@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
+        <file>QMLButtonStyle.qml</file>
+        <file>QMLScroolBar.qml</file>
     </qresource>
 </RCC>

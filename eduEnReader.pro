@@ -1,8 +1,8 @@
 TEMPLATE = app
 
 QT += qml quick
-QT += multimedia multimediawidgets
 CONFIG += c++11
+CONFIG += qt plugin
 
 SOURCES += main.cpp \
     soundstore.cpp \
@@ -36,3 +36,5 @@ HEADERS += \
     soundreader.h \
     factory.h \
     uicontroller.h
+
+DISTFILES +=
