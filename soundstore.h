@@ -9,8 +9,7 @@ class SoundStore : public QObject
 {
     Q_OBJECT
 public:
-    explicit SoundStore(QObject *parent = 0);
-
+    SoundStore(QObject *parent = 0);
 signals:
 
 public slots:

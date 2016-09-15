@@ -5,12 +5,18 @@
 #include <QtMultimedia/QMediaPlayer>
 #include "factory.h"
 
-class SoundPlayer : public QObject, public Factory <SoundPlayer>
+class SoundPlayer : public QObject
 {
     Q_OBJECT
 public:
-    explicit SoundPlayer(QObject *parent = 0);
+    typedef QSharedPointer <SoundPlayer> PTR;
+    static QSharedPointer <SoundPlayer> createPointer()
+    {
+        PTR rezPtr = QSharedPointer <SoundPlayer> (new SoundPlayer());
+        return rezPtr;
+    }
 
+    SoundPlayer(QObject *parent = 0);
 signals:
 
 public slots:

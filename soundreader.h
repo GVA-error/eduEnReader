@@ -2,16 +2,29 @@
 #define SOUNDREADER_H
 
 #include <QTypeInfo>
+#include <QSharedPointer>
 #include <QObject>
 #include "factory.h"
 #include "riff/riff.h"
 
-class SoundReader : public Factory <SoundReader>
+class SoundReader
 {
 public:
+    typedef QSharedPointer <SoundReader> PTR;
+    static QSharedPointer <SoundReader> createPointer()
+    {
+        PTR rezPtr = QSharedPointer <SoundReader> (new SoundReader());
+        return rezPtr;
+    }
+
     qint64 getSample(qint64 sample);
 
+    qint64 readFile(QString fileName);
     SoundReader();
+    ~SoundReader();
+
+private:
+    riffwave_reader* wavriff;
 };
 
 #endif // SOUNDREADER_H

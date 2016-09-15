@@ -14,7 +14,6 @@ class TextStore : public QObject
 public:
     explicit TextStore(QObject *parent = 0);
 
-
     // Размер блока, каждый блок отвечает за свою часть текста, модификаторы за текст не считаем
     const qint32 blockSize = 10;
     // для удобства обработки храним текст в блоках
