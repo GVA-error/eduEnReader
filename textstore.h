@@ -3,29 +3,38 @@
 
 #include <QObject>
 #include <QTextDocument>
+#include <QTextDocumentWriter>
+#include <QTextCodec>
+#include <QTextEdit>
+#include <QCursor>
 #include <QString>
 #include <QVector>
+#include <QTextBlock>
 
+
+// Не нужен
 class TextStore : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(qint32 blockSize)
-    Q_PROPERTY(QVector <QString> textBlocks)
 public:
+    typedef QSharedPointer <TextStore> PTR;
+    static QSharedPointer <TextStore> factoryMethod()
+    {
+        PTR rezPtr = QSharedPointer <TextStore> (new TextStore());
+        return rezPtr;
+    }
+
     explicit TextStore(QObject *parent = 0);
 
-    // Размер блока, каждый блок отвечает за свою часть текста, модификаторы за текст не считаем
-    const qint32 blockSize = 10;
-    // для удобства обработки храним текст в блоках
-    QVector <QString> textBlocks;
-
-
+    QSharedPointer<QTextDocument> document;
 signals:
     void textWasChanged();
 public slots:
+    void setDocument(QTextDocument& newDock){ document = QSharedPointer<QTextDocument>(&newDock); }
 
-    Q_INVOKABLE QVariant getBlock(qint64 blockNumber);
+private:
 
+    void clearSimularBind(qint64 beginTextPos, qint64 endTextPos, QColor color, qint64 beginSoundPos, qint64 endSoundPos);
 };
 
 #endif // TEXTSTORE_H

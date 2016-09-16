@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick widgets
 CONFIG += c++11
 CONFIG += qt plugin
 
@@ -13,8 +13,8 @@ SOURCES += main.cpp \
     soundplayer.cpp \
     riff/riff.cc \
     soundreader.cpp \
-    factory.cpp \
-    uicontroller.cpp
+    uicontroller.cpp \
+    documenthandler/documenthandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,7 +34,27 @@ HEADERS += \
     riff/cdefs.h \
     riff/riff.h \
     soundreader.h \
-    factory.h \
-    uicontroller.h
+    uicontroller.h \
+    documenthandler/documenthandler.h
 
-DISTFILES +=
+DISTFILES += \
+    images/editcopy.png \
+    images/editcut.png \
+    images/editpaste.png \
+    images/editredo.png \
+    images/editundo.png \
+    images/exportpdf.png \
+    images/filenew.png \
+    images/fileopen.png \
+    images/fileprint.png \
+    images/filesave.png \
+    images/qt-logo.png \
+    images/textbold.png \
+    images/textcenter.png \
+    images/textitalic.png \
+    images/textjustify.png \
+    images/textleft.png \
+    images/textright.png \
+    images/textunder.png \
+    images/zoomin.png \
+    images/zoomout.png

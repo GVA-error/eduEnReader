@@ -1,16 +1,22 @@
+#include <QColor>
 #include "textstore.h"
 
 TextStore::TextStore(QObject *parent) : QObject(parent)
 {
-    textBlocks.resize(2);
+    QColor col = QColor().red();
+    if (!col.isValid())
+       return;
+    QTextCharFormat fmt;
+    fmt.setForeground(col);
 
-    textBlocks[0] = "0123456789";
-    textBlocks[1] = "<h1>abc</h1>";
+    QTextEdit textEdit;
+    textEdit.setDocument(document.data());
+  /*  QTextCursor cursor = textEdit.textCursor();
+    if (!cursor.hasSelection())
+        cursor.select(QTextCursor::WordUnderCursor);
+    cursor.mergeCharFormat(fmt);
+    textEdit->mergeCurrentCharFormat(fmt);*/
+
 
     emit textWasChanged();
-}
-
-QVariant TextStore::getBlock(qint64 blockNumber)
-{
-    return textBlocks.at(blockNumber);
 }

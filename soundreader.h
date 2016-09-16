@@ -4,14 +4,13 @@
 #include <QTypeInfo>
 #include <QSharedPointer>
 #include <QObject>
-#include "factory.h"
 #include "riff/riff.h"
 
 class SoundReader
 {
 public:
     typedef QSharedPointer <SoundReader> PTR;
-    static QSharedPointer <SoundReader> createPointer()
+    static QSharedPointer <SoundReader> factoryMethod()
     {
         PTR rezPtr = QSharedPointer <SoundReader> (new SoundReader());
         return rezPtr;

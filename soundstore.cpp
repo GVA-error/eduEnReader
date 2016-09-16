@@ -2,8 +2,8 @@
 
 SoundStore::SoundStore(QObject *parent) : QObject(parent)
 {
-    _soundPlayer = SoundPlayer::createPointer();
-    _soundReader = SoundReader::createPointer();
+    _soundPlayer = SoundPlayer::factoryMethod();
+    _soundReader = SoundReader::factoryMethod();
 }
 
 qint64 SoundStore::getSample(qint64 pos)

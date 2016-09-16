@@ -3,14 +3,13 @@
 
 #include <QObject>
 #include <QtMultimedia/QMediaPlayer>
-#include "factory.h"
 
 class SoundPlayer : public QObject
 {
     Q_OBJECT
 public:
     typedef QSharedPointer <SoundPlayer> PTR;
-    static QSharedPointer <SoundPlayer> createPointer()
+    static QSharedPointer <SoundPlayer> factoryMethod()
     {
         PTR rezPtr = QSharedPointer <SoundPlayer> (new SoundPlayer());
         return rezPtr;

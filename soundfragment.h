@@ -1,13 +1,18 @@
 #ifndef SOUNDFRAGMENT_H
 #define SOUNDFRAGMENT_H
 
-#include "soundplayer.h"
+#include "soundstore.h"
 
 class SoundFragment
 {
-    SoundFragment() = delete;
-    explicit SoundFragment(SoundPlayer* source, qint64 begin, qint64 end);
 
+public:
+    typedef QSharedPointer <SoundFragment> PTR;
+    static QSharedPointer <SoundFragment> factoryMethod(SoundStore::PTR source, qint64 begin, qint64 end)
+    {
+        PTR rezPtr = QSharedPointer <SoundFragment> (new SoundFragment(source, begin, end));
+        return rezPtr;
+    }
 signals:
 
 public slots:
@@ -17,7 +22,10 @@ private:
     qint64 _begin;
     qint64 _end;
 
-    SoundPlayer* _soundSource;
+    SoundStore::PTR _soundSource;
+
+    SoundFragment() = delete;
+    explicit SoundFragment(SoundStore::PTR source, qint64 begin, qint64 end);
 };
 
 #endif // SOUNDFRAGMENT_H

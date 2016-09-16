@@ -1,6 +1,6 @@
 #include "soundfragment.h"
 
-SoundFragment::SoundFragment(SoundPlayer* source, qint64 begin, qint64 end)
+SoundFragment::SoundFragment(SoundStore::PTR source, qint64 begin, qint64 end)
 {
     _soundSource = source;
     _begin = begin;
