@@ -15,14 +15,20 @@ TextFragment::TextFragment(qint64 begin, qint64 end, TextFragment::PTR source)
     _source = source->_source;
 }
 
-char TextFragment::getSymbol(qint64 i)
+QString TextFragment::getString() const
 {
-    // TODO работа с документом
-    return -1;
+    QString rezString = _source->getString(_begin, _end);
+    return rezString;
 }
 
-qint64 TextFragment::getFragmentLength()
+QChar TextFragment::getSymbol(qint64 i) const
 {
-    // TODO работа с документом
-    return -1;
+    QChar rezChar = getString()[0];
+    return rezChar;
 }
+
+qint64 TextFragment::getFragmentLength() const
+{
+    return _end-_begin;
+}
+

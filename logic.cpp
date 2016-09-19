@@ -7,8 +7,8 @@ Logic::Logic()
 
 void Logic::clear()
 {
-    _bindList.clear();
-    _bindVector.clear();
+    _staticBindList.clear();
+    _staticBindVector.clear();
 }
 
 void Logic::setReadRegim()
@@ -24,20 +24,20 @@ void Logic::setWriteRegim()
 
 void Logic::bind(TextFragment::PTR text, SoundFragment::PTR sound)
 {
-    Bind b;
+    staticBind b;
     b.text = text;
     b.sound = sound;
 
     Q_ASSERT(!haveIntersaption(b)); // TO DO заменить на затирание бинда
-    _bindList.push_back(b);
+    _staticBindList.push_back(b);
 }
 
 void Logic::autoBinding()
 {
     const qint64 maxSintanceSize = 100000; // Можно вычислить для каждой фразы исходя из её длинны
-    auto firstSound = _bindList.front();
+    auto firstSound = _staticBindList.front();
     auto lastSound = SoundFragment::factoryMethod(0, 0, firstSound.sound);
-    for (auto bind : _bindList)
+    for (auto bind : _staticBindList)
     {
         qint64 lastPos = bind.text->getFragmentLength();
         auto curTextFragment = TextFragment::factoryMethod(0, lastPos, bind.text);
@@ -50,7 +50,7 @@ void Logic::autoBinding()
     }
 }
 
-bool Logic::haveIntersaption(const Bind& A, const Bind& B) const
+bool Logic::haveIntersaption(const staticBind &A, const staticBind &B) const
 {
     if (A.text->begin() >= B.text->begin() && A.text->end() <= B.text->end())
         return true;
@@ -59,9 +59,9 @@ bool Logic::haveIntersaption(const Bind& A, const Bind& B) const
     return false;
 }
 
-bool Logic::haveIntersaption(const Bind& newBind) const
+bool Logic::haveIntersaption(const staticBind& newBind) const
 {
-    for (auto bind : _bindList)
+    for (auto bind : _staticBindList)
         if (haveIntersaption(bind, newBind))
             return true;
     return false;
@@ -69,13 +69,24 @@ bool Logic::haveIntersaption(const Bind& newBind) const
 
 void Logic::autoBind(TextFragment::PTR text, SoundFragment::PTR sound)
 {
-    Bind newBind = getAutoBind(text, sound);
+    staticBind newBind = getAutoBind(text, sound);
     Q_ASSERT(!haveIntersaption(newBind));
-    _bindList.push_back(newBind);
+    _staticBindList.push_back(newBind);
+}
+
+SoundFragment::PTR Logic::getBindedSound(qint64 textPos)
+{
+    for (auto bind : _staticBindList)
+    {
+        if (bind.text->begin() <= textPos && bind.text->end() >= textPos)
+            return bind.sound;
+    }
+    //auto defaultSound = _staticBindList.front().sound;
+    return SoundFragment::factoryMethod(0, 0, SoundStore::PTR());
 }
 
 // Желательно искать начало и конец фразы
-Logic::Bind Logic::getAutoBind(TextFragment::PTR text, SoundFragment::PTR sound) const
+Logic::staticBind Logic::getAutoBind(TextFragment::PTR text, SoundFragment::PTR sound) const
 {
 
 }

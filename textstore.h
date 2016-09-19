@@ -48,6 +48,11 @@ public:
     }
     TextStore();
 
+    QString getString(qint64 begin, qint64 end) const;
+    qint64 getCursorPos() const;
+
+    // Ниже методы косаемые только UI
+
     QQuickItem *target() { return m_target; }
 
     void setTarget(QQuickItem *target);
@@ -92,7 +97,7 @@ public Q_SLOTS:
 
     void setDocumentTitle(QString arg);
 
-Q_SIGNALS:
+signals:
     void targetChanged();
     void cursorPositionChanged();
     void selectionStartChanged();

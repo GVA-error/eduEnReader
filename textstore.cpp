@@ -15,6 +15,17 @@ TextStore::TextStore()
 {
 }
 
+QString TextStore::getString(qint64 begin, qint64 end) const
+{
+    Q_ASSERT(end >= begin);
+    return m_text.mid(begin, end - begin);
+}
+
+qint64 TextStore::getCursorPos() const
+{
+    return 1;
+}
+
 void TextStore::setTarget(QQuickItem *target)
 {
     m_doc = 0;
@@ -126,6 +137,7 @@ void TextStore::reset()
     emit underlineChanged();
     emit fontSizeChanged();
     emit textColorChanged();
+    emit cursorPositionChanged();
 }
 
 QTextCursor TextStore::textCursor() const

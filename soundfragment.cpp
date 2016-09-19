@@ -29,5 +29,5 @@ char SoundFragment::getSample(qint64 i)
 qint64 SoundFragment::getSampleNumber()
 {
     // TODO работа с документом
-    return -1;
+    return _end - _begin;
 }

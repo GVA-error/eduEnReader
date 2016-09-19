@@ -26,5 +26,6 @@
         <file>images/zoomout.png</file>
         <file>example.html</file>
         <file>QMLScroolBar.qml</file>
+        <file>QMLTextPanel.qml</file>
     </qresource>
 </RCC>

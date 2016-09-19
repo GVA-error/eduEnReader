@@ -22,13 +22,15 @@ public:
     }
 
     // Глобальные Begin End
-    qint64 begin() { return _begin; }
-    qint64 end() { return _end; }
+    qint64 begin() const { return _begin; }
+    qint64 end() const { return _end; }
 
     // Метод в локальных координатах
-    char getSymbol(qint64 i);
+    QChar getSymbol(qint64 i) const;
+    QString getString() const;
 
-    qint64 getFragmentLength();
+    qint64 getFragmentLength() const;
+
 private:
     TextFragment() = delete;
     // В глобальных координатах

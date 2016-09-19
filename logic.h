@@ -18,6 +18,8 @@ public:
         return rezPtr;
     }
 
+    SoundFragment::PTR getBindedSound(qint64 textPos);
+
     void autoBinding();
     void bind(TextFragment::PTR, SoundFragment::PTR);
 
@@ -28,20 +30,27 @@ public:
     Logic();
 
 private:
-    struct Bind{
+    struct dinamicBind
+    {
+        qint64 distanceToLast;
+        SoundFragment::PTR sound;
+    };
+
+    struct staticBind{
         TextFragment::PTR text;
         SoundFragment::PTR sound;
     };
     bool _readRegim = false; // глобальный режим
 
-    QVector <Bind> _bindVector;
-    QList <Bind> _bindList;
+    QVector <staticBind> _staticBindVector; // В данный моммент работаем со статичным текстом
+    QList <staticBind> _staticBindList;
 
-    bool haveIntersaption(const Bind&) const;
-    bool haveIntersaption(const Bind& A, const Bind& B) const;
+    // Нужно переписать для динамических биндов
+    bool haveIntersaption(const staticBind &) const;
+    bool haveIntersaption(const staticBind& A, const staticBind& B) const;
 
     void autoBind(TextFragment::PTR, SoundFragment::PTR);
-    Bind getAutoBind(TextFragment::PTR text, SoundFragment::PTR sound) const;
+    staticBind getAutoBind(TextFragment::PTR text, SoundFragment::PTR sound) const;
 };
 
 #endif // LOGIC_H

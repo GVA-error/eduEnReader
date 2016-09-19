@@ -18,7 +18,9 @@ public:
     SoundStore(QObject *parent = 0);
 
     qint64 getSample(qint64 pos) const;
+    qint64 getSampleNumber() const;
     void readFile(QString fileName);
+
 signals:
 
 public slots:

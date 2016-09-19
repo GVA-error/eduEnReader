@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import TextStoreModul 1.0
+import UiControlerModul 1.0
 
 ApplicationWindow {
 
@@ -13,13 +14,27 @@ ApplicationWindow {
 
     title: document.documentTitle + " - Text Editor Example"
 
+    UiControler{
+        id: uiControler
+        oldXSoundPos: 0
+        mouseIsPressed: false
+        document : document
+        // переместить сюда сaунд как документ
+        onOldXSoundPosChanged:
+        {
+             selectRect.x = oldXSoundPos;
+        }
+        onNewXSoundPosChanged:
+        {
+            selectRect.width = Math.abs(oldXSoundPos-newXSoundPos);
+        }
+    }
     MessageDialog {
         id: aboutBox
         title: "About Text"
         text: "This is a basic text editor \nwritten with Qt Quick Controls"
         icon: StandardIcon.Information
     }
-
     Action {
         id: cutAction
         text: "Cut"
@@ -28,7 +43,6 @@ ApplicationWindow {
         iconName: "edit-cut"
         onTriggered: textArea.cut()
     }
-
     Action {
         id: copyAction
         text: "Copy"
@@ -37,7 +51,6 @@ ApplicationWindow {
         iconName: "edit-copy"
         onTriggered: textArea.copy()
     }
-
     Action {
         id: pasteAction
         text: "Paste"
@@ -46,7 +59,6 @@ ApplicationWindow {
         iconName: "edit-paste"
         onTriggered: textArea.paste()
     }
-
     Action {
         id: alignLeftAction
         text: "&Left"
@@ -84,7 +96,6 @@ ApplicationWindow {
         checkable: true
         checked: document.alignment == Qt.AlignJustify
     }
-
     Action {
         id: boldAction
         text: "&Bold"
@@ -94,7 +105,6 @@ ApplicationWindow {
         checkable: true
         checked: document.bold
     }
-
     Action {
         id: italicAction
         text: "&Italic"
@@ -113,7 +123,6 @@ ApplicationWindow {
         checkable: true
         checked: document.underline
     }
-
     FileDialog {
         id: fileDialog
         nameFilters: ["Text files (*.txt)", "HTML files (*.html, *.htm)"]
@@ -124,12 +133,10 @@ ApplicationWindow {
                 document.saveAs(fileUrl, selectedNameFilter)
         }
     }
-
     ColorDialog {
         id: colorDialog
         color: "black"
     }
-
     Action {
         id: fileOpenAction
         iconSource: "images/fileopen.png"
@@ -140,7 +147,6 @@ ApplicationWindow {
             fileDialog.open()
         }
     }
-
     Action {
         id: fileSaveAsAction
         iconSource: "images/filesave.png"
@@ -276,13 +282,124 @@ ApplicationWindow {
         radius: 10
 
         QMLSoundGraph {
-            id : soundGraph
+            id : soundPanel
             width: parent.width
             height: parent.height/10
+
+
+            Action {
+                id: playAction
+                text: "Play"
+                shortcut: "ctrl+p"
+                iconSource: "images/editcut.png"
+                iconName: "edit-cut"
+                onTriggered: textArea.cut()
+            }
+
+            Action {
+                id: bindAction
+                text: "Bind"
+                shortcut: "Ctrl+C"
+                iconSource: "images/editcopy.png"
+                iconName: "edit-copy"
+                onTriggered: uiControler.makeBind();
+            }
+
+            Action {
+                id: openAction
+                text: "Open"
+                shortcut: "ctrl+v"
+                iconSource: "qrc:images/editpaste.png"
+                iconName: "edit-paste"
+                onTriggered: textArea.paste()
+            }
+
+            ToolBar
+            {
+                id : soundToolBar
+                width: 150
+
+                RowLayout {
+                    spacing: 0
+
+                    ToolButton { action: playAction }
+                    ToolButton { action: bindAction }
+                    ToolButton { action: openAction }
+
+                    Item { Layout.fillWidth: true }
+                }
+
+            }
+
+
+            Rectangle {
+                anchors.left: soundToolBar.right
+                anchors.right: parent.right
+                id: soundGraph
+                height: soundToolBar.height
+                color: "blue"
+
+                radius: 10
+
+                Rectangle{
+                    id : selectRect
+                    x: 0
+                    y: 0
+                    width: 3
+                    height: soundGraph.height
+                    color: "red"
+                    opacity : 0.5
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onReleased: {
+                        uiControler.mouseIsPressed = false;
+                        var oldPos, newPos;
+                        if (selectRect.x === uiControler.oldXSoundPos)
+                        {
+                            oldPos = selectRect.x;
+                            newPos = selectRect.x + selectRect.width;
+                        }
+                        else
+                        {
+                            oldPos = uiControler.oldXSoundPos - selectRect.width;
+                            newPos = uiControler.oldXSoundPos;
+                        }
+                        uiControler.oldXSoundPos = oldPos;
+                        uiControler.newXSoundPos = newPos;
+                    }
+                    onMouseXChanged:{
+                        if (!uiControler.mouseIsPressed)
+                            return;
+                        var x = mouseX;
+                        var w = x - uiControler.oldXSoundPos;
+                        if (w < 0)
+                        {
+                            w = Math.abs(w);
+                            selectRect.x = uiControler.oldXSoundPos - w;
+                            if (selectRect.x < 0)
+                                selectRect.x = 0;
+                        }
+                        if (w < 5)
+                            w = 3;
+                       // selectRect.width = w;
+                        //uiControler.oldXSoundPos = selectRect.x;
+                        selectRect.width = w;
+                    }
+
+                    onPressed:{
+                        var x = mouseX;
+                        selectRect.x = x;
+                        uiControler.oldXSoundPos = x;
+                        uiControler.mouseIsPressed = true;
+                    }
+                }
+            }
         }
         TextArea {
             width: parent.width
-            anchors.top: soundGraph.bottom
+            anchors.top: soundPanel.bottom
             anchors.bottom: parent.bottom
             Accessible.name: "document"
             id: textArea
@@ -290,7 +407,7 @@ ApplicationWindow {
             baseUrl: "qrc:/"
             text: document.text
             textFormat: Qt.RichText
-            //Component.onCompleted: forceActiveFocus()
+            Component.onCompleted: forceActiveFocus()
         }
 
     }
@@ -327,7 +444,6 @@ ApplicationWindow {
             errorDialog.visible = true
         }
     }
-
 
 }
 
