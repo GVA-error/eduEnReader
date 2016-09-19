@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include "textstore.h"
 
+// служит для обмена текстом
 class TextFragment
 {
 public:

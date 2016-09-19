@@ -19,3 +19,8 @@ void UIController::binding()
 
 
 }
+
+void UIController::openSoundFile(QString fileName)
+{
+    _soundStore->readFile(fileName);
+}

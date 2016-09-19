@@ -42,10 +42,9 @@ Item {
     ToolBar
     {
         id : soundToolBar
-        width: parent.width * 2 / 10
+        width: 150
 
         RowLayout {
-            anchors.fill: parent
             spacing: 0
 
             ToolButton { action: playAction }
@@ -64,6 +63,8 @@ Item {
         id: soundGraph
         height: soundToolBar.height
         color: "blue"
+
+        radius: 10
 
         Rectangle{
             id : selectRect

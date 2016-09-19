@@ -36,11 +36,13 @@ public:
     bool mouseIsPressed;
     bool getMouseIsPressed() const {return mouseIsPressed;}
     bool setMouseIsPressed(bool& newValue) { mouseIsPressed = newValue;}
+
 signals:
 
 public slots:
 
     void binding();
+    void openSoundFile(QString fileName);
 private:
 
     Logic::PTR _logic;

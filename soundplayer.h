@@ -16,6 +16,7 @@ public:
     }
 
     SoundPlayer(QObject *parent = 0);
+    void openFile(QString FileName);
 signals:
 
 public slots:

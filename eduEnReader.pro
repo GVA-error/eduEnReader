@@ -13,8 +13,7 @@ SOURCES += main.cpp \
     soundplayer.cpp \
     riff/riff.cc \
     soundreader.cpp \
-    uicontroller.cpp \
-    documenthandler/documenthandler.cpp
+    uicontroller.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,8 +33,7 @@ HEADERS += \
     riff/cdefs.h \
     riff/riff.h \
     soundreader.h \
-    uicontroller.h \
-    documenthandler/documenthandler.h
+    uicontroller.h
 
 DISTFILES += \
     images/editcopy.png \

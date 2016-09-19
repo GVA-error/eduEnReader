@@ -3,6 +3,8 @@
 
 #include "soundstore.h"
 
+// служит для обмена звуком
+
 class SoundFragment
 {
 

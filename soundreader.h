@@ -4,6 +4,7 @@
 #include <QTypeInfo>
 #include <QSharedPointer>
 #include <QObject>
+#include <QFile>
 #include "riff/riff.h"
 
 class SoundReader
@@ -23,6 +24,7 @@ public:
     ~SoundReader();
 
 private:
+    const qint32 buffSize = 0;
     riffwave_reader* wavriff;
 };
 

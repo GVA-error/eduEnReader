@@ -24,3 +24,8 @@ void SoundPlayer::play(qint64 begin, qint64 end)
 {
 
 }
+
+void SoundPlayer::openFile(QString FileName)
+{
+
+}

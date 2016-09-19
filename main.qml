@@ -3,14 +3,13 @@ import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
-import DocumentHandlerModul 1.0
 import TextStoreModul 1.0
 
 ApplicationWindow {
 
     visible: true
-    width: 640
-    height: 480
+    width: 1024
+    height: 768
 
     title: document.documentTitle + " - Text Editor Example"
 
@@ -274,6 +273,8 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         width: parent.width
 
+        radius: 10
+
         QMLSoundGraph {
             id : soundGraph
             width: parent.width
@@ -289,7 +290,7 @@ ApplicationWindow {
             baseUrl: "qrc:/"
             text: document.text
             textFormat: Qt.RichText
-            Component.onCompleted: forceActiveFocus()
+            //Component.onCompleted: forceActiveFocus()
         }
 
     }
@@ -298,7 +299,7 @@ ApplicationWindow {
         id: errorDialog
     }
 
-    DocumentHandler {
+    TextStore {
         id: document
         target: textArea
         cursorPosition: textArea.cursorPosition
