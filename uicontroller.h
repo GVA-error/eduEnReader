@@ -41,13 +41,17 @@ signals:
 
 public slots:
 
-    void binding();
+    void makeBind();
     void openSoundFile(QString fileName);
+    void clickedOnText();
 private:
 
     Logic::PTR _logic;
     SoundStore::PTR _soundStore;
+    TextStore::PTR _textStore;
 
+    SoundFragment::PTR getSellectedSound();
+    TextFragment::PTR getSellectedText();
 };
 
 #endif // UIController_H

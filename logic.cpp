@@ -22,47 +22,39 @@ void Logic::setWriteRegim()
     _readRegim = false;
 }
 
-void Logic::bind(qint64 beginTextPos, qint64 endTextPos, qint64 beginSoundPos, qint64 endSoundPos)
+void Logic::bind(TextFragment::PTR text, SoundFragment::PTR sound)
 {
     Bind b;
-    b.beginSoundPos = beginSoundPos;
-    b.endSoundPos = endSoundPos;
-    b.beginTextPos = beginTextPos;
-    b.endTextPos = endTextPos;
+    b.text = text;
+    b.sound = sound;
 
     Q_ASSERT(!haveIntersaption(b)); // TO DO заменить на затирание бинда
     _bindList.push_back(b);
 }
 
-void Logic::autoBinding(const SoundStore::PTR soundReader)
+void Logic::autoBinding()
 {
-    QList <qint64> begin_End_TextPos;
+    const qint64 maxSintanceSize = 100000; // Можно вычислить для каждой фразы исходя из её длинны
+    auto firstSound = _bindList.front();
+    auto lastSound = SoundFragment::factoryMethod(0, 0, firstSound.sound);
     for (auto bind : _bindList)
     {
-        begin_End_TextPos.push_back(bind.beginTextPos);
-        begin_End_TextPos.push_back(bind.endTextPos);
-    }
-    autoBinding(begin_End_TextPos, soundReader);
-}
+        qint64 lastPos = bind.text->getFragmentLength();
+        auto curTextFragment = TextFragment::factoryMethod(0, lastPos, bind.text);
+        qint64 beginSoundRange = lastSound->getSampleNumber();
+        qint64 endSoundRange = beginSoundRange + maxSintanceSize;
+        auto curSoundFragment = SoundFragment::factoryMethod(beginSoundRange, endSoundRange, lastSound);
 
-void Logic::autoBinding(QList <qint64> begin_End_TextPos, const SoundStore::PTR soundReader)
-{
-    qint64 lastSoundEnd = 0;
-    for (auto begin = begin_End_TextPos.begin(); begin+2 != begin_End_TextPos.end(); begin += 2)
-    {
-        qint64 beginSoundRange = lastSoundEnd;
-        qint64 endSoundRange = lastSoundEnd + 10; // считаем что не выделенно фраз больше 10 секунд
-        qint64 beginText = *begin;
-        qint64 endText = *(begin+1);
-        autoBind(beginText, endText, beginSoundRange, endSoundRange, soundReader);
+        autoBind(curTextFragment, curSoundFragment);
+        lastSound = bind.sound;
     }
 }
 
 bool Logic::haveIntersaption(const Bind& A, const Bind& B) const
 {
-    if (A.beginTextPos >= B.beginTextPos && A.beginTextPos <= B.endTextPos)
+    if (A.text->begin() >= B.text->begin() && A.text->end() <= B.text->end())
         return true;
-    if (A.endTextPos >= B.beginTextPos && A.endTextPos <= B.endTextPos)
+    if (A.sound->begin() >= B.sound->begin() && A.sound->end() <= B.sound->end())
         return true;
     return false;
 }
@@ -75,15 +67,15 @@ bool Logic::haveIntersaption(const Bind& newBind) const
     return false;
 }
 
-void Logic::autoBind(qint64 beginText, qint64 endText, qint64 beginSoundRange, qint64 endSoundRange, const SoundStore::PTR soundReader)
+void Logic::autoBind(TextFragment::PTR text, SoundFragment::PTR sound)
 {
-    Bind newBind = getAutoBind(beginText, endText, beginSoundRange, endSoundRange, soundReader);
+    Bind newBind = getAutoBind(text, sound);
     Q_ASSERT(!haveIntersaption(newBind));
     _bindList.push_back(newBind);
 }
 
 // Желательно искать начало и конец фразы
-Logic::Bind Logic::getAutoBind(qint64 beginText, qint64 endText, qint64 beginSoundRange, qint64 endSoundRange, const SoundStore::PTR soundReader) const
+Logic::Bind Logic::getAutoBind(TextFragment::PTR text, SoundFragment::PTR sound) const
 {
 
 }

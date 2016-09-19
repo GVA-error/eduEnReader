@@ -40,6 +40,12 @@ class TextStore : public QObject
     Q_PROPERTY(QString documentTitle READ documentTitle WRITE setDocumentTitle NOTIFY documentTitleChanged)
 
 public:
+    typedef QSharedPointer <TextStore> PTR;
+    static QSharedPointer <TextStore> factoryMethod()
+    {
+        PTR rezPtr = QSharedPointer <TextStore> (new TextStore());
+        return rezPtr;
+    }
     TextStore();
 
     QQuickItem *target() { return m_target; }

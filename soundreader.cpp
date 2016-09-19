@@ -10,6 +10,12 @@ SoundReader::~SoundReader()
     delete wavriff;
 }
 
+qint64 SoundReader::getDiscret()
+{
+    Q_ASSERT(wavriff);
+    return wavriff->samplespersec();
+}
+
 qint64 SoundReader::getSample(qint64 sample)
 {
     // Для оптимизации можно использовать буфер

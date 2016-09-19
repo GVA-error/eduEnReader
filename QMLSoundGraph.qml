@@ -23,16 +23,16 @@ Item {
 
     Action {
         id: bindAction
-        text: "Copy"
+        text: "Bind"
         shortcut: "Ctrl+C"
         iconSource: "images/editcopy.png"
         iconName: "edit-copy"
-        onTriggered: textArea.copy()
+        onTriggered: uiControler.makeBind();
     }
 
     Action {
         id: openAction
-        text: "Paste"
+        text: "Open"
         shortcut: "ctrl+v"
         iconSource: "qrc:images/editpaste.png"
         iconName: "edit-paste"

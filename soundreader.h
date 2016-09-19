@@ -18,6 +18,7 @@ public:
     }
 
     qint64 getSample(qint64 sample);
+    qint64 getDiscret();
 
     qint64 readFile(QString fileName);
     SoundReader();

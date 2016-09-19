@@ -5,6 +5,8 @@
 #include <QList>
 #include <QVector>
 #include <soundfragment.h>
+#include "soundfragment.h"
+#include "textfragment.h"
 
 class Logic
 {
@@ -16,8 +18,8 @@ public:
         return rezPtr;
     }
 
-    void autoBinding(const SoundStore::PTR soundReader);
-    void bind(qint64 beginTextPos, qint64 endTextPos, qint64 beginSoundPos, qint64 endSoundPos);
+    void autoBinding();
+    void bind(TextFragment::PTR, SoundFragment::PTR);
 
     void setReadRegim();
     void setWriteRegim();
@@ -27,10 +29,8 @@ public:
 
 private:
     struct Bind{
-        qint64 beginTextPos;
-        qint64 endTextPos;
-        qint64 beginSoundPos;
-        qint64 endSoundPos;
+        TextFragment::PTR text;
+        SoundFragment::PTR sound;
     };
     bool _readRegim = false; // глобальный режим
 
@@ -40,10 +40,8 @@ private:
     bool haveIntersaption(const Bind&) const;
     bool haveIntersaption(const Bind& A, const Bind& B) const;
 
-    void autoBind(qint64 beginText, qint64 endText, qint64 beginSoundRange, qint64 endSoundRange, const SoundStore::PTR soundReader);
-    Bind getAutoBind(qint64 beginText, qint64 endText, qint64 beginSoundRange, qint64 endSoundRange, const SoundStore::PTR soundReader) const;
-
-    void autoBinding(QList <qint64> begin_End_TextPos, const SoundStore::PTR);
+    void autoBind(TextFragment::PTR, SoundFragment::PTR);
+    Bind getAutoBind(TextFragment::PTR text, SoundFragment::PTR sound) const;
 };
 
 #endif // LOGIC_H
