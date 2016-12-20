@@ -2,9 +2,10 @@
 #define TEXTSTORE_H
 
 #include <QQuickTextDocument>
-
 #include <QtGui/QTextCharFormat>
 #include <QtCore/QTextCodec>
+#include <assert.h>
+#include "store.h"
 
 #include <qqmlfile.h>
 
@@ -12,7 +13,7 @@ QT_BEGIN_NAMESPACE
 class QTextDocument;
 QT_END_NAMESPACE
 
-class TextStore : public QObject
+class TextStore : public QObject, public Store <TextStore>
 {
     Q_OBJECT
 
@@ -40,15 +41,12 @@ class TextStore : public QObject
     Q_PROPERTY(QString documentTitle READ documentTitle WRITE setDocumentTitle NOTIFY documentTitleChanged)
 
 public:
-    typedef QSharedPointer <TextStore> PTR;
-    static QSharedPointer <TextStore> factoryMethod()
-    {
-        PTR rezPtr = QSharedPointer <TextStore> (new TextStore());
-        return rezPtr;
-    }
     TextStore();
+    virtual ~TextStore(){}
 
     QString getString(qint64 begin, qint64 end) const;
+    QString getString() const;
+    QString getSellectedStreing() const;
     qint64 getCursorPos() const;
 
     // Ниже методы косаемые только UI
@@ -89,9 +87,10 @@ public Q_SLOTS:
     void setUnderline(bool arg);
     void setFontSize(int arg);
     void setTextColor(const QColor &arg);
+    void setTextBackground(const QColor &arg);
     void setFontFamily(const QString &arg);
 
-    void setFileUrl(const QUrl &arg);
+    void setFileUrl(const QUrl &arg) override;
     void setText(const QString &arg);
     void saveAs(const QUrl &arg, const QString &fileType);
 

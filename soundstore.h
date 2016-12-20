@@ -2,35 +2,43 @@
 #define SOUNDSTORE_H
 
 #include <QObject>
-#include "soundreader.h"
-#include "soundplayer.h"
+#include <QMediaPlayer>
+#include <QSharedPointer>
+#include "store.h"
 
-class SoundStore : public QObject
+class SoundStore : public QObject, public Store <SoundStore>
 {
     Q_OBJECT
+    Q_PROPERTY(qreal position READ getPersentPos WRITE setPosPersent NOTIFY posChanged)
 public:
-    typedef QSharedPointer <SoundStore> PTR;
-    static QSharedPointer <SoundStore> factoryMethod()
-    {
-        PTR rezPtr = QSharedPointer <SoundStore> (new SoundStore());
-        return rezPtr;
+    virtual ~SoundStore() {
+
+       // qDebug() << "~SoundStore()";
+
     }
-    SoundStore(QObject *parent = 0);
 
-    qint64 getSample(qint64 pos) const;
-    qint64 getSampleNumber() const;
-    void readFile(QString fileName);
-
+    void setFileUrl(const QUrl& url) override; // TODO Добавить потдержку относительных путей
+    QUrl fileUrl() const override;
 signals:
+    void posChanged();
 
 public slots:
+    void playReal(qreal begin, qreal end = -1); // указывается в секундах
 
-    void play(qint64 begin, qint64 end);
+    void setPosReal(qreal); // позиция устанавливается в секундах
+    void setPosPersent(qreal); // позиция устанавливаеться в проентах
+    qreal getPersentPos() const;
+    qreal getTimePos() const;
+    void start();
+    void stop();
 
-private:
+  //  void posChanched(qint64 newPos);
+protected:
+    friend class Store;
 
-    SoundReader::PTR _soundReader;
-    SoundPlayer::PTR _soundPlayer;
+    QMediaPlayer _player;
+    QUrl _lastOpenedUrl;
+    SoundStore(QObject *parent = 0);
 };
 
 #endif // SOUNDSTORE_H

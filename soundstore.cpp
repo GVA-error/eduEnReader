@@ -1,24 +1,72 @@
 #include "soundstore.h"
 
-SoundStore::SoundStore(QObject *parent) : QObject(parent)
+SoundStore::SoundStore(QObject *parent)
+    : QObject(parent), Store()
 {
-    _soundPlayer = SoundPlayer::factoryMethod();
-    _soundReader = SoundReader::factoryMethod();
+   // qDebug() << "SoundStore()";
+    connect(&_player, SIGNAL(positionChanged(qint64)), this, SIGNAL(posChanged()));
+}
+/*
+void SoundStore::posChanched(qint64 newPos)
+{
+    //emit SIGNAL(posChanged);
+    qint64 duration = _player.duration();
+    if (duration >= newPos)
+        return;
+    _player.setPosition(newPos);
+}*/
+
+void SoundStore::setPosPersent(qreal pos)
+{
+    qint64 fullDuretion = _player.duration();
+    qint64 realPos = fullDuretion * pos;
+    _player.setPosition(realPos);
 }
 
-qint64 SoundStore::getSample(qint64 pos) const
+void SoundStore::setPosReal(qreal p)
 {
-    qint64 sample = _soundReader->getSample(pos);
-    return sample;
+    qint64 realPos = p * 1000; // переводим в милисекунды
+    _player.setPosition(realPos);
 }
 
-void SoundStore::play(qint64 begin, qint64 end)
+void SoundStore::start()
 {
-    _soundPlayer->play(begin, end);
+    _player.play();
 }
 
-void SoundStore::readFile(QString fileName)
+void SoundStore::stop()
 {
-    _soundReader->readFile(fileName);
-    _soundPlayer->openFile(fileName);
+    _player.pause();
+}
+
+void SoundStore::playReal(qreal begin, qreal end)
+{
+    setPosReal(begin);
+    _player.play();
+}
+
+qreal SoundStore::getTimePos() const
+{
+    qreal curTimePos = (qreal)_player.position() / 1000;
+    return curTimePos;
+}
+
+qreal SoundStore::getPersentPos() const
+{
+    qint64 fullDuretion = _player.duration();
+    qint64 curDuration = _player.position();
+    qreal posPersent = (qreal)curDuration / (qreal)fullDuretion;
+    return posPersent;
+}
+
+void SoundStore::setFileUrl(const QUrl& url)
+{
+    _player.setMedia(url);
+    _lastOpenedUrl = url;
+    _player.setVolume(50);
+}
+
+QUrl SoundStore::fileUrl() const
+{
+    return _lastOpenedUrl;
 }

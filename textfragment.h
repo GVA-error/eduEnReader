@@ -4,43 +4,32 @@
 #include <QTypeInfo>
 #include <QSharedPointer>
 #include "textstore.h"
+#include "fragment.h"
 
 // служит для обмена текстом
-class TextFragment
+class TextFragment : public Fragment <TextFragment, TextStore::PTR, qint64>
 {
 public:
-    typedef QSharedPointer <TextFragment> PTR;
-    static QSharedPointer <TextFragment> factoryMethod(qint64 begin, qint64 end, TextStore::PTR source)
-    {
-        PTR rezPtr = QSharedPointer <TextFragment> (new TextFragment(begin, end, source));
-        return rezPtr;
-    }
-    static QSharedPointer <TextFragment> factoryMethod(qint64 begin, qint64 end, TextFragment::PTR source)
-    {
-        PTR rezPtr = QSharedPointer <TextFragment> (new TextFragment(begin, end, source));
-        return rezPtr;
-    }
-
-    // Глобальные Begin End
-    qint64 begin() const { return _begin; }
-    qint64 end() const { return _end; }
-
     // Метод в локальных координатах
     QChar getSymbol(qint64 i) const;
     QString getString() const;
 
     qint64 getFragmentLength() const;
 
+    // Нужно для подсвечивания текста
+    void mark(); // Подсветка случайным цвета
+    void mark(const QColor&); // .. конкретным цветом
+    void unmark();
+
+    QColor getRandomMarkColor(); // Случайный цвет подсветки текста
+
+    virtual ~TextFragment() {}
 private:
+    friend class Fragment;
     TextFragment() = delete;
     // В глобальных координатах
-    TextFragment(qint64 begin, qint64 end, TextStore::PTR);
-    // В координатах фрагмента источника
-    TextFragment(qint64 begin, qint64 end, TextFragment::PTR);
-
-    qint64 _begin;
-    qint64 _end;
-    TextStore::PTR _source;
+    TextFragment(qint64 begin, qint64 end, TextStore::PTR source)
+        : Fragment(begin, end, source) { }
 };
 
 #endif // TEXTFRAGMENT_H

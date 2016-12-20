@@ -1,39 +1,47 @@
-import QtQuick 2.2
-import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.1
+import QtQuick 2.5
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.1
+import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.1
+import QtQuick.Controls.Styles 1.4
 import TextStoreModul 1.0
-import UiControlerModul 1.0
+import SoundStoreModul 1.1
+import UiControlerModul 1.1
+
+
+// TODO РЕФАКТОРИНГ
 
 ApplicationWindow {
-
     visible: true
     width: 1024
     height: 768
-
     title: document.documentTitle + " - Text Editor Example"
-
     UiControler{
         id: uiControler
-        oldXSoundPos: 0
         mouseIsPressed: false
         document : document
-        // переместить сюда сaунд как документ
-        onOldXSoundPosChanged:
-        {
-             selectRect.x = oldXSoundPos;
-        }
-        onNewXSoundPosChanged:
-        {
-            selectRect.width = Math.abs(oldXSoundPos-newXSoundPos);
-        }
+        soundStore : soundStore
     }
     MessageDialog {
         id: aboutBox
         title: "About Text"
-        text: "This is a basic text editor \nwritten with Qt Quick Controls"
+        text: "Autor: Golubtsov Vasiliy Anatolievich.
+            \n e-mail - vsv10000ego@gmail.com
+            \n It project absolutly free for Eanglish teachers
+            \n If you wont help it project: QVI: "; // TODO Написать куви
         icon: StandardIcon.Information
+    }
+    Action{
+        id: translateAction
+        text: "Translate"
+        shortcut: "ctrl+t"
+        iconSource: "images/editcut.png" // TODO придумать иконку
+        iconName: "edit-cut"
+        onTriggered: {
+            var translateUrl = uiControler.formUrlToTranslateSellected();
+            translateDialog.setUrl(translateUrl)
+            translateDialog.showDialog()
+        }
     }
     Action {
         id: cutAction
@@ -123,19 +131,37 @@ ApplicationWindow {
         checkable: true
         checked: document.underline
     }
+
     FileDialog {
         id: fileDialog
-        nameFilters: ["Text files (*.txt)", "HTML files (*.html, *.htm)"]
+        nameFilters: ["Bind file (*.bnd)"]
         onAccepted: {
             if (fileDialog.selectExisting)
-                document.fileUrl = fileUrl
+                uiControler.openBindFile(fileUrl)
             else
-                document.saveAs(fileUrl, selectedNameFilter)
+                uiControler.saveBindFile(fileUrl)
+        }
+    }
+    FileDialog {
+        id: soundFileDialog
+        nameFilters: ["Sound File (*.wav)"]
+        selectExisting : true
+        onAccepted: {
+            uiControler.createBindFile(fileUrl)
         }
     }
     ColorDialog {
         id: colorDialog
         color: "black"
+    }
+    Action {
+        id: fileCreateAction
+        iconSource: "images/fileopen.png"
+        iconName: "document-open"
+        text: "Create"
+        onTriggered: {
+            soundFileDialog.open()
+        }
     }
     Action {
         id: fileOpenAction
@@ -161,6 +187,7 @@ ApplicationWindow {
     menuBar: MenuBar {
         Menu {
             title: "&File"
+            MenuItem { action: fileCreateAction}
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAsAction }
             MenuItem { text: "Quit"; onTriggered: Qt.quit() }
@@ -198,33 +225,25 @@ ApplicationWindow {
 
     toolBar: ToolBar {
         id: mainToolBar
-        width: parent.width
+        //width: parent.width
         RowLayout {
             anchors.fill: parent
             spacing: 0
             ToolButton { action: fileOpenAction }
-
             QMLToolBarSeparator {}
-
             ToolButton { action: copyAction }
             ToolButton { action: cutAction }
             ToolButton { action: pasteAction }
-
             QMLToolBarSeparator {}
-
             ToolButton { action: boldAction }
             ToolButton { action: italicAction }
             ToolButton { action: underlineAction }
-
             QMLToolBarSeparator {}
-
             ToolButton { action: alignLeftAction }
             ToolButton { action: alignCenterAction }
             ToolButton { action: alignRightAction }
             ToolButton { action: alignJustifyAction }
-
             QMLToolBarSeparator {}
-
             ToolButton {
                 id: colorButton
                 property var color : document.textColor
@@ -244,11 +263,9 @@ ApplicationWindow {
             Item { Layout.fillWidth: true }
         }
     }
-
     ToolBar {
         id: secondaryToolBar
-        width: parent.width
-
+        //width: parent.width
         RowLayout {
             anchors.fill: parent
             ComboBox {
@@ -276,44 +293,38 @@ ApplicationWindow {
 
     Rectangle{
         anchors.top: secondaryToolBar.bottom
-        anchors.bottom: parent.bottom
+       // anchors.bottom: parent.bottom
         width: parent.width
-
-        radius: 10
+        anchors.fill: parent
 
         QMLSoundGraph {
             id : soundPanel
             width: parent.width
             height: parent.height/10
-
-
-            Action {
-                id: playAction
-                text: "Play"
-                shortcut: "ctrl+p"
-                iconSource: "images/editcut.png"
-                iconName: "edit-cut"
-                onTriggered: textArea.cut()
-            }
-
             Action {
                 id: bindAction
                 text: "Bind"
-                shortcut: "Ctrl+C"
-                iconSource: "images/editcopy.png"
-                iconName: "edit-copy"
-                onTriggered: uiControler.makeBind();
+                shortcut: "ctrl+B"
+                iconSource: "images/bind.png"
+                iconName: "Bind "
+                onTriggered: uiControler.makeBind()
             }
-
             Action {
-                id: openAction
-                text: "Open"
-                shortcut: "ctrl+v"
-                iconSource: "qrc:images/editpaste.png"
-                iconName: "edit-paste"
-                onTriggered: textArea.paste()
+                id: playAction
+                text: "Play"
+                shortcut: "Ctrl+P"
+                iconSource: "images/play.png"
+                iconName: "Play"
+                onTriggered: soundStore.start();
             }
-
+            Action {
+                id: pauseAction
+                text: "Pause"
+                shortcut: "ctrl+O"
+                iconSource: "qrc:images/stop.png"
+                iconName: "Pause"
+                onTriggered: soundStore.stop()
+            }
             ToolBar
             {
                 id : soundToolBar
@@ -321,80 +332,85 @@ ApplicationWindow {
 
                 RowLayout {
                     spacing: 0
-
-                    ToolButton { action: playAction }
                     ToolButton { action: bindAction }
-                    ToolButton { action: openAction }
-
+                    ToolButton { action: playAction }
+                    ToolButton { action: pauseAction }
                     Item { Layout.fillWidth: true }
                 }
 
             }
-
 
             Rectangle {
                 anchors.left: soundToolBar.right
                 anchors.right: parent.right
                 id: soundGraph
                 height: soundToolBar.height
-                color: "blue"
 
-                radius: 10
+                Slider {
+                    id: soundSlider
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: soundToolBar.height
 
-                Rectangle{
-                    id : selectRect
-                    x: 0
-                    y: 0
-                    width: 3
-                    height: soundGraph.height
-                    color: "red"
-                    opacity : 0.5
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onReleased: {
-                        uiControler.mouseIsPressed = false;
-                        var oldPos, newPos;
-                        if (selectRect.x === uiControler.oldXSoundPos)
-                        {
-                            oldPos = selectRect.x;
-                            newPos = selectRect.x + selectRect.width;
+                    value: soundStore.position
+                    style: SliderStyle {
+                            groove: Rectangle {
+                                implicitWidth: 200
+                                implicitHeight: soundToolBar.height / 2
+                                color: "lightgray"
+                                radius: 8
+                            }
+                            handle: Rectangle {
+                                anchors.centerIn: parent
+                                color: control.pressed ? "white" : "lightgray"
+                                border.color: "gray"
+                                border.width: 2
+                                implicitWidth: 34
+                                implicitHeight: 34
+                                radius: 12
+                            }
                         }
-                        else
-                        {
-                            oldPos = uiControler.oldXSoundPos - selectRect.width;
-                            newPos = uiControler.oldXSoundPos;
-                        }
-                        uiControler.oldXSoundPos = oldPos;
-                        uiControler.newXSoundPos = newPos;
-                    }
-                    onMouseXChanged:{
-                        if (!uiControler.mouseIsPressed)
-                            return;
-                        var x = mouseX;
-                        var w = x - uiControler.oldXSoundPos;
-                        if (w < 0)
-                        {
-                            w = Math.abs(w);
-                            selectRect.x = uiControler.oldXSoundPos - w;
-                            if (selectRect.x < 0)
-                                selectRect.x = 0;
-                        }
-                        if (w < 5)
-                            w = 3;
-                       // selectRect.width = w;
-                        //uiControler.oldXSoundPos = selectRect.x;
-                        selectRect.width = w;
+                    onValueChanged:
+                    {
+                        if (!pressed)
+                            uiControler.setCursorPosInTimePos();
                     }
 
-                    onPressed:{
-                        var x = mouseX;
-                        selectRect.x = x;
-                        uiControler.oldXSoundPos = x;
-                        uiControler.mouseIsPressed = true;
+                    onPressedChanged:
+                    {
+                        if (pressed)
+                            soundStore.setPosPersent(soundSlider.value);
                     }
                 }
+            }
+        }
+
+        TextStore {
+            id: document
+            target: textArea
+            cursorPosition: textArea.cursorPosition
+            selectionStart: textArea.selectionStart
+            selectionEnd: textArea.selectionEnd
+            textColor: colorDialog.color
+            //Component.onCompleted: document.fileUrl = "qrc:/example.html"
+            onFontSizeChanged: {
+                fontSizeSpinBox.valueGuard = false
+                fontSizeSpinBox.value = document.fontSize
+                fontSizeSpinBox.valueGuard = true
+            }
+            onFontFamilyChanged: {
+                var index = Qt.fontFamilies().indexOf(document.fontFamily)
+                if (index == -1) {
+                    fontFamilyComboBox.currentIndex = 0
+                    fontFamilyComboBox.special = true
+                } else {
+                    fontFamilyComboBox.currentIndex = index
+                    fontFamilyComboBox.special = false
+                }
+            }
+            onError: {
+                errorDialog.text = message
+                errorDialog.visible = true
             }
         }
         TextArea {
@@ -408,42 +424,61 @@ ApplicationWindow {
             text: document.text
             textFormat: Qt.RichText
             Component.onCompleted: forceActiveFocus()
-        }
 
+            Menu {
+                id : contextMenue
+                title: "Edit"
+
+                MenuItem {
+                    text: "Translate"
+                    action: translateAction
+                }
+                MenuSeparator { }
+                MenuItem {
+                    text: "Cut"
+                    action: cutAction
+                }
+                MenuItem {
+                    text: "Copy"
+                    action: copyAction
+                }
+                MenuItem {
+                    text: "Paste"
+                    action: pasteAction // ТУТ ГЛЮК!!
+                }
+            }
+            MouseArea{
+                acceptedButtons: Qt.RightButton
+                anchors.fill: parent
+                cursorShape: Qt.IBeamCursor
+                onClicked: {
+                    if (mouse.button == Qt.RightButton)
+                        contextMenue.popup();
+                }
+                onReleased: {
+                     if (!propagateComposedEvents) {
+                        propagateComposedEvents = true
+                     }
+                }
+            }
+        }
     }
 
     MessageDialog {
         id: errorDialog
     }
-
-    TextStore {
-        id: document
-        target: textArea
-        cursorPosition: textArea.cursorPosition
-        selectionStart: textArea.selectionStart
-        selectionEnd: textArea.selectionEnd
-        textColor: colorDialog.color
-        Component.onCompleted: document.fileUrl = "qrc:/example.html"
-        onFontSizeChanged: {
-            fontSizeSpinBox.valueGuard = false
-            fontSizeSpinBox.value = document.fontSize
-            fontSizeSpinBox.valueGuard = true
-        }
-        onFontFamilyChanged: {
-            var index = Qt.fontFamilies().indexOf(document.fontFamily)
-            if (index == -1) {
-                fontFamilyComboBox.currentIndex = 0
-                fontFamilyComboBox.special = true
-            } else {
-                fontFamilyComboBox.currentIndex = index
-                fontFamilyComboBox.special = false
-            }
-        }
-        onError: {
-            errorDialog.text = message
-            errorDialog.visible = true
-        }
+    SimpleDialog {
+        id: translateDialog
+        contentText: qsTr("Translate")
+        onBack: hideDialog()
     }
+
+    SoundStore{
+        id: soundStore
+        position: 0
+
+    }
+
 
 }
 

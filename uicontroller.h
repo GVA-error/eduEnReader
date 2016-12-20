@@ -2,75 +2,89 @@
 #define UIController_H
 
 #include <QObject>
+#include <QWebElement>
+#include <QWebView>
+#include <QWebFrame>
 #include "logic.h"
 #include "soundstore.h"
 #include "textstore.h"
 #include "soundfragment.h"
 #include "textfragment.h"
+#include "ASR/bindmaker.h"
 
+/* TODO LIST
+ * 3) Записывать все распознанные строки
+ * 4) Добавить отрицательные позиции
+ * 5) Заполнение распознаным
+ * 7) Распоралелить GUI и Расчёт
+ * 8) Борьба с шумом с помощью вейлет преобразований через dll WavUtills
+ * 9) Создание файла
+ * 10) Архивирование
+ * 11) Ускорить алгоритм повторного биндинга через использование окна
+ * 12) Логическе заполнение по времени
+ * 13) Конвертор форматов
+ * 14) Воспроизведение видио
+*/
 class UIController : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(qint32 oldXSoundPos READ getOldXSoundPos WRITE setOldXSoundPos NOTIFY soundSellectionChanged)
-    Q_PROPERTY(qint32 newXSoundPos READ getNewXSoundPos WRITE setNewXSoundPos NOTIFY soundSellectionChanged)
-    //Q_PROPERTY(qint32 oldXTextPos READ getOldXTextPos WRITE setOldXTextdPos NOTIFY textSellectionChanged)
-    //Q_PROPERTY(qint32 newXTextPos READ getNewXTextPos WRITE setNewXTextPos NOTIFY textSellectionChanged)
     Q_PROPERTY(TextStore* document WRITE setDocument)
+    Q_PROPERTY(SoundStore* soundStore WRITE setSoundStore)
     Q_PROPERTY(bool mouseIsPressed READ getMouseIsPressed WRITE setMouseIsPressed)
 public:
     explicit UIController(QObject *parent = 0);
 
-    qint32 newXSoundPos;
-    qint32 getNewXSoundPos() const {return newXSoundPos;}
-    void setNewXSoundPos(qint32& newValue) {
-        newXSoundPos = newValue;
-        emit soundSellectionChanged();
-    }
-    qint32 oldXSoundPos;
-    qint32 getOldXSoundPos() const { return oldXSoundPos; }
-    void setOldXSoundPos(qint32& newValue) {
-        oldXSoundPos = newValue;
-        emit soundSellectionChanged();
-    }
-
- /*
-  * qint32 newXTextPos;
-    qint32 getNewXTextPos() const {return newXTextPos;}
-    void setNewXTextPos(qint32& newValue) { newXTextPos = newValue;}
-    qint32 oldXTextPos;
-    qint32 getOldXTextPos() const { return oldXTextPos; }
-    void setOldXTextdPos(qint32& newValue) { oldXTextPos = newValue;}
-*/
     bool mouseIsPressed;
     bool getMouseIsPressed() const {return mouseIsPressed;}
-    bool setMouseIsPressed(bool& newValue) { mouseIsPressed = newValue;}
+    void setMouseIsPressed(bool& newValue) { mouseIsPressed = newValue;}
 
     void setDocument(TextStore* TS) {
         _textStore =  TextStore::PTR(TS);
-        QObject::connect(&(*_textStore), SIGNAL(cursorPositionChanged()), this, SLOT(clickedOnText()));
+        QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
+        // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+        if (_textStore.isNull() == false && _soundStore.isNull() == false)
+            initBindMaker(_textStore, _soundStore, _logic);
     }
+
+    void setSoundStore(SoundStore* TS) {
+        _soundStore =  SoundStore::PTR(TS);
+        // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+        if (_textStore.isNull() == false && _soundStore.isNull() == false)
+            initBindMaker(_textStore, _soundStore, _logic);
+    }
+
 signals:
     void soundSellectionChanged();
     void textSellectionChanged();
 public slots:
 
-    void makeBind();
+    void openBindFile(const QUrl &bindFileName);
+    void saveBindFile(const QUrl &bindFileName);
+    void createBindFile(const QUrl &soundFileName);
+    void makeBind(); // автопривязка TODO переименовать
     void openSoundFile(QString fileName);
-    void clickedOnText();
+    void cursorPosChanged();
+    void setCursorPosInTimePos();
+    void setTimePosInCursorPos();
+
+    QString formUrlToTranslateSellected();
+
+protected slots:
+    void recognizeIsFinished();
+
 private:
-
     Logic::PTR _logic;
-    SoundStore::PTR _soundStore;
-    TextStore::PTR _textStore;
-    //TextStore document;
+    SoundStore::PTR _soundStore; //bool _f_setSound;
+    TextStore::PTR _textStore;  //bool _f_setText;
+    BindMaker::PTR _bindMaker;
 
-    SoundFragment::PTR getSellectedSound();
-    TextFragment::PTR getSellectedText();
+    bool _f_reconizing;
 
-    void setSellectionSound(SoundFragment::PTR);
+    const QString _baseTranslateURL = "http://www.multitran.com/m.exe?l1=1&l2=2&s="; // +word0+word1 ..
+
     void setSellectionText(TextFragment::PTR);
-    void setSellectionSound(qint32 begin, qint32 end); // тут будет глюк с большими файлами
     void setSellectionText(qint64 begin, qint64 end);
+    void initBindMaker(TextStore::PTR, SoundStore::PTR, Logic::PTR);
 };
 
 #endif // UIController_H

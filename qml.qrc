@@ -24,8 +24,12 @@
         <file>images/textunder.png</file>
         <file>images/zoomin.png</file>
         <file>images/zoomout.png</file>
-        <file>example.html</file>
         <file>QMLScroolBar.qml</file>
-        <file>QMLTextPanel.qml</file>
+        <file>images/bind.png</file>
+        <file>images/play.png</file>
+        <file>images/stop.png</file>
+        <file>SimpleDialog.qml</file>
+        <file>DialogBackground.qml</file>
+        <file>FileDialogs.qml</file>
     </qresource>
 </RCC>

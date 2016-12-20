@@ -18,12 +18,27 @@ TextStore::TextStore()
 QString TextStore::getString(qint64 begin, qint64 end) const
 {
     Q_ASSERT(end >= begin);
-    return m_text.mid(begin, end - begin);
+    QString str = getString();
+    return str.mid(begin, end - begin);
+}
+
+QString TextStore::getString() const
+{
+    QString planeText = m_doc->toPlainText(); // заменить на член
+    return planeText;
+}
+
+QString TextStore::getSellectedStreing() const
+{
+    qint64 begin = m_selectionStart;
+    qint64 end = m_selectionEnd;
+    QString sellectedString = getString(begin, end);
+    return sellectedString;
 }
 
 qint64 TextStore::getCursorPos() const
 {
-    return 1;
+    return m_cursorPosition;
 }
 
 void TextStore::setTarget(QQuickItem *target)
@@ -42,32 +57,28 @@ void TextStore::setTarget(QQuickItem *target)
     emit targetChanged();
 }
 
-void TextStore::setFileUrl(const QUrl &arg)
+void TextStore::setFileUrl(const QUrl &url)
 {
-    if (m_fileUrl != arg) {
-        m_fileUrl = arg;
-        QString fileName = QQmlFile::urlToLocalFileOrQrc(arg);
-        if (QFile::exists(fileName)) {
-            QFile file(fileName);
-            if (file.open(QFile::ReadOnly)) {
-                QByteArray data = file.readAll();
-                QTextCodec *codec = QTextCodec::codecForHtml(data);
-                setText(codec->toUnicode(data));
-                if (m_doc)
-                    m_doc->setModified(false);
-                if (fileName.isEmpty())
-                    m_documentTitle = QStringLiteral("untitled.txt");
-                else
-                    m_documentTitle = QFileInfo(fileName).fileName();
+    QString fileName = QQmlFile::urlToLocalFileOrQrc(url);
+    assert(fileName.isEmpty() == false);
+    m_documentTitle = QFileInfo(fileName).baseName();
+    m_fileUrl = url;
+    if (QFile::exists(fileName)) {
+        QFile file(fileName);
+        if (file.open(QFile::ReadOnly))
+        {
+            QByteArray data = file.readAll();
+            QTextCodec *codec = QTextCodec::codecForHtml(data);
+            setText(codec->toUnicode(data));
+            if (m_doc)
+                m_doc->setModified(false);
+            emit textChanged();
+            emit documentTitleChanged();
 
-                emit textChanged();
-                emit documentTitleChanged();
-
-                reset();
-            }
+            reset();
         }
-        emit fileUrlChanged();
     }
+    emit fileUrlChanged();
 }
 
 QString TextStore::documentTitle() const
@@ -275,6 +286,16 @@ void TextStore::setTextColor(const QColor &c)
     format.setForeground(QBrush(c));
     mergeFormatOnWordOrSelection(format);
     emit textColorChanged();
+}
+
+void TextStore::setTextBackground(const QColor &c)
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+    QTextCharFormat format;
+    format.setBackground(QBrush(c));
+    mergeFormatOnWordOrSelection(format);
 }
 
 QString TextStore::fontFamily() const

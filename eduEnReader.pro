@@ -1,8 +1,12 @@
 TEMPLATE = app
 
 QT += qml quick widgets
+QT += multimedia multimediawidgets
+QT += webkit webkitwidgets
+LIBS += -lsndfile
 CONFIG += c++11
 CONFIG += qt plugin
+CONFIG+=qml_debug
 
 SOURCES += main.cpp \
     soundstore.cpp \
@@ -10,18 +14,23 @@ SOURCES += main.cpp \
     soundfragment.cpp \
     textfragment.cpp \
     textstore.cpp \
-    soundplayer.cpp \
-    riff/riff.cc \
-    soundreader.cpp \
-    uicontroller.cpp
+    uicontroller.cpp \
+    ASR/asr.cpp \
+    ASR/bindmaker.cpp \
+    ASR/datapreparation.cpp \
+    ASR/metrics.cpp \
+    ASR/wavworker.cpp \
+    store.cpp \
+    fragment.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += \
+    qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
 # Default rules for deployment.
-include(deployment.pri)
+#include(deployment.pri)
 
 HEADERS += \
     soundstore.h \
@@ -29,11 +38,15 @@ HEADERS += \
     soundfragment.h \
     textfragment.h \
     textstore.h \
-    soundplayer.h \
-    riff/cdefs.h \
-    riff/riff.h \
-    soundreader.h \
-    uicontroller.h
+    uicontroller.h \
+    ASR/asr.h \
+    ASR/bindmaker.h \
+    ASR/datapreparation.h \
+    ASR/metrics.h \
+    ASR/wavworker.h \
+    store.h \
+    fragment.h \
+    webtranslator.h
 
 DISTFILES += \
     images/editcopy.png \
