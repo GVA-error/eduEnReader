@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.1
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Styles 1.4 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
 import UiControlerModul 1.1
@@ -11,11 +11,17 @@ import UiControlerModul 1.1
 
 // TODO РЕФАКТОРИНГ
 
+/*
+При вызове контексного меню MenuContentItem.qml:178: ReferenceError: Acccessible is not defined
+
+*/
+
 ApplicationWindow {
     visible: true
     width: 1024
     height: 768
     title: document.documentTitle + " - Text Editor Example"
+
     UiControler{
         id: uiControler
         mouseIsPressed: false
@@ -131,29 +137,6 @@ ApplicationWindow {
         checkable: true
         checked: document.underline
     }
-
-    FileDialog {
-        id: fileDialog
-        nameFilters: ["Bind file (*.bnd)"]
-        onAccepted: {
-            if (fileDialog.selectExisting)
-                uiControler.openBindFile(fileUrl)
-            else
-                uiControler.saveBindFile(fileUrl)
-        }
-    }
-    FileDialog {
-        id: soundFileDialog
-        nameFilters: ["Sound File (*.wav)"]
-        selectExisting : true
-        onAccepted: {
-            uiControler.createBindFile(fileUrl)
-        }
-    }
-    ColorDialog {
-        id: colorDialog
-        color: "black"
-    }
     Action {
         id: fileCreateAction
         iconSource: "images/fileopen.png"
@@ -182,6 +165,29 @@ ApplicationWindow {
             fileDialog.selectExisting = false
             fileDialog.open()
         }
+    }
+
+    FileDialog {
+        id: fileDialog
+        nameFilters: ["Bind file (*.bnd)"]
+        onAccepted: {
+            if (fileDialog.selectExisting)
+                uiControler.openBindFile(fileUrl)
+            else
+                uiControler.saveBindFile(fileUrl)
+        }
+    }
+    FileDialog {
+        id: soundFileDialog
+        nameFilters: ["Sound File (*.wav)"]
+        selectExisting : true
+        onAccepted: {
+            uiControler.createBindFile(fileUrl)
+        }
+    }
+    ColorDialog {
+        id: colorDialog
+        color: "black"
     }
 
     menuBar: MenuBar {
@@ -225,7 +231,9 @@ ApplicationWindow {
 
     toolBar: ToolBar {
         id: mainToolBar
-        //width: parent.width
+        width: parent.width// - videoRect.width
+        //anchors.right: videoRect.left
+
         RowLayout {
             anchors.fill: parent
             spacing: 0
@@ -260,14 +268,6 @@ ApplicationWindow {
                     colorDialog.open()
                 }
             }
-            Item { Layout.fillWidth: true }
-        }
-    }
-    ToolBar {
-        id: secondaryToolBar
-        //width: parent.width
-        RowLayout {
-            anchors.fill: parent
             ComboBox {
                 id: fontFamilyComboBox
                 implicitWidth: 150
@@ -287,20 +287,51 @@ ApplicationWindow {
                 property bool valueGuard: true
                 onValueChanged: if (valueGuard) document.fontSize = value
             }
+
             Item { Layout.fillWidth: true }
         }
     }
+//    ToolBar {
+//        id: secondaryToolBar
+//        //width: parent.width
+//        //anchors.right: videoRect.left
+//        //anchors.top: mainToolBar.bottom
+//        //anchors.fill: parent
+//        height: 40
+//        RowLayout {
+//            anchors.fill: parent
+
+//            Item { Layout.fillWidth: true }
+//        }
+//    }
 
     Rectangle{
-        anchors.top: secondaryToolBar.bottom
-       // anchors.bottom: parent.bottom
+        id : videoRect
+        anchors.top : parent.top;
+        anchors.bottom: soundToolBar.top;
+        //anchors.right : soundToolBar.right
+        x : (parent.width - width) / 2
+        //y : 0
+        width: 300;
+        height: 300
+        color: "red"
+//        VideoOutput {
+//           anchors.fill: parent;
+//           source: videoProducer;
+//       }
+    }
+
+    Rectangle{
+        id : soundToolBar
+        anchors.top: videoRect.bottom
+        //anchors.bottom: parent.bottom
         width: parent.width
-        anchors.fill: parent
+        //anchors.fill: parent
+        height: 50
 
         QMLSoundGraph {
             id : soundPanel
-            width: parent.width
-            height: parent.height/10
+            anchors.fill: parent
             Action {
                 id: bindAction
                 text: "Bind"
@@ -325,14 +356,13 @@ ApplicationWindow {
                 iconName: "Pause"
                 onTriggered: soundStore.stop()
             }
+
             ToolBar
             {
-                id : soundToolBar
-                width: 150
-
+                anchors.fill: parent
                 RowLayout {
                     spacing: 0
-                    ToolButton { action: bindAction }
+                    ToolButton { action: translateAction }
                     ToolButton { action: playAction }
                     ToolButton { action: pauseAction }
                     Item { Layout.fillWidth: true }
@@ -340,129 +370,141 @@ ApplicationWindow {
 
             }
 
-            Rectangle {
-                anchors.left: soundToolBar.right
+
+        }
+
+        Rectangle {
+            x : 130
+            y : 200
+            //anchors.top: videoRect.
+            anchors.bottom:  soundToolBar.bottom
+            //anchors.right: parent.right
+            id: soundGraph
+            height: soundToolBar.height
+            width: soundToolBar.width - x - 20
+            color : "transparent"
+            Slider {
+                id: soundSlider
+                anchors.left: parent.left
                 anchors.right: parent.right
-                id: soundGraph
                 height: soundToolBar.height
-
-                Slider {
-                    id: soundSlider
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: soundToolBar.height
-
-                    value: soundStore.position
-                    style: SliderStyle {
-                            groove: Rectangle {
-                                implicitWidth: 200
-                                implicitHeight: soundToolBar.height / 2
-                                color: "lightgray"
-                                radius: 8
-                            }
-                            handle: Rectangle {
-                                anchors.centerIn: parent
-                                color: control.pressed ? "white" : "lightgray"
-                                border.color: "gray"
-                                border.width: 2
-                                implicitWidth: 34
-                                implicitHeight: 34
-                                radius: 12
-                            }
+                value: soundStore.position
+                style: SliderStyle {
+                        groove: Rectangle {
+                            implicitWidth: 200
+                            implicitHeight: soundToolBar.height / 2
+                            color: "white"
+                            radius: 8
                         }
-                    onValueChanged:
-                    {
-                        if (!pressed)
-                            uiControler.setCursorPosInTimePos();
+                        handle: Rectangle {
+                            anchors.centerIn: parent
+                            color: control.pressed ? "white" : "lightgray"
+                            border.color: "gray"
+                            border.width: 2
+                            implicitWidth: 34
+                            implicitHeight: 34
+                            radius: 12
+                        }
                     }
+                onValueChanged:
+                {
+                    if (!pressed)
+                        uiControler.setCursorPosInTimePos();
+                }
 
-                    onPressedChanged:
-                    {
-                        if (pressed)
-                            soundStore.setPosPersent(soundSlider.value);
-                    }
+                onPressedChanged:
+                {
+                    if (pressed)
+                        soundStore.setPosPersent(soundSlider.value);
                 }
             }
         }
 
-        TextStore {
-            id: document
-            target: textArea
-            cursorPosition: textArea.cursorPosition
-            selectionStart: textArea.selectionStart
-            selectionEnd: textArea.selectionEnd
-            textColor: colorDialog.color
-            //Component.onCompleted: document.fileUrl = "qrc:/example.html"
-            onFontSizeChanged: {
-                fontSizeSpinBox.valueGuard = false
-                fontSizeSpinBox.value = document.fontSize
-                fontSizeSpinBox.valueGuard = true
-            }
-            onFontFamilyChanged: {
-                var index = Qt.fontFamilies().indexOf(document.fontFamily)
-                if (index == -1) {
-                    fontFamilyComboBox.currentIndex = 0
-                    fontFamilyComboBox.special = true
-                } else {
-                    fontFamilyComboBox.currentIndex = index
-                    fontFamilyComboBox.special = false
-                }
-            }
-            onError: {
-                errorDialog.text = message
-                errorDialog.visible = true
+    }
+
+
+
+    TextStore {
+        id: document
+        target: textArea
+        cursorPosition: textArea.cursorPosition
+        selectionStart: textArea.selectionStart
+        selectionEnd: textArea.selectionEnd
+        textColor: colorDialog.color
+        //Component.onCompleted: document.fileUrl = "qrc:/example.html"
+        onFontSizeChanged: {
+            fontSizeSpinBox.valueGuard = false
+            fontSizeSpinBox.value = document.fontSize
+            fontSizeSpinBox.valueGuard = true
+        }
+        onFontFamilyChanged: {
+            var index = Qt.fontFamilies().indexOf(document.fontFamily)
+            if (index == -1) {
+                fontFamilyComboBox.currentIndex = 0
+                fontFamilyComboBox.special = true
+            } else {
+                fontFamilyComboBox.currentIndex = index
+                fontFamilyComboBox.special = false
             }
         }
-        TextArea {
-            width: parent.width
-            anchors.top: soundPanel.bottom
-            anchors.bottom: parent.bottom
-            Accessible.name: "document"
-            id: textArea
-            frameVisible: false
-            baseUrl: "qrc:/"
-            text: document.text
-            textFormat: Qt.RichText
-            Component.onCompleted: forceActiveFocus()
-
-            Menu {
-                id : contextMenue
-                title: "Edit"
-
-                MenuItem {
-                    text: "Translate"
-                    action: translateAction
-                }
-                MenuSeparator { }
-                MenuItem {
-                    text: "Cut"
-                    action: cutAction
-                }
-                MenuItem {
-                    text: "Copy"
-                    action: copyAction
-                }
-                MenuItem {
-                    text: "Paste"
-                    action: pasteAction // ТУТ ГЛЮК!!
-                }
-            }
-            MouseArea{
-                acceptedButtons: Qt.RightButton
-                anchors.fill: parent
-                cursorShape: Qt.IBeamCursor
-                onClicked: {
-                    if (mouse.button == Qt.RightButton)
-                        contextMenue.popup();
-                }
-                onReleased: {
-                     if (!propagateComposedEvents) {
-                        propagateComposedEvents = true
-                     }
-                }
-            }
+        onError: {
+            errorDialog.text = message
+            errorDialog.visible = true
         }
     }
+
+    TextArea {
+        width: parent.width
+        anchors.top: soundToolBar.bottom
+        anchors.bottom: parent.bottom
+        Accessible.name: "document"
+        id: textArea
+        frameVisible: false
+        baseUrl: "qrc:/"
+        text: document.text
+        textFormat: Qt.RichText
+        Component.onCompleted: forceActiveFocus()
+
+
+    }
+
+    Menu {
+        id : contextMenue
+        title: "Edit"
+
+        MenuItem {
+            text: "Translate"
+            action: translateAction
+        }
+       // MenuSeparator { }
+        MenuItem {
+            text: "Cut"
+            action: cutAction
+        }
+        MenuItem {
+            text: "Copy"
+            action: copyAction
+        }
+        MenuItem {
+            text: "Paste"
+            action: pasteAction // ТУТ ГЛЮК!!
+        }
+    }
+    MouseArea{
+        acceptedButtons: Qt.RightButton
+        anchors.fill: textArea
+        cursorShape: Qt.IBeamCursor
+        onClicked: {
+            if (mouse.button == Qt.RightButton)
+                contextMenue.popup();
+        }
+        onReleased: {
+             if (!propagateComposedEvents) {
+                propagateComposedEvents = true
+             }
+        }
+    }
+
 
     MessageDialog {
         id: errorDialog

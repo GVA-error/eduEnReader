@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
-//import QtWebKit 3.0
-import QtQml.Models 2.1
+import QtWebKit 3.0
+//import QtQml.Models 2.1
 //import QtQuick.XmlListModel 2.0
 
 
@@ -52,18 +52,18 @@ Item {
             height: parent.height * 3 / 4
             radius: 100
             anchors.centerIn: parent
-//            WebView{
-//                anchors.fill: parent
+            WebView{
+                anchors.fill: parent
 
-//                url:"http://www.multitran.com/m.exe?l1=1&l2=2&s=word"
+                url:"http://www.multitran.com/m.exe?l1=1&l2=2&s=word"
 
-//                id: webView
-//                objectName: "myWebView"
+                id: webView
+                objectName: "myWebView"
 
-//                onLoadingChanged: {
+                onLoadingChanged: {
 
-//                }
-//            }
+                }
+            }
         }
         Text {
             id: textBack
@@ -98,7 +98,7 @@ Item {
     }
     function setUrl(url)
     {
-      //  webView.url = url
+        webView.url = url
        /* var request = new XMLHttpRequest()
         request.open('GET', "http://habrahabr.ru/rss/hubs/", true);
         request.onreadystatechange = function () {
@@ -115,7 +115,7 @@ Item {
     }
     function setHtml(html)
     {
-      //  webView.loadHtml(html)
+        webView.loadHtml(html)
 //        var request = new XMLHttpRequest()
 
 //        request.open('GET', html, true);
