@@ -10,6 +10,7 @@
 #include "ASR/bindmaker.h"
 
 /* TODO LIST
+ * 1) Ввести понятие бесконечного бинда - нужно для последнего бинда
  * 3) Записывать все распознанные строки
  * 8) Борьба с шумом с помощью вейлет преобразований через dll WavUtills
  * 10) Архивирование
@@ -24,7 +25,7 @@
  * 20) ПРоблема с тире - странно воспроизводит
  * 21) Проблема с выделением цветом - крайне не стабильно
  * 22) Проверка кодек и сущевствования файлов
- *
+ * 23) Хранение времени в милисекундах
  *
  *
  *
@@ -76,6 +77,13 @@ public slots:
     void setTimePosInCursorPos();
 
     QString formUrlToTranslateSellected();
+
+    // Устанавливает для какого примера методы getExample будут возвращать значения
+    // Возвращают true в случаи удачи
+    QStringList getExamplesNames(const QString& seakablePhrase) const; // Перейти к первому примеру
+
+    qreal getExampleStart(const QString& exampleName) const;
+    qreal getExampleFinish(const QString& exampleName) const;
 
 protected slots:
     void recognizeIsFinished();

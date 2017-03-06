@@ -13,12 +13,19 @@ TextStore::TextStore()
     , m_selectionStart(0)
     , m_selectionEnd(0)
 {
+    m_doc = &_default_m_doc;
 }
 
 QString TextStore::getString(qint64 begin, qint64 end) const
 {
-    Q_ASSERT(end >= begin);
     QString str = getString();
+    //Q_ASSERT(end >= begin); // TODO Вернуть после введения понятия бесконечного бинда
+    if (end < begin)
+        end = begin = 0; // TODO а это стереть
+
+    if (begin == 5174)
+        return str.mid(begin, end - begin);
+
     return str.mid(begin, end - begin);
 }
 
@@ -71,7 +78,10 @@ void TextStore::setFileUrl(const QUrl &url)
             QTextCodec *codec = QTextCodec::codecForHtml(data);
             setText(codec->toUnicode(data));
             if (m_doc)
+            {
+                m_doc->setHtml(data);
                 m_doc->setModified(false);
+            }
             emit textChanged();
             emit documentTitleChanged();
 

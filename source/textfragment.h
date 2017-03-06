@@ -23,6 +23,8 @@ public:
 
     QColor getRandomMarkColor(); // Случайный цвет подсветки текста
 
+    bool havePhrase(const QString& phrase) const;
+
     virtual ~TextFragment() {}
 private:
     friend class Fragment <TextFragment, TextStore::PTR, qint64>;

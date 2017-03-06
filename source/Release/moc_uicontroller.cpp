@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UIController_t {
-    QByteArrayData data[22];
-    char stringdata0[326];
+    QByteArrayData data[27];
+    char stringdata0[403];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,12 +47,17 @@ QT_MOC_LITERAL(12, 159, 16), // "cursorPosChanged"
 QT_MOC_LITERAL(13, 176, 21), // "setCursorPosInTimePos"
 QT_MOC_LITERAL(14, 198, 21), // "setTimePosInCursorPos"
 QT_MOC_LITERAL(15, 220, 27), // "formUrlToTranslateSellected"
-QT_MOC_LITERAL(16, 248, 19), // "recognizeIsFinished"
-QT_MOC_LITERAL(17, 268, 8), // "document"
-QT_MOC_LITERAL(18, 277, 10), // "TextStore*"
-QT_MOC_LITERAL(19, 288, 10), // "soundStore"
-QT_MOC_LITERAL(20, 299, 11), // "SoundStore*"
-QT_MOC_LITERAL(21, 311, 14) // "mouseIsPressed"
+QT_MOC_LITERAL(16, 248, 16), // "getExamplesNames"
+QT_MOC_LITERAL(17, 265, 14), // "seakablePhrase"
+QT_MOC_LITERAL(18, 280, 15), // "getExampleStart"
+QT_MOC_LITERAL(19, 296, 11), // "exampleName"
+QT_MOC_LITERAL(20, 308, 16), // "getExampleFinish"
+QT_MOC_LITERAL(21, 325, 19), // "recognizeIsFinished"
+QT_MOC_LITERAL(22, 345, 8), // "document"
+QT_MOC_LITERAL(23, 354, 10), // "TextStore*"
+QT_MOC_LITERAL(24, 365, 10), // "soundStore"
+QT_MOC_LITERAL(25, 376, 11), // "SoundStore*"
+QT_MOC_LITERAL(26, 388, 14) // "mouseIsPressed"
 
     },
     "UIController\0soundSellectionChanged\0"
@@ -62,8 +67,11 @@ QT_MOC_LITERAL(21, 311, 14) // "mouseIsPressed"
     "fileName\0cursorPosChanged\0"
     "setCursorPosInTimePos\0setTimePosInCursorPos\0"
     "formUrlToTranslateSellected\0"
-    "recognizeIsFinished\0document\0TextStore*\0"
-    "soundStore\0SoundStore*\0mouseIsPressed"
+    "getExamplesNames\0seakablePhrase\0"
+    "getExampleStart\0exampleName\0"
+    "getExampleFinish\0recognizeIsFinished\0"
+    "document\0TextStore*\0soundStore\0"
+    "SoundStore*\0mouseIsPressed"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,28 +81,31 @@ static const uint qt_meta_data_UIController[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
-       3,   94, // properties
+      15,   14, // methods
+       3,  118, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
-       3,    0,   75,    2, 0x06 /* Public */,
+       1,    0,   89,    2, 0x06 /* Public */,
+       3,    0,   90,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   76,    2, 0x0a /* Public */,
-       6,    1,   79,    2, 0x0a /* Public */,
-       7,    1,   82,    2, 0x0a /* Public */,
-       9,    0,   85,    2, 0x0a /* Public */,
-      10,    1,   86,    2, 0x0a /* Public */,
-      12,    0,   89,    2, 0x0a /* Public */,
-      13,    0,   90,    2, 0x0a /* Public */,
-      14,    0,   91,    2, 0x0a /* Public */,
-      15,    0,   92,    2, 0x0a /* Public */,
-      16,    0,   93,    2, 0x09 /* Protected */,
+       4,    1,   91,    2, 0x0a /* Public */,
+       6,    1,   94,    2, 0x0a /* Public */,
+       7,    1,   97,    2, 0x0a /* Public */,
+       9,    0,  100,    2, 0x0a /* Public */,
+      10,    1,  101,    2, 0x0a /* Public */,
+      12,    0,  104,    2, 0x0a /* Public */,
+      13,    0,  105,    2, 0x0a /* Public */,
+      14,    0,  106,    2, 0x0a /* Public */,
+      15,    0,  107,    2, 0x0a /* Public */,
+      16,    1,  108,    2, 0x0a /* Public */,
+      18,    1,  111,    2, 0x0a /* Public */,
+      20,    1,  114,    2, 0x0a /* Public */,
+      21,    0,  117,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
@@ -110,12 +121,15 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::QString,
+    QMetaType::QStringList, QMetaType::QString,   17,
+    QMetaType::QReal, QMetaType::QString,   19,
+    QMetaType::QReal, QMetaType::QString,   19,
     QMetaType::Void,
 
  // properties: name, type, flags
-      17, 0x80000000 | 18, 0x0009510b,
-      19, 0x80000000 | 20, 0x0009510b,
-      21, QMetaType::Bool, 0x00095103,
+      22, 0x80000000 | 23, 0x0009510b,
+      24, 0x80000000 | 25, 0x0009510b,
+      26, QMetaType::Bool, 0x00095103,
 
        0        // eod
 };
@@ -138,7 +152,13 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 9: _t->setTimePosInCursorPos(); break;
         case 10: { QString _r = _t->formUrlToTranslateSellected();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 11: _t->recognizeIsFinished(); break;
+        case 11: { QStringList _r = _t->getExamplesNames((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
+        case 12: { qreal _r = _t->getExampleStart((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
+        case 13: { qreal _r = _t->getExampleFinish((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
+        case 14: _t->recognizeIsFinished(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -219,13 +239,13 @@ int UIController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 15;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

@@ -9,8 +9,6 @@
 #include "soundfragment.h"
 #include "textfragment.h"
 
-// TODO хранить в тегах время
-
 class Logic
 {
 public:
@@ -22,6 +20,17 @@ public:
         PTR rezPtr = QSharedPointer <Logic> (new Logic());
         return rezPtr;
     }
+
+    struct Example{
+        QString FileName;
+        qreal start;
+        qreal end;
+    };
+
+    // Формирование списка примеров по искомой фразе
+    // findInThisFile - искать ли в текущем файле
+    QList <Example> getExamples(const QString& seakablePhrase, bool findInThisFile = false) const;
+    QList <Example> getExamplesInThis(const QString& seakablePhrase) const; // Ищет только в текущем файле
 
     QString getCurBndFileName() { return _curBndFileName; }
 
@@ -47,7 +56,7 @@ public:
     // Нужны для динамического позиционирования
     qint64 posInWavToPosInText(qreal); // по позиции в секундах, узнаёт позицию в интерпретированнном тексте
     qreal posInTxtToPosInWav(qint64); // по позиции в интерпретированном тексте узнаёт позицию в wav файле в секундах
-    // ДЛя динамической подсветки
+    // Для динамической подсветки
     void markBindFromSoundPos(qreal);
     void markBindFromTextPos(qint64);
     void unMarkBindFromSoundPos(qreal);
@@ -106,8 +115,8 @@ private:
 
     QVector <Bind>::iterator getBindOnTextPos(qint64 pos); // Поиск бинда сответствующего позиции тексте
 
-    QString curSoundFileName;
-    QString curTextFileName;
+  //  QString curSoundFileName;
+    //QString curTextFileName;
     QString _curBndFileName;
 
     // Нужно переписать для динамических биндов
@@ -121,9 +130,12 @@ private:
     void fromString(QString& str, qreal& posBigin, qreal &posEnd, QString source) const; // нужна для чтения распозноного текста
 
     // Нужно для подсветки текущего фрагмента
-    Bind getBindFromSoundPos(qreal);
-    Bind getBindFromTextPos(qint64);
-    Bind getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos);
+    Bind getBindFromSoundPos(qreal) const;
+    Bind getBindFromTextPos(qint64) const;
+    Bind getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const;
+
+    // Нужно для нахождения примеров
+    QList<Bind> getBindsWithPhrase(const QString& seekablePhrase) const;
 
     bool isEquils(const Bind& left, const Bind& right) {
         auto l_sound = left.sound;

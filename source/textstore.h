@@ -124,6 +124,9 @@ private:
 
     QQuickItem *m_target;
     QTextDocument *m_doc;
+    // Нужен для возможости полного функционирования объектов textStore без привязки к гуи гуи
+    // К примеру при поиске примеров с нужным словом
+    QTextDocument _default_m_doc;
 
     int m_cursorPosition;
     int m_selectionStart;

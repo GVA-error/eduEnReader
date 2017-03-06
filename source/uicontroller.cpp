@@ -6,6 +6,27 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _f_reconizing = false;
 }
 
+QStringList UIController::getExamplesNames(const QString& seakablePhrase) const
+{
+    QStringList rezList;
+
+    return rezList;
+}
+
+qreal UIController::getExampleStart(const QString& exampleName) const
+{
+
+
+
+    return 0;
+}
+
+qreal UIController::getExampleFinish(const QString& exampleName) const
+{
+
+    return 0;
+}
+
 void UIController::initBindMaker(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic)
 {
     _bindMaker = BindMaker::factoryMethod(text, sound, logic);
@@ -85,12 +106,15 @@ void UIController::makeBind()
     //_textStore->setFileUrl(textUrl);
     //_soundStore->setFileUrl(soundUrl);
 
+    auto examples = _logic->getExamples("swim", true);
+
     if (_f_reconizing)
         return;
     //BindMaker bm(_textStore, _soundStore, _logic);
     _bindMaker->setSplitSize(5.0f, 3.0f);
     _bindMaker->start();
     _f_reconizing = true;
+
     //_transliter.loadTranslation("");
 
 //    _logic->bindLogicHanding();

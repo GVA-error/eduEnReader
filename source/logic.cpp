@@ -10,6 +10,61 @@ Logic::Logic()
     _lastTempMarkPos = -1;
 }
 
+QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, bool findInThisFile) const
+{
+    QList <Logic::Example> rezList;
+    QDir curDir;
+    QStringList bindFiles = curDir.entryList(QStringList("*.bnd"));
+
+    TextStore::PTR tmp_textStore = TextStore::factoryMethod();
+    SoundStore::PTR tmp_soundStore = SoundStore::factoryMethod();
+    Logic tmp_logic;
+
+    for (QString bnd : bindFiles)
+    {
+        if (!findInThisFile && bnd == _curBndFileName)
+            continue;
+        tmp_logic.readFromFile(bnd, tmp_textStore, tmp_soundStore);
+        auto bndExamples = tmp_logic.getExamplesInThis(seakablePhrase);
+        rezList += bndExamples;
+    }
+
+    return rezList;
+}
+
+QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase) const
+{
+    QList <Logic::Example> rezList;
+
+    auto bindsWithSeekablePhrase = getBindsWithPhrase(seekablePhrase);
+    for (auto bind : bindsWithSeekablePhrase)
+    {
+        Example newExample;
+        auto soundFragment = bind.sound;
+        auto sound = soundFragment->getSource();
+        newExample.FileName = sound->toString();
+        newExample.start = soundFragment->begin();
+        newExample.end = soundFragment->end();
+        rezList.push_back(newExample);
+    }
+
+    return rezList;
+}
+
+QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase) const
+{
+    QList <Logic::Bind> rezList;
+
+    for (Logic::Bind bind : _bindVector)
+    {
+        auto textFragmend = bind.text;
+        if (textFragmend->havePhrase(seekablePhrase))
+            rezList.push_back(bind);
+    }
+
+    return rezList;
+}
+
 void Logic::bindLogicHanding()
 {
     Bind lastBind = tempBind;
@@ -76,7 +131,7 @@ void Logic::unMarkBindFromTextPos(qint64 textPos)
     markableText->unmark();
 }
 
-Logic::Bind Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos)
+Logic::Bind Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const
 {
     if (_bindVector.empty())
         return zeroBind;
@@ -93,12 +148,12 @@ Logic::Bind Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos)
     return zeroBind;
 }
 
-Logic::Bind Logic::getBindFromSoundPos(qreal soundPos)
+Logic::Bind Logic::getBindFromSoundPos(qreal soundPos) const
 {
     return getBindFromSoundOrTextPos(soundPos, -1);
 }
 
-Logic::Bind Logic::getBindFromTextPos(qint64 textPos)
+Logic::Bind Logic::getBindFromTextPos(qint64 textPos) const
 {
     return getBindFromSoundOrTextPos(-1, textPos);
 }
@@ -132,8 +187,8 @@ void Logic::clear()
     _recognizedStringPosBegin.clear();
     _recognizedStringPosEnd.clear();
     _recognizedStrings.clear();
-    curSoundFileName.clear();
-    curTextFileName.clear();
+    //curSoundFileName.clear();
+   // curTextFileName.clear();
 }
 
 void Logic::tempMarkBindInTextPos(qint64 pos)
@@ -329,14 +384,22 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
             textHashString = value_buff.trimmed();
     }
 
-    textStore->fromString(textStoreString);
-    soundStore->fromString(soundStoreString);
+    QString realHashText;
+    QString realHashSound;
+    if (!textStore.isNull())
+    {
+        textStore->fromString(textStoreString);
+        realHashText = textStore->getHash();
+    }
+    if (!soundStore.isNull())
+    {
+        soundStore->fromString(soundStoreString);
+        realHashSound = soundStore->getHash();
+    }
 
-    QString realHashText = textStore->getHash();
-    QString realHashSound = soundStore->getHash();
-
-    if (realHashText != textHashString || realHashSound != soundHashString)
-        qDebug() << "FileReading: IncorrectHash" << "\n";
+    if (!soundStore.isNull() || !soundStore.isNull())
+        if (realHashText != textHashString || realHashSound != soundHashString)
+            qDebug() << "FileReading: IncorrectHash" << "\n";
 
     for (auto bindString : bindListString)
     {

@@ -56,7 +56,7 @@ void SoundStore::start()
     qint64 curRealPos = position();
     qint64 finishPos = _finishPos * 1000;
     qint64 duration = finishPos - curRealPos;
-    if (duration < _epsilonTime)
+    if (duration < _epsilonTime && _startPos > 0)
         return;
     _timerToStop->stop();
     _timerToStop->start(duration);
@@ -136,11 +136,11 @@ void SoundStore::setFileUrl(const QUrl& url, qreal start, qreal finish)
 
 void SoundStore::setFileUrl(const QUrl& url)
 {
-    _startPos = -1;
-    _finishPos = -1;
     setMedia(QUrl(url));
     _lastOpenedUrl = url;
     setVolume(50);
+    _finishPos = -1;
+    _startPos = -1;
 }
 
 QUrl SoundStore::fileUrl() const

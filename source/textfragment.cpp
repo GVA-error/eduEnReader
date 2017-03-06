@@ -1,5 +1,15 @@
 #include "textfragment.h"
 
+bool TextFragment::havePhrase(const QString& phrase) const
+{
+    QString fragmentString = getString();
+    qint32 indexOfPhrase = fragmentString.indexOf(phrase);
+    if (indexOfPhrase > 0)
+        return true;
+    return false;
+}
+
+
 QString TextFragment::getString() const
 {
     QString rezString = _source->getString(_begin, _end);
