@@ -293,6 +293,7 @@ ApplicationWindow {
         }
     }
 
+    // Видео
     Rectangle{
         id : videoRect
         anchors.top : parent.top;
@@ -304,6 +305,7 @@ ApplicationWindow {
         height: 480
         color: "black"
         VideoOutput {
+            id : videoOutput;
            anchors.fill: parent;
         //   width: 800;
         //   height: 600
@@ -318,6 +320,7 @@ ApplicationWindow {
        }
     }
 
+    // Ползунок, старт, пауза ..
     Rectangle{
         id : soundToolBar
         anchors.top: videoRect.bottom
@@ -372,7 +375,7 @@ ApplicationWindow {
 
         }
 
-        Rectangle {
+        Rectangle { // Ползунок
             x : 130
             y : 200
             //anchors.top: videoRect.
@@ -405,6 +408,7 @@ ApplicationWindow {
                             radius: 12
                         }
                     }
+
                 onValueChanged:
                 {
                     if (!pressed)
@@ -482,7 +486,7 @@ ApplicationWindow {
         }
         MenuItem {
             text: "Paste"
-            action: pasteAction // ТУТ ГЛЮК!!
+            action: pasteAction
         }
     }
     MouseArea{

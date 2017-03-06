@@ -5,7 +5,13 @@ SoundStore::SoundStore(QObject *parent, Flags flags)
 {
    // qDebug() << "SoundStore()";
     connect(this, SIGNAL(positionChanged(qint64)), this, SIGNAL(posChanged())); // Монжно удалить?
-    setMedia(QUrl("file:///home/gva-error/projects/eduEnReader/Bield/1.mp4"));//url);
+
+    _startPos = _finishPos = -1;
+    setFileUrl(QUrl::fromLocalFile("/home/gva/eduEnReader/source/Release/B.mp4"), 5, 10);//url);
+
+    _timerToStop = new QTimer(this);
+    connect(_timerToStop, SIGNAL(timeout()), this, SLOT(stopStopTimer()));
+
     setVolume(50);
 }
 
@@ -35,7 +41,7 @@ void SoundStore::posChanched(qint64 newPos)
 void SoundStore::setPosPersent(qreal pos)
 {
     qint64 fullDuretion = duration();
-    qint64 realPos = fullDuretion * pos;
+    qint64 realPos = fullDuretion * pos + _startPos * 1000;
     setPosition(realPos);
 }
 
@@ -47,12 +53,34 @@ void SoundStore::setPosReal(qreal p)
 
 void SoundStore::start()
 {
+    qint64 curRealPos = position();
+    qint64 finishPos = _finishPos * 1000;
+    qint64 duration = finishPos - curRealPos;
+    if (duration < _epsilonTime)
+        return;
+    _timerToStop->stop();
+    _timerToStop->start(duration);
     play();
 }
 
 void SoundStore::stop()
 {
     pause();
+    _timerToStop->stop();
+}
+
+void SoundStore::stopStopTimer()
+{
+    qint64 curTime = position();
+    qint64 finishTime = _finishPos * 1000;
+    qint64 timeToStop = finishTime - curTime;
+    if (timeToStop >= _epsilonTime)
+    {
+        _timerToStop->stop();
+        _timerToStop->start(timeToStop);
+    }
+    else
+        stop();
 }
 
 void SoundStore::playReal(qreal begin, qreal end)
@@ -67,16 +95,49 @@ qreal SoundStore::getTimePos() const
     return curTimePos;
 }
 
-qreal SoundStore::getPersentPos() const
+qint64 SoundStore::duration() const
+{
+    qint32 fullDeduraton = QMediaPlayer::duration();
+    qint32 realDuration = (_finishPos - _startPos) * 1000;
+    assert((_startPos >= 0 && _finishPos >= 0) || (_startPos < 0 && _finishPos < 0));
+    assert(_startPos <= _finishPos);
+    if (_startPos < 0)
+        return fullDeduraton;
+    return realDuration;
+
+}
+
+qreal SoundStore::getPersentPos()
 {
     qint64 fullDuretion = duration();
-    qint64 curDuration = position();
+    if (fullDuretion <= 0)
+        fullDuretion = 1;
+    qint64 curDuration = position() - _startPos * 1000;
+    if (curDuration < 0)
+        curDuration = 0;
     qreal posPersent = (qreal)curDuration / (qreal)fullDuretion;
+    if (posPersent > 1)// && !_timerToStop->isActive())
+    {
+        //_timerToStop->start(1);
+        //_temerToStopIsActive = true;
+        posPersent = 1;
+    }
     return posPersent;
 }
 
+void SoundStore::setFileUrl(const QUrl& url, qreal start, qreal finish)
+{
+    setFileUrl(url);
+    _startPos = start;
+    _finishPos = finish;
+    setPosReal(_startPos);
+}
+
+
 void SoundStore::setFileUrl(const QUrl& url)
 {
+    _startPos = -1;
+    _finishPos = -1;
     setMedia(QUrl(url));
     _lastOpenedUrl = url;
     setVolume(50);

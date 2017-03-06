@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'uicontroller.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,12 +12,14 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'uicontroller.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.1. It"
+#error "This file was generated using the moc from 5.8.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UIController_t {
     QByteArrayData data[22];
     char stringdata0[326];
@@ -111,8 +113,8 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-      17, 0x80000000 | 18, 0x0009510a,
-      19, 0x80000000 | 20, 0x0009510a,
+      17, 0x80000000 | 18, 0x0009510b,
+      19, 0x80000000 | 20, 0x0009510b,
       21, QMetaType::Bool, 0x00095103,
 
        0        // eod
@@ -146,12 +148,14 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             typedef void (UIController::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UIController::soundSellectionChanged)) {
                 *result = 0;
+                return;
             }
         }
         {
             typedef void (UIController::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UIController::textSellectionChanged)) {
                 *result = 1;
+                return;
             }
         }
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
@@ -170,6 +174,8 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
+        case 0: *reinterpret_cast< TextStore**>(_v) = _t->getDocument(); break;
+        case 1: *reinterpret_cast< SoundStore**>(_v) = _t->getSoundStore(); break;
         case 2: *reinterpret_cast< bool*>(_v) = _t->getMouseIsPressed(); break;
         default: break;
         }
@@ -252,4 +258,5 @@ void UIController::textSellectionChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE

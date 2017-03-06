@@ -2,12 +2,14 @@
 #include <QQmlApplicationEngine>
 #include <QtWebEngineCore>
 #include <QtWebEngine/qtwebengineglobal.h>
+#include <QTextCodec>
 #include "textstore.h"
 #include "soundstore.h"
 #include "uicontroller.h"
 
 int main(int argc, char *argv[])
 {
+    QTextCodec::setCodecForLocale(QTextCodec::codecForHtml("utf-16"));
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QtWebEngine::initialize();

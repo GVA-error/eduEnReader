@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMediaPlayer>
 #include <QSharedPointer>
+#include <QTimer>
+#include <assert.h>
 #include "store.h"
 
 class SoundStore : public QMediaPlayer, public Store <SoundStore>
@@ -16,20 +18,22 @@ public:
        // qDebug() << "~SoundStore()";
     }
 
+    void setFileUrl(const QUrl& url, qreal start, qreal finish);
     void setFileUrl(const QUrl& url) override; // TODO Добавить потдержку относительных путей
     QUrl fileUrl() const override;
 signals:
     void posChanged();
 
 public slots:
-    void playReal(qreal begin, qreal end = -1); // указывается в секундах
+    void playReal(qreal begin, qreal end = -1); // указывается в секундах, не используеься - не работает
 
     void setPosReal(qreal); // позиция устанавливается в секундах
     void setPosPersent(qreal); // позиция устанавливаеться в проентах
-    qreal getPersentPos() const;
+    qreal getPersentPos(); // Процент воспроизведёного
     qreal getTimePos() const;
     void start();
     void stop();
+    void stopStopTimer(); // Нужна для синхронизации завершения
 
     // Для потдержки Qml MediaPlayer
     void setVideoSurface(QAbstractVideoSurface* surface);
@@ -40,7 +44,16 @@ protected:
     friend class Store <SoundStore>;
     QUrl _lastOpenedUrl;
     QAbstractVideoSurface* m_surface; // Для потдержки Qml MediaPlayer
+    QTimer *_timerToStop;
+    // Моменты начала и конца воспроизведения файла.
+    qreal _startPos;
+    qreal _finishPos;
+
+    const qint32 _epsilonTime = 5; // Допустимая погрешность по времени в милисекундах при остановке видео
+
     SoundStore(QObject * parent = 0, Flags flags = 0);
+
+    qint64 duration() const ;//override;
 };
 
 #endif // SOUNDSTORE_H
