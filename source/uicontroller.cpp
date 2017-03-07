@@ -4,27 +4,37 @@ UIController::UIController(QObject *parent) : QObject(parent)
 {
     _logic = Logic::factoryMethod();
     _f_reconizing = false;
+   // _exampleList.push_back("1");
+   // _exampleList.push_back("2");
 }
 
-QStringList UIController::getExamplesNames(const QString& seakablePhrase) const
+void UIController::playExample(QString ID)
 {
-    QStringList rezList;
-
-    return rezList;
+    auto example = _example[ID];
+    qreal begin = example.start;
+    qreal end = example.end;
+    QUrl url = example.realUrl;
+    _soundStore->setFileUrl(url, begin, end);
+    _soundStore->start();
 }
 
-qreal UIController::getExampleStart(const QString& exampleName) const
+void UIController::getExamplesFor(const QString& seekablePhrase)
 {
-
-
-
-    return 0;
-}
-
-qreal UIController::getExampleFinish(const QString& exampleName) const
-{
-
-    return 0;
+    _example.clear();
+    _exampleList.clear();
+    emit exampleListChanged();
+    auto exampleList = _logic->getExamples(seekablePhrase, true);
+    for (auto example : exampleList)
+    {
+        qreal begin = example.start;
+        qreal end = example.end;
+        QString newExampleName = example.FileName
+                + " " + QString().number(begin)
+                + " " + QString().number(end);
+        _exampleList .push_back(newExampleName);
+        _example[newExampleName] = example;
+    }
+    setExampleList(_exampleList);
 }
 
 void UIController::initBindMaker(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic)

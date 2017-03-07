@@ -6,6 +6,8 @@ Item {
     id: root
     signal back
     property alias contentText: dialogText.text
+    property real baseW : 3/4 * width;
+    property real baseH : 3/4 * height;
     anchors.fill: parent
     visible: false
     DialogBackground {
@@ -16,8 +18,8 @@ Item {
     }
     Rectangle {
         id: dialog
-        width: parent.width * 3 / 4
-        height: parent.height * 3 / 4
+        width: baseW
+        height: baseH
         radius: 4
         color: "whitesmoke"
         anchors.top: parent.top
@@ -42,20 +44,6 @@ Item {
 
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-        }
-        Rectangle
-        {
-            width: parent.width * 9 / 10
-            height: parent.height * 3 / 4
-            radius: 100
-            anchors.centerIn: parent
-
-            WebEngineView
-            {
-                anchors.fill: parent
-                url: "http://www.multitran.com/m.exe?l1=1&l2=2&s=word"
-                id: webView
-            }
         }
         Text {
             id: textBack
@@ -87,46 +75,5 @@ Item {
     function hideDialog() {
         dialogBackground.hide()
         root.visible = false
-    }
-    function setUrl(url)
-    {
-        webView.url = url
-       /* var request = new XMLHttpRequest()
-        request.open('GET', "http://habrahabr.ru/rss/hubs/", true);
-        request.onreadystatechange = function () {
-            if (request.readyState === XMLHttpRequest.DONE) {
-                if(request.readyState === 4) {
-                   // console.log(request.responseText)
-                    dataModel.xml = request.responseText
-                } else {
-                    console.log("HTTP request failed", request.status)
-                }
-            }
-        }
-        request.send()*/
-    }
-    function setHtml(html)
-    {
-        webView.loadHtml(html)
-//        var request = new XMLHttpRequest()
-
-//        request.open('GET', html, true);
-//        request.onreadystatechange = function () {
-//            if (request.readyState === XMLHttpRequest.DONE) {
-//                if(request.readyState === 4) {
-//                   // console.log(request.responseText)
-//                    webView.loadHtml(request.responseText)
-
-//                } else {
-//                    console.log("HTTP request failed", request.status)
-//                }
-//            }
-//        }
-//        request.send()
-
-    }
-    function setXPath(xPath)
-    {
-
     }
 }

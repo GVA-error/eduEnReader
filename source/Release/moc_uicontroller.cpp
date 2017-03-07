@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UIController_t {
-    QByteArrayData data[27];
-    char stringdata0[403];
+    QByteArrayData data[28];
+    char stringdata0[407];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,43 +35,43 @@ QT_MOC_LITERAL(0, 0, 12), // "UIController"
 QT_MOC_LITERAL(1, 13, 22), // "soundSellectionChanged"
 QT_MOC_LITERAL(2, 36, 0), // ""
 QT_MOC_LITERAL(3, 37, 21), // "textSellectionChanged"
-QT_MOC_LITERAL(4, 59, 12), // "openBindFile"
-QT_MOC_LITERAL(5, 72, 12), // "bindFileName"
-QT_MOC_LITERAL(6, 85, 12), // "saveBindFile"
-QT_MOC_LITERAL(7, 98, 14), // "createBindFile"
-QT_MOC_LITERAL(8, 113, 13), // "soundFileName"
-QT_MOC_LITERAL(9, 127, 8), // "makeBind"
-QT_MOC_LITERAL(10, 136, 13), // "openSoundFile"
-QT_MOC_LITERAL(11, 150, 8), // "fileName"
-QT_MOC_LITERAL(12, 159, 16), // "cursorPosChanged"
-QT_MOC_LITERAL(13, 176, 21), // "setCursorPosInTimePos"
-QT_MOC_LITERAL(14, 198, 21), // "setTimePosInCursorPos"
-QT_MOC_LITERAL(15, 220, 27), // "formUrlToTranslateSellected"
-QT_MOC_LITERAL(16, 248, 16), // "getExamplesNames"
-QT_MOC_LITERAL(17, 265, 14), // "seakablePhrase"
-QT_MOC_LITERAL(18, 280, 15), // "getExampleStart"
-QT_MOC_LITERAL(19, 296, 11), // "exampleName"
-QT_MOC_LITERAL(20, 308, 16), // "getExampleFinish"
-QT_MOC_LITERAL(21, 325, 19), // "recognizeIsFinished"
-QT_MOC_LITERAL(22, 345, 8), // "document"
-QT_MOC_LITERAL(23, 354, 10), // "TextStore*"
-QT_MOC_LITERAL(24, 365, 10), // "soundStore"
-QT_MOC_LITERAL(25, 376, 11), // "SoundStore*"
-QT_MOC_LITERAL(26, 388, 14) // "mouseIsPressed"
+QT_MOC_LITERAL(4, 59, 18), // "exampleListChanged"
+QT_MOC_LITERAL(5, 78, 12), // "openBindFile"
+QT_MOC_LITERAL(6, 91, 12), // "bindFileName"
+QT_MOC_LITERAL(7, 104, 12), // "saveBindFile"
+QT_MOC_LITERAL(8, 117, 14), // "createBindFile"
+QT_MOC_LITERAL(9, 132, 13), // "soundFileName"
+QT_MOC_LITERAL(10, 146, 8), // "makeBind"
+QT_MOC_LITERAL(11, 155, 13), // "openSoundFile"
+QT_MOC_LITERAL(12, 169, 8), // "fileName"
+QT_MOC_LITERAL(13, 178, 16), // "cursorPosChanged"
+QT_MOC_LITERAL(14, 195, 21), // "setCursorPosInTimePos"
+QT_MOC_LITERAL(15, 217, 21), // "setTimePosInCursorPos"
+QT_MOC_LITERAL(16, 239, 27), // "formUrlToTranslateSellected"
+QT_MOC_LITERAL(17, 267, 14), // "getExamplesFor"
+QT_MOC_LITERAL(18, 282, 14), // "seekablePhrase"
+QT_MOC_LITERAL(19, 297, 11), // "playExample"
+QT_MOC_LITERAL(20, 309, 2), // "ID"
+QT_MOC_LITERAL(21, 312, 19), // "recognizeIsFinished"
+QT_MOC_LITERAL(22, 332, 8), // "document"
+QT_MOC_LITERAL(23, 341, 10), // "TextStore*"
+QT_MOC_LITERAL(24, 352, 10), // "soundStore"
+QT_MOC_LITERAL(25, 363, 11), // "SoundStore*"
+QT_MOC_LITERAL(26, 375, 16), // "exampleListModel"
+QT_MOC_LITERAL(27, 392, 14) // "mouseIsPressed"
 
     },
     "UIController\0soundSellectionChanged\0"
-    "\0textSellectionChanged\0openBindFile\0"
-    "bindFileName\0saveBindFile\0createBindFile\0"
-    "soundFileName\0makeBind\0openSoundFile\0"
-    "fileName\0cursorPosChanged\0"
+    "\0textSellectionChanged\0exampleListChanged\0"
+    "openBindFile\0bindFileName\0saveBindFile\0"
+    "createBindFile\0soundFileName\0makeBind\0"
+    "openSoundFile\0fileName\0cursorPosChanged\0"
     "setCursorPosInTimePos\0setTimePosInCursorPos\0"
-    "formUrlToTranslateSellected\0"
-    "getExamplesNames\0seakablePhrase\0"
-    "getExampleStart\0exampleName\0"
-    "getExampleFinish\0recognizeIsFinished\0"
-    "document\0TextStore*\0soundStore\0"
-    "SoundStore*\0mouseIsPressed"
+    "formUrlToTranslateSellected\0getExamplesFor\0"
+    "seekablePhrase\0playExample\0ID\0"
+    "recognizeIsFinished\0document\0TextStore*\0"
+    "soundStore\0SoundStore*\0exampleListModel\0"
+    "mouseIsPressed"
 };
 #undef QT_MOC_LITERAL
 
@@ -82,54 +82,61 @@ static const uint qt_meta_data_UIController[] = {
        0,       // classname
        0,    0, // classinfo
       15,   14, // methods
-       3,  118, // properties
+       4,  116, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
        1,    0,   89,    2, 0x06 /* Public */,
        3,    0,   90,    2, 0x06 /* Public */,
+       4,    0,   91,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   91,    2, 0x0a /* Public */,
-       6,    1,   94,    2, 0x0a /* Public */,
-       7,    1,   97,    2, 0x0a /* Public */,
-       9,    0,  100,    2, 0x0a /* Public */,
-      10,    1,  101,    2, 0x0a /* Public */,
-      12,    0,  104,    2, 0x0a /* Public */,
+       5,    1,   92,    2, 0x0a /* Public */,
+       7,    1,   95,    2, 0x0a /* Public */,
+       8,    1,   98,    2, 0x0a /* Public */,
+      10,    0,  101,    2, 0x0a /* Public */,
+      11,    1,  102,    2, 0x0a /* Public */,
       13,    0,  105,    2, 0x0a /* Public */,
       14,    0,  106,    2, 0x0a /* Public */,
       15,    0,  107,    2, 0x0a /* Public */,
-      16,    1,  108,    2, 0x0a /* Public */,
-      18,    1,  111,    2, 0x0a /* Public */,
-      20,    1,  114,    2, 0x0a /* Public */,
-      21,    0,  117,    2, 0x09 /* Protected */,
+      16,    0,  108,    2, 0x0a /* Public */,
+      17,    1,  109,    2, 0x0a /* Public */,
+      19,    1,  112,    2, 0x0a /* Public */,
+      21,    0,  115,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QUrl,    5,
-    QMetaType::Void, QMetaType::QUrl,    5,
-    QMetaType::Void, QMetaType::QUrl,    8,
+    QMetaType::Void, QMetaType::QUrl,    6,
+    QMetaType::Void, QMetaType::QUrl,    6,
+    QMetaType::Void, QMetaType::QUrl,    9,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   11,
+    QMetaType::Void, QMetaType::QString,   12,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::QString,
-    QMetaType::QStringList, QMetaType::QString,   17,
-    QMetaType::QReal, QMetaType::QString,   19,
-    QMetaType::QReal, QMetaType::QString,   19,
+    QMetaType::Void, QMetaType::QString,   18,
+    QMetaType::Void, QMetaType::QString,   20,
     QMetaType::Void,
 
  // properties: name, type, flags
       22, 0x80000000 | 23, 0x0009510b,
       24, 0x80000000 | 25, 0x0009510b,
-      26, QMetaType::Bool, 0x00095103,
+      26, QMetaType::QStringList, 0x00495003,
+      27, QMetaType::Bool, 0x00095103,
+
+ // properties: notify_signal_id
+       0,
+       0,
+       2,
+       0,
 
        0        // eod
 };
@@ -142,22 +149,19 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: _t->soundSellectionChanged(); break;
         case 1: _t->textSellectionChanged(); break;
-        case 2: _t->openBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 3: _t->saveBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 4: _t->createBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 5: _t->makeBind(); break;
-        case 6: _t->openSoundFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 7: _t->cursorPosChanged(); break;
-        case 8: _t->setCursorPosInTimePos(); break;
-        case 9: _t->setTimePosInCursorPos(); break;
-        case 10: { QString _r = _t->formUrlToTranslateSellected();
+        case 2: _t->exampleListChanged(); break;
+        case 3: _t->openBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 4: _t->saveBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 5: _t->createBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 6: _t->makeBind(); break;
+        case 7: _t->openSoundFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 8: _t->cursorPosChanged(); break;
+        case 9: _t->setCursorPosInTimePos(); break;
+        case 10: _t->setTimePosInCursorPos(); break;
+        case 11: { QString _r = _t->formUrlToTranslateSellected();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 11: { QStringList _r = _t->getExamplesNames((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 12: { qreal _r = _t->getExampleStart((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
-        case 13: { qreal _r = _t->getExampleFinish((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
+        case 12: _t->getExamplesFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 13: _t->playExample((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 14: _t->recognizeIsFinished(); break;
         default: ;
         }
@@ -175,6 +179,13 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             typedef void (UIController::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UIController::textSellectionChanged)) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            typedef void (UIController::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UIController::exampleListChanged)) {
+                *result = 2;
                 return;
             }
         }
@@ -196,7 +207,8 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: *reinterpret_cast< TextStore**>(_v) = _t->getDocument(); break;
         case 1: *reinterpret_cast< SoundStore**>(_v) = _t->getSoundStore(); break;
-        case 2: *reinterpret_cast< bool*>(_v) = _t->getMouseIsPressed(); break;
+        case 2: *reinterpret_cast< QStringList*>(_v) = _t->getExampleList(); break;
+        case 3: *reinterpret_cast< bool*>(_v) = _t->getMouseIsPressed(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -206,7 +218,8 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: _t->setDocument(*reinterpret_cast< TextStore**>(_v)); break;
         case 1: _t->setSoundStore(*reinterpret_cast< SoundStore**>(_v)); break;
-        case 2: _t->setMouseIsPressed(*reinterpret_cast< bool*>(_v)); break;
+        case 2: _t->setExampleList(*reinterpret_cast< QStringList*>(_v)); break;
+        case 3: _t->setMouseIsPressed(*reinterpret_cast< bool*>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -251,17 +264,17 @@ int UIController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 3;
+        _id -= 4;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -277,6 +290,12 @@ void UIController::soundSellectionChanged()
 void UIController::textSellectionChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
+}
+
+// SIGNAL 2
+void UIController::exampleListChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

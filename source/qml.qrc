@@ -31,5 +31,7 @@
         <file>SimpleDialog.qml</file>
         <file>DialogBackground.qml</file>
         <file>FileDialogs.qml</file>
+        <file>ListDialog.qml</file>
+        <file>VideoController.qml</file>
     </qresource>
 </RCC>

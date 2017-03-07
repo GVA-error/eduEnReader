@@ -737,10 +737,12 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../qml.qrc \
 		../../../Qt/5.8/gcc_64/bin/rcc \
+		../VideoController.qml \
 		../SimpleDialog.qml \
 		../DialogBackground.qml \
 		../QMLToolBarSeparator.qml \
 		../FileDialogs.qml \
+		../ListDialog.qml \
 		../QMLButtonStyle.qml \
 		../QMLScroolBar.qml \
 		../main.qml \
@@ -865,6 +867,9 @@ moc_soundstore.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../store.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
@@ -1126,6 +1131,9 @@ moc_uicontroller.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmetaobject.h \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../store.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
@@ -1443,6 +1451,9 @@ moc_bindmaker.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/QList \
 		../../../Qt/5.8/gcc_64/include/QtCore/QTextStream \
@@ -1713,6 +1724,9 @@ main.o: ../main.cpp ../../../Qt/5.8/gcc_64/include/QtGui/QGuiApplication \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../uicontroller.h \
 		../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/QList \
@@ -1826,6 +1840,9 @@ soundstore.o: ../soundstore.cpp ../soundstore.h \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../store.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
@@ -1946,6 +1963,9 @@ logic.o: ../logic.cpp ../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmetaobject.h \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../store.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
@@ -2104,6 +2124,9 @@ soundfragment.o: ../soundfragment.cpp ../soundfragment.h \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../store.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
@@ -2507,6 +2530,9 @@ uicontroller.o: ../uicontroller.cpp ../uicontroller.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmetaobject.h \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../store.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
@@ -2821,6 +2847,9 @@ bindmaker.o: ../ASR/bindmaker.cpp ../ASR/bindmaker.h \
 		../../../Qt/5.8/gcc_64/include/QtMultimedia/qaudio.h \
 		../../../Qt/5.8/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/QList \
 		../../../Qt/5.8/gcc_64/include/QtCore/QTextStream \

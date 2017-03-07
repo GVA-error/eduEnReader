@@ -22,6 +22,7 @@ public:
     }
 
     struct Example{
+        QUrl realUrl;
         QString FileName;
         qreal start;
         qreal end;

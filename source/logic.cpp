@@ -45,6 +45,7 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase) c
         newExample.FileName = sound->toString();
         newExample.start = soundFragment->begin();
         newExample.end = soundFragment->end();
+        newExample.realUrl = sound->fileUrl();
         rezList.push_back(newExample);
     }
 

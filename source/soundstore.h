@@ -35,6 +35,9 @@ public slots:
     void stop();
     void stopStopTimer(); // Нужна для синхронизации завершения
 
+    void saveCurState();
+    void backToSavedState();
+
     // Для потдержки Qml MediaPlayer
     void setVideoSurface(QAbstractVideoSurface* surface);
     QAbstractVideoSurface* getVideoSurface();
@@ -48,6 +51,12 @@ protected:
     // Моменты начала и конца воспроизведения файла.
     qreal _startPos;
     qreal _finishPos;
+
+    // Сохраненное состояние
+    qreal _saved_startPos;
+    qreal _saved_finishPos;
+    qint64 _saved_curPos;
+    QUrl _saved_lastOpenedUrl;
 
     const qint32 _epsilonTime = 5; // Допустимая погрешность по времени в милисекундах при остановке видео
 

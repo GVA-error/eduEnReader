@@ -10,9 +10,7 @@ import TextStoreModul 1.0
 import SoundStoreModul 1.1
 import UiControlerModul 1.1
 
-
 // TODO РЕФАКТОРИНГ
-
 /*
 При вызове контексного меню MenuContentItem.qml:178: ReferenceError: Acccessible is not defined
 
@@ -23,14 +21,12 @@ ApplicationWindow {
     width: 1024
     height: 768
     title: document.documentTitle + " - Text Editor Example"
-
     UiControler{
         id: uiControler
         mouseIsPressed: false
         document : document
         soundStore : soundStore
     }
-
     MessageDialog {
         id: aboutBox
         title: "About Text"
@@ -167,7 +163,6 @@ ApplicationWindow {
             fileDialog.open()
         }
     }
-
     FileDialog {
         id: fileDialog
         nameFilters: ["Bind file (*.bnd)"]
@@ -190,7 +185,6 @@ ApplicationWindow {
         id: colorDialog
         color: "black"
     }
-
     menuBar: MenuBar {
         Menu {
             title: "&File"
@@ -229,12 +223,10 @@ ApplicationWindow {
             MenuItem { text: "About..." ; onTriggered: aboutBox.open() }
         }
     }
-
     toolBar: ToolBar {
         id: mainToolBar
         width: parent.width// - videoRect.width
         //anchors.right: videoRect.left
-
         RowLayout {
             anchors.fill: parent
             spacing: 0
@@ -292,7 +284,6 @@ ApplicationWindow {
             Item { Layout.fillWidth: true }
         }
     }
-
     // Видео
     Rectangle{
         id : videoRect
@@ -319,7 +310,19 @@ ApplicationWindow {
             }
        }
     }
+    // Список примеров
+    ListDialog{
+        id : examples;
+        out_model: uiControler.exampleListModel;
+        title: "Examples"
 
+        anchors.top : parent.top
+        anchors.bottom: soundToolBar.top
+        anchors.left: videoRect.right
+        anchors.right: soundToolBar.right
+
+        onSelected : uiControler.playExample(str);
+    }
     // Ползунок, старт, пауза ..
     Rectangle{
         id : soundToolBar
@@ -328,7 +331,6 @@ ApplicationWindow {
         width: parent.width
         //anchors.fill: parent
         height: 50
-
         QMLSoundGraph {
             id : soundPanel
             anchors.fill: parent
@@ -338,7 +340,7 @@ ApplicationWindow {
                 shortcut: "ctrl+B"
                 iconSource: "images/bind.png"
                 iconName: "Bind "
-                onTriggered: uiControler.makeBind()
+                onTriggered: uiControler.getExamplesFor("swin")
             }
             Action {
                 id: playAction
@@ -358,9 +360,7 @@ ApplicationWindow {
                 iconName: "Pause"
                 onTriggered: soundStore.stop()
             }
-
-            ToolBar
-            {
+            ToolBar{
                 anchors.fill: parent
                 RowLayout {
                     spacing: 0
@@ -371,60 +371,14 @@ ApplicationWindow {
                 }
 
             }
-
-
         }
 
-        Rectangle { // Ползунок
-            x : 130
-            y : 200
-            //anchors.top: videoRect.
-            anchors.bottom:  soundToolBar.bottom
-            //anchors.right: parent.right
-            id: soundGraph
-            height: soundToolBar.height
-            width: soundToolBar.width - x - 20
-            color : "transparent"
-            Slider {
-                id: soundSlider
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: soundToolBar.height
-                value: soundStore.position
-                style: SliderStyle {
-                        groove: Rectangle {
-                            implicitWidth: 200
-                            implicitHeight: soundToolBar.height / 2
-                            color: "white"
-                            radius: 8
-                        }
-                        handle: Rectangle {
-                            anchors.centerIn: parent
-                            color: control.pressed ? "white" : "lightgray"
-                            border.color: "gray"
-                            border.width: 2
-                            implicitWidth: 34
-                            implicitHeight: 34
-                            radius: 12
-                        }
-                    }
-
-                onValueChanged:
-                {
-                    if (!pressed)
-                        uiControler.setCursorPosInTimePos();
-                }
-
-                onPressedChanged:
-                {
-                    if (pressed)
-                        soundStore.setPosPersent(soundSlider.value);
-                }
-            }
+        VideoController{
+            id : videoSlider
+            source : soundStore
         }
 
     }
-
     TextStore {
         id: document
         target: textArea
@@ -453,7 +407,6 @@ ApplicationWindow {
             errorDialog.visible = true
         }
     }
-
     TextArea {
         width: parent.width
         anchors.top: soundToolBar.bottom
@@ -466,11 +419,9 @@ ApplicationWindow {
         textFormat: Qt.RichText
         Component.onCompleted: forceActiveFocus()
     }
-
     Menu {
         id : contextMenue
         title: "Edit"
-
         MenuItem {
             text: "Translate"
             action: translateAction
@@ -503,20 +454,27 @@ ApplicationWindow {
              }
         }
     }
-
-    SimpleDialog
-    {
+    SimpleDialog{
         id: translateDialog
         contentText: qsTr("Translate")
         onBack: hideDialog()
-    }
-    MessageDialog {
-        id: errorDialog
+        Rectangle{
+            width: translateDialog.baseW * 9 / 10
+            height: translateDialog.baseH * 3 / 4
+            radius: 100
+            anchors.centerIn: parent
+            WebEngineView{
+                id: webView
+                anchors.fill : parent
+                url: "http://www.multitran.com/m.exe?l1=1&l2=2&s=word"
+            }
+        }
+        function setUrl(url){ webView.url = url }
     }
 
-    SoundStore{
-        id: soundStore
-    }
+    MessageDialog { id : errorDialog }
+    SoundStore { id : soundStore }
+
 
 }
 

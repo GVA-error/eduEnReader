@@ -27,6 +27,19 @@ QAbstractVideoSurface* SoundStore::getVideoSurface()
     return m_surface;
 }
 
+void SoundStore::saveCurState()
+{
+    _saved_startPos = _startPos;
+    _saved_finishPos = _finishPos;
+    _saved_lastOpenedUrl = _lastOpenedUrl;
+    _saved_curPos = position();
+}
+
+void SoundStore::backToSavedState()
+{
+    setFileUrl(_saved_lastOpenedUrl, _saved_startPos, _saved_finishPos);
+    setPosition(_saved_curPos);
+}
 
 /*
 void SoundStore::posChanched(qint64 newPos)
