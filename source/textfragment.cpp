@@ -1,11 +1,26 @@
 #include "textfragment.h"
 
-bool TextFragment::havePhrase(const QString& phrase) const
+bool TextFragment::havePhrase(const QString& phrase, qreal egeOffset) const
 {
+    assert(egeOffset > 0 && egeOffset < 0.5);
     QString fragmentString = getString();
-    qint32 indexOfPhrase = fragmentString.indexOf(phrase);
-    if (indexOfPhrase > 0)
-        return true;
+    qint32 l = fragmentString.length();
+    qint32 newl = l * (1-egeOffset*2);
+    qint32 offset = l * egeOffset;
+    fragmentString = fragmentString.mid(offset, newl);
+    // Допустимые варианты
+    QStringList vars;
+    vars.push_back(" " + phrase + " ");
+    vars.push_back(" " + phrase + ",");
+    vars.push_back(" " + phrase + ":");
+    vars.push_back(" " + phrase + ".");
+    vars.push_back(" " + phrase + "?");
+    vars.push_back(" " + phrase + "!");
+    vars.push_back(" " + phrase + ".");
+
+    for (auto var : vars)
+        if (fragmentString.contains(var))
+            return true;
     return false;
 }
 

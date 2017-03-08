@@ -91,6 +91,7 @@ void UIController::openBindFile(const QUrl &arg)
 {
     QString fileName = arg.toLocalFile();
     _logic->readFromFile(fileName, _textStore, _soundStore);
+    _soundStore->saveCurState();
 }
 
 void UIController::saveBindFile(const QUrl &arg)
@@ -109,6 +110,12 @@ QString UIController::formUrlToTranslateSellected()
     return rezUrl;
 }
 
+void UIController::getExample()
+{
+    QString sellectedString = _textStore->getSellectedStreing();
+    getExamplesFor(sellectedString);
+}
+
 void UIController::makeBind()
 {
     //QUrl soundUrl = QUrl::fromLocalFile("/home/gva-error/eduEnReader/eduEnReader/tests/test.wav");
@@ -116,7 +123,10 @@ void UIController::makeBind()
     //_textStore->setFileUrl(textUrl);
     //_soundStore->setFileUrl(soundUrl);
 
-    auto examples = _logic->getExamples("swim", true);
+    //auto examples = _logic->getExamples(QString("swi"), true);
+
+    //_logic->bindLogicHanding();
+   // return;
 
     if (_f_reconizing)
         return;

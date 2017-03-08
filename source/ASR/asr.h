@@ -56,7 +56,7 @@ public slots:
 
 private:
     // Путь до скрипта распознования
-    const QString KALDI_PATH = "/home/gva-error/distr/kaldi/egs/apiai_decode/s5/";
+    const QString KALDI_PATH = "/home/gva/kaldi/egs/apiai_decode/s5/";
     // Скрипт распознования
     const QString RECOGNIZE_SCRIPT = KALDI_PATH + "wav_to_string.sh";
 

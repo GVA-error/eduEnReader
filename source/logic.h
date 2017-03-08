@@ -69,7 +69,7 @@ public:
     qint64 roundToBindTextPos(qint64);
     qreal roundToBindSoundPos(qreal);
 
-    void clear();
+    void clear(bool clearRecognized);
 private:
     Logic();
     enum FileTypes{ sound, text, binds, undefined };

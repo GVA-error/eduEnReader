@@ -4,14 +4,18 @@ import QtQuick.Controls.Styles 1.4
 
 Rectangle { // Ползунок
     property var source;
-    x : 130
-    y : 200
+    property int size_height;
+    property int size_width;
+    property int pos_x;
+    property int pos_y;
+
+    x : pos_x;//130
+    y : pos_y;//200
     //anchors.top: videoRect.
-    anchors.bottom:  soundToolBar.bottom
     //anchors.right: parent.right
     id: soundGraph
-    height: soundToolBar.height
-    width: soundToolBar.width - x - 20
+    height: size_height
+    width: size_width
     color : "transparent"
     Slider {
         id: soundSlider

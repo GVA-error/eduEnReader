@@ -251,6 +251,10 @@ bool DataPreparation::fileIsCorrect(const QString& fileName)
 void DataPreparation::clearDefaultSplitDir()
 {
     clearDir(SPLIT_DIR);
+    _rezFileNameList.clear();
+    _rezFileBeginOffset.clear();
+    _rezFileEndOffset.clear();
+
 }
 
 bool DataPreparation::clearDir(const QDir &dir)

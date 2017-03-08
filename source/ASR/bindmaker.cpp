@@ -46,6 +46,7 @@ void BindMaker::preparetion()
 void BindMaker::preparetion(const QStringList& recognizedStrings)
 {
     clear();
+    _logic->clear(false);
     qreal curStringNumber = 0;
     QList <QStringList> fileStrings;
 
@@ -77,6 +78,7 @@ void BindMaker::preparetion(const QStringList& recognizedStrings)
 void BindMaker::preparetion(qreal splitSize, qreal diff)
 {
     clear();
+    _logic->clear(true);
     assert(splitSize - diff > 0);
     QUrl url = _soundStore->fileUrl();
     QString fileName = url.toLocalFile();
@@ -171,6 +173,7 @@ void BindMaker::handleRecognized(const QString& fileName, const QStringList& rec
 void BindMaker::useLocalMinToFind_bind()
 {
     qDebug() << "******* Binding *******";
+    _logic->clear(true);
     qint64 curLastTextPos = -1;
     for (auto partFileName : _fileParts)
     {

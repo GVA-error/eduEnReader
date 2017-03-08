@@ -23,7 +23,8 @@ public:
 
     QColor getRandomMarkColor(); // Случайный цвет подсветки текста
 
-    bool havePhrase(const QString& phrase) const;
+    // egeOffset - какую часть фрагмента считаем не верно распознаной
+    bool havePhrase(const QString& phrase, qreal egeOffset = 0.25) const;
 
     virtual ~TextFragment() {}
 private:

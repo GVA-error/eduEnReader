@@ -61,7 +61,8 @@ void ASRLinuxKaldi::allStringRecognized(int exitCode)
     switch(exitCode)
     {
     case 0:
-        qDebug()<< "generator script ok:" << exitCode;
+        qDebug()<< "generator script ok:" << exitCode
+                << _fileSpeach[_file_name];
         break;
     default:
     case -1:

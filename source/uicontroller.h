@@ -10,12 +10,13 @@
 #include "ASR/bindmaker.h"
 
 /* TODO LIST
+ * 0) Убрать двойные повторения
  * 1) Ввести понятие бесконечного бинда - нужно для последнего бинда
  * 3) Записывать все распознанные строки
  * 8) Борьба с шумом с помощью вейлет преобразований через dll WavUtills
  * 10) Архивирование
  * 11) Ускорить алгоритм повторного биндинга через использование окна
- * 12) Логическе заполнение по времени
+ * 12) Логическе заполнение по времени!!!
  * 13) Конвертор форматов
  * 15) Умное выделение (Между пробелами)
  * 16) Вставка рапознонаго текста
@@ -31,6 +32,7 @@
  * 26) Сузить ползунок против мискликов
  * 27) Псевдонимы?
  * 29) Так же выводить часть текста
+ * 30) Dont find corelation - выводит при не рабочем скрипте распознования
  * n) Децентралиация вычислений?
 */
 class UIController : public QObject
@@ -82,6 +84,7 @@ public slots:
     void saveBindFile(const QUrl &bindFileName);
     void createBindFile(const QUrl &soundFileName);
     void makeBind(); // автопривязка TODO переименовать
+    void getExample();
     void openSoundFile(QString fileName);
     void cursorPosChanged();
     void setCursorPosInTimePos();

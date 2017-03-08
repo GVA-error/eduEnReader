@@ -17,6 +17,7 @@ import UiControlerModul 1.1
 */
 
 ApplicationWindow {
+    id : root
     visible: true
     width: 1024
     height: 768
@@ -45,6 +46,14 @@ ApplicationWindow {
             translateDialog.setUrl(translateUrl)
             translateDialog.showDialog()
         }
+    }
+    Action{
+        id: exampleAction
+        text: "Example"
+        shortcut: "ctrl+e"
+        iconSource: "images/editcut.png" // TODO придумать иконку
+        iconName: "edit-cut"
+        onTriggered: { var translateUrl = uiControler.getExample() }
     }
     Action {
         id: cutAction
@@ -331,7 +340,7 @@ ApplicationWindow {
         width: parent.width
         //anchors.fill: parent
         height: 50
-        QMLSoundGraph {
+        Rectangle {
             id : soundPanel
             anchors.fill: parent
             Action {
@@ -340,7 +349,7 @@ ApplicationWindow {
                 shortcut: "ctrl+B"
                 iconSource: "images/bind.png"
                 iconName: "Bind "
-                onTriggered: uiControler.getExamplesFor("swin")
+                onTriggered: uiControler.makeBind()
             }
             Action {
                 id: playAction
@@ -361,24 +370,50 @@ ApplicationWindow {
                 onTriggered: soundStore.stop()
             }
             ToolBar{
-                anchors.fill: parent
+                //anchors.fill: parent
+                anchors.left: parent.left
+                anchors.right : homeToolBar.left
+                //width: 200
                 RowLayout {
                     spacing: 0
                     ToolButton { action: bindAction }
                     ToolButton { action: playAction }
                     ToolButton { action: pauseAction }
-                    Item { Layout.fillWidth: true }
+                    //ToolButton { action: homeAction }
                 }
-
+            }
+            Action {
+                id: homeAction
+                text: "Home"
+                shortcut: "ctrl+H"
+                iconSource: "qrc:images/bind.png"
+                iconName: "Bind "
+                onTriggered: soundStore.backToSavedState()
+            }
+            ToolBar{
+                id : homeToolBar
+                //anchors.fill: parent
+                anchors.right: parent.right
+                width: 50
+                RowLayout {
+                    spacing: 0
+                    ToolButton { action: homeAction }
+                }
             }
         }
 
+        // Ползуок
         VideoController{
-            id : videoSlider
-            source : soundStore
+            id : videoSlider;
+            source : soundStore;
+            x : 200;
+         //   y : 200;
+            height: soundToolBar.height;
+            width: soundToolBar.width - 400;
+            anchors.bottom:  soundToolBar.bottom
         }
-
     }
+
     TextStore {
         id: document
         target: textArea
@@ -426,7 +461,11 @@ ApplicationWindow {
             text: "Translate"
             action: translateAction
         }
-       // MenuSeparator { }
+        MenuItem {
+            text: "Example"
+            action: exampleAction
+        }
+        MenuSeparator { }
         MenuItem {
             text: "Cut"
             action: cutAction
@@ -474,7 +513,5 @@ ApplicationWindow {
 
     MessageDialog { id : errorDialog }
     SoundStore { id : soundStore }
-
-
 }
 

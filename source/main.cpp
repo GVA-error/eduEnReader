@@ -9,7 +9,8 @@
 
 int main(int argc, char *argv[])
 {
-    QTextCodec::setCodecForLocale(QTextCodec::codecForHtml("utf-16"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForHtml("unicode"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForUtfText("unicode"));
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QtWebEngine::initialize();

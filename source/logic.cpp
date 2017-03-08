@@ -69,13 +69,23 @@ QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase) con
 void Logic::bindLogicHanding()
 {
     Bind lastBind = tempBind;
-    // Обрабатываем конци биндов
+    // Обрабатываем текстовые конци биндов
     for (auto& bind : _bindVector)
     {
         auto curText = bind.text;
         auto lastText = lastBind.text;
         qint64 curBegin = curText->begin();
         lastText->setEnd(curBegin);
+        lastBind = bind;
+    }
+    lastBind = tempBind;
+    // Обрабатываем текстовые конци биндов
+    for (auto& bind : _bindVector)
+    {
+        auto curSound = bind.sound;
+        auto lastSound = lastBind.sound;
+        qreal curBegin = curSound->begin();
+        lastSound->setEnd(curBegin);
         lastBind = bind;
     }
 }
@@ -182,12 +192,15 @@ Logic::FileTypes Logic::getFileType(const QString&) const
     return FileTypes::undefined;
 }
 
-void Logic::clear()
+void Logic::clear(bool clearRecognized)
 {
     _bindVector.clear();
-    _recognizedStringPosBegin.clear();
-    _recognizedStringPosEnd.clear();
-    _recognizedStrings.clear();
+    if (clearRecognized)
+    {
+        _recognizedStringPosBegin.clear();
+        _recognizedStringPosEnd.clear();
+        _recognizedStrings.clear();
+    }
     //curSoundFileName.clear();
    // curTextFileName.clear();
 }
@@ -350,7 +363,7 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     QStringList bindListString;
     QStringList recognizedStrings;
     FileTypes type = getFileType(fileName);
-    clear();
+    clear(true);
 
     if (type != FileTypes::binds)
     {
