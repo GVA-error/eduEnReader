@@ -27,7 +27,7 @@ QAbstractVideoSurface* SoundStore::getVideoSurface()
     return m_surface;
 }
 
-void SoundStore::saveCurState()
+void SoundStore::saveHome()
 {
     _saved_startPos = _startPos;
     _saved_finishPos = _finishPos;
@@ -35,10 +35,11 @@ void SoundStore::saveCurState()
     _saved_curPos = position();
 }
 
-void SoundStore::backToSavedState()
+void SoundStore::home()
 {
     setFileUrl(_saved_lastOpenedUrl, _saved_startPos, _saved_finishPos);
     setPosition(_saved_curPos);
+    start();
 }
 
 /*
@@ -56,12 +57,14 @@ void SoundStore::setPosPersent(qreal pos)
     qint64 fullDuretion = duration();
     qint64 realPos = fullDuretion * pos + _startPos * 1000;
     setPosition(realPos);
+    //emit posChanged(); // Походу уже вызывается
 }
 
 void SoundStore::setPosReal(qreal p)
 {
     qint64 realPos = p * 1000; // переводим в милисекунды
     setPosition(realPos);
+    emit posChanged();
 }
 
 void SoundStore::start()
@@ -72,7 +75,8 @@ void SoundStore::start()
     if (duration < _epsilonTime && _startPos > 0)
         return;
     _timerToStop->stop();
-    _timerToStop->start(duration);
+    if (duration >= _epsilonTime)
+        _timerToStop->start(duration);
     play();
 }
 
@@ -120,7 +124,7 @@ qint64 SoundStore::duration() const
 
 }
 
-qreal SoundStore::getPersentPos()
+qreal SoundStore::getPersentPos() const
 {
     qint64 fullDuretion = duration();
     if (fullDuretion <= 0)

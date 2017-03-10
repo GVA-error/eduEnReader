@@ -32,9 +32,41 @@ ApplicationWindow {
         id: aboutBox
         title: "About Text"
         text: "Autor: Golubtsov Vasiliy Anatolievich.
-            \n e-mail - vsv10000ego@gmail.com";
+            \n e-mail - vsv10000ego@gmail.com"
         icon: StandardIcon.Information
     }
+    FileDialog{
+        id: commentFileDialog
+        nameFilters : ["Sound File (*.html)"]
+        selectExisting : true
+        property bool addAction : false;
+        onAccepted: {
+            uiControler.addComment(fileUrl)
+        }
+    }
+    FileDialog {
+        id: fileDialog
+        nameFilters: ["Bind file (*.bnd)"]
+        onAccepted: {
+            if (fileDialog.selectExisting)
+                uiControler.openBindFile(fileUrl)
+            else
+                uiControler.saveBindFile(fileUrl)
+        }
+    }
+    FileDialog {
+        id: soundFileDialog
+        nameFilters: ["Sound File (*.wav)"]
+        selectExisting : true
+        onAccepted: {
+            uiControler.createBindFile(fileUrl)
+        }
+    }
+    ColorDialog {
+        id: colorDialog
+        color: "black"
+    }
+
     Action{
         id: translateAction
         text: "Translate"
@@ -45,6 +77,16 @@ ApplicationWindow {
             var translateUrl = uiControler.formUrlToTranslateSellected();
             translateDialog.setUrl(translateUrl)
             translateDialog.showDialog()
+        }
+    }
+    Action{
+        id: commentAddAction
+        text: "Translate"
+        shortcut: "ctrl+k"
+        iconSource: "images/editcut.png" // TODO придумать иконку
+        iconName: "edit-cut"
+        onTriggered: {
+            commentFileDialog.open()
         }
     }
     Action{
@@ -172,28 +214,6 @@ ApplicationWindow {
             fileDialog.open()
         }
     }
-    FileDialog {
-        id: fileDialog
-        nameFilters: ["Bind file (*.bnd)"]
-        onAccepted: {
-            if (fileDialog.selectExisting)
-                uiControler.openBindFile(fileUrl)
-            else
-                uiControler.saveBindFile(fileUrl)
-        }
-    }
-    FileDialog {
-        id: soundFileDialog
-        nameFilters: ["Sound File (*.wav)"]
-        selectExisting : true
-        onAccepted: {
-            uiControler.createBindFile(fileUrl)
-        }
-    }
-    ColorDialog {
-        id: colorDialog
-        color: "black"
-    }
     menuBar: MenuBar {
         Menu {
             title: "&File"
@@ -319,6 +339,25 @@ ApplicationWindow {
             }
        }
     }
+
+    // Список комментариев
+    ListDialog{
+        id : comments;
+        out_model: uiControler.commentListModel
+        title: "Comments"
+
+        anchors.top : parent.top
+        anchors.bottom: soundToolBar.top
+        anchors.right : videoRect.left
+        anchors.left : soundToolBar.left
+
+        onSelected : {
+            var fileUrl = uiControler.getCommentUrlWithName(str);
+            commentDialog.openHtml(fileUrl)
+            commentDialog.showDialog()
+        }
+    }
+
     // Список примеров
     ListDialog{
         id : examples;
@@ -355,10 +394,13 @@ ApplicationWindow {
                 id: playAction
                 text: "Play"
                 shortcut: "Ctrl+P"
-                iconSource: "images/play.png"
+                iconSource: soundStore.state == SoundStore.PlayingState ? "images/stop.png" : "images/play.png"
                 iconName: "Play"
                 onTriggered: {
-                    soundStore.start();
+                    if (soundStore.state == SoundStore.PlayingState)
+                        soundStore.stop()
+                    else
+                        soundStore.start()
                 }
             }
             Action {
@@ -378,7 +420,7 @@ ApplicationWindow {
                     spacing: 0
                     ToolButton { action: bindAction }
                     ToolButton { action: playAction }
-                    ToolButton { action: pauseAction }
+                   // ToolButton { action: pauseAction }
                     //ToolButton { action: homeAction }
                 }
             }
@@ -388,7 +430,7 @@ ApplicationWindow {
                 shortcut: "ctrl+H"
                 iconSource: "qrc:images/bind.png"
                 iconName: "Bind "
-                onTriggered: soundStore.backToSavedState()
+                onTriggered: uiControler.home()
             }
             ToolBar{
                 id : homeToolBar
@@ -465,6 +507,10 @@ ApplicationWindow {
             text: "Example"
             action: exampleAction
         }
+        MenuItem {
+            text: "Add comment"
+            action: commentAddAction
+        }
         MenuSeparator { }
         MenuItem {
             text: "Cut"
@@ -493,24 +539,14 @@ ApplicationWindow {
              }
         }
     }
-    SimpleDialog{
+    WebViewDialog{
         id: translateDialog
         contentText: qsTr("Translate")
-        onBack: hideDialog()
-        Rectangle{
-            width: translateDialog.baseW * 9 / 10
-            height: translateDialog.baseH * 3 / 4
-            radius: 100
-            anchors.centerIn: parent
-            WebEngineView{
-                id: webView
-                anchors.fill : parent
-                url: "http://www.multitran.com/m.exe?l1=1&l2=2&s=word"
-            }
-        }
-        function setUrl(url){ webView.url = url }
+        defaultURL : "http://www.multitran.com/m.exe?l1=1&l2=2&s=word"
     }
-
+    HtmlView{
+        id: commentDialog
+    }
     MessageDialog { id : errorDialog }
     SoundStore { id : soundStore }
 }

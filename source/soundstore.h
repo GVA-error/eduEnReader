@@ -29,14 +29,14 @@ public slots:
 
     void setPosReal(qreal); // позиция устанавливается в секундах
     void setPosPersent(qreal); // позиция устанавливаеться в проентах
-    qreal getPersentPos(); // Процент воспроизведёного
+    qreal getPersentPos() const; // Процент воспроизведёного
     qreal getTimePos() const;
     void start();
     void stop();
     void stopStopTimer(); // Нужна для синхронизации завершения
 
-    void saveCurState();
-    void backToSavedState();
+    void saveHome();
+    void home();
 
     // Для потдержки Qml MediaPlayer
     void setVideoSurface(QAbstractVideoSurface* surface);
@@ -58,7 +58,9 @@ protected:
     qint64 _saved_curPos;
     QUrl _saved_lastOpenedUrl;
 
-    const qint32 _epsilonTime = 5; // Допустимая погрешность по времени в милисекундах при остановке видео
+    // Нужно чтобы таймер не запускался на 0 - 1, что моэет вызвать притормаживание
+    // Допустимая погрешность по времени в милисекундах при остановке видео
+    const qint32 _epsilonTime = 5;
 
     SoundStore(QObject * parent = 0, Flags flags = 0);
 

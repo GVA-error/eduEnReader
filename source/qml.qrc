@@ -33,5 +33,7 @@
         <file>FileDialogs.qml</file>
         <file>ListDialog.qml</file>
         <file>VideoController.qml</file>
+        <file>WebViewDialog.qml</file>
+        <file>HtmlView.qml</file>
     </qresource>
 </RCC>

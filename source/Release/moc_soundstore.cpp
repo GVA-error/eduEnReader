@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SoundStore_t {
     QByteArrayData data[21];
-    char stringdata0[232];
+    char stringdata0[216];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,23 +44,22 @@ QT_MOC_LITERAL(9, 81, 10), // "getTimePos"
 QT_MOC_LITERAL(10, 92, 5), // "start"
 QT_MOC_LITERAL(11, 98, 4), // "stop"
 QT_MOC_LITERAL(12, 103, 13), // "stopStopTimer"
-QT_MOC_LITERAL(13, 117, 12), // "saveCurState"
-QT_MOC_LITERAL(14, 130, 16), // "backToSavedState"
-QT_MOC_LITERAL(15, 147, 15), // "setVideoSurface"
-QT_MOC_LITERAL(16, 163, 22), // "QAbstractVideoSurface*"
-QT_MOC_LITERAL(17, 186, 7), // "surface"
-QT_MOC_LITERAL(18, 194, 15), // "getVideoSurface"
-QT_MOC_LITERAL(19, 210, 8), // "position"
-QT_MOC_LITERAL(20, 219, 12) // "videoSurface"
+QT_MOC_LITERAL(13, 117, 8), // "saveHome"
+QT_MOC_LITERAL(14, 126, 4), // "home"
+QT_MOC_LITERAL(15, 131, 15), // "setVideoSurface"
+QT_MOC_LITERAL(16, 147, 22), // "QAbstractVideoSurface*"
+QT_MOC_LITERAL(17, 170, 7), // "surface"
+QT_MOC_LITERAL(18, 178, 15), // "getVideoSurface"
+QT_MOC_LITERAL(19, 194, 8), // "position"
+QT_MOC_LITERAL(20, 203, 12) // "videoSurface"
 
     },
     "SoundStore\0posChanged\0\0playReal\0begin\0"
     "end\0setPosReal\0setPosPersent\0getPersentPos\0"
     "getTimePos\0start\0stop\0stopStopTimer\0"
-    "saveCurState\0backToSavedState\0"
-    "setVideoSurface\0QAbstractVideoSurface*\0"
-    "surface\0getVideoSurface\0position\0"
-    "videoSurface"
+    "saveHome\0home\0setVideoSurface\0"
+    "QAbstractVideoSurface*\0surface\0"
+    "getVideoSurface\0position\0videoSurface"
 };
 #undef QT_MOC_LITERAL
 
@@ -142,8 +141,8 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->start(); break;
         case 8: _t->stop(); break;
         case 9: _t->stopStopTimer(); break;
-        case 10: _t->saveCurState(); break;
-        case 11: _t->backToSavedState(); break;
+        case 10: _t->saveHome(); break;
+        case 11: _t->home(); break;
         case 12: _t->setVideoSurface((*reinterpret_cast< QAbstractVideoSurface*(*)>(_a[1]))); break;
         case 13: { QAbstractVideoSurface* _r = _t->getVideoSurface();
             if (_a[0]) *reinterpret_cast< QAbstractVideoSurface**>(_a[0]) = _r; }  break;

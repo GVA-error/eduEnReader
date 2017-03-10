@@ -4,8 +4,41 @@ UIController::UIController(QObject *parent) : QObject(parent)
 {
     _logic = Logic::factoryMethod();
     _f_reconizing = false;
+    _f_home = true;
    // _exampleList.push_back("1");
    // _exampleList.push_back("2");
+}
+
+void UIController::saveHome()
+{
+    _soundStore->saveHome();
+    _textStore->saveHome();
+}
+
+void UIController::home(){
+    _soundStore->home();
+    _textStore->home();
+    _f_home = true;
+}
+
+TextFragment::PTR UIController::getSellectedText()
+{
+    qint64 begin = _textStore->selectionStart();
+    qint64 end = _textStore->selectionEnd();
+    auto rezFragment = TextFragment::factoryMethod(begin, end, _textStore);
+    return rezFragment;
+}
+
+void UIController::addComment(const QUrl& commentUrl)
+{
+    auto sellectedFragment = getSellectedText();
+    _logic->makeComment(sellectedFragment, commentUrl);
+}
+
+QUrl UIController::getCommentUrlWithName(QString name)
+{
+    QUrl commentUrl = _logic->getCommentUrlsonName(name);
+    return commentUrl;
 }
 
 void UIController::playExample(QString ID)
@@ -14,8 +47,15 @@ void UIController::playExample(QString ID)
     qreal begin = example.start;
     qreal end = example.end;
     QUrl url = example.realUrl;
+    QString text = example.text;
+
+    if (_f_home)
+        saveHome();
+
+    _f_home = false;
     _soundStore->setFileUrl(url, begin, end);
     _soundStore->start();
+    _textStore->setText(text);
 }
 
 void UIController::getExamplesFor(const QString& seekablePhrase)
@@ -61,6 +101,8 @@ void UIController::setCursorPosInTimePos()
 
 void UIController::setTimePosInCursorPos()
 {
+    if (!_f_home)// TODO Убрать когда буду делать переходы вне дома
+        return;
     qint64 textPos = _textStore->getCursorPos();
     qreal newSoundPos = _logic->posInTxtToPosInWav(textPos);
 
@@ -78,6 +120,8 @@ void UIController::cursorPosChanged()
     if (cursorPos <= 0)
         return;
     _logic->tempMarkBindInTextPos(cursorPos);
+    auto newComments = _logic->getCommentNamesonTextPos(cursorPos);
+    setCommentList(newComments);
     setTimePosInCursorPos();
 }
 
@@ -91,7 +135,7 @@ void UIController::openBindFile(const QUrl &arg)
 {
     QString fileName = arg.toLocalFile();
     _logic->readFromFile(fileName, _textStore, _soundStore);
-    _soundStore->saveCurState();
+    saveHome();
 }
 
 void UIController::saveBindFile(const QUrl &arg)

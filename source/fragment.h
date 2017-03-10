@@ -26,6 +26,10 @@ public:
     IndexType end() const { return _end; }
 
     bool isBelongs(IndexType pos) const { return pos >= _begin && pos <= _end; }
+    bool haveIntersaption(IndexType posBegin, IndexType posEnd) const {
+        return isBelongs(posBegin) || isBelongs(posEnd)
+                || (posBegin <= _begin && posEnd >= _end);
+    }
 
     PTRSourceType getSource() { return _source; }
 

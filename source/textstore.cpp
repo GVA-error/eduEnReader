@@ -14,6 +14,8 @@ TextStore::TextStore()
     , m_selectionEnd(0)
 {
     m_doc = &_default_m_doc;
+    _saved_url = QUrl();
+    _saved_curPosition = 0;
 }
 
 QString TextStore::getString(qint64 begin, qint64 end) const
@@ -48,6 +50,18 @@ qint64 TextStore::getCursorPos() const
     return m_cursorPosition;
 }
 
+void TextStore::saveHome()
+{
+    _saved_curPosition = getCursorPos();
+    _saved_url = m_fileUrl;
+}
+
+void TextStore::home()
+{
+    setFileUrl(_saved_url);
+    setCursorPosition(_saved_curPosition);
+}
+
 void TextStore::setTarget(QQuickItem *target)
 {
     m_doc = 0;
@@ -67,7 +81,7 @@ void TextStore::setTarget(QQuickItem *target)
 void TextStore::setFileUrl(const QUrl &url)
 {
     QString fileName = QQmlFile::urlToLocalFileOrQrc(url);
-    assert(fileName.isEmpty() == false);
+    //assert(fileName.isEmpty() == false);
     m_documentTitle = QFileInfo(fileName).baseName();
     m_fileUrl = url;
     if (QFile::exists(fileName)) {

@@ -737,6 +737,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../qml.qrc \
 		../../../Qt/5.8/gcc_64/bin/rcc \
+		../WebViewDialog.qml \
 		../VideoController.qml \
 		../SimpleDialog.qml \
 		../DialogBackground.qml \
@@ -745,6 +746,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../ListDialog.qml \
 		../QMLButtonStyle.qml \
 		../QMLScroolBar.qml \
+		../HtmlView.qml \
 		../main.qml \
 		../QMLSoundGraph.qml \
 		../images/textunder.png \

@@ -24,29 +24,41 @@ Rectangle { // Ползунок
         height: soundToolBar.height
         value: source.position
         style: SliderStyle {
-                groove: Rectangle {
-                    implicitWidth: 200
-                    implicitHeight: soundToolBar.height / 2
-                    color: "white"
-                    radius: 8
-                }
-                handle: Rectangle {
-                    anchors.centerIn: parent
-                    color: control.pressed ? "white" : "lightgray"
-                    border.color: "gray"
-                    border.width: 2
-                    implicitWidth: 34
-                    implicitHeight: 34
-                    radius: 12
-                }
+            groove: Rectangle {
+                implicitWidth: 200
+                implicitHeight: soundToolBar.height / 2
+                color: "white"
+                radius: 8
             }
-        onValueChanged: {
+            handle: Rectangle {
+                anchors.centerIn: parent
+                color: control.pressed ? "white" : "lightgray"
+                border.color: "gray"
+                border.width: 2
+                implicitWidth: 34
+                implicitHeight: 34
+                radius: 12
+            }
+        }
+        /*onValueChanged: {
             if (!pressed)
                 uiControler.setCursorPosInTimePos();
-        }
-        onPressedChanged:{
+        }*/
+        onValueChanged:
+        {
             if (pressed)
-                source.setPosPersent(soundSlider.value);
+                source.position = value;
+            //if ()
+
         }
+
+//        onPressedChanged:{
+//            //if (pressed)
+
+//            if (!pressed)
+//            {
+//                source.setPosPersent(soundSlider.value);
+//            }
+//        }
     }
 }

@@ -42,10 +42,12 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase) c
         Example newExample;
         auto soundFragment = bind.sound;
         auto sound = soundFragment->getSource();
+        auto text = bind.text;
         newExample.FileName = sound->toString();
         newExample.start = soundFragment->begin();
         newExample.end = soundFragment->end();
         newExample.realUrl = sound->fileUrl();
+        newExample.text = "... " + text->getString() + " ...";
         rezList.push_back(newExample);
     }
 
@@ -89,6 +91,48 @@ void Logic::bindLogicHanding()
         lastBind = bind;
     }
 }
+
+QList <QString> Logic::getCommentNamesonTextPos(qint64 pos)
+{
+    QList <QString> rezList;
+    qint64 begin, end;
+    begin = end = pos;
+    Bind b = getBindFromTextPos(pos);
+    if (!isEquils(b, zeroBind))
+    {
+        auto text = b.text;
+        begin = text->begin();
+        end = text->end();
+    }
+    rezList = getCommentNamesonTextPos(begin, end);
+    return rezList;
+}
+QList <QString> Logic::getCommentNamesonTextPos(qint64 begin, qint64 end)
+{
+    QList <QString> rezList;
+    for (Comment comment : _commentsVector)
+    {
+        auto commented = comment.commented;
+        if (commented.isNull())
+            continue;
+        if (commented->haveIntersaption(begin, end))
+        {
+            QString name = comment.name;
+            rezList.push_back(name);
+        }
+    }
+    return rezList;
+}
+
+QUrl Logic::getCommentUrlsonName(QString name)
+{
+    for (Comment comment : _commentsVector)
+        if (comment.name == name)
+            return comment.commentUrl;
+    assert(true);
+    return QUrl();
+}
+
 
 qint64 Logic::posInWavToPosInText(qreal soundPos)
 {
@@ -195,6 +239,7 @@ Logic::FileTypes Logic::getFileType(const QString&) const
 void Logic::clear(bool clearRecognized)
 {
     _bindVector.clear();
+    _commentsVector.clear();
     if (clearRecognized)
     {
         _recognizedStringPosBegin.clear();
@@ -229,6 +274,21 @@ void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QSt
 
     addInBindList(b);
     addInRecognizedList(recognizedText, soundBegin, soundEnd);
+}
+
+void Logic::makeComment(TextFragment::PTR text, QUrl url)
+{
+    Comment c;
+    c.name = url.fileName(); // Надо чтобы могли ссылаться все
+    c.commented = text;
+    c.commentUrl = url;
+
+    addInCommentList(c);
+}
+
+void Logic::addInCommentList(const Comment& comment)
+{
+    _commentsVector.push_back(comment);
 }
 
 void Logic::addInBindList(const Bind& bind)
@@ -351,6 +411,11 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
                    << posBegin << " " << posEnd <<  "\n";
         i++;
     }
+    for (auto comment : _commentsVector)
+    {
+        QString curStringBind = toString(comment);
+        fileStream << par_Comment << " " << curStringBind << "\n";
+    }
     file.close();
 }
 
@@ -361,6 +426,7 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     QString textHashString;
     QString soundHashString;
     QStringList bindListString;
+    QStringList commentListString;
     QStringList recognizedStrings;
     FileTypes type = getFileType(fileName);
     clear(true);
@@ -386,6 +452,8 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         value_buff = fileStream.readLine();
         if (par_buff == par_Bind)
             bindListString.push_back(value_buff);
+        if (par_buff == par_Comment)
+            commentListString.push_back(value_buff);
         else if (par_buff == par_RecognizedString)
             recognizedStrings.push_back(value_buff);
         else if (par_buff == par_SoundStore)
@@ -422,6 +490,13 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         addInBindList(nextBind);
     }
 
+    for (auto commentString : commentListString)
+    {
+        Comment nextComment;
+        fromString(nextComment, commentString, textStore);
+        addInCommentList(nextComment);
+    }
+
     qint64 i = 0;
     for (auto recognizedStr : recognizedStrings)
     {
@@ -451,6 +526,43 @@ QString Logic::toString(const Bind& bind) const
     outStream << textBegin << " " << textEnd << " "
               << soundBegin << " " << soundEnd;
     return rez;
+}
+
+QString Logic::toString(const Comment & comment) const{
+    QUrl url = comment.commentUrl;
+    QString stringUrl = url.toString();
+    auto commented = comment.commented;
+    qint64 textBegin = commented->begin();
+    qint64 textEnd = commented->end();
+    QString stringName = comment.name;
+
+    QString rez;
+    QTextStream outStream(&rez);
+    outStream << stringUrl << " " << stringName << " "
+              << textBegin << " " << textEnd;
+
+    return rez;
+}
+
+void Logic::fromString(Comment&, QString stringComment, TextStore::PTR text)
+{
+    QUrl url;
+    QString name;
+    qint64 begin;
+    qint64 end;
+    QString stringUrl;
+    QTextStream sourceString(&stringComment);
+    sourceString >> stringUrl >> name >> begin >> end;
+    url = QUrl(stringUrl);
+
+    auto commented = TextFragment::factoryMethod(begin, end, text);
+
+    Comment newComment;
+    newComment.commented = commented;
+    newComment.commentUrl = url;
+    newComment.name = name;
+
+    addInCommentList(newComment);
 }
 
 void Logic::fromString(Bind& bind, QString bindString, SoundStore::PTR sound, TextStore::PTR text) const

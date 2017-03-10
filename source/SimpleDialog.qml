@@ -13,7 +13,7 @@ Item {
     DialogBackground {
         id: dialogBackground
         onBackClicked: {
-        //    hideDialog()
+            hideDialog()
         }
     }
     Rectangle {

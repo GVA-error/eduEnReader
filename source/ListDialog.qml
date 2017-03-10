@@ -26,7 +26,7 @@ Item {
             property var view: ListView.view
             property var isCurrent: ListView.isCurrentItem
 
-            width: view.width
+            width: parent.width
             height: 40
 
             Rectangle {
@@ -55,7 +55,7 @@ Item {
         }
 
         header: Rectangle {
-            width: view.width
+            width: parent.width
             height: 40
             border {
                 color: "black"
@@ -69,6 +69,4 @@ Item {
             }
         }
     }
-
-
 }

@@ -94,6 +94,8 @@ public Q_SLOTS:
 
     void setDocumentTitle(QString arg);
 
+    void saveHome();
+    void home();
 signals:
     void targetChanged();
     void cursorPositionChanged();
@@ -131,6 +133,9 @@ private:
     int m_cursorPosition;
     int m_selectionStart;
     int m_selectionEnd;
+
+    QUrl _saved_url;
+    qint64 _saved_curPosition;
 
     QFont m_font;
     int m_fontSize;
