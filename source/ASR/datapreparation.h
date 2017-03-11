@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QDir>
+#include <QProcess>
 #include <assert.h>
 #include <math.h>
 #include "wavworker.h"
@@ -21,6 +22,10 @@ class DataPreparation : public QObject
     const qint32 _16k = 16000;
 public:
     explicit DataPreparation(QObject *parent = 0);
+    // Извлекает аудиодорожку из *.mp4 файла
+    // Возвращает имя получившевася файла
+    QString extractAudio(const QString& fileName);
+    void noiseReduse(const QString& fileName);
 
     // Делит файл на несколько маленьких
     // splitSize - время в секундах, определяет размер
@@ -40,12 +45,15 @@ public:
 signals:
 
 public slots:
+    void finished(int);
 
 private:
+    QProcess *_console;
     WavWorker _wav;
     QStringList _rezFileNameList;
     QMap <QString, qreal> _rezFileBeginOffset;
     QMap <QString, qreal> _rezFileEndOffset;
+    const QString _noiseReduseScrit = "/home/gva/eduEnReader/source/Scripts/noiseReduse.sh";
 
     // Нужна для сохронения и подготовки
     // В ауте нумерация с нуля

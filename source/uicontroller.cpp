@@ -9,6 +9,16 @@ UIController::UIController(QObject *parent) : QObject(parent)
    // _exampleList.push_back("2");
 }
 
+TextStore* UIController::getDocument()
+{
+    return _textStore.data();
+}
+
+SoundStore* UIController::getSoundStore()
+{
+    return _soundStore.data();
+}
+
 void UIController::saveHome()
 {
     _soundStore->saveHome();
@@ -19,6 +29,63 @@ void UIController::home(){
     _soundStore->home();
     _textStore->home();
     _f_home = true;
+}
+bool UIController::getMouseIsPressed() const
+{
+    return mouseIsPressed;
+}
+
+void UIController::setMouseIsPressed(bool& newValue)
+{
+    mouseIsPressed = newValue;
+}
+
+void UIController::setDocument(TextStore* TS) {
+    _textStore =  TextStore::PTR(TS);
+    QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
+    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+    if (_textStore.isNull() == false && _soundStore.isNull() == false)
+        initBindMaker(_textStore, _soundStore, _logic);
+}
+
+void UIController::setSoundStore(SoundStore* TS) {
+    _soundStore =  SoundStore::PTR(TS);
+    QObject::connect(_soundStore.data(), SIGNAL(posChanged()), this, SLOT(setCursorPosInTimePos()));
+    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+    if (_textStore.isNull() == false && _soundStore.isNull() == false)
+        initBindMaker(_textStore, _soundStore, _logic);
+}
+
+QStringList UIController::getExampleList() const
+{
+    return _exampleList;
+}
+
+void UIController::setExampleList(const QStringList& newExamples)
+{
+    _exampleList = newExamples;
+    emit exampleListChanged();
+}
+
+QStringList UIController::getCommentList() const
+{
+    return _commentList;
+}
+
+void UIController::setCommentList(QStringList newComments)
+{
+    if (newComments.size() > 1)
+    {
+        QStringList doubleList;
+        for (auto cur = newComments.begin() + 1; cur != newComments.end() ; cur++)
+            for (auto prev = newComments.begin(); prev != cur; prev++)
+                if (*prev == *cur)
+                    doubleList.push_back(*prev);
+        for (auto d : doubleList)
+            newComments.removeOne(d);
+    }
+    _commentList = newComments;
+    emit commentListChanged();
 }
 
 TextFragment::PTR UIController::getSellectedText()
@@ -35,7 +102,7 @@ void UIController::addComment(const QUrl& commentUrl)
     _logic->makeComment(sellectedFragment, commentUrl);
 }
 
-QUrl UIController::getCommentUrlWithName(QString name)
+QUrl UIController::getCommentUrlWithName(const QString &name) const
 {
     QUrl commentUrl = _logic->getCommentUrlsonName(name);
     return commentUrl;
@@ -93,6 +160,8 @@ void UIController::recognizeIsFinished()
 
 void UIController::setCursorPosInTimePos()
 {
+    if (_f_home == false)
+        return;
     qreal timePos = _soundStore->getTimePos();
     qint64 textPos = _logic->posInWavToPosInText(timePos);
     if (textPos >= 0)
@@ -101,7 +170,7 @@ void UIController::setCursorPosInTimePos()
 
 void UIController::setTimePosInCursorPos()
 {
-    if (!_f_home)// TODO Убрать когда буду делать переходы вне дома
+    if (_f_home == false)
         return;
     qint64 textPos = _textStore->getCursorPos();
     qreal newSoundPos = _logic->posInTxtToPosInWav(textPos);
@@ -116,6 +185,8 @@ void UIController::setTimePosInCursorPos()
 
 void UIController::cursorPosChanged()
 {
+    if (_f_home == false)
+        return;
     qint64 cursorPos = _textStore->getCursorPos();
     if (cursorPos <= 0)
         return;
@@ -171,6 +242,13 @@ void UIController::makeBind()
 
     //_logic->bindLogicHanding();
    // return;
+
+//    DataPreparation p;
+//    p.extractAudio("A2.mp4");
+//    p.noiseReduse("A2.wav");
+
+//    return;
+
 
     if (_f_reconizing)
         return;
@@ -235,18 +313,22 @@ void UIController::makeBind()
 //    bm.binding();
 }
 
-void UIController::openSoundFile(QString fileName)
+void UIController::openSoundFile(const QString &fileName)
 {
     _soundStore->setFileUrl(fileName);
 }
 
 void UIController::setSellectionText(TextFragment::PTR t)
 {
+    if (_f_home == false)
+        return;
     setSellectionText(t->begin(), t->end());
 }
 
 void UIController::setSellectionText(qint64 begin, qint64 end)
 {
+    if (_f_home == false)
+        return;
     _textStore->setSelectionStart(begin);
     _textStore->setSelectionEnd(end);
 }

@@ -7,10 +7,6 @@
 //    _end = end;
 //}
 
-void SoundFragment::play()
-{
-    _source->playReal(_begin, _end);
-}
 
 //SoundFragment::SoundFragment(qreal begin, qreal end, SoundFragment::PTR source)
 //{

@@ -100,12 +100,6 @@ void SoundStore::stopStopTimer()
         stop();
 }
 
-void SoundStore::playReal(qreal begin, qreal end)
-{
-    setPosReal(begin);
-    play();
-}
-
 qreal SoundStore::getTimePos() const
 {
     qreal curTimePos = (qreal)position() / 1000;

@@ -82,13 +82,17 @@ void BindMaker::preparetion(qreal splitSize, qreal diff)
     assert(splitSize - diff > 0);
     QUrl url = _soundStore->fileUrl();
     QString fileName = url.toLocalFile();
+
+    QString wavFile = _preparator.extractAudio(fileName);
+    _preparator.noiseReduse(wavFile);
+
     if (diff == 0.0f)
-        _preparator.splitFile(fileName, splitSize);
+        _preparator.splitFile(wavFile, splitSize);
     else
     {
         qreal max = splitSize + diff;
         qreal min = splitSize - diff;
-        _preparator.splitFile(fileName, min, max);
+        _preparator.splitFile(wavFile, min, max);
     }
     _fileParts = _preparator.getFileNameList();
 

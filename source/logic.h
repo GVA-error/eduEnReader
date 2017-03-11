@@ -34,7 +34,7 @@ public:
     QList <Example> getExamples(const QString& seakablePhrase, bool findInThisFile = false) const;
     QList <Example> getExamplesInThis(const QString& seakablePhrase) const; // Ищет только в текущем файле
 
-    QString getCurBndFileName() { return _curBndFileName; }
+    QString getCurBndFileName() const { return _curBndFileName; }
 
     // Логически обрабатывает бинлы
     void bindLogicHanding();
@@ -52,16 +52,16 @@ public:
     void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString& recognizedText);
     void makeComment(TextFragment::PTR text, QUrl url);
 
-    QStringList getRecognizedStrings() { return _recognizedStrings; }
-    qreal getRecognizedStringBegin(qint64 stringNumber) { return _recognizedStringPosBegin[stringNumber];}
-    qreal getRecognizedStringEnd(qint64 stringNumber) { return _recognizedStringPosEnd[stringNumber];}
+    QStringList getRecognizedStrings() const { return _recognizedStrings; }
+    qreal getRecognizedStringBegin(qint64 stringNumber) const { return _recognizedStringPosBegin.value(stringNumber);}
+    qreal getRecognizedStringEnd(qint64 stringNumber) const { return _recognizedStringPosEnd.value(stringNumber);}
 
     // Нужны для динамического позиционирования
-    qint64 posInWavToPosInText(qreal); // по позиции в секундах, узнаёт позицию в интерпретированнном тексте
-    qreal posInTxtToPosInWav(qint64); // по позиции в интерпретированном тексте узнаёт позицию в wav файле в секундах
-    QList <QString> getCommentNamesonTextPos(qint64 begin, qint64 end); // по позиции в интерпритированном тексте возвращает url комментария
-    QList <QString> getCommentNamesonTextPos(qint64 pos); // Если позиция принадлежит бинду, возвращает все комментарии пересекающие бинд
-    QUrl getCommentUrlsonName(QString name);
+    qint64 posInWavToPosInText(qreal) const; // по позиции в секундах, узнаёт позицию в интерпретированнном тексте
+    qreal posInTxtToPosInWav(qint64) const; // по позиции в интерпретированном тексте узнаёт позицию в wav файле в секундах
+    QList <QString> getCommentNamesonTextPos(qint64 begin, qint64 end) const; // по позиции в интерпритированном тексте возвращает url комментария
+    QList <QString> getCommentNamesonTextPos(qint64 pos) const; // Если позиция принадлежит бинду, возвращает все комментарии пересекающие бинд
+    QUrl getCommentUrlsonName(const QString &name) const;
 
     // Для динамической подсветки
     void markBindFromSoundPos(qreal);
@@ -72,8 +72,8 @@ public:
     void markAllBindedText(); // Ненужна
     void unMarkAllBindedText();
     // Округляют до позиции в ближайшем бинде
-    qint64 roundToBindTextPos(qint64);
-    qreal roundToBindSoundPos(qreal);
+    qint64 roundToBindTextPos(qint64) const;
+    qreal roundToBindSoundPos(qreal) const;
 
     void clear(bool clearRecognized);
 private:
@@ -110,15 +110,16 @@ private:
 
     // Возвращается если не нашли подходящего бинда
     // Иницилизирован в конструкторе
-    Bind zeroBind;
+    Bind zeroBind; // Не стоит модифицировать
     Bind tempBind; // служит как временная переменная которую можно поменять, но она не на что не повличет
 
+    QString _curBndFileName;
     qint64 _lastTempMarkPos;
 
     // Упорядоченное множество биндов
     // Нужно для подсветки и дихотомического поиска соответствующего выделения
     QVector <Bind> _bindVector;
-    QVector <Comment> _commentsVector;
+    QVector <Comment> _commentsVector; // Комментарии к тексту
     QStringList _recognizedStrings; // Распознаные строки из файла, нужны для быстрого перепросчёта
     QMap <qint64, qreal> _recognizedStringPosBegin; // позициия в звуковом файле для каждого элемента _recognizedStrings
     QMap <qint64, qreal> _recognizedStringPosEnd;
@@ -130,10 +131,6 @@ private:
     void addInCommentList(const Comment&);
 
     QVector <Bind>::iterator getBindOnTextPos(qint64 pos); // Поиск бинда сответствующего позиции тексте
-
-  //  QString curSoundFileName;
-    //QString curTextFileName;
-    QString _curBndFileName;
 
     // Нужно переписать для динамических биндов
     bool haveIntersaption(const Bind&) const;
@@ -155,7 +152,7 @@ private:
     // Нужно для нахождения примеров
     QList<Bind> getBindsWithPhrase(const QString& seekablePhrase) const;
 
-    bool isEquils(const Bind& left, const Bind& right) {
+    bool isEquils(const Bind& left, const Bind& right) const {
         auto l_sound = left.sound;
         auto l_text = left.text;
         auto r_sound = right.sound;

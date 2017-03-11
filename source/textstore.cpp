@@ -7,15 +7,14 @@
 #include <QtCore/QFileInfo>
 
 TextStore::TextStore()
-    : m_target(0)
-    , m_doc(0)
-    , m_cursorPosition(-1)
-    , m_selectionStart(0)
-    , m_selectionEnd(0)
+    : _target(0)
+    , _doc(&_default_m_doc)
+    , _cursorPosition(-1)
+    , _selectionStart(0)
+    , _selectionEnd(0)
+    , _saved_url(QUrl())
+    , _saved_curPosition(0)
 {
-    m_doc = &_default_m_doc;
-    _saved_url = QUrl();
-    _saved_curPosition = 0;
 }
 
 QString TextStore::getString(qint64 begin, qint64 end) const
@@ -33,27 +32,27 @@ QString TextStore::getString(qint64 begin, qint64 end) const
 
 QString TextStore::getString() const
 {
-    QString planeText = m_doc->toPlainText(); // заменить на член
+    QString planeText = _doc->toPlainText(); // заменить на член
     return planeText;
 }
 
 QString TextStore::getSellectedStreing() const
 {
-    qint64 begin = m_selectionStart;
-    qint64 end = m_selectionEnd;
+    qint64 begin = _selectionStart;
+    qint64 end = _selectionEnd;
     QString sellectedString = getString(begin, end);
     return sellectedString;
 }
 
 qint64 TextStore::getCursorPos() const
 {
-    return m_cursorPosition;
+    return _cursorPosition;
 }
 
 void TextStore::saveHome()
 {
     _saved_curPosition = getCursorPos();
-    _saved_url = m_fileUrl;
+    _saved_url = _fileUrl;
 }
 
 void TextStore::home()
@@ -64,16 +63,16 @@ void TextStore::home()
 
 void TextStore::setTarget(QQuickItem *target)
 {
-    m_doc = 0;
-    m_target = target;
-    if (!m_target)
+    _doc = 0;
+    _target = target;
+    if (!_target)
         return;
 
-    QVariant doc = m_target->property("textDocument");
+    QVariant doc = _target->property("textDocument");
     if (doc.canConvert<QQuickTextDocument*>()) {
         QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
         if (qqdoc)
-            m_doc = qqdoc->textDocument();
+            _doc = qqdoc->textDocument();
     }
     emit targetChanged();
 }
@@ -82,8 +81,8 @@ void TextStore::setFileUrl(const QUrl &url)
 {
     QString fileName = QQmlFile::urlToLocalFileOrQrc(url);
     //assert(fileName.isEmpty() == false);
-    m_documentTitle = QFileInfo(fileName).baseName();
-    m_fileUrl = url;
+    _documentTitle = QFileInfo(fileName).baseName();
+    _fileUrl = url;
     if (QFile::exists(fileName)) {
         QFile file(fileName);
         if (file.open(QFile::ReadOnly))
@@ -91,10 +90,10 @@ void TextStore::setFileUrl(const QUrl &url)
             QByteArray data = file.readAll();
             QTextCodec *codec = QTextCodec::codecForHtml(data);
             setText(codec->toUnicode(data));
-            if (m_doc)
+            if (_doc)
             {
-                m_doc->setHtml(data);
-                m_doc->setModified(false);
+                _doc->setHtml(data);
+                _doc->setModified(false);
             }
             emit textChanged();
             emit documentTitleChanged();
@@ -107,21 +106,21 @@ void TextStore::setFileUrl(const QUrl &url)
 
 QString TextStore::documentTitle() const
 {
-    return m_documentTitle;
+    return _documentTitle;
 }
 
 void TextStore::setDocumentTitle(QString arg)
 {
-    if (m_documentTitle != arg) {
-        m_documentTitle = arg;
+    if (_documentTitle != arg) {
+        _documentTitle = arg;
         emit documentTitleChanged();
     }
 }
 
 void TextStore::setText(const QString &arg)
 {
-    if (m_text != arg) {
-        m_text = arg;
+    if (_text != arg) {
+        _text = arg;
         emit textChanged();
     }
 }
@@ -138,27 +137,27 @@ void TextStore::saveAs(const QUrl &arg, const QString &fileType)
         emit error(tr("Cannot save: ") + f.errorString());
         return;
     }
-    f.write((isHtml ? m_doc->toHtml() : m_doc->toPlainText()).toLocal8Bit());
+    f.write((isHtml ? _doc->toHtml() : _doc->toPlainText()).toLocal8Bit());
     f.close();
     setFileUrl(QUrl::fromLocalFile(localPath));
 }
 
 QUrl TextStore::fileUrl() const
 {
-    return m_fileUrl;
+    return _fileUrl;
 }
 
 QString TextStore::text() const
 {
-    return m_text;
+    return _text;
 }
 
 void TextStore::setCursorPosition(int position)
 {
-    if (position == m_cursorPosition)
+    if (position == _cursorPosition)
         return;
 
-    m_cursorPosition = position;
+    _cursorPosition = position;
 
     reset();
 }
@@ -177,12 +176,12 @@ void TextStore::reset()
 
 QTextCursor TextStore::textCursor() const
 {
-    QTextCursor cursor = QTextCursor(m_doc);
-    if (m_selectionStart != m_selectionEnd) {
-        cursor.setPosition(m_selectionStart);
-        cursor.setPosition(m_selectionEnd, QTextCursor::KeepAnchor);
+    QTextCursor cursor = QTextCursor(_doc);
+    if (_selectionStart != _selectionEnd) {
+        cursor.setPosition(_selectionStart);
+        cursor.setPosition(_selectionEnd, QTextCursor::KeepAnchor);
     } else {
-        cursor.setPosition(m_cursorPosition);
+        cursor.setPosition(_cursorPosition);
     }
     return cursor;
 }
@@ -197,21 +196,21 @@ void TextStore::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 
 void TextStore::setSelectionStart(int position)
 {
-    m_selectionStart = position;
+    _selectionStart = position;
 }
 
 void TextStore::setSelectionEnd(int position)
 {
-    m_selectionEnd = position;
+    _selectionEnd = position;
 }
 
 void TextStore::setAlignment(Qt::Alignment a)
 {
     QTextBlockFormat fmt;
     fmt.setAlignment((Qt::Alignment) a);
-    QTextCursor cursor = QTextCursor(m_doc);
-    cursor.setPosition(m_selectionStart, QTextCursor::MoveAnchor);
-    cursor.setPosition(m_selectionEnd, QTextCursor::KeepAnchor);
+    QTextCursor cursor = QTextCursor(_doc);
+    cursor.setPosition(_selectionStart, QTextCursor::MoveAnchor);
+    cursor.setPosition(_selectionEnd, QTextCursor::KeepAnchor);
     cursor.mergeBlockFormat(fmt);
     emit alignmentChanged();
 }

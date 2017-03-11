@@ -17,16 +17,12 @@ public:
     virtual ~SoundStore() {
        // qDebug() << "~SoundStore()";
     }
-
     void setFileUrl(const QUrl& url, qreal start, qreal finish);
     void setFileUrl(const QUrl& url) override; // TODO Добавить потдержку относительных путей
     QUrl fileUrl() const override;
 signals:
     void posChanged();
-
 public slots:
-    void playReal(qreal begin, qreal end = -1); // указывается в секундах, не используеься - не работает
-
     void setPosReal(qreal); // позиция устанавливается в секундах
     void setPosPersent(qreal); // позиция устанавливаеться в проентах
     qreal getPersentPos() const; // Процент воспроизведёного
@@ -42,7 +38,6 @@ public slots:
     void setVideoSurface(QAbstractVideoSurface* surface);
     QAbstractVideoSurface* getVideoSurface();
 
-  //  void posChanched(qint64 newPos);
 protected:
     friend class Store <SoundStore>;
     QUrl _lastOpenedUrl;

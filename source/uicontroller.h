@@ -10,6 +10,7 @@
 #include "ASR/bindmaker.h"
 
 /* TODO LIST
+ * -2) Использовать последние версии qml
  * -1) Что за бага с колёсиком мыши? Срочный рефакоринг?
  * 1) Ввести понятие бесконечного бинда - нужно для последнего бинда
  * 3) Записывать все распознанные строки
@@ -29,6 +30,7 @@
  * 21) Проблема с выделением цветом - крайне не стабильно
  * 22) Проверка кодек и сущевствования файлов
  * 23) Хранение времени в милисекундах
+ * 24) Минимальное/максимальное количество слов в фрагменте
  * 27) Псевдонимы?
  * 30) Dont find corelation - выводит при не рабочем скрипте распознования
  * n) Децентралиация вычислений?
@@ -46,39 +48,20 @@ public:
     explicit UIController(QObject *parent = 0);
 
     bool mouseIsPressed;
-    bool getMouseIsPressed() const {return mouseIsPressed;}
-    void setMouseIsPressed(bool& newValue) { mouseIsPressed = newValue;}
+    bool getMouseIsPressed() const;
+    void setMouseIsPressed(bool& newValue);
 
-    void setDocument(TextStore* TS) {
-        _textStore =  TextStore::PTR(TS);
-        QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
-        // По скольку последовательность вызовов setDocument и setSoundStore пишу так
-        if (_textStore.isNull() == false && _soundStore.isNull() == false)
-            initBindMaker(_textStore, _soundStore, _logic);
-    }
+    void setDocument(TextStore* TS);
+    void setSoundStore(SoundStore* TS);
 
-    void setSoundStore(SoundStore* TS) {
-        _soundStore =  SoundStore::PTR(TS);
-        QObject::connect(_soundStore.data(), SIGNAL(posChanged()), this, SLOT(setCursorPosInTimePos()));
-        // По скольку последовательность вызовов setDocument и setSoundStore пишу так
-        if (_textStore.isNull() == false && _soundStore.isNull() == false)
-            initBindMaker(_textStore, _soundStore, _logic);
-    }
+    QStringList getExampleList() const;
+    void setExampleList(const QStringList& newExamples);
 
-    QStringList getExampleList() const { return _exampleList; }
-    void setExampleList(const QStringList& newExamples){
-        _exampleList = newExamples;
-        emit exampleListChanged();
-    }
+    QStringList getCommentList() const;
+    void setCommentList(QStringList newComments);
 
-    QStringList getCommentList() const{ return _commentList; }
-    void setCommentList(const QStringList& newComments){
-        _commentList = newComments;
-        emit commentListChanged();
-    }
-
-    TextStore* getDocument() { return _textStore.data(); }
-    SoundStore* getSoundStore() { return _soundStore.data(); }
+    TextStore* getDocument();
+    SoundStore* getSoundStore();
 
 signals:
     void soundSellectionChanged();
@@ -95,7 +78,7 @@ public slots:
     void makeBind(); // автопривязка TODO переименовать
     void addComment(const QUrl&);
     void getExample();
-    void openSoundFile(QString fileName);
+    void openSoundFile(const QString& fileName);
     void cursorPosChanged();
     void setCursorPosInTimePos();
     void setTimePosInCursorPos();
@@ -106,7 +89,7 @@ public slots:
     void getExamplesFor(const QString& seekablePhrase);
     void playExample(QString ID);
 
-    QUrl getCommentUrlWithName(QString name);
+    QUrl getCommentUrlWithName(const QString& name) const;
 
 protected slots:
     void recognizeIsFinished();

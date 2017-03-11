@@ -184,7 +184,7 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 9: _t->makeBind(); break;
         case 10: _t->addComment((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 11: _t->getExample(); break;
-        case 12: _t->openSoundFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 12: _t->openSoundFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 13: _t->cursorPosChanged(); break;
         case 14: _t->setCursorPosInTimePos(); break;
         case 15: _t->setTimePosInCursorPos(); break;
@@ -192,7 +192,7 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 17: _t->getExamplesFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 18: _t->playExample((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 19: { QUrl _r = _t->getCommentUrlWithName((*reinterpret_cast< QString(*)>(_a[1])));
+        case 19: { QUrl _r = _t->getCommentUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 20: _t->recognizeIsFinished(); break;
         default: ;

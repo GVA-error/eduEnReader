@@ -15,11 +15,9 @@ QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, bool fi
     QList <Logic::Example> rezList;
     QDir curDir;
     QStringList bindFiles = curDir.entryList(QStringList("*.bnd"));
-
     TextStore::PTR tmp_textStore = TextStore::factoryMethod();
     SoundStore::PTR tmp_soundStore = SoundStore::factoryMethod();
     Logic tmp_logic;
-
     for (QString bnd : bindFiles)
     {
         if (!findInThisFile && bnd == _curBndFileName)
@@ -28,7 +26,6 @@ QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, bool fi
         auto bndExamples = tmp_logic.getExamplesInThis(seakablePhrase);
         rezList += bndExamples;
     }
-
     return rezList;
 }
 
@@ -92,7 +89,7 @@ void Logic::bindLogicHanding()
     }
 }
 
-QList <QString> Logic::getCommentNamesonTextPos(qint64 pos)
+QList <QString> Logic::getCommentNamesonTextPos(qint64 pos) const
 {
     QList <QString> rezList;
     qint64 begin, end;
@@ -107,7 +104,7 @@ QList <QString> Logic::getCommentNamesonTextPos(qint64 pos)
     rezList = getCommentNamesonTextPos(begin, end);
     return rezList;
 }
-QList <QString> Logic::getCommentNamesonTextPos(qint64 begin, qint64 end)
+QList <QString> Logic::getCommentNamesonTextPos(qint64 begin, qint64 end) const
 {
     QList <QString> rezList;
     for (Comment comment : _commentsVector)
@@ -124,7 +121,7 @@ QList <QString> Logic::getCommentNamesonTextPos(qint64 begin, qint64 end)
     return rezList;
 }
 
-QUrl Logic::getCommentUrlsonName(QString name)
+QUrl Logic::getCommentUrlsonName(const QString& name) const
 {
     for (Comment comment : _commentsVector)
         if (comment.name == name)
@@ -134,7 +131,7 @@ QUrl Logic::getCommentUrlsonName(QString name)
 }
 
 
-qint64 Logic::posInWavToPosInText(qreal soundPos)
+qint64 Logic::posInWavToPosInText(qreal soundPos) const
 {
     Bind sellectedBind = getBindFromSoundPos(soundPos);
     auto sellectedText = sellectedBind.text;
@@ -142,7 +139,7 @@ qint64 Logic::posInWavToPosInText(qreal soundPos)
     return posInText;
 }
 
-qreal Logic::posInTxtToPosInWav(qint64 textPos)
+qreal Logic::posInTxtToPosInWav(qint64 textPos) const
 {
     Bind sellectedBind = getBindFromTextPos(textPos);
     auto sellectedSound = sellectedBind.sound;
@@ -213,7 +210,7 @@ Logic::Bind Logic::getBindFromTextPos(qint64 textPos) const
     return getBindFromSoundOrTextPos(-1, textPos);
 }
 
-qint64 Logic::roundToBindTextPos(qint64 textPos)
+qint64 Logic::roundToBindTextPos(qint64 textPos) const
 {
     auto bind = getBindFromTextPos(textPos);
     auto text = bind.text;
@@ -221,7 +218,7 @@ qint64 Logic::roundToBindTextPos(qint64 textPos)
     return rez;
 }
 
-qreal Logic::roundToBindSoundPos(qreal soundPos)
+qreal Logic::roundToBindSoundPos(qreal soundPos) const
 {
     auto bind = getBindFromSoundPos(soundPos);
     auto sound = bind.sound;
@@ -231,7 +228,6 @@ qreal Logic::roundToBindSoundPos(qreal soundPos)
 
 Logic::FileTypes Logic::getFileType(const QString&) const
 {
-
     // TODO важно допилить типизацию
     return FileTypes::undefined;
 }

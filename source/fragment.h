@@ -18,9 +18,7 @@ public:
         PTR rezPtr = QSharedPointer <ThisType> (new ThisType(begin, end, source));
         return rezPtr;
     }
-
     void setEnd(IndexType newEnd) { _end = newEnd; }
-
     // Методы в глобальных координатах
     IndexType begin() const { return _begin; }
     IndexType end() const { return _end; }
@@ -39,7 +37,6 @@ public:
 protected:
     IndexType _begin;
     IndexType _end;
-
     PTRSourceType _source;
     Fragment() = delete;
     Fragment(IndexType begin, IndexType end, PTRSourceType source)

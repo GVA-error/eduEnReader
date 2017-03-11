@@ -8,12 +8,9 @@
 #include <QList>
 #include <QMap>
 
-
 // TODO Выделить ScriptRecognize
 
 // Интерфейс распознователя речи
-// Нужен для кросплатформинности классов использующих систему распознования
-// В таких класах, следует использовать данный интерфейс
 class IASR : public QObject
 {
     Q_OBJECT
@@ -53,7 +50,6 @@ signals:
 public slots:
     void stringRecognized();
     void allStringRecognized(int exitCode);
-
 private:
     // Путь до скрипта распознования
     const QString KALDI_PATH = "/home/gva/kaldi/egs/apiai_decode/s5/";
@@ -63,9 +59,7 @@ private:
     QString _file_name;
     QMap <QString, QStringList> _fileSpeach;
     QProcess *_console;
-
     void startRecognizeScript(const QStringList& args);
-
 };
 
 #endif // ASR_H

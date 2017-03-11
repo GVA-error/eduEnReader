@@ -2,6 +2,77 @@
 
 DataPreparation::DataPreparation(QObject *parent) : QObject(parent)
 {
+    _console = new QProcess();
+    QObject::connect(_console, SIGNAL(finished(int)),
+                     this, SLOT(finished(int)));
+}
+
+void DataPreparation::finished(int succes)
+{
+    switch(succes)
+    {
+    case 0:
+        qDebug()<< "generator script ok: " << succes;
+        break;
+    default:
+    case -1:
+    case -2:
+        qCritical()<< "generator script failed:" << succes;
+        assert(false);
+        break;
+    };
+}
+
+QString DataPreparation::extractAudio(const QString& fileName)
+{
+    QFileInfo sourceInfo = QFileInfo(fileName);
+    QString rezFileName = sourceInfo.baseName() + ".wav";
+    if (QFile::exists(rezFileName))
+        QFile::remove(rezFileName);
+
+    QString script;
+    QTextStream sourceString(&script);
+    sourceString << "ffmpeg -i " << fileName << " -vn -ar " << _16k
+           << " -ac 1 -ab 16 -f wav " << rezFileName;
+    _console->setWorkingDirectory("./");
+    _console->start(script);
+
+    qint32 exitCode = -3;
+    if(_console->waitForFinished(-1))
+    {
+       exitCode = _console->exitCode();
+    }
+
+    return rezFileName;
+}
+
+void DataPreparation::noiseReduse(const QString& fileName)
+{
+    QFileInfo sourceInfo = QFileInfo(fileName);
+    QString tmp_rezFileName = sourceInfo.baseName() + "_.wav";
+    QString rezFileName = sourceInfo.baseName() + ".wav";
+
+    QString script;
+    QTextStream sourceString(&script);
+
+    // Скрипт взят там -> http://sox.10957.n7.nabble.com/noiseprof-noisered-and-artifacts-on-audio-td4971.html
+    // Если коротко: ищем момент тишины и на основе его генерим noise profile
+    sourceString << _noiseReduseScrit;
+
+    QStringList args;
+    args.push_back(fileName);
+    args.push_back(tmp_rezFileName);
+    _console->setWorkingDirectory("./");
+    _console->start(script, args);
+
+    qint32 exitCode = -3;
+    if(_console->waitForFinished(-1))
+    {
+       exitCode = _console->exitCode();
+    }
+
+    QFile::remove(rezFileName);
+    QFile::rename(tmp_rezFileName, rezFileName);
 
 }
 

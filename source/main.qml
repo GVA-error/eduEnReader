@@ -13,7 +13,6 @@ import UiControlerModul 1.1
 // TODO РЕФАКТОРИНГ
 /*
 При вызове контексного меню MenuContentItem.qml:178: ReferenceError: Acccessible is not defined
-
 */
 
 ApplicationWindow {
@@ -46,8 +45,8 @@ ApplicationWindow {
     }
     FileDialog {
         id: fileDialog
-        nameFilters: ["Bind file (*.bnd)"]
-        onAccepted: {
+        nameFilters : ["Bind file (*.bnd)"]
+        onAccepted : {
             if (fileDialog.selectExisting)
                 uiControler.openBindFile(fileUrl)
             else
@@ -56,7 +55,7 @@ ApplicationWindow {
     }
     FileDialog {
         id: soundFileDialog
-        nameFilters: ["Sound File (*.wav)"]
+        nameFilters: ["Sound File (*.mp4)"]
         selectExisting : true
         onAccepted: {
             uiControler.createBindFile(fileUrl)
@@ -66,7 +65,6 @@ ApplicationWindow {
         id: colorDialog
         color: "black"
     }
-
     Action{
         id: translateAction
         text: "Translate"
@@ -331,11 +329,13 @@ ApplicationWindow {
         //   height: 600
            source: soundStore
        }
-       MouseArea
-       {
+       MouseArea{
             anchors.fill: parent
             onClicked: {
-                soundStore.play()
+                if (soundStore.state == SoundStore.PlayingState)
+                    soundStore.stop()
+                else
+                    soundStore.start()
             }
        }
     }

@@ -49,7 +49,7 @@ public:
     QString getSellectedStreing() const;
     qint64 getCursorPos() const;
 
-    QQuickItem *target() { return m_target; }
+    QQuickItem *target() { return _target; }
 
     void setTarget(QQuickItem *target);
 
@@ -57,9 +57,9 @@ public:
     void setSelectionStart(int position);
     void setSelectionEnd(int position);
 
-    int cursorPosition() const { return m_cursorPosition; }
-    int selectionStart() const { return m_selectionStart; }
-    int selectionEnd() const { return m_selectionEnd; }
+    int cursorPosition() const { return _cursorPosition; }
+    int selectionStart() const { return _selectionStart; }
+    int selectionEnd() const { return _selectionEnd; }
 
     QString fontFamily() const;
 
@@ -124,24 +124,24 @@ private:
     QTextCursor textCursor() const;
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
 
-    QQuickItem *m_target;
-    QTextDocument *m_doc;
+    QQuickItem *_target;
+    QTextDocument *_doc;
     // Нужен для возможости полного функционирования объектов textStore без привязки к гуи гуи
     // К примеру при поиске примеров с нужным словом
     QTextDocument _default_m_doc;
 
-    int m_cursorPosition;
-    int m_selectionStart;
-    int m_selectionEnd;
+    qint32 _cursorPosition;
+    qint32 _selectionStart;
+    qint32 _selectionEnd;
 
     QUrl _saved_url;
     qint64 _saved_curPosition;
 
-    QFont m_font;
-    int m_fontSize;
-    QUrl m_fileUrl;
-    QString m_text;
-    QString m_documentTitle;
+    QFont _font;
+    qint32 _fontSize;
+    QUrl _fileUrl;
+    QString _text;
+    QString _documentTitle;
 };
 
 
