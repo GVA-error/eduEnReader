@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QDebug>
 #include <QDir>
-#include <QProcess>
 #include <assert.h>
 #include <math.h>
+#include "ASR/scripter.h"
 #include "wavworker.h"
 
 // Нужна чтобы хранить части звуковой дорожки // Атоматически не чиститься
@@ -22,10 +22,10 @@ class DataPreparation : public QObject
     const qint32 _16k = 16000;
 public:
     explicit DataPreparation(QObject *parent = 0);
-    // Извлекает аудиодорожку из *.mp4 файла
-    // Возвращает имя получившевася файла
-    QString extractAudio(const QString& fileName);
-    void noiseReduse(const QString& fileName);
+
+    QString prepeareWav(const QString& videoFile);
+
+    void generateNoise_wav(const QString& fileName, const QString& noiseWav, qint64 begin, qint64 end); // генерим noiseWav с примером шума из файла
 
     // Делит файл на несколько маленьких
     // splitSize - время в секундах, определяет размер
@@ -45,15 +45,19 @@ public:
 signals:
 
 public slots:
-    void finished(int);
 
 private:
-    QProcess *_console;
     WavWorker _wav;
+    Scripter _scripter;
     QStringList _rezFileNameList;
     QMap <QString, qreal> _rezFileBeginOffset;
     QMap <QString, qreal> _rezFileEndOffset;
-    const QString _noiseReduseScrit = "/home/gva/eduEnReader/source/Scripts/noiseReduse.sh";
+    const qint64 _noiseFileSize = 8000; // размер файла с шумом, для построения модели шума, должно быть кратно четырём
+    // Позиции в которых ищем шум
+    const qint64 _noiseWindowBegin = 15 * _16k;
+    const qint64 _noiseWindowEnd = 30 * _16k; // Считаем что файл хотябы 30 секунд
+
+    const QString _noise_wav = "/home/gva/eduEnReader/source/Scripts/noise.wav";
 
     // Нужна для сохронения и подготовки
     // В ауте нумерация с нуля
@@ -73,7 +77,6 @@ private:
 
     qreal getStadyComponent(double* data, qint64 dataSize);
     void deleteStadyComponent(double* data, qint64 dataSize);
-    void deleteNoise(double* data, qint64 dataSize); // Удаляет лишнее
     void useMultyWindow(double* data, qint64 dataSize);
 
     // выделяет новый массив вида [prefix[0], .. , prefix[prefixSize-1], data[0], .. , data[dataSize-1]]

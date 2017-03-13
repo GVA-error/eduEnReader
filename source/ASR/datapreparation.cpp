@@ -2,78 +2,62 @@
 
 DataPreparation::DataPreparation(QObject *parent) : QObject(parent)
 {
-    _console = new QProcess();
-    QObject::connect(_console, SIGNAL(finished(int)),
-                     this, SLOT(finished(int)));
 }
 
-void DataPreparation::finished(int succes)
+QString DataPreparation::prepeareWav(const QString& videoFile)
 {
-    switch(succes)
-    {
-    case 0:
-        qDebug()<< "generator script ok: " << succes;
-        break;
-    default:
-    case -1:
-    case -2:
-        qCritical()<< "generator script failed:" << succes;
-        assert(false);
-        break;
-    };
+    QString wavFile = _scripter.extractAudio(videoFile);
+    //generateNoise_wav(wavFile, _noise_wav);
+    generateNoise_wav(wavFile, _noise_wav, _noiseWindowBegin, _noiseWindowEnd);
+    _scripter.noiseReduse(wavFile, _noise_wav);
+    return wavFile;
 }
 
-QString DataPreparation::extractAudio(const QString& fileName)
+void DataPreparation::generateNoise_wav(const QString& fileName, const QString& noiseWav, qint64 begin, qint64 end)
 {
-    QFileInfo sourceInfo = QFileInfo(fileName);
-    QString rezFileName = sourceInfo.baseName() + ".wav";
-    if (QFile::exists(rezFileName))
-        QFile::remove(rezFileName);
+    QString tmp_filtred = "f_" + fileName;
+    if (QFile::exists(tmp_filtred))
+        QFile::remove(tmp_filtred);
+    QFile::copy(fileName, tmp_filtred);
+    _scripter.noiseReduse(tmp_filtred, tmp_filtred);
 
-    QString script;
-    QTextStream sourceString(&script);
-    sourceString << "ffmpeg -i " << fileName << " -vn -ar " << _16k
-           << " -ac 1 -ab 16 -f wav " << rezFileName;
-    _console->setWorkingDirectory("./");
-    _console->start(script);
-
-    qint32 exitCode = -3;
-    if(_console->waitForFinished(-1))
+    _wav.openInFile(tmp_filtred);
+    _wav.setReadPos(begin);
+    qint64 curPos = begin;
+    qint64 globalMinPos = curPos;
+    qreal globalMinEnergy;
+    qint64 step = _noiseFileSize / 4;
+    double* buff = new double[_noiseFileSize];
+    _wav.read(buff, step * 3);
+    bool f_processing = true;
+    while (f_processing && curPos + step*5 < end)
     {
-       exitCode = _console->exitCode();
+        double* readBuffer = new double[step];
+        f_processing = _wav.read(readBuffer, step);
+        double* tmp = buff;
+        buff = join(buff, 3*step, readBuffer, step);
+        delete tmp;
+        delete readBuffer;
+        qreal localEnergy = getEnergy(buff, 0, step * 4);
+        if (curPos == begin || localEnergy < globalMinEnergy)
+        {
+            globalMinPos = curPos;
+            globalMinEnergy = localEnergy;
+        }
+        tmp = buff;
+        buff = splitBegin(buff, 4*step, step);
+        delete tmp;
+        curPos += step;
     }
+    delete buff;
 
-    return rezFileName;
-}
-
-void DataPreparation::noiseReduse(const QString& fileName)
-{
-    QFileInfo sourceInfo = QFileInfo(fileName);
-    QString tmp_rezFileName = sourceInfo.baseName() + "_.wav";
-    QString rezFileName = sourceInfo.baseName() + ".wav";
-
-    QString script;
-    QTextStream sourceString(&script);
-
-    // Скрипт взят там -> http://sox.10957.n7.nabble.com/noiseprof-noisered-and-artifacts-on-audio-td4971.html
-    // Если коротко: ищем момент тишины и на основе его генерим noise profile
-    sourceString << _noiseReduseScrit;
-
-    QStringList args;
-    args.push_back(fileName);
-    args.push_back(tmp_rezFileName);
-    _console->setWorkingDirectory("./");
-    _console->start(script, args);
-
-    qint32 exitCode = -3;
-    if(_console->waitForFinished(-1))
-    {
-       exitCode = _console->exitCode();
-    }
-
-    QFile::remove(rezFileName);
-    QFile::rename(tmp_rezFileName, rezFileName);
-
+    _wav.openInFile(fileName);
+    WavWorker::Settings settings;
+    writePreparation(settings);
+    if (QFile::exists(noiseWav))
+        QFile::remove(noiseWav);
+    _wav.openOutFile(noiseWav, settings);
+    _wav.copyPart(globalMinPos, _noiseFileSize);
 }
 
 double* DataPreparation::join(double* prefix, qint64 prefixSize, double* data, qint64 dataSize) const
@@ -148,16 +132,6 @@ void DataPreparation::deleteStadyComponent(double* data, qint64 dataSize)
         data[i] -= stadyComponent;
 }
 
-void DataPreparation::deleteNoise(double* data, qint64 dataSize)
-{
-    for (qint64 i = 1; i<dataSize; i++)
-    {
-        double cur_xi = data[i];
-        double prev_xi = data[i-1];
-        data[i] = (cur_xi - 0.9*prev_xi) * (0.54 - 0.46*cos((i-6)*M_2_PI/180));
-    }
-}
-
 void DataPreparation::writePreparation(WavWorker::Settings& settings, const QDir& outDirrectory)
 {
     if (outDirrectory.exists() == false)
@@ -181,11 +155,11 @@ void DataPreparation::splitFile(const QString& fileName, qreal minSplitSize, qre
         qDebug() << "Incorrect file name or file not exists: " << fileName << "\n";
         return;
     }
-    _wav.openInFile(fileName);
     qint64 partNumber = 0;
     qint64 curBuffSize = 0;
     bool f_processing = true;
     qint64 curPos = 0;
+    _wav.openInFile(fileName);
     while (f_processing)
     {
         QString ID = QString().number(partNumber);
@@ -204,9 +178,6 @@ void DataPreparation::splitFile(const QString& fileName, qreal minSplitSize, qre
         assert(curBuffSize >= minStep);
         qint64 minPos = minStep + getEnergyMin(buff + minStep, curBuffSize - minStep);
         _wav.openOutFile(outputName, settings);
-        deleteStadyComponent(buff, minPos);
-        //useMultyWindow(buff, minPos);
-        //deleteNoise(buff, minPos);
         _wav.write(buff, minPos);
         _rezFileNameList.push_back(outputName);
         _rezFileBeginOffset[outputName] = (floor(10 * (qreal)curPos / discret))/10;
@@ -219,6 +190,8 @@ void DataPreparation::splitFile(const QString& fileName, qreal minSplitSize, qre
         partNumber++;
     }
     delete buff;
+    for (auto part : _rezFileNameList)
+        _scripter.normalise(part);
 }
 
 void DataPreparation::splitFile(const QString &fileName, qreal splitSize, const QDir &outDirrectory)

@@ -11,6 +11,27 @@ WavWorker::~WavWorker()
 
 }
 
+void WavWorker::setWritePos(qint64 pos)
+{
+    qint32 readed = sf_seek(_out, pos, SEEK_SET);
+    assert(readed == pos);
+}
+
+void WavWorker::setReadPos(qint64 pos)
+{
+    qint32 readed = sf_seek(_in, pos, SEEK_SET);
+    assert(readed == pos);
+}
+
+void WavWorker::copyPart(qint64 pos, qint64 size)
+{
+    double* buff = new double[size];
+    setReadPos(pos);
+    read(buff, size);
+    write(buff, size);
+    delete buff;
+}
+
 void WavWorker::defaultInitFSInfo(SF_INFO&sfinfo)
 {
     memset (&sfinfo, 0, sizeof (sfinfo));

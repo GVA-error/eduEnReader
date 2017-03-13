@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDebug>
 #include <sndfile.h>
+#include "assert.h"
 
 const qint64 _16k = 16000;
 
@@ -26,6 +27,12 @@ public:
     // при этом закрываем старый, и открываем новый
     void openInFile(const QString& fileName);
     void openOutFile(const QString& fileName, const Settings&);
+
+    // Вырезает часть из _in в _out
+    void copyPart(qint64 pos, qint64 size);
+
+    void setReadPos(qint64 pos);
+    void setWritePos(qint64 pos);
 
     // Нужен для чтения следующей части файла, при разбивке
     // buffSize - сколько читать

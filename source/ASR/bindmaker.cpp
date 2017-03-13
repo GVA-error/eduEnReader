@@ -81,11 +81,8 @@ void BindMaker::preparetion(qreal splitSize, qreal diff)
     _logic->clear(true);
     assert(splitSize - diff > 0);
     QUrl url = _soundStore->fileUrl();
-    QString fileName = url.toLocalFile();
-
-    QString wavFile = _preparator.extractAudio(fileName);
-    _preparator.noiseReduse(wavFile);
-
+    QString videoFile = url.toLocalFile();
+    QString wavFile = _preparator.prepeareWav(videoFile);
     if (diff == 0.0f)
         _preparator.splitFile(wavFile, splitSize);
     else
@@ -95,6 +92,7 @@ void BindMaker::preparetion(qreal splitSize, qreal diff)
         _preparator.splitFile(wavFile, min, max);
     }
     _fileParts = _preparator.getFileNameList();
+
 
     for (auto file : _fileParts)
         _asr->recognize(file);
@@ -150,6 +148,8 @@ void BindMaker::run()
         return;
     }
 
+    if (_textList.empty())
+        return;
     qDebug() << "******* Recognizing *******";
     // Тут можно парралелить
     for (auto nextPart : _fileParts)

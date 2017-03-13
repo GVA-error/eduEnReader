@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     ASR/metrics.cpp \
     ASR/wavworker.cpp \
     store.cpp \
-    fragment.cpp
+    fragment.cpp \
+    ASR/scripter.cpp
 
 RESOURCES += qml.qrc
 
@@ -46,7 +47,8 @@ HEADERS += \
     ASR/wavworker.h \
     store.h \
     fragment.h \
-    webtranslator.h
+    webtranslator.h \
+    ASR/scripter.h
 
 DISTFILES += \
     images/editcopy.png \
