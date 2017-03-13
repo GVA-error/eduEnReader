@@ -61,7 +61,7 @@ Item {
                 color: "black"
                 width: 1
             }
-
+            radius: 10
             Text {
                 anchors.centerIn: parent
                 renderType: Text.NativeRendering

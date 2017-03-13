@@ -760,6 +760,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../images/editredo.png \
 		../images/play.png \
 		../images/textleft.png \
+		../images/go-home.png \
 		../images/textright.png \
 		../images/editundo.png \
 		../images/editpaste.png \
@@ -1555,6 +1556,7 @@ moc_datapreparation.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../ASR/scripter.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFile \
+		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/QProcess \
 		../../../Qt/5.8/gcc_64/include/QtCore/qprocess.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QTextStream \
@@ -1617,14 +1619,16 @@ moc_scripter.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfile.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
+		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvector.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qset.h \
@@ -3032,6 +3036,7 @@ datapreparation.o: ../ASR/datapreparation.cpp ../ASR/datapreparation.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../ASR/scripter.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QFile \
+		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
 		../../../Qt/5.8/gcc_64/include/QtCore/QProcess \
 		../../../Qt/5.8/gcc_64/include/QtCore/qprocess.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QTextStream \
@@ -3338,14 +3343,16 @@ scripter.o: ../ASR/scripter.cpp ../ASR/scripter.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfile.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QFileInfo \
+		../../../Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvector.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qset.h \

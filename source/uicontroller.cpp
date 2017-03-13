@@ -96,10 +96,10 @@ TextFragment::PTR UIController::getSellectedText()
     return rezFragment;
 }
 
-void UIController::addComment(const QUrl& commentUrl)
+void UIController::addComment(const QUrl& commentUrl, const QString &name)
 {
     auto sellectedFragment = getSellectedText();
-    _logic->makeComment(sellectedFragment, commentUrl);
+    _logic->makeComment(sellectedFragment, commentUrl, name);
 }
 
 QUrl UIController::getCommentUrlWithName(const QString &name) const
@@ -135,9 +135,18 @@ void UIController::getExamplesFor(const QString& seekablePhrase)
     {
         qreal begin = example.start;
         qreal end = example.end;
-        QString newExampleName = example.FileName
-                + " " + QString().number(begin)
-                + " " + QString().number(end);
+        qint32 minBegin = (qint32)begin/60;
+        qint32 minEnd = (qint32)end/60;
+        qint32 secBegin = (qint32)begin%60;
+        qint32 secEnd = (qint32)end%60;
+        QString beginString = QString().number(minBegin) + ":" + QString().number(secBegin);
+        QString endString = QString().number(minEnd) + ":" + QString().number(secEnd);
+
+        example.text = beginString + " " + example.text + " " + endString;
+
+        QString newExampleName = QString().number(_exampleList.size()+1) + ":" + example.FileName;
+                //+ " " + beginString;
+                //+ "-" + endString;
         _exampleList .push_back(newExampleName);
         _example[newExampleName] = example;
     }

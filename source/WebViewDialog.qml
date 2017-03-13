@@ -4,8 +4,11 @@ import QtWebEngine 1.4
 SimpleDialog {
     id : root
     property url defaultURL
+    property string postLoadScript
+    property bool scriptRuned : false
     onBack: hideDialog()
     Rectangle{
+        id : webRect
         width: translateDialog.baseW * 9 / 10
         height: translateDialog.baseH * 3 / 4
         radius: 100
@@ -20,7 +23,11 @@ SimpleDialog {
         webView.url = url
     }
     function runScript(js){
-        //var js = "document.documentElement.outerHTML";
-        webview.runJavaScript(js, function(result){console.log(result);})
+        //webView.reload()
+        webView.runJavaScript(js, function(result){
+            console.log("JS_begin: " + result + " JS_end");
+           // if (result!=="undefined")
+                webView.loadHtml(result, webView.url)
+        })
     }
 }

@@ -35,5 +35,6 @@
         <file>VideoController.qml</file>
         <file>WebViewDialog.qml</file>
         <file>HtmlView.qml</file>
+        <file>images/go-home.png</file>
     </qresource>
 </RCC>

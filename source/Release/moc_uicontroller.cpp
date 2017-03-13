@@ -46,19 +46,19 @@ QT_MOC_LITERAL(11, 150, 14), // "createBindFile"
 QT_MOC_LITERAL(12, 165, 13), // "soundFileName"
 QT_MOC_LITERAL(13, 179, 8), // "makeBind"
 QT_MOC_LITERAL(14, 188, 10), // "addComment"
-QT_MOC_LITERAL(15, 199, 10), // "getExample"
-QT_MOC_LITERAL(16, 210, 13), // "openSoundFile"
-QT_MOC_LITERAL(17, 224, 8), // "fileName"
-QT_MOC_LITERAL(18, 233, 16), // "cursorPosChanged"
-QT_MOC_LITERAL(19, 250, 21), // "setCursorPosInTimePos"
-QT_MOC_LITERAL(20, 272, 21), // "setTimePosInCursorPos"
-QT_MOC_LITERAL(21, 294, 27), // "formUrlToTranslateSellected"
-QT_MOC_LITERAL(22, 322, 14), // "getExamplesFor"
-QT_MOC_LITERAL(23, 337, 14), // "seekablePhrase"
-QT_MOC_LITERAL(24, 352, 11), // "playExample"
-QT_MOC_LITERAL(25, 364, 2), // "ID"
-QT_MOC_LITERAL(26, 367, 21), // "getCommentUrlWithName"
-QT_MOC_LITERAL(27, 389, 4), // "name"
+QT_MOC_LITERAL(15, 199, 4), // "name"
+QT_MOC_LITERAL(16, 204, 10), // "getExample"
+QT_MOC_LITERAL(17, 215, 13), // "openSoundFile"
+QT_MOC_LITERAL(18, 229, 8), // "fileName"
+QT_MOC_LITERAL(19, 238, 16), // "cursorPosChanged"
+QT_MOC_LITERAL(20, 255, 21), // "setCursorPosInTimePos"
+QT_MOC_LITERAL(21, 277, 21), // "setTimePosInCursorPos"
+QT_MOC_LITERAL(22, 299, 27), // "formUrlToTranslateSellected"
+QT_MOC_LITERAL(23, 327, 14), // "getExamplesFor"
+QT_MOC_LITERAL(24, 342, 14), // "seekablePhrase"
+QT_MOC_LITERAL(25, 357, 11), // "playExample"
+QT_MOC_LITERAL(26, 369, 2), // "ID"
+QT_MOC_LITERAL(27, 372, 21), // "getCommentUrlWithName"
 QT_MOC_LITERAL(28, 394, 19), // "recognizeIsFinished"
 QT_MOC_LITERAL(29, 414, 8), // "document"
 QT_MOC_LITERAL(30, 423, 10), // "TextStore*"
@@ -74,14 +74,14 @@ QT_MOC_LITERAL(35, 491, 14) // "mouseIsPressed"
     "commentListChanged\0saveHome\0home\0"
     "openBindFile\0bindFileName\0saveBindFile\0"
     "createBindFile\0soundFileName\0makeBind\0"
-    "addComment\0getExample\0openSoundFile\0"
+    "addComment\0name\0getExample\0openSoundFile\0"
     "fileName\0cursorPosChanged\0"
     "setCursorPosInTimePos\0setTimePosInCursorPos\0"
     "formUrlToTranslateSellected\0getExamplesFor\0"
     "seekablePhrase\0playExample\0ID\0"
-    "getCommentUrlWithName\0name\0"
-    "recognizeIsFinished\0document\0TextStore*\0"
-    "soundStore\0SoundStore*\0exampleListModel\0"
+    "getCommentUrlWithName\0recognizeIsFinished\0"
+    "document\0TextStore*\0soundStore\0"
+    "SoundStore*\0exampleListModel\0"
     "commentListModel\0mouseIsPressed"
 };
 #undef QT_MOC_LITERAL
@@ -93,7 +93,7 @@ static const uint qt_meta_data_UIController[] = {
        0,       // classname
        0,    0, // classinfo
       21,   14, // methods
-       5,  156, // properties
+       5,  158, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -112,17 +112,17 @@ static const uint qt_meta_data_UIController[] = {
       10,    1,  128,    2, 0x0a /* Public */,
       11,    1,  131,    2, 0x0a /* Public */,
       13,    0,  134,    2, 0x0a /* Public */,
-      14,    1,  135,    2, 0x0a /* Public */,
-      15,    0,  138,    2, 0x0a /* Public */,
-      16,    1,  139,    2, 0x0a /* Public */,
-      18,    0,  142,    2, 0x0a /* Public */,
-      19,    0,  143,    2, 0x0a /* Public */,
-      20,    0,  144,    2, 0x0a /* Public */,
-      21,    0,  145,    2, 0x0a /* Public */,
-      22,    1,  146,    2, 0x0a /* Public */,
-      24,    1,  149,    2, 0x0a /* Public */,
-      26,    1,  152,    2, 0x0a /* Public */,
-      28,    0,  155,    2, 0x09 /* Protected */,
+      14,    2,  135,    2, 0x0a /* Public */,
+      16,    0,  140,    2, 0x0a /* Public */,
+      17,    1,  141,    2, 0x0a /* Public */,
+      19,    0,  144,    2, 0x0a /* Public */,
+      20,    0,  145,    2, 0x0a /* Public */,
+      21,    0,  146,    2, 0x0a /* Public */,
+      22,    0,  147,    2, 0x0a /* Public */,
+      23,    1,  148,    2, 0x0a /* Public */,
+      25,    1,  151,    2, 0x0a /* Public */,
+      27,    1,  154,    2, 0x0a /* Public */,
+      28,    0,  157,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
@@ -137,16 +137,16 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::Void, QMetaType::QUrl,    9,
     QMetaType::Void, QMetaType::QUrl,   12,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QUrl,    2,
+    QMetaType::Void, QMetaType::QUrl, QMetaType::QString,    2,   15,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   17,
+    QMetaType::Void, QMetaType::QString,   18,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::QString,
-    QMetaType::Void, QMetaType::QString,   23,
-    QMetaType::Void, QMetaType::QString,   25,
-    QMetaType::QUrl, QMetaType::QString,   27,
+    QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Void, QMetaType::QString,   26,
+    QMetaType::QUrl, QMetaType::QString,   15,
     QMetaType::Void,
 
  // properties: name, type, flags
@@ -182,7 +182,7 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 7: _t->saveBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 8: _t->createBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 9: _t->makeBind(); break;
-        case 10: _t->addComment((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 10: _t->addComment((*reinterpret_cast< const QUrl(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 11: _t->getExample(); break;
         case 12: _t->openSoundFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 13: _t->cursorPosChanged(); break;

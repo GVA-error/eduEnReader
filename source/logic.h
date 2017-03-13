@@ -50,7 +50,7 @@ public:
     void createFromNewSoundFile(const QString& fileName, TextStore::PTR, SoundStore::PTR);
 
     void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString& recognizedText);
-    void makeComment(TextFragment::PTR text, QUrl url);
+    void makeComment(TextFragment::PTR text, QUrl url, const QString &name);
 
     QStringList getRecognizedStrings() const { return _recognizedStrings; }
     qreal getRecognizedStringBegin(qint64 stringNumber) const { return _recognizedStringPosBegin.value(stringNumber);}

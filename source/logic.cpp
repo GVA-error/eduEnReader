@@ -272,10 +272,10 @@ void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QSt
     addInRecognizedList(recognizedText, soundBegin, soundEnd);
 }
 
-void Logic::makeComment(TextFragment::PTR text, QUrl url)
+void Logic::makeComment(TextFragment::PTR text, QUrl url, const QString& name)
 {
     Comment c;
-    c.name = url.fileName(); // Надо чтобы могли ссылаться все
+    c.name = name;
     c.commented = text;
     c.commentUrl = url;
 

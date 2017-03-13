@@ -20,7 +20,7 @@ ApplicationWindow {
     visible: true
     width: 1024
     height: 768
-    title: document.documentTitle + " - Text Editor Example"
+    title: document.documentTitle
     UiControler{
         id: uiControler
         mouseIsPressed: false
@@ -33,15 +33,6 @@ ApplicationWindow {
         text: "Autor: Golubtsov Vasiliy Anatolievich.
             \n e-mail - vsv10000ego@gmail.com"
         icon: StandardIcon.Information
-    }
-    FileDialog{
-        id: commentFileDialog
-        nameFilters : ["Sound File (*.html)"]
-        selectExisting : true
-        property bool addAction : false;
-        onAccepted: {
-            uiControler.addComment(fileUrl)
-        }
     }
     FileDialog {
         id: fileDialog
@@ -61,6 +52,45 @@ ApplicationWindow {
             uiControler.createBindFile(fileUrl)
         }
     }
+    FileDialog{
+        id: commentFileDialog
+        nameFilters : ["Sound File (*.html)"]
+        selectExisting : true
+        property bool addAction : false;
+        onAccepted: {
+            nameCommentDialog.name = fileUrl;
+            nameCommentDialog.open()
+        }
+    }
+    Dialog{
+       id: nameCommentDialog
+       property string name: ""
+       Label {
+           id : nameLabel
+           text: "Enter comment name: "
+       }
+       TextField {
+           id: nameInput;
+           width: 200
+           anchors.left: nameLabel.right
+           style: TextFieldStyle {
+               textColor: "black"
+               background: Rectangle {
+                   radius: 10
+                   implicitWidth: 100
+                   implicitHeight: 24
+                   border.color: "#333"
+                   border.width: 1
+               }
+           }
+       }
+
+       onAccepted: {
+           var fileUrl = commentFileDialog.fileUrl;
+           var name = nameInput.text
+           uiControler.addComment(fileUrl, name)
+       }
+    }
     ColorDialog {
         id: colorDialog
         color: "black"
@@ -73,8 +103,18 @@ ApplicationWindow {
         iconName: "edit-cut"
         onTriggered: {
             var translateUrl = uiControler.formUrlToTranslateSellected();
+            var loadScript = "document.body.children[0].children[6].outerHTML";
+            translateDialog.postLoadScript = loadScript
+            //translateDialog.runScript(loadScript)
             translateDialog.setUrl(translateUrl)
             translateDialog.showDialog()
+            /*
+                    .children[\"0\"].children[\"0\"].children[1]
+                    .children[\"0\"].children[\"0\"].children[\"0\"]
+                    .children[\"0\"].children[\"0\"].children[\"0\"]
+                    .children[1].children[\"0\"].children[\"0\"]
+                    .children[\"0\"].children[\"0\"].children[1]
+                    .innerHTML"*/
         }
     }
     Action{
@@ -85,6 +125,7 @@ ApplicationWindow {
         iconName: "edit-cut"
         onTriggered: {
             commentFileDialog.open()
+
         }
     }
     Action{
@@ -417,7 +458,7 @@ ApplicationWindow {
                 anchors.right : homeToolBar.left
                 //width: 200
                 RowLayout {
-                    spacing: 0
+                    spacing: 15
                     ToolButton { action: bindAction }
                     ToolButton { action: playAction }
                    // ToolButton { action: pauseAction }
@@ -428,7 +469,7 @@ ApplicationWindow {
                 id: homeAction
                 text: "Home"
                 shortcut: "ctrl+H"
-                iconSource: "qrc:images/bind.png"
+                iconSource: "qrc:images/go-home.png"
                 iconName: "Bind "
                 onTriggered: uiControler.home()
             }
