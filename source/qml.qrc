@@ -32,9 +32,16 @@
         <file>DialogBackground.qml</file>
         <file>FileDialogs.qml</file>
         <file>ListDialog.qml</file>
-        <file>VideoController.qml</file>
+        <file>VideoSlider.qml</file>
         <file>WebViewDialog.qml</file>
         <file>HtmlView.qml</file>
+        <file>TopToolBar.qml</file>
+        <file>main_Read.qml</file>
+        <file>MainVideoView.qml</file>
+        <file>ControlPanel.qml</file>
+        <file>images/view-sort-ascending.png</file>
+        <file>images/text-x-lilypond.png</file>
         <file>images/go-home.png</file>
+        <file>TextReaderArea.qml</file>
     </qresource>
 </RCC>

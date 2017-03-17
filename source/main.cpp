@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtWebEngineCore>
@@ -11,13 +12,15 @@ int main(int argc, char *argv[])
 {
     QTextCodec::setCodecForLocale(QTextCodec::codecForHtml("unicode"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForUtfText("unicode"));
+
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QtWebEngine::initialize();
     qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");
     qmlRegisterType<SoundStore>("SoundStoreModul", 1, 1, "SoundStore");
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/main_Read.qml")));
 
     return app.exec();
 }

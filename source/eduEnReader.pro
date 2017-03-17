@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     fragment.cpp \
     ASR/scripter.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += \
+    qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -70,7 +71,20 @@ DISTFILES += \
     images/textright.png \
     images/textunder.png \
     images/zoomin.png \
-    images/zoomout.png
+    images/zoomout.png \
+    main.qml \
+    WebViewDialog.qml \
+    VideoController.qml \
+    TopMenu.qml \
+    SimpleDialog.qml \
+    QMLToolBarSeparator.qml \
+    QMLSoundGraph.qml \
+    QMLScroolBar.qml \
+    QMLButtonStyle.qml \
+    ListDialog.qml \
+    HtmlView.qml \
+    TopToolBar.qml \
+    qm.qml
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

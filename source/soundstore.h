@@ -27,7 +27,7 @@ public slots:
     void setPosPersent(qreal); // позиция устанавливаеться в проентах
     qreal getPersentPos() const; // Процент воспроизведёного
     qreal getTimePos() const;
-    void start();
+    void start(); // Использовать вместо play TODO - Перегрузить
     void stop();
     void stopStopTimer(); // Нужна для синхронизации завершения
 

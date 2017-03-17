@@ -8,7 +8,7 @@ SoundStore::SoundStore(QObject *parent, Flags flags)
 
     _startPos = _finishPos = -1;
     setFileUrl(QUrl::fromLocalFile("/home/gva/eduEnReader/source/Release/B.mp4"), 5, 10);//url);
-
+    saveHome();
     _timerToStop = new QTimer(this);
     connect(_timerToStop, SIGNAL(timeout()), this, SLOT(stopStopTimer()));
 
