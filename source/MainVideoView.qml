@@ -1,25 +1,25 @@
 import QtQuick 2.5
 import QtMultimedia 5.8
+import QtQuick.Controls 2.1
+import QtQuick.Window 2.0
 import SoundStoreModul 1.1
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import Qt.labs.platform 1.0
 
 Rectangle{
     id : root
+    property var source;
     VideoOutput {
        id : videoOutput;
        anchors.fill: parent;
-    //   width: 800;
-    //   height: 600
-       source: soundStore
+       source: root.source
    }
    MouseArea{
         anchors.fill: parent
         onClicked: {
-            if (soundStore.state == SoundStore.PlayingState)
-                soundStore.stop()
+            if (source.state === SoundStore.PlayingState)
+                source.stop()
             else
-                soundStore.start()
+                source.start()
         }
    }
 }

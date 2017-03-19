@@ -43,5 +43,13 @@
         <file>images/text-x-lilypond.png</file>
         <file>images/go-home.png</file>
         <file>TextReaderArea.qml</file>
+        <file>images/examples.png</file>
+        <file>images/msg_info.png</file>
+        <file>images/package_games_puzzle.png</file>
+        <file>images/setting.png</file>
+        <file>images/tools-check-spelling.png</file>
+        <file>PageSettings_Read.qml</file>
+        <file>PageExamples_Read.qml</file>
+        <file>PageHome_Read.qml</file>
     </qresource>
 </RCC>

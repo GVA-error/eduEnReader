@@ -17,8 +17,7 @@ public:
     qint64 getFragmentLength() const;
 
     // Нужно для подсвечивания текста
-    void mark(); // Подсветка случайным цвета
-    void mark(const QColor&); // .. конкретным цветом
+    void mark();
     void unmark();
 
     QColor getRandomMarkColor(); // Случайный цвет подсветки текста

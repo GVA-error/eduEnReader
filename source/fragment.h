@@ -23,6 +23,8 @@ public:
     IndexType begin() const { return _begin; }
     IndexType end() const { return _end; }
 
+    IndexType mid() const { return (_begin + _end) / 2; }
+
     bool isBelongs(IndexType pos) const { return pos >= _begin && pos <= _end; }
     bool haveIntersaption(IndexType posBegin, IndexType posEnd) const {
         return isBelongs(posBegin) || isBelongs(posEnd)

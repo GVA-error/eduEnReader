@@ -4,9 +4,13 @@ Rectangle {
     id: buttonStyle
 
     property variant text
+    property int fix_width
+    property bool checked: false
+
     signal clicked
 
-    height: text.height + 10; width: text.width + 20
+    height: text.height + 20;
+    width: fix_width
     border.width: 1
     radius: 4
     smooth: true
@@ -14,11 +18,11 @@ Rectangle {
     gradient: Gradient {
         GradientStop {
             position: 0.0
-            color: !mouseArea.pressed ? activePalette.light : activePalette.button
+            color: !mouseArea.pressed && !checked ? activePalette.light : activePalette.button
         }
         GradientStop {
             position: 1.0
-            color: !mouseArea.pressed ? activePalette.button : activePalette.dark
+            color: !mouseArea.pressed && !checked ? activePalette.button : activePalette.dark
         }
     }
 

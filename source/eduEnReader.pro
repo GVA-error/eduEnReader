@@ -1,8 +1,9 @@
 TEMPLATE = app
 
-QT += qml quick
+qtHaveModule(widgets): QT += widgets
+QT += qml quick quickcontrols2
 CONFIG += c++11
-CONFIG += qt plugin #
+CONFIG += qt plugin
 LIBS += -lsndfile
 QT += multimedia multimediawidgets
 QT += webengine
@@ -83,8 +84,7 @@ DISTFILES += \
     QMLButtonStyle.qml \
     ListDialog.qml \
     HtmlView.qml \
-    TopToolBar.qml \
-    qm.qml
+    TopToolBar.qml
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

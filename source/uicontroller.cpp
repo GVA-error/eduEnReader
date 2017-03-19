@@ -7,6 +7,16 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _f_home = true;
    // _exampleList.push_back("1");
    // _exampleList.push_back("2");
+
+    //connect(this, SIGNAL(textSellectionChanged()), this, SLOT(startSellectTimer()));
+    _sellectTimer.start();
+}
+
+void UIController::startSellectTimer()
+{
+    QString sellectedString = _textStore->getSellectedStreing();
+    if (sellectedString.length()>0)
+        _sellectTimer.start();
 }
 
 TextStore* UIController::getDocument()
@@ -30,6 +40,8 @@ void UIController::home(){
     _textStore->home();
     _f_home = true;
 }
+
+
 bool UIController::getMouseIsPressed() const
 {
     return mouseIsPressed;
@@ -108,6 +120,11 @@ QUrl UIController::getCommentUrlWithName(const QString &name) const
     return commentUrl;
 }
 
+qint32 UIController::getMidMarkable() const
+{
+    return _logic->getTextMidPosCurBind();
+}
+
 void UIController::playExample(QString ID)
 {
     auto example = _example[ID];
@@ -171,6 +188,7 @@ void UIController::setCursorPosInTimePos()
 {
     if (_f_home == false)
         return;
+
     qreal timePos = _soundStore->getTimePos();
     qint64 textPos = _logic->posInWavToPosInText(timePos);
     if (textPos >= 0)
@@ -179,7 +197,7 @@ void UIController::setCursorPosInTimePos()
 
 void UIController::setTimePosInCursorPos()
 {
-    if (_f_home == false)
+    if (_f_home == false || canNotSync())
         return;
     qint64 textPos = _textStore->getCursorPos();
     qreal newSoundPos = _logic->posInTxtToPosInWav(textPos);
@@ -205,6 +223,25 @@ void UIController::cursorPosChanged()
     setTimePosInCursorPos();
 }
 
+void UIController::markCurText()
+{
+    qint64 cursorPos = _textStore->getCursorPos();
+    if (cursorPos <= 0)
+        return;
+    _textStore->setAllUnMarkText(); // Костыль от глюка TextArea с не всегда устанвливаемым фоном
+    _logic->tempMarkBindInTextPos(cursorPos);
+}
+
+void UIController::markLastText()
+{
+    _logic->markLastBind();
+}
+
+void UIController::unmarkLastText()
+{
+    _logic->unmarkLastBind();
+}
+
 void UIController::createBindFile(const QUrl &soundFileName)
 {
     QString fileName = soundFileName.toLocalFile();
@@ -216,6 +253,7 @@ void UIController::openBindFile(const QUrl &arg)
     QString fileName = arg.toLocalFile();
     _logic->readFromFile(fileName, _textStore, _soundStore);
     saveHome();
+    _logic->unMarkAllBindedText();
 }
 
 void UIController::saveBindFile(const QUrl &arg)

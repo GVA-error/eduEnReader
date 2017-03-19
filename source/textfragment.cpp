@@ -44,23 +44,30 @@ qint64 TextFragment::getFragmentLength() const
 
 void TextFragment::unmark()
 {
-    mark(Qt::GlobalColor::white);
-}
-
-void TextFragment::mark()
-{
-    QColor mColor = getRandomMarkColor();
-    mark(mColor);
-}
-
-void TextFragment::mark(const QColor& color)
-{
+    if (_source.isNull()) // Случай нулевого бинда
+        return;
     qint64 oldSellectionStart = _source->selectionStart();
     qint64 oldSellectionEnd = _source->selectionEnd();
 
     _source->setSelectionStart(_begin);
     _source->setSelectionEnd(_end);
-    _source->setTextBackground(color);
+    _source->setUnMarkText();
+
+    _source->setSelectionStart(oldSellectionStart);
+    _source->setSelectionEnd(oldSellectionEnd);
+}
+
+
+void TextFragment::mark()
+{
+    if (_source.isNull()) // Случай нулевого бинда
+        return;
+    qint64 oldSellectionStart = _source->selectionStart();
+    qint64 oldSellectionEnd = _source->selectionEnd();
+
+    _source->setSelectionStart(_begin);
+    _source->setSelectionEnd(_end);
+    _source->setMarkText();
 
     _source->setSelectionStart(oldSellectionStart);
     _source->setSelectionEnd(oldSellectionEnd);

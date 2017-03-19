@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_PLUGIN -DQT_WEBENGINE_LIB -DQT_WEBENGINEWIDGETS_LIB -DQT_WEBENGINECORE_LIB -DQT_QUICK_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_WEBCHANNEL_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB -DQT_QML_DEBUG -D_REENTRANT
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_PLUGIN -DQT_MULTIMEDIAWIDGETS_LIB -DQT_WEBENGINEWIDGETS_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_QUICKCONTROLS2_LIB -DQT_WEBENGINE_LIB -DQT_WEBENGINECORE_LIB -DQT_QUICK_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_WEBCHANNEL_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_POSITIONING_LIB -DQT_CORE_LIB -DQT_QML_DEBUG -D_REENTRANT
 CFLAGS        = -pipe -g -D_REENTRANT -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -D_REENTRANT -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../../source -I. -I../../../Qt/5.8/gcc_64/include -I../../../Qt/5.8/gcc_64/include/QtWebEngine -I../../../Qt/5.8/gcc_64/include/QtWebEngineWidgets -I../../../Qt/5.8/gcc_64/include/QtWebEngineCore -I../../../Qt/5.8/gcc_64/include/QtQuick -I../../../Qt/5.8/gcc_64/include/QtMultimediaWidgets -I../../../Qt/5.8/gcc_64/include/QtMultimedia -I../../../Qt/5.8/gcc_64/include/QtPrintSupport -I../../../Qt/5.8/gcc_64/include/QtWidgets -I../../../Qt/5.8/gcc_64/include/QtGui -I../../../Qt/5.8/gcc_64/include/QtWebChannel -I../../../Qt/5.8/gcc_64/include/QtQml -I../../../Qt/5.8/gcc_64/include/QtNetwork -I../../../Qt/5.8/gcc_64/include/QtPositioning -I../../../Qt/5.8/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -isystem /usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I../../../Qt/5.8/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../../source -I. -I../../../Qt/5.8/gcc_64/include -I../../../Qt/5.8/gcc_64/include/QtMultimediaWidgets -I../../../Qt/5.8/gcc_64/include/QtWebEngineWidgets -I../../../Qt/5.8/gcc_64/include/QtPrintSupport -I../../../Qt/5.8/gcc_64/include/QtWidgets -I../../../Qt/5.8/gcc_64/include/QtQuickControls2 -I../../../Qt/5.8/gcc_64/include/QtWebEngine -I../../../Qt/5.8/gcc_64/include/QtWebEngineCore -I../../../Qt/5.8/gcc_64/include/QtQuick -I../../../Qt/5.8/gcc_64/include/QtMultimedia -I../../../Qt/5.8/gcc_64/include/QtGui -I../../../Qt/5.8/gcc_64/include/QtWebChannel -I../../../Qt/5.8/gcc_64/include/QtQml -I../../../Qt/5.8/gcc_64/include/QtNetwork -I../../../Qt/5.8/gcc_64/include/QtPositioning -I../../../Qt/5.8/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -isystem /usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I../../../Qt/5.8/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/gva/Qt/5.8/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = eduEnReader1.0.0
 DISTDIR = /home/gva/eduEnReader/source/Release/.tmp/eduEnReader1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/gva/Qt/5.8/gcc_64/lib -Wl,-rpath-link,/home/gva/Qt/5.8/gcc_64/lib
-LIBS          = $(SUBLIBS) -lsndfile -L/home/gva/Qt/5.8/gcc_64/lib -lQt5WebEngine -lQt5WebEngineWidgets -lQt5WebEngineCore -lQt5Quick -lQt5MultimediaWidgets -lQt5Multimedia -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5WebChannel -lQt5Qml -lQt5Network -lQt5Positioning -lQt5Core -lGL -lpthread -lpulse-mainloop-glib -lpulse -lglib-2.0 
+LIBS          = $(SUBLIBS) -lsndfile -L/home/gva/Qt/5.8/gcc_64/lib -lQt5MultimediaWidgets -lQt5WebEngineWidgets -lQt5PrintSupport -lQt5Widgets -lQt5QuickControls2 -lQt5WebEngine -lQt5WebEngineCore -lQt5Quick -lQt5Multimedia -lQt5Gui -lQt5WebChannel -lQt5Qml -lQt5Network -lQt5Positioning -lQt5Core -lGL -lpthread -lpulse-mainloop-glib -lpulse -lglib-2.0 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -125,7 +125,6 @@ DIST          = ../images/editcopy.png \
 		../ListDialog.qml \
 		../HtmlView.qml \
 		../TopToolBar.qml \
-		../qm.qml \
 		../../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.8/gcc_64/mkspecs/common/unix.conf \
 		../../../../Qt/5.8/gcc_64/mkspecs/common/linux.conf \
@@ -509,14 +508,15 @@ Makefile: ../eduEnReader.pro ../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.pr
 		../../../Qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../eduEnReader.pro \
 		../qml.qrc \
-		../../../Qt/5.8/gcc_64/lib/libQt5WebEngine.prl \
-		../../../Qt/5.8/gcc_64/lib/libQt5WebEngineWidgets.prl \
-		../../../Qt/5.8/gcc_64/lib/libQt5WebEngineCore.prl \
-		../../../Qt/5.8/gcc_64/lib/libQt5Quick.prl \
 		../../../Qt/5.8/gcc_64/lib/libQt5MultimediaWidgets.prl \
-		../../../Qt/5.8/gcc_64/lib/libQt5Multimedia.prl \
+		../../../Qt/5.8/gcc_64/lib/libQt5WebEngineWidgets.prl \
 		../../../Qt/5.8/gcc_64/lib/libQt5PrintSupport.prl \
 		../../../Qt/5.8/gcc_64/lib/libQt5Widgets.prl \
+		../../../Qt/5.8/gcc_64/lib/libQt5QuickControls2.prl \
+		../../../Qt/5.8/gcc_64/lib/libQt5WebEngine.prl \
+		../../../Qt/5.8/gcc_64/lib/libQt5WebEngineCore.prl \
+		../../../Qt/5.8/gcc_64/lib/libQt5Quick.prl \
+		../../../Qt/5.8/gcc_64/lib/libQt5Multimedia.prl \
 		../../../Qt/5.8/gcc_64/lib/libQt5Gui.prl \
 		../../../Qt/5.8/gcc_64/lib/libQt5WebChannel.prl \
 		../../../Qt/5.8/gcc_64/lib/libQt5Qml.prl \
@@ -696,14 +696,15 @@ Makefile: ../eduEnReader.pro ../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.pr
 ../../../Qt/5.8/gcc_64/mkspecs/features/lex.prf:
 ../eduEnReader.pro:
 ../qml.qrc:
-../../../Qt/5.8/gcc_64/lib/libQt5WebEngine.prl:
-../../../Qt/5.8/gcc_64/lib/libQt5WebEngineWidgets.prl:
-../../../Qt/5.8/gcc_64/lib/libQt5WebEngineCore.prl:
-../../../Qt/5.8/gcc_64/lib/libQt5Quick.prl:
 ../../../Qt/5.8/gcc_64/lib/libQt5MultimediaWidgets.prl:
-../../../Qt/5.8/gcc_64/lib/libQt5Multimedia.prl:
+../../../Qt/5.8/gcc_64/lib/libQt5WebEngineWidgets.prl:
 ../../../Qt/5.8/gcc_64/lib/libQt5PrintSupport.prl:
 ../../../Qt/5.8/gcc_64/lib/libQt5Widgets.prl:
+../../../Qt/5.8/gcc_64/lib/libQt5QuickControls2.prl:
+../../../Qt/5.8/gcc_64/lib/libQt5WebEngine.prl:
+../../../Qt/5.8/gcc_64/lib/libQt5WebEngineCore.prl:
+../../../Qt/5.8/gcc_64/lib/libQt5Quick.prl:
+../../../Qt/5.8/gcc_64/lib/libQt5Multimedia.prl:
 ../../../Qt/5.8/gcc_64/lib/libQt5Gui.prl:
 ../../../Qt/5.8/gcc_64/lib/libQt5WebChannel.prl:
 ../../../Qt/5.8/gcc_64/lib/libQt5Qml.prl:
@@ -762,6 +763,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../QMLSoundGraph.qml \
 		../ListDialog.qml \
 		../ControlPanel.qml \
+		../PageSettings_Read.qml \
 		../FileDialogs.qml \
 		../TextReaderArea.qml \
 		../SimpleDialog.qml \
@@ -770,17 +772,21 @@ qrc_qml.cpp: ../qml.qrc \
 		../QMLButtonStyle.qml \
 		../QMLScroolBar.qml \
 		../TopToolBar.qml \
+		../PageExamples_Read.qml \
 		../DialogBackground.qml \
 		../main.qml \
 		../WebViewDialog.qml \
+		../PageHome_Read.qml \
 		../images/textunder.png \
 		../images/textjustify.png \
 		../images/editredo.png \
+		../images/setting.png \
 		../images/play.png \
 		../images/textleft.png \
 		../images/go-home.png \
 		../images/textright.png \
 		../images/view-sort-ascending.png \
+		../images/tools-check-spelling.png \
 		../images/editundo.png \
 		../images/editpaste.png \
 		../images/bind.png \
@@ -788,10 +794,13 @@ qrc_qml.cpp: ../qml.qrc \
 		../images/editcopy.png \
 		../images/filesave.png \
 		../images/textcenter.png \
+		../images/package_games_puzzle.png \
 		../images/textbold.png \
 		../images/qt-logo.png \
 		../images/zoomin.png \
 		../images/text-x-lilypond.png \
+		../images/examples.png \
+		../images/msg_info.png \
 		../images/textitalic.png \
 		../images/fileprint.png \
 		../images/exportpdf.png \
@@ -913,7 +922,7 @@ moc_soundstore.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../soundstore.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../soundstore.h -o moc_soundstore.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../soundstore.h -o moc_soundstore.cpp
 
 moc_textstore.cpp: ../../../Qt/5.8/gcc_64/include/QtQuick/QQuickTextDocument \
 		../../../Qt/5.8/gcc_64/include/QtQuick/qquicktextdocument.h \
@@ -1023,6 +1032,7 @@ moc_textstore.cpp: ../../../Qt/5.8/gcc_64/include/QtQuick/QQuickTextDocument \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -1051,7 +1061,7 @@ moc_textstore.cpp: ../../../Qt/5.8/gcc_64/include/QtQuick/QQuickTextDocument \
 		../textstore.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../textstore.h -o moc_textstore.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../textstore.h -o moc_textstore.cpp
 
 moc_uicontroller.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
@@ -1101,11 +1111,13 @@ moc_uicontroller.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTime \
+		../../../Qt/5.8/gcc_64/include/QtCore/qdatetime.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
 		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/QList \
 		../../../Qt/5.8/gcc_64/include/QtGui/qevent.h \
@@ -1199,6 +1211,7 @@ moc_uicontroller.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -1233,7 +1246,7 @@ moc_uicontroller.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../uicontroller.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../uicontroller.h -o moc_uicontroller.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../uicontroller.h -o moc_uicontroller.cpp
 
 moc_asr.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
@@ -1323,7 +1336,7 @@ moc_asr.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../ASR/asr.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/asr.h -o moc_asr.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/asr.h -o moc_asr.cpp
 
 moc_bindmaker.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
@@ -1441,6 +1454,7 @@ moc_bindmaker.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -1504,7 +1518,7 @@ moc_bindmaker.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../ASR/bindmaker.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/bindmaker.h -o moc_bindmaker.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/bindmaker.h -o moc_bindmaker.cpp
 
 moc_datapreparation.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
@@ -1585,7 +1599,7 @@ moc_datapreparation.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../ASR/datapreparation.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/datapreparation.h -o moc_datapreparation.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/datapreparation.h -o moc_datapreparation.cpp
 
 moc_scripter.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
@@ -1661,7 +1675,7 @@ moc_scripter.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../ASR/scripter.h \
 		moc_predefs.h \
 		../../../Qt/5.8/gcc_64/bin/moc
-	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/scripter.h -o moc_scripter.cpp
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../ASR/scripter.h -o moc_scripter.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1819,6 +1833,7 @@ main.o: ../main.cpp ../../../Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/QList \
 		../../../Qt/5.8/gcc_64/include/QtGui/qaccessible.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -1852,6 +1867,8 @@ main.o: ../main.cpp ../../../Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/5.8/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
 		../uicontroller.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTime \
+		../../../Qt/5.8/gcc_64/include/QtCore/qdatetime.h \
 		../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/QList \
 		../../../Qt/5.8/gcc_64/include/QtCore/QVector \
@@ -2127,6 +2144,7 @@ logic.o: ../logic.cpp ../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -2378,6 +2396,7 @@ textfragment.o: ../textfragment.cpp ../textfragment.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -2517,6 +2536,7 @@ textstore.o: ../textstore.cpp ../../../Qt/5.8/gcc_64/include/QtGui/QColor \
 		../../../Qt/5.8/gcc_64/include/QtGui/qaccessible.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -2597,11 +2617,13 @@ uicontroller.o: ../uicontroller.cpp ../uicontroller.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QTime \
+		../../../Qt/5.8/gcc_64/include/QtCore/qdatetime.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../logic.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
 		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/QList \
 		../../../Qt/5.8/gcc_64/include/QtGui/qevent.h \
@@ -2695,6 +2717,7 @@ uicontroller.o: ../uicontroller.cpp ../uicontroller.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \
@@ -2934,6 +2957,7 @@ bindmaker.o: ../ASR/bindmaker.cpp ../ASR/bindmaker.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgb.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/5.8/gcc_64/include/QtGui/QMouseEvent \
 		../../../Qt/5.8/gcc_64/include/QtGui/QTextCharFormat \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qpen.h \

@@ -2,6 +2,7 @@
 #define TEXTSTORE_H
 
 #include <QQuickTextDocument>
+#include <QMouseEvent>
 #include <QtGui/QTextCharFormat>
 #include <QtCore/QTextCodec>
 #include <assert.h>
@@ -39,6 +40,8 @@ class TextStore : public QObject, public Store <TextStore>
     Q_PROPERTY(QUrl fileUrl READ fileUrl WRITE setFileUrl NOTIFY fileUrlChanged)
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
     Q_PROPERTY(QString documentTitle READ documentTitle WRITE setDocumentTitle NOTIFY documentTitleChanged)
+
+    Q_PROPERTY(QColor markColor READ getMarkColor WRITE setMarkCalor NOTIFY markColorChanged)
 
 public:
     TextStore();
@@ -85,7 +88,10 @@ public Q_SLOTS:
     void setUnderline(bool arg);
     void setFontSize(int arg);
     void setTextColor(const QColor &arg);
-    void setTextBackground(const QColor &arg);
+    void setMarkText();
+    void setAllMarkText();
+    void setUnMarkText();
+    void setAllUnMarkText();
     void setFontFamily(const QString &arg);
 
     void setFileUrl(const QUrl &arg) override;
@@ -96,6 +102,9 @@ public Q_SLOTS:
 
     void saveHome();
     void home();
+
+    void setMarkCalor(const QColor& c){ _markColor = c; }
+    QColor getMarkColor() const { return _markColor; }
 signals:
     void targetChanged();
     void cursorPositionChanged();
@@ -119,16 +128,21 @@ signals:
     void documentTitleChanged();
     void error(QString message);
 
+    void markColorChanged();
 private:
     void reset();
     QTextCursor textCursor() const;
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+    void mergeFormatOnAll(const QTextCharFormat &format);
 
     QQuickItem *_target;
     QTextDocument *_doc;
     // Нужен для возможости полного функционирования объектов textStore без привязки к гуи гуи
     // К примеру при поиске примеров с нужным словом
     QTextDocument _default_m_doc;
+    QColor _markColor;
+
+    bool _mousePresed;
 
     qint32 _cursorPosition;
     qint32 _selectionStart;

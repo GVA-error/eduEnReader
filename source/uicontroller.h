@@ -2,6 +2,7 @@
 #define UIController_H
 
 #include <QObject>
+#include <QTime>
 #include "logic.h"
 #include "soundstore.h"
 #include "textstore.h"
@@ -9,13 +10,20 @@
 #include "textfragment.h"
 #include "ASR/bindmaker.h"
 
+// Заметка: Когда буду делать лекции сделать шрифт побольше
+
+/* Баги
+ * Глюк с обновлением текстового поля, иногда остаются выделения похоже при нехватке ресурсов
+ *
+ * /
+
 /* TODO LIST
  * -n) Подсветка розово серым - увеличение шрифта 1.5
  * -n) Ввод отдельных слов
  *
  *
  *
- *
+ * -4) Сьтруктурировать словарь как файловую структуру. - Файловый словарь?
  * -3) Препод может отключить текст и запретить браузер
  * -2) Использовать последние версии qml
  * -1) Что за бага с колёсиком мыши? Срочный рефакоринг?
@@ -24,7 +32,8 @@
  * 2) Усреднить громкость - нормализовать каждый файл
  * 3) Записывать все распознанные строки
  * 4) Представление дирректории комментариев в виде оглавления
- * 8) Борьба с шумом с помощью вейлет преобразований через dll WavUtills
+ * 5) Вывод примеров определённой длинны
+ * 6) Если пользователь не видит начала или конца производить сдвиг текста
  * 7) Использование внешнего апи
  * 10) Архивирование
  * 11) Ускорить алгоритм повторного биндинга через использование окна
@@ -53,7 +62,8 @@ class UIController : public QObject
     Q_PROPERTY(SoundStore* soundStore READ getSoundStore WRITE setSoundStore) // иначе нотификация не нужна.
     Q_PROPERTY(QStringList exampleListModel READ getExampleList WRITE setExampleList NOTIFY exampleListChanged)
     Q_PROPERTY(QStringList commentListModel READ getCommentList WRITE setCommentList NOTIFY commentListChanged)
-    Q_PROPERTY(bool mouseIsPressed READ getMouseIsPressed WRITE setMouseIsPressed)
+    Q_PROPERTY(bool mouseIsPressed WRITE setMouseIsPressed)
+
 public:
     explicit UIController(QObject *parent = 0);
 
@@ -82,6 +92,7 @@ public slots:
 
     void saveHome();
     void home();
+
     void openBindFile(const QUrl &bindFileName);
     void saveBindFile(const QUrl &bindFileName);
     void createBindFile(const QUrl &soundFileName);
@@ -92,6 +103,10 @@ public slots:
     void cursorPosChanged();
     void setCursorPosInTimePos();
     void setTimePosInCursorPos();
+    void markCurText(); // Нужна для синхронизации во время централизации текста
+    void markLastText();
+    void unmarkLastText();
+    void startSellectTimer();
 
     QString formUrlToTranslateSellected();
 
@@ -101,10 +116,17 @@ public slots:
 
     QUrl getCommentUrlWithName(const QString& name) const;
 
+    qint32 getMidMarkable() const;
+
+    bool canNotSync() const { return _sellectTimer.elapsed() < _sellectingTime; }
+
 protected slots:
     void recognizeIsFinished();
 
 private:
+    QTime _sellectTimer; // Следит чтобы во время выделения текста и немного погодя не производилось синхронизаций со звуком, из-за глюка с пропагейшеном
+    const qint32 _sellectingTime = 500; // ..
+
     Logic::PTR _logic;
     SoundStore::PTR _soundStore; //bool _f_setSound;
     TextStore::PTR _textStore;  //bool _f_setText;

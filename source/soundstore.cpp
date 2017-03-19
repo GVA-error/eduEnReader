@@ -37,9 +37,13 @@ void SoundStore::saveHome()
 
 void SoundStore::home()
 {
+    if (_saved_lastOpenedUrl == _lastOpenedUrl
+            && _saved_startPos == _startPos
+            && _saved_finishPos == _finishPos) // Мы и так дома
+        return;
     setFileUrl(_saved_lastOpenedUrl, _saved_startPos, _saved_finishPos);
     setPosition(_saved_curPos);
-    start();
+    //start();
 }
 
 /*

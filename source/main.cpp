@@ -14,7 +14,12 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForUtfText("unicode"));
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+#ifdef QT_WIDGETS_LIB
+    QApplication app(argc, argv);
+#else
     QGuiApplication app(argc, argv);
+#endif
     QQmlApplicationEngine engine;
     QtWebEngine::initialize();
     qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");

@@ -7,7 +7,9 @@ Logic::Logic()
     zeroBind.text = TextFragment::factoryMethod(-1, -1, TextStore::PTR());
     tempBind.sound = SoundFragment::factoryMethod(-1.0f, -1.0f, SoundStore::PTR());
     tempBind.text = TextFragment::factoryMethod(-1, -1, TextStore::PTR());
-    _lastTempMarkPos = -1;
+    _lastTempMarkPos = zeroBind;
+    //for (qint32 i = 0; i<_lastTempMarkListSize; i++)
+    //    _lastTempMarkPos.append(zeroBind);
 }
 
 QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, bool findInThisFile) const
@@ -147,6 +149,14 @@ qreal Logic::posInTxtToPosInWav(qint64 textPos) const
     return posInSound;
 }
 
+qint32 Logic::getTextMidPosCurBind() const
+{
+    auto curBind = _lastTempMarkPos;
+    auto text = curBind.text;
+    qint32 mid = text->mid();
+    return mid;
+}
+
 void Logic::markBindFromSoundPos(qreal soundPos)
 {
     Bind markableBind = getBindFromSoundPos(soundPos);
@@ -248,15 +258,35 @@ void Logic::clear(bool clearRecognized)
 
 void Logic::tempMarkBindInTextPos(qint64 pos)
 {
-    unMarkBindFromTextPos(_lastTempMarkPos);
-    markBindFromTextPos(pos);
-    _lastTempMarkPos = pos;
+    //unMarkAllBindedText();
+    unmarkLastBind();
+    auto curBind = getBindFromTextPos(pos);
+    markBind(curBind);
+    _lastTempMarkPos = curBind;
+    //_lastTempMarkPos.push_back(curBind);
+    //_lastTempMarkPos.pop_front();
+}
+
+void Logic::markLastBind()
+{
+    markBind(_lastTempMarkPos);
+}
+
+void Logic::unmarkLastBind()
+{
+    unmarkBind(_lastTempMarkPos);
 }
 
 void Logic::markAllBindedText()
 {
     for (auto bind : _bindVector)
         markBind(bind);
+}
+
+void Logic::unMarkAllBindedText()
+{
+    for (auto bind : _bindVector)
+        unmarkBind(bind);
 }
 
 void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString &recognizedText)
@@ -337,7 +367,29 @@ QVector <Logic::Bind>::iterator Logic::getBindOnTextPos(qint64 textPos)
 void Logic::markBind(const Bind& bind)
 {
     auto text = bind.text;
+    if (text.isNull())
+        return;
     text->mark();
+}
+
+void Logic::unmarkBind(const Bind& bind)
+{
+    auto text = bind.text;
+    if (text.isNull())
+        return;
+    text->unmark();
+}
+
+void Logic::markBind(const QList<Bind>& bindList)
+{
+    for (auto bind : bindList)
+        markBind(bind);
+}
+
+void Logic::unmarkBind(const QList<Bind>& bindList)
+{
+    for (auto bind : bindList)
+        unmarkBind(bind);
 }
 
 void Logic::createFromNewSoundFile(const QString& fileName, TextStore::PTR text, SoundStore::PTR sound)

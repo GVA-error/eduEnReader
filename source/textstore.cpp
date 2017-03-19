@@ -14,6 +14,8 @@ TextStore::TextStore()
     , _selectionEnd(0)
     , _saved_url(QUrl())
     , _saved_curPosition(0)
+    , _mousePresed(false)
+    , _markColor("#FF7F50")
 {
 }
 
@@ -186,6 +188,13 @@ QTextCursor TextStore::textCursor() const
     return cursor;
 }
 
+void TextStore::mergeFormatOnAll(const QTextCharFormat &format)
+{
+    QTextCursor cursor = textCursor();
+    cursor.select(QTextCursor::Document);
+    cursor.mergeCharFormat(format);
+}
+
 void TextStore::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 {
     QTextCursor cursor = textCursor();
@@ -311,13 +320,49 @@ void TextStore::setTextColor(const QColor &c)
     emit textColorChanged();
 }
 
-void TextStore::setTextBackground(const QColor &c)
+void TextStore::setAllMarkText()
 {
     QTextCursor cursor = textCursor();
     if (cursor.isNull())
         return;
+
     QTextCharFormat format;
-    format.setBackground(QBrush(c));
+    format.setBackground(QBrush(_markColor));
+
+    mergeFormatOnAll(format);
+}
+
+void TextStore::setMarkText()
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+
+    QTextCharFormat format;
+    format.setBackground(QBrush(_markColor));
+    mergeFormatOnWordOrSelection(format);
+}
+
+void TextStore::setAllUnMarkText()
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+
+    QTextCharFormat format;
+    format.setBackground(QBrush(Qt::GlobalColor::white));
+
+    mergeFormatOnAll(format);
+}
+
+void TextStore::setUnMarkText()
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+
+    QTextCharFormat format;
+    format.setBackground(QBrush(Qt::GlobalColor::white));
     mergeFormatOnWordOrSelection(format);
 }
 

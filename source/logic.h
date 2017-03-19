@@ -71,6 +71,10 @@ public:
     void tempMarkBindInTextPos(qint64);
     void markAllBindedText(); // Ненужна
     void unMarkAllBindedText();
+    void markLastBind();
+    void unmarkLastBind();
+
+    qint32 getTextMidPosCurBind() const; // Нужно для позиционирования на середину бинда
     // Округляют до позиции в ближайшем бинде
     qint64 roundToBindTextPos(qint64) const;
     qreal roundToBindSoundPos(qreal) const;
@@ -114,7 +118,9 @@ private:
     Bind tempBind; // служит как временная переменная которую можно поменять, но она не на что не повличет
 
     QString _curBndFileName;
-    qint64 _lastTempMarkPos;
+
+    //const qint32 _lastTempMarkListSize = 7;
+    Bind _lastTempMarkPos;
 
     // Упорядоченное множество биндов
     // Нужно для подсветки и дихотомического поиска соответствующего выделения
@@ -137,6 +143,9 @@ private:
     bool haveIntersaption(const Bind& A, const Bind& B) const;
 
     void markBind(const Bind&);
+    void unmarkBind(const Bind&);
+    void markBind(const QList<Bind>&);
+    void unmarkBind(const QList<Bind>&);
 
     QString toString(const Bind &) const;
     QString toString(const Comment &) const;
