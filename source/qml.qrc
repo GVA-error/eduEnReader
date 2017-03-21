@@ -51,5 +51,7 @@
         <file>PageSettings_Read.qml</file>
         <file>PageExamples_Read.qml</file>
         <file>PageHome_Read.qml</file>
+        <file>images/not-synch.png</file>
+        <file>images/synch.png</file>
     </qresource>
 </RCC>

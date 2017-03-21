@@ -790,11 +790,13 @@ qrc_qml.cpp: ../qml.qrc \
 		../images/editundo.png \
 		../images/editpaste.png \
 		../images/bind.png \
+		../images/synch.png \
 		../images/editcut.png \
 		../images/editcopy.png \
 		../images/filesave.png \
 		../images/textcenter.png \
 		../images/package_games_puzzle.png \
+		../images/not-synch.png \
 		../images/textbold.png \
 		../images/qt-logo.png \
 		../images/zoomin.png \

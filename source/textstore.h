@@ -44,12 +44,13 @@ class TextStore : public QObject, public Store <TextStore>
     Q_PROPERTY(QColor markColor READ getMarkColor WRITE setMarkCalor NOTIFY markColorChanged)
 
 public:
+    const QColor _defaultColor = QColor("#e6d1d1");
+   // const QStringList _prefixAndPostFix = { " ", ",", "!", "?", ":", "(", ")"};
     TextStore();
     virtual ~TextStore(){}
 
     QString getString(qint64 begin, qint64 end) const;
     QString getString() const;
-    QString getSellectedStreing() const;
     qint64 getCursorPos() const;
 
     QQuickItem *target() { return _target; }
@@ -82,7 +83,12 @@ public:
 
     QString documentTitle() const;
 
+
+    //QStringList getAllWordVarints(const QString& word) const;
+
 public Q_SLOTS:
+    QString getSellectedStreing() const;
+    void setSelectionByWord(qint32 pos);
     void setBold(bool arg);
     void setItalic(bool arg);
     void setUnderline(bool arg);
@@ -92,6 +98,7 @@ public Q_SLOTS:
     void setAllMarkText();
     void setUnMarkText();
     void setAllUnMarkText();
+    void setWorldMark(const QString& word);
     void setFontFamily(const QString &arg);
 
     void setFileUrl(const QUrl &arg) override;
@@ -105,6 +112,9 @@ public Q_SLOTS:
 
     void setMarkCalor(const QColor& c){ _markColor = c; }
     QColor getMarkColor() const { return _markColor; }
+
+    //qint64 indexOfPrefixOrPostFix(const QString& s, qint64 leftOffset = 0) const; // первое вхождение префикса или постфикса
+    //bool isPrefixOrPostfix(const QString&) const;
 signals:
     void targetChanged();
     void cursorPositionChanged();
@@ -134,6 +144,7 @@ private:
     QTextCursor textCursor() const;
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
     void mergeFormatOnAll(const QTextCharFormat &format);
+    QList <qint64> getWordPositions(const QString& word) const; // Нужно для подсветки слов
 
     QQuickItem *_target;
     QTextDocument *_doc;

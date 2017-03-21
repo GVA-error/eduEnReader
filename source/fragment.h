@@ -2,6 +2,7 @@
 #define FRAGMENT_H
 
 #include <QDebug>
+#include <assert.h>
 
 // Базовый класс для различных фрагментов
 // По сути фабрика, реализует пару protected конструкторов но использует для фабричных методов конструкторы наследника,
@@ -15,15 +16,31 @@ public:
     typedef QSharedPointer <ThisType> PTR;
     static QSharedPointer <ThisType> factoryMethod(IndexType begin, IndexType end, PTRSourceType source)
     {
+        if (begin > end)
+            qCritical("Incorrect feagments");
         PTR rezPtr = QSharedPointer <ThisType> (new ThisType(begin, end, source));
         return rezPtr;
     }
+    static QSharedPointer <ThisType> summ(PTR left, PTR right)
+    {
+        IndexType rezBegin = left->begin();
+        IndexType rezEnd = right->end();
+        PTRSourceType leftSource = left->getSource();
+        PTRSourceType rightSource = right->getSource();
+        assert(leftSource.data() == rightSource.data()); // так как нет понятия нуля
+        PTRSourceType rezSourse = leftSource;
+        PTR rezPtr = QSharedPointer <ThisType> (new ThisType(rezBegin, rezEnd, rezSourse));;
+        return rezPtr;
+    }
+
     void setEnd(IndexType newEnd) { _end = newEnd; }
     // Методы в глобальных координатах
     IndexType begin() const { return _begin; }
     IndexType end() const { return _end; }
 
     IndexType mid() const { return (_begin + _end) / 2; }
+
+    IndexType size() const { return _end - _begin; }
 
     bool isBelongs(IndexType pos) const { return pos >= _begin && pos <= _end; }
     bool haveIntersaption(IndexType posBegin, IndexType posEnd) const {

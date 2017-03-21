@@ -1,17 +1,25 @@
 
 import QtQuick 2.8
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
+import TextStoreModul 1.0
+import SoundStoreModul 1.1
+import UiControlerModul 1.1
 
 ToolBar {
-    leftPadding: 50
-    topPadding: 5
+    leftPadding: 10
+    topPadding: 10
     bottomPadding : 5
     id : root
+    function setExampleText(text){
+        exampleTextEdit.text = text
+    }
+
     Flow {
         id: flow
         width: parent.width
@@ -20,10 +28,12 @@ ToolBar {
             id: fileRow
             QMLButtonStyle {
                 fix_width : 100
-                text: "Open"
+                text: "open"
                 onClicked: openDialog.open()
             }
             ToolSeparator {
+                leftPadding: 15
+                rightPadding: 15
                 //contentItem.visible: fileRow.y === editRow.y
             }
         }
@@ -31,7 +41,7 @@ ToolBar {
             id: homeRow
             QMLButtonStyle {
                 fix_width : 100
-                text: "Home"
+                text: "home"
                 checked: pageView.currentIndex == 0
                 onClicked: mainRoot.goHome()
             }
@@ -53,18 +63,34 @@ ToolBar {
         }
         Row {
             id: exampleRow
+            //spacing: 30
             QMLButtonStyle {
                 fix_width : 100
                 text: "examples"
-                checked: homePage.curRightList == 1
-                onClicked: mainRoot.goExamples()
+                checked: homePage.isExampleShowing()
+                onClicked: {
+                    if (homePage.isExampleShowing())
+                        mainRoot.goHome()
+                    else
+                        mainRoot.goExamples()
+                }
             }
-//            ToolSeparator {
-//                contentItem.visible: fileRow.y === editRow.y
-//            }
+
+            Label{
+                text: " "
+                //y : 10
+                visible: homePage.isExampleShowing()
+            }
+            TextField {
+                visible: homePage.isExampleShowing()
+                id : exampleTextEdit
+                text: ""
+                onTextChanged: {
+                    homePage.setExamples(text)
+                }
+            }
         }
     }
-
 
     FileDialog {
         id: openDialog
@@ -76,48 +102,5 @@ ToolBar {
                 homePage.homeUiControler.openBindFile(file)
         }
     }
-
-
-//    FileDialog {
-//        id: fileDialog
-//        nameFilters : ["Bind file (*.bnd)"]
-//        onAccepted : {
-//            if (fileDialog.selectExisting)
-//                uiControler.openBindFile(fileUrl)
-//            else
-//                uiControler.saveBindFile(fileUrl)
-//        }
-//    }
 }
 
-
-
-
-
-
-//ToolBar {
-//    id: root
-////    width: parent.width// - videoRect.width
-////    //anchors.top: menuBar.
-////    //anchors.right: videoRect.left
-
-//    RowLayout {
-//        anchors.fill: parent
-//        spacing: 0
-//        ToolButton { action: fileOpenAction }
-//        QMLToolBarSeparator {}
-//        Item { Layout.fillWidth: true }
-//    }
-
-
-//    Action {
-//        id: fileOpenAction
-//        iconSource: "images/fileopen.png"
-//        iconName: "document-open"
-//        text: "Open"
-//        onTriggered: {
-//            fileDialog.selectExisting = true
-//            fileDialog.open()
-//        }
-//    }
-//}

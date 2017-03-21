@@ -1,29 +1,61 @@
 #include "textfragment.h"
 
-bool TextFragment::havePhrase(const QString& phrase, qreal egeOffset) const
+bool TextFragment::havePhraseOnMid(const QString& phrase, qreal egeOffset) const
+{   
+    assert(egeOffset > 0 && egeOffset < 0.5);
+    QString fragmentString = getString();
+    qint32 l = fragmentString.length();
+    qint32 offset = l * egeOffset;
+    QStringList textList = fragmentString.split(QRegExp("\\b"));
+    qint64 begin = 0;
+    for (auto str : textList)
+    {
+        qint64 end = begin + str.length();
+        if (str == phrase)
+            if (end > offset && begin < l - offset)
+                return true;
+        begin = end;
+    }
+    return false;
+}
+
+bool TextFragment::havePhraseOnBegin(const QString& phrase, qreal egeOffset) const
 {
     assert(egeOffset > 0 && egeOffset < 0.5);
     QString fragmentString = getString();
     qint32 l = fragmentString.length();
-    qint32 newl = l * (1-egeOffset*2);
     qint32 offset = l * egeOffset;
-    fragmentString = fragmentString.mid(offset, newl);
-    // Допустимые варианты
-    QStringList vars;
-    vars.push_back(" " + phrase + " ");
-    vars.push_back(" " + phrase + ",");
-    vars.push_back(" " + phrase + ":");
-    vars.push_back(" " + phrase + ".");
-    vars.push_back(" " + phrase + "?");
-    vars.push_back(" " + phrase + "!");
-    vars.push_back(" " + phrase + ".");
-
-    for (auto var : vars)
-        if (fragmentString.contains(var))
-            return true;
+    QStringList textList = fragmentString.split(QRegExp("\\b"));
+    qint64 begin = 0;
+    for (auto str : textList)
+    {
+        qint64 end = begin + str.length();
+        if (str == phrase)
+            if (end < offset)
+                return true;
+        begin = end;
+    }
     return false;
 }
 
+bool TextFragment::havePhraseOnEnd(const QString& phrase, qreal egeOffset) const
+{
+    assert(egeOffset > 0 && egeOffset < 0.5);
+    QString fragmentString = getString();
+    qint32 l = fragmentString.length();
+    qint32 offset = l * egeOffset;
+    QStringList textList = fragmentString.split(QRegExp("\\b"));
+    qint64 begin = 0;
+    for (auto str : textList)
+    {
+        qint64 end = begin + str.length();
+        if (str == phrase)
+            if (begin > l - offset)
+                return true;
+        begin = end;
+    }
+    return false;
+}
 
 QString TextFragment::getString() const
 {

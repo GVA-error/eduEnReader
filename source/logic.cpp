@@ -12,7 +12,31 @@ Logic::Logic()
     //    _lastTempMarkPos.append(zeroBind);
 }
 
-QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, bool findInThisFile) const
+Logic::Bind Logic::summ(const Bind& left, const Bind& right)
+{
+    if (isEquils(left, zeroBind))
+        return right;
+    if (isEquils(right, zeroBind))
+        return left;
+
+    Bind summBind;
+    TextFragment::PTR summText;
+    SoundFragment::PTR summSound;
+    TextFragment::PTR leftText = left.text;
+    TextFragment::PTR rightText = right.text;
+    SoundFragment::PTR leftSound = left.sound;
+    SoundFragment::PTR rightSound = right.sound;
+
+    summText = TextFragment::summ(leftText, rightText);
+    summSound = SoundFragment::summ(leftSound, rightSound);
+
+    summBind.sound = summSound;
+    summBind.text = summText;
+
+    return summBind;
+}
+
+QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile) const
 {
     QList <Logic::Example> rezList;
     QDir curDir;
@@ -25,21 +49,25 @@ QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, bool fi
         if (!findInThisFile && bnd == _curBndFileName)
             continue;
         tmp_logic.readFromFile(bnd, tmp_textStore, tmp_soundStore);
-        auto bndExamples = tmp_logic.getExamplesInThis(seakablePhrase);
+        auto bndExamples = tmp_logic.getExamplesInThis(seakablePhrase, minDuration, maxDuration);
         rezList += bndExamples;
     }
     return rezList;
 }
 
-QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase) const
+QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, qreal minDuration, qreal maxDuration)
 {
     QList <Logic::Example> rezList;
 
     auto bindsWithSeekablePhrase = getBindsWithPhrase(seekablePhrase);
+
     for (auto bind : bindsWithSeekablePhrase)
     {
         Example newExample;
         auto soundFragment = bind.sound;
+        qreal duration = soundFragment->size();
+        if (duration < minDuration || duration > maxDuration)
+            continue;
         auto sound = soundFragment->getSource();
         auto text = bind.text;
         newExample.FileName = sound->toString();
@@ -47,22 +75,41 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase) c
         newExample.end = soundFragment->end();
         newExample.realUrl = sound->fileUrl();
         newExample.text = "... " + text->getString() + " ...";
+        newExample.exampableWord = seekablePhrase;
         rezList.push_back(newExample);
     }
 
     return rezList;
 }
 
-QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase) const
+QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
 {
     QList <Logic::Bind> rezList;
 
-    for (Logic::Bind bind : _bindVector)
+    _bindVector.push_front(zeroBind);
+    _bindVector.push_back(zeroBind);
+
+    auto curBind = _bindVector.begin() + 1;
+    for (;curBind != _bindVector.end() - 1; curBind++)
     {
-        auto textFragmend = bind.text;
-        if (textFragmend->havePhrase(seekablePhrase))
-            rezList.push_back(bind);
+        Bind next = *(curBind+1);
+        Bind prev = *(curBind-1);
+        TextFragment::PTR cutTextFragmend = (*curBind).text;
+        if (cutTextFragmend->havePhraseOnMid(seekablePhrase))
+            rezList.push_back(*curBind);
+        else if (cutTextFragmend->havePhraseOnBegin(seekablePhrase))
+        {
+            Bind summBind = summ(prev, *curBind);
+            rezList.push_back(summBind);
+        } else if (cutTextFragmend->havePhraseOnEnd(seekablePhrase))
+        {
+            Bind summBind = summ(*curBind, next);
+            rezList.push_back(summBind);
+        }
     }
+
+    _bindVector.pop_front();
+    _bindVector.pop_back();
 
     return rezList;
 }
@@ -147,6 +194,22 @@ qreal Logic::posInTxtToPosInWav(qint64 textPos) const
     auto sellectedSound = sellectedBind.sound;
     qreal posInSound = sellectedSound->begin();
     return posInSound;
+}
+
+qint32 Logic::getTextBeginPosCurBind() const
+{
+    auto curBind = _lastTempMarkPos;
+    auto text = curBind.text;
+    qint32 begin = text->begin();
+    return begin;
+}
+
+qint32 Logic::getTextEndPosCurBind() const
+{
+    auto curBind = _lastTempMarkPos;
+    auto text = curBind.text;
+    qint32 end = text->end();
+    return end;
 }
 
 qint32 Logic::getTextMidPosCurBind() const

@@ -2,6 +2,7 @@ import QtQuick 2.8
 
 import QtMultimedia 5.8
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
@@ -13,12 +14,14 @@ import TextStoreModul 1.0
 Rectangle{
     id : root
     height: 50
-    ToolButton {
+    Button {
         id : playButton
         y : 5
-        // width: 30
-        background: Image {
-            source: soundStore.state == SoundStore.PlayingState ? "images/stop.png" : "images/play.png"
+        width: 30
+        background: Rectangle {
+            Image {
+                source: soundStore.state == SoundStore.PlayingState ? "images/stop.png" : "images/play.png"
+            }
         }
         onClicked: {
             if (soundStore.state == SoundStore.PlayingState)
@@ -37,8 +40,22 @@ Rectangle{
         //        x : (root.width - mainVideoView.width) / 2;
      //   y : 200;
         height: root.height;
-        width: mainVideoView.width - playButton.width;
+        width: mainVideoView.width - playButton.width - centraliseButton.width;
         anchors.bottom:  root.bottom
+    }
+    Button {
+        id : centraliseButton
+        y : 5
+        width: 30
+        anchors.left:  videoSlider.right
+        background: Rectangle {
+            Image {
+                source: homePage.homeUiControler.dontSynch ? "images/not-synch.png" : "images/synch.png"
+            }
+        }
+        onClicked: {
+            homePage.homeUiControler.dontSynch = !homePage.homeUiControler.dontSynch;
+        }
     }
 }
 

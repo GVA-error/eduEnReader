@@ -16,10 +16,12 @@ Page {
     property var homeDocument : document
     property var homeSoundStore : soundStore
     property var homeUiControler : uiControler
-    property int curRightList: pageLits.currentIndex
+    property var textArea : flickableTextArea
 
+    function isExampleShowing() { return pageLits.currentIndex == 1}
     function showComments() { pageLits.setCurrentIndex(0) }
     function showExamples() { pageLits.setCurrentIndex(1) }
+    function setExamples(str) { uiControler.getExamplesFor(str) }
 
     // Список примеров или комментариев
     SwipeView {
@@ -83,7 +85,7 @@ Page {
     }
 
     Flickable {
-        id: flickable
+        id: flickableTextArea
         anchors.top: controlPanel.bottom
         anchors.bottom: parent.bottom
         width: parent.width
@@ -92,6 +94,18 @@ Page {
         ScrollBar.vertical: ScrollBar {
             width: 20
         }
+        Behavior on contentY {
+                 NumberAnimation {
+                     duration: 600
+                 }
+             }
+
+        function getCurY() { return contentY }
+        function setCurY(newY) {
+            contentY = newY
+
+        }
+        function getCurHeigth() { return height }
     }
 
     UiControler{
@@ -99,6 +113,11 @@ Page {
         mouseIsPressed: false
         document : document
         soundStore : soundStore
+        property bool dontSynch : false
+        onDontSynchChanged:{
+            if (!dontSynch)
+                textArea.syncSoundAndSliderPosition()
+        }
     }
 
     TextStore {

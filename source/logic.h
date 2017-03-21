@@ -25,14 +25,15 @@ public:
         QUrl realUrl;
         QString FileName;
         QString text;
+        QString exampableWord; // Слово для которого даём пример
         qreal start;
         qreal end;
     };
 
     // Формирование списка примеров по искомой фразе
     // findInThisFile - искать ли в текущем файле
-    QList <Example> getExamples(const QString& seakablePhrase, bool findInThisFile = false) const;
-    QList <Example> getExamplesInThis(const QString& seakablePhrase) const; // Ищет только в текущем файле
+    QList <Example> getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile = false) const;
+    QList <Example> getExamplesInThis(const QString& seakablePhrase, qreal minDuration, qreal maxDuration); // Ищет только в текущем файле
 
     QString getCurBndFileName() const { return _curBndFileName; }
 
@@ -75,6 +76,8 @@ public:
     void unmarkLastBind();
 
     qint32 getTextMidPosCurBind() const; // Нужно для позиционирования на середину бинда
+    qint32 getTextBeginPosCurBind() const; // .. начала
+    qint32 getTextEndPosCurBind() const; // .. конец
     // Округляют до позиции в ближайшем бинде
     qint64 roundToBindTextPos(qint64) const;
     qreal roundToBindSoundPos(qreal) const;
@@ -114,7 +117,7 @@ private:
 
     // Возвращается если не нашли подходящего бинда
     // Иницилизирован в конструкторе
-    Bind zeroBind; // Не стоит модифицировать
+    Bind zeroBind; // Не стоит модифицировать, нейтрален отнасительно суммирования
     Bind tempBind; // служит как временная переменная которую можно поменять, но она не на что не повличет
 
     QString _curBndFileName;
@@ -159,7 +162,7 @@ private:
     Bind getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const;
 
     // Нужно для нахождения примеров
-    QList<Bind> getBindsWithPhrase(const QString& seekablePhrase) const;
+    QList<Bind> getBindsWithPhrase(const QString& seekablePhrase);
 
     bool isEquils(const Bind& left, const Bind& right) const {
         auto l_sound = left.sound;
@@ -169,6 +172,8 @@ private:
         return l_text->begin() == r_text->begin() && l_text->end() == r_text->end() &&
                l_sound->begin() == r_sound->begin() && l_sound->end() == r_sound->end();
     }
+
+    Bind summ(const Bind& left, const Bind& right);
 };
 
 #endif // LOGIC_H

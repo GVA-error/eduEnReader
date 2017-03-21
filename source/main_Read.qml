@@ -11,11 +11,6 @@ import TextStoreModul 1.0
 import SoundStoreModul 1.1
 import UiControlerModul 1.1
 
-// TODO РЕФАКТОРИНГ
-/*
-При вызове контексного меню MenuContentItem.qml:178: ReferenceError: Acccessible is not defined
-*/
-
 ApplicationWindow {
     id : mainRoot
     visible: true
@@ -33,12 +28,11 @@ ApplicationWindow {
         homePage.homeSoundStore.stop()
     }
     function goExamples(){
-       // pageView.setCurrentIndex(1)
-       // homePage.homeSoundStore.stop()
+          homePage.showExamples()
     }
 
     header : TopToolBar{ id : mainToolBar }
-    SwipeView {
+    SwipeView  /*StackView*/ {
         id: pageView
         anchors.fill: parent
         PageHome_Read{ id : homePage }

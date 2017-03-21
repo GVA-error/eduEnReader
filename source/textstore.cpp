@@ -9,14 +9,79 @@
 TextStore::TextStore()
     : _target(0)
     , _doc(&_default_m_doc)
-    , _cursorPosition(-1)
+    , _cursorPosition(0)
     , _selectionStart(0)
     , _selectionEnd(0)
     , _saved_url(QUrl())
     , _saved_curPosition(0)
     , _mousePresed(false)
-    , _markColor("#FF7F50")
+    , _markColor(_defaultColor)
 {
+}
+
+//qint64 TextStore::indexOfPrefixOrPostFix(const QString& str, qint64 leftOffset) const
+//{
+//    qint32 index = -1;
+//    for (auto fix : _prefixAndPostFix)
+//    {
+//        qint32 curIndex;
+//        if (leftOffset >= 0)
+//            curIndex = str.indexOf(fix, leftOffset);
+//        else
+//            curIndex = str.lastIndexOf(fix, -leftOffset);
+
+//        if (curIndex != -1 && curIndex < index)
+//            index = curIndex;
+//    }
+//    return index;
+//}
+
+//QStringList TextStore::getAllWordVarints(const QString& word) const
+//{
+//    QStringList vars;
+//    for (auto prefix : _prefixAndPostFix)
+//        for (auto postfix : _prefixAndPostFix)
+//            vars.push_back(prefix + word + postfix);
+//    return vars;
+//}
+
+//bool TextStore::isPrefixOrPostfix(const QString& s) const
+//{
+//    if (_prefixAndPostFix.indexOf(s))
+//        return true;
+//    return false;
+//}
+
+QList <qint64> TextStore::getWordPositions(const QString& word) const
+{
+    QString text = getString();
+    QString curTextPart = text;
+
+
+    //QStringList textList = text.split(_prefixAndPostFix);
+    QList <qint64> rezList;
+
+    qint64 beginPos = 0;
+    while (curTextPart.length() != 0)
+    {
+        qint64 pos = curTextPart.indexOf(word);
+        qint64 realPos = beginPos + pos;
+        if (pos == -1)
+            break;
+        qint64 l = word.length();
+        qint64 cutSize = pos + l;
+        beginPos += cutSize;
+        curTextPart = curTextPart.mid(cutSize);
+        QRegExp sep("\\W");
+        if (!sep.exactMatch(text.at(realPos-1)))
+            if (realPos > 1)
+                continue;
+        if (!sep.exactMatch(text.at(realPos+l)))
+            if (realPos < text.length())
+                continue;
+        rezList.push_back(realPos);
+    }
+    return rezList;
 }
 
 QString TextStore::getString(qint64 begin, qint64 end) const
@@ -59,6 +124,7 @@ void TextStore::saveHome()
 
 void TextStore::home()
 {
+    _doc->clear();
     setFileUrl(_saved_url);
     setCursorPosition(_saved_curPosition);
 }
@@ -154,6 +220,16 @@ QString TextStore::text() const
     return _text;
 }
 
+void TextStore::setSelectionByWord(qint32 pos)
+{
+    QTextCursor cursor = textCursor();
+    cursor.setPosition(pos);
+    cursor.select(QTextCursor::WordUnderCursor);
+
+    setSelectionEnd(cursor.selectionEnd());
+    setSelectionStart(cursor.selectionStart());
+}
+
 void TextStore::setCursorPosition(int position)
 {
     if (position == _cursorPosition)
@@ -206,11 +282,13 @@ void TextStore::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 void TextStore::setSelectionStart(int position)
 {
     _selectionStart = position;
+    emit selectionStartChanged();
 }
 
 void TextStore::setSelectionEnd(int position)
 {
     _selectionEnd = position;
+    emit selectionEndChanged();
 }
 
 void TextStore::setAlignment(Qt::Alignment a)
@@ -318,6 +396,19 @@ void TextStore::setTextColor(const QColor &c)
     format.setForeground(QBrush(c));
     mergeFormatOnWordOrSelection(format);
     emit textColorChanged();
+}
+
+void TextStore::setWorldMark(const QString& word)
+{
+    setAllUnMarkText();
+    auto wordPositions = getWordPositions(word);
+    for (auto pos : wordPositions)
+    {
+        qint64 posEnd = pos + word.length();
+        setSelectionEnd(posEnd);
+        setSelectionStart(pos);
+        setMarkText(); // Возвращать старый селлект нет смысла, так как метод исполбьзуется только во время примеров
+    }
 }
 
 void TextStore::setAllMarkText()

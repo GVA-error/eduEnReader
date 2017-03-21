@@ -11,17 +11,13 @@
 #include "ASR/bindmaker.h"
 
 // Заметка: Когда буду делать лекции сделать шрифт побольше
-
-/* Баги
- * Глюк с обновлением текстового поля, иногда остаются выделения похоже при нехватке ресурсов
- *
- * /
+// Расказать о минимальной длинне примеров
+// Рассказать о возможности искать примеры по длинне
 
 /* TODO LIST
- * -n) Подсветка розово серым - увеличение шрифта 1.5
- * -n) Ввод отдельных слов
  *
- *
+ * -n) Возможность искать примеры определённой длинны
+ * -n) Синхронизация с удалёнкой
  *
  * -4) Сьтруктурировать словарь как файловую структуру. - Файловый словарь?
  * -3) Препод может отключить текст и запретить браузер
@@ -35,6 +31,7 @@
  * 5) Вывод примеров определённой длинны
  * 6) Если пользователь не видит начала или конца производить сдвиг текста
  * 7) Использование внешнего апи
+ * 8) Список для транслейта
  * 10) Архивирование
  * 11) Ускорить алгоритм повторного биндинга через использование окна
  * 15) Умное выделение (Между пробелами)
@@ -54,6 +51,7 @@
  * X) Балансировка колличества букв
  * X) Использовать логические паузы
  * X) Список коллизий
+ * X) Вторичная разбивка по мидам уже разбитых при распозновании
 */
 class UIController : public QObject
 {
@@ -63,6 +61,8 @@ class UIController : public QObject
     Q_PROPERTY(QStringList exampleListModel READ getExampleList WRITE setExampleList NOTIFY exampleListChanged)
     Q_PROPERTY(QStringList commentListModel READ getCommentList WRITE setCommentList NOTIFY commentListChanged)
     Q_PROPERTY(bool mouseIsPressed WRITE setMouseIsPressed)
+    Q_PROPERTY(qint32 examplesSize READ getExamplesSize WRITE setExamplesSize NOTIFY examplesSizeChanged)
+    Q_PROPERTY(qint32 diffSize READ getDiffSize WRITE setDiffSize NOTIFY diffSizeChanged)
 
 public:
     explicit UIController(QObject *parent = 0);
@@ -88,6 +88,8 @@ signals:
     void textSellectionChanged();
     void exampleListChanged();
     void commentListChanged();
+    void examplesSizeChanged();
+    void diffSizeChanged();
 public slots:
 
     void saveHome();
@@ -98,7 +100,6 @@ public slots:
     void createBindFile(const QUrl &soundFileName);
     void makeBind(); // автопривязка TODO переименовать
     void addComment(const QUrl&, const QString& name);
-    void getExample();
     void openSoundFile(const QString& fileName);
     void cursorPosChanged();
     void setCursorPosInTimePos();
@@ -108,15 +109,25 @@ public slots:
     void unmarkLastText();
     void startSellectTimer();
 
+    void setExamplesSize(qint32 newSize){ _examplesSize = newSize; }
+    qint32 getExamplesSize(){ return _examplesSize; }
+    void setDiffSize(qint32 newDiff){
+        _diffSize = newDiff;
+    }
+    qint32 getDiffSize(){ return _diffSize; }
+
     QString formUrlToTranslateSellected();
 
     // Нужны для воспроизведения примеров
-    void getExamplesFor(const QString& seekablePhrase);
     void playExample(QString ID);
+    void getExample();
+    void getExamplesFor(const QString& seekablePhrase);
 
     QUrl getCommentUrlWithName(const QString& name) const;
 
     qint32 getMidMarkable() const;
+    qint32 getBeginMarkable() const;
+    qint32 getEndMarkable() const;
 
     bool canNotSync() const { return _sellectTimer.elapsed() < _sellectingTime; }
 
@@ -126,6 +137,8 @@ protected slots:
 private:
     QTime _sellectTimer; // Следит чтобы во время выделения текста и немного погодя не производилось синхронизаций со звуком, из-за глюка с пропагейшеном
     const qint32 _sellectingTime = 500; // ..
+    qreal _examplesSize; // Храним в qreal, пока пользователь оперирует только целыми значениями
+    qreal _diffSize;
 
     Logic::PTR _logic;
     SoundStore::PTR _soundStore; //bool _f_setSound;

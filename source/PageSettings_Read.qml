@@ -2,6 +2,7 @@ import QtQuick 2.8
 import QtWebEngine 1.4
 
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.0
@@ -20,21 +21,19 @@ Page {
 
         GridLayout {
             id: gridLayout
-            rows: 1
+            rows: 3
             flow: GridLayout.TopToBottom
             anchors.fill: parent
-            Label { text: "Mark text color" }
-            //Label { text: "Line 2" }
+            Text { text: "Text color mark" }
+            Label { text: "Examples size" }
+            Label { text: "Difference of examples size +-" }
 
             ToolButton {
                 id: colorButton
                 Rectangle {
                     id: colorRect
                     anchors.fill: parent
-                    //anchors.margins: 8
                     color: homePage.homeDocument.markColor
-                  //  border.width: 1
-                   // border.color: homePage.homeDocument.markColor
                 }
                 onClicked: {
                     colorDialog.open()
@@ -44,10 +43,33 @@ Page {
                     color: homePage.homeDocument.markColor
                     onAccepted: {
                         colorRect.color = color
+                        homePage.homeDocument.markColor = color
                     }
+                }
+            }
+
+            TextField {
+                id : fromExamplesSize
+                validator: IntValidator { bottom:0; top: 1000}
+                text: homePage.homeUiControler.examplesSize
+                onTextChanged: {
+                    homePage.homeUiControler.examplesSize = text*1
+                    if (text.length == 0)
+                       text = "0";
+                }
+
+            }
+
+            TextField {
+                id : diffExamplesSize
+                validator: IntValidator { bottom:0; top: 1000}
+                text: homePage.homeUiControler.diffSize
+                onTextChanged:{
+                    homePage.homeUiControler.diffSize = text*1
+                    if (text.length == 0)
+                       text = "0";
                 }
             }
         }
     }
-
 }

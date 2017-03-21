@@ -7,7 +7,7 @@ SoundStore::SoundStore(QObject *parent, Flags flags)
     connect(this, SIGNAL(positionChanged(qint64)), this, SIGNAL(posChanged())); // Монжно удалить?
 
     _startPos = _finishPos = -1;
-    setFileUrl(QUrl::fromLocalFile("/home/gva/eduEnReader/source/Release/B.mp4"), 5, 10);//url);
+    //setFileUrl(QUrl::fromLocalFile("/home/gva/eduEnReader/source/Release/B.mp4"), 0, 10);//url);
     saveHome();
     _timerToStop = new QTimer(this);
     connect(_timerToStop, SIGNAL(timeout()), this, SLOT(stopStopTimer()));

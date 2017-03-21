@@ -5,6 +5,8 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _logic = Logic::factoryMethod();
     _f_reconizing = false;
     _f_home = true;
+    _examplesSize = 30;
+    _diffSize = 30;
    // _exampleList.push_back("1");
    // _exampleList.push_back("2");
 
@@ -33,6 +35,7 @@ void UIController::saveHome()
 {
     _soundStore->saveHome();
     _textStore->saveHome();
+    _f_home = true;
 }
 
 void UIController::home(){
@@ -125,6 +128,16 @@ qint32 UIController::getMidMarkable() const
     return _logic->getTextMidPosCurBind();
 }
 
+qint32 UIController::getBeginMarkable() const
+{
+    return _logic->getTextBeginPosCurBind();
+}
+
+qint32 UIController::getEndMarkable() const
+{
+    return _logic->getTextEndPosCurBind();
+}
+
 void UIController::playExample(QString ID)
 {
     auto example = _example[ID];
@@ -132,6 +145,7 @@ void UIController::playExample(QString ID)
     qreal end = example.end;
     QUrl url = example.realUrl;
     QString text = example.text;
+    QString word = example.exampableWord;
 
     if (_f_home)
         saveHome();
@@ -140,14 +154,25 @@ void UIController::playExample(QString ID)
     _soundStore->setFileUrl(url, begin, end);
     _soundStore->start();
     _textStore->setText(text);
+    _textStore->setWorldMark(word);
+}
+
+void UIController::getExample()
+{
+    QString sellectedString = _textStore->getSellectedStreing();
+    getExamplesFor(sellectedString);
 }
 
 void UIController::getExamplesFor(const QString& seekablePhrase)
 {
+    if (seekablePhrase.length() == 0)
+        return;
     _example.clear();
     _exampleList.clear();
     emit exampleListChanged();
-    auto exampleList = _logic->getExamples(seekablePhrase, true);
+    qreal minDuration = _examplesSize - _diffSize;
+    qreal maxDuration = _examplesSize + _diffSize;
+    auto exampleList = _logic->getExamples(seekablePhrase, minDuration, maxDuration, true);
     for (auto example : exampleList)
     {
         qreal begin = example.start;
@@ -207,7 +232,8 @@ void UIController::setTimePosInCursorPos()
     qreal roundedNewSoundPos = _logic->roundToBindSoundPos(newSoundPos);
     if (abs(roundedCurSoundPos - roundedNewSoundPos) < 0.1 || roundedNewSoundPos == -1)
         return;
-    _soundStore->setPosReal(newSoundPos);
+    if (newSoundPos >= 0)
+        _soundStore->setPosReal(newSoundPos);
 }
 
 void UIController::cursorPosChanged()
@@ -215,9 +241,7 @@ void UIController::cursorPosChanged()
     if (_f_home == false)
         return;
     qint64 cursorPos = _textStore->getCursorPos();
-    if (cursorPos <= 0)
-        return;
-    _logic->tempMarkBindInTextPos(cursorPos);
+    markCurText();
     auto newComments = _logic->getCommentNamesonTextPos(cursorPos);
     setCommentList(newComments);
     setTimePosInCursorPos();
@@ -225,6 +249,8 @@ void UIController::cursorPosChanged()
 
 void UIController::markCurText()
 {
+    if (_f_home == false)
+        return;
     qint64 cursorPos = _textStore->getCursorPos();
     if (cursorPos <= 0)
         return;
@@ -270,12 +296,6 @@ QString UIController::formUrlToTranslateSellected()
     QString handledSellectedString = splitedSellectedString.join("+");
     rezUrl += handledSellectedString;
     return rezUrl;
-}
-
-void UIController::getExample()
-{
-    QString sellectedString = _textStore->getSellectedStreing();
-    getExamplesFor(sellectedString);
 }
 
 void UIController::makeBind()
@@ -376,6 +396,6 @@ void UIController::setSellectionText(qint64 begin, qint64 end)
 {
     if (_f_home == false)
         return;
-    _textStore->setSelectionStart(begin);
     _textStore->setSelectionEnd(end);
+    _textStore->setSelectionStart(begin);
 }

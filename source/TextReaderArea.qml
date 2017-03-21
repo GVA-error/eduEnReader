@@ -15,6 +15,7 @@ import UiControlerModul 1.1
 TextArea {
     id: root
     Accessible.name: "document"
+    //visible: homePage.curRightList == 1
     textFormat: Qt.RichText
     wrapMode: TextArea.Wrap
     focus: true
@@ -27,18 +28,40 @@ TextArea {
     bottomPadding: 0
     background: null
     readOnly: true
+    mouseSelectionMode : TextInput.SelectWords
 
     text: document.text
 
-    property bool dontSync : false
+    property int cynhTopPading : 45
+    property int cynhBottpmPading : 55
 
     function syncSoundAndSliderPosition()
     {
-        if (dontSync || uiControler.canNotSync())
+        if (homePage.homeUiControler.dontSynch)
             return;
         var mid = uiControler.getMidMarkable();
-        var centr = positionToRectangle(mid).y;
-        //flickableItem.contentY = centr - root.height/2
+        var begin = uiControler.getBeginMarkable();
+        var end = uiControler.getEndMarkable();
+        var midY = positionToRectangle(mid).y;
+        var beginY = positionToRectangle(begin).y;
+        var endY = positionToRectangle(end).y;
+
+        var thisYBegin = homePage.textArea.getCurY();
+        var thisHeight = homePage.textArea.getCurHeigth();
+        var thisYEnd = thisYBegin + thisHeight - cynhBottpmPading;
+
+        if (endY - beginY > thisHeight - cynhTopPading)
+            homePage.textArea.setCurY(beginY - cynhTopPading)
+        else
+        {
+            console.log(" ")
+            console.log(endY)
+            console.log(thisYEnd)
+            if (beginY < thisYBegin)
+                homePage.textArea.setCurY(beginY - cynhTopPading)
+            if (endY > thisYEnd)
+                homePage.textArea.setCurY(endY - thisHeight + cynhBottpmPading)
+        }
         uiControler.markCurText()
     }
 
@@ -46,15 +69,20 @@ TextArea {
     MouseArea {
         acceptedButtons: Qt.RightButton
         anchors.fill: parent
-        onClicked: contextMenue.open()
+        propagateComposedEvents: true
+        onClicked: {
+            if (selectedText.length == 0)
+            {
+                var textPos = root.positionAt(mouseX, mouseY)
+                document.setSelectionByWord(textPos)
+            }
+            contextMenue.open()
+        }
     }
 
     onLinkActivated: Qt.openUrlExternally(link)
     Menu {
         id : contextMenue
-
-
-        //title: "Edit"
         MenuItem {
             text: "Translate"
             onTriggered: {
@@ -66,76 +94,12 @@ TextArea {
         MenuItem {
             text: "Example"
             onTriggered: {
-                uiControler.getExample()
+                //uiControler.getExample()
+                mainToolBar.setExampleText(document.getSellectedStreing())
                 showExamples();
             }
 
         }
     }
 }
-
-
-
-
-
-
-
-
-
-//TextArea{
-//    id: root
-//   // frameVisible: false
-//    //height: 500
-//    text: document.text
-//    textFormat: Qt.RichText
-//    Component.onCompleted: forceActiveFocus()
-//    //wrapMode: TextArea.Wrap
-//   // flickableItem.interactive: false
-
-
-//    onSelectedTextChanged: {
-//        uiControler.startSellectTimer()
-//    }
-
-//    MouseArea{
-//        anchors.fill: root
-//        acceptedButtons: Qt.RightButton
-//        cursorShape: Qt.IBeamCursor
-//        propagateComposedEvents: true
-//        onClicked: {
-//            if (mouse.button == Qt.RightButton)
-//                contextMenue.popup();
-//        }
-//        onReleased: {
-//            if (!propagateComposedEvents) {
-//                propagateComposedEvents = true
-//             }
-//        }
-//        onPressed: {
-//            if (mouse.source !== Qt.MouseEventNotSynthesized)
-//                 mouse.accepted = true
-//        }
-//    }
-
-//    Action{
-//        id: exampleAction
-//        text: "Example"
-//        shortcut: "ctrl+e"
-//        iconSource: "images/editcut.png" // TODO придумать иконку
-//        iconName: "edit-cut"
-//        onTriggered: { var translateUrl = uiControler.getExample() }
-//    }
-//    Action{
-//        id: translateAction
-//        text: "Translate"
-//        shortcut: "ctrl+t"
-//        iconSource: "images/editcut.png" // TODO придумать иконку
-//        iconName: "edit-cut"
-//        onTriggered: {
-//            var translateUrl = uiControler.formUrlToTranslateSellected();
-//            translateDialog.setUrl(translateUrl)
-//            translateDialog.showDialog()
-//        }
-//    }
-//}
 
