@@ -10,6 +10,7 @@ QString DataPreparation::prepeareWav(const QString& videoFile)
     //generateNoise_wav(wavFile, _noise_wav);
     generateNoise_wav(wavFile, _noise_wav, _noiseWindowBegin, _noiseWindowEnd);
     _scripter.noiseReduse(wavFile, _noise_wav);
+   // _scripter.noiseReduse(wavFile, _noise_wav);
     return wavFile;
 }
 

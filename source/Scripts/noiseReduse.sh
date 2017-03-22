@@ -16,5 +16,5 @@
 # 2 - output file
 # 3 - noise file
 
-sox noise.wav -n noiseprof noise.prof
-sox $1 $2 noisered noise.prof 0.21 lowpass 300 highpass 3400 norm compand 0.05,0.2 6:-54,-84,-36,-36,-24,-24,0,-12 0 -84 0.2
+sox $3 -n noiseprof noise.prof
+sox $1 $2 noisered noise.prof 0.05 lowpass 70 highpass 3400 norm compand 0.05,0.2 6:-54,-84,-36,-36,-24,-24,0,-12 0 -84 0.2

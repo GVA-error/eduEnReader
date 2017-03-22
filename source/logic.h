@@ -50,7 +50,8 @@ public:
     // TODO проверять на пересоздание
     void createFromNewSoundFile(const QString& fileName, TextStore::PTR, SoundStore::PTR);
 
-    void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString& recognizedText);
+    // pos - номер бинда перед которым будет вставлен бинд
+    void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString& recognizedText, qint64 pos = -1);
     void makeComment(TextFragment::PTR text, QUrl url, const QString &name);
 
     QStringList getRecognizedStrings() const { return _recognizedStrings; }
@@ -63,6 +64,9 @@ public:
     QList <QString> getCommentNamesonTextPos(qint64 begin, qint64 end) const; // по позиции в интерпритированном тексте возвращает url комментария
     QList <QString> getCommentNamesonTextPos(qint64 pos) const; // Если позиция принадлежит бинду, возвращает все комментарии пересекающие бинд
     QUrl getCommentUrlsonName(const QString &name) const;
+    TextFragment::PTR getText(qint64 pos) const;
+    SoundFragment::PTR getSound(qint64 pos) const;
+    qint64 getBindNumber() const;
 
     // Для динамической подсветки
     void markBindFromSoundPos(qreal);
@@ -135,7 +139,8 @@ private:
 
     // Добавление с сохранением порядка
     // Так же гарантирует что одновременно в списке биндов не будет ссылок на разные источники
-    void addInBindList(const Bind&);
+    // pos - номер бинда перед которым будет вставлен бинд
+    void addInBindList(const Bind&, qint64 pos = -1);
     void addInRecognizedList(const QString& recognizedString, qreal beginSound, qreal endSound);
     void addInCommentList(const Comment&);
 

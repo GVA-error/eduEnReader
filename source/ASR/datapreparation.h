@@ -54,8 +54,8 @@ private:
     QMap <QString, qreal> _rezFileEndOffset;
     const qint64 _noiseFileSize = 8000; // размер файла с шумом, для построения модели шума, должно быть кратно четырём
     // Позиции в которых ищем шум
-    const qint64 _noiseWindowBegin = 15 * _16k;
-    const qint64 _noiseWindowEnd = 30 * _16k; // Считаем что файл хотябы 30 секунд
+    const qint64 _noiseWindowBegin = 30 * _16k;
+    const qint64 _noiseWindowEnd = 60 * _16k; // Считаем что файл хотябы 60 секунд
 
     const QString _noise_wav = "/home/gva/eduEnReader/source/Scripts/noise.wav";
 

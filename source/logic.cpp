@@ -36,6 +36,35 @@ Logic::Bind Logic::summ(const Bind& left, const Bind& right)
     return summBind;
 }
 
+TextFragment::PTR Logic::getText(qint64 pos) const
+{
+    if (pos == 0)
+        return _bindVector.front().text;
+    else if (pos == _bindVector.length() - 1)
+        return _bindVector.back().text;
+    else
+        qCritical() << "It version can\'t get u mid text";
+    assert(false);
+    return nullptr;
+}
+
+SoundFragment::PTR Logic::getSound(qint64 pos) const
+{
+    if (pos == 0)
+        return _bindVector.front().sound;
+    else if (pos == _bindVector.length())
+        return _bindVector.back().sound;
+    else
+        qCritical() << "It version can\'t get u mid text";
+    assert(false);
+    return nullptr;
+}
+
+qint64 Logic::getBindNumber() const
+{
+    _bindVector.size();
+}
+
 QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile) const
 {
     QList <Logic::Example> rezList;
@@ -352,7 +381,7 @@ void Logic::unMarkAllBindedText()
         unmarkBind(bind);
 }
 
-void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString &recognizedText)
+void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString &recognizedText, qint64 pos)
 {
     Bind b;
     b.text = text;
@@ -363,6 +392,23 @@ void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QSt
 
     addInBindList(b);
     addInRecognizedList(recognizedText, soundBegin, soundEnd);
+}
+
+void Logic::addInBindList(const Bind& bind, qint64 pos)
+{
+    // TODO Добавить возможность вставки в середину
+
+    // TODO надо сохранять порядок
+    if (pos == -1)
+        _bindVector.push_back(bind);
+    else if (pos == 0)
+        _bindVector.push_front(bind);
+    else
+        qCritical() << "We can\'t add bind in mid";
+
+    // TODO Добавить проверку последней ссылки на store'ы
+
+    //assert(false);
 }
 
 void Logic::makeComment(TextFragment::PTR text, QUrl url, const QString& name)
@@ -378,15 +424,6 @@ void Logic::makeComment(TextFragment::PTR text, QUrl url, const QString& name)
 void Logic::addInCommentList(const Comment& comment)
 {
     _commentsVector.push_back(comment);
-}
-
-void Logic::addInBindList(const Bind& bind)
-{
-    // TODO надо сохранять порядок
-    _bindVector.push_back(bind);
-    // TODO Добавить проверку последней ссылки на store'ы
-
-    //assert(false);
 }
 
 void Logic::addInRecognizedList(const QString& recognizedString, qreal beginSound, qreal endSound)
@@ -463,12 +500,12 @@ void Logic::createFromNewSoundFile(const QString& fileName, TextStore::PTR text,
     QString textFileName = base + ".html";
     QUrl soundUrl = QUrl::fromLocalFile(fileName);
     sound->setFileUrl(soundUrl);
-    QFile textTmp(textFileName);
-    textTmp.resize(0);
-    textTmp.close();
+    //QFile textTmp(textFileName);
+    //textTmp.resize(0);
+    //textTmp.close();
     QUrl textUrl = QUrl::fromLocalFile(textFileName);
     text->setFileUrl(textUrl);
-    text->setText("");
+    //text->setText("");
     QString bndFileName = base + ".bnd";
 
     writeInFile(bndFileName, text, sound);
@@ -579,6 +616,9 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
 
     QString realHashText;
     QString realHashSound;
+    QString curPath = QFileInfo(fileName).absolutePath();
+    textStoreString = curPath + "/" + textStoreString;
+    soundStoreString = curPath + "/" + soundStoreString;
     if (!textStore.isNull())
     {
         textStore->fromString(textStoreString);

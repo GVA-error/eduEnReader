@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 #endif
     QQmlApplicationEngine engine;
+    QUrl appPath(QString("%1").arg(app.applicationDirPath()));
+    engine.rootContext()->setContextProperty("appPath", appPath);
     QtWebEngine::initialize();
     qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");

@@ -20,6 +20,8 @@ public:
     void setFileUrl(const QUrl& url, qreal start, qreal finish);
     void setFileUrl(const QUrl& url) override; // TODO Добавить потдержку относительных путей
     QUrl fileUrl() const override;
+
+    qreal duration() { return _finishPos - _startPos;}
 signals:
     void posChanged();
 public slots:

@@ -201,6 +201,33 @@ void BindMaker::useLocalMinToFind_bind()
         }
         curLastTextPos = beginText;
     }
+    addEdgeBinds();
+}
+
+void BindMaker::addEdgeBinds()
+{
+    qint64 n = _logic->getBindNumber();
+
+    TextFragment::PTR firstText = _logic->getText(0);
+    TextFragment::PTR lastText = _logic->getText(n-1);
+    SoundFragment::PTR firstSound = _logic->getSound(0);
+    SoundFragment::PTR lastSound = _logic->getSound(n-1);
+
+    qint64 textLength = _textStore->length();
+    qreal soundDuration = _soundStore->duration();
+
+    qreal beginSound = firstSound->begin();
+    qreal beginText = firstText->begin();
+    qreal endSound = lastSound->end();
+    qreal endText = lastText->end();
+
+    auto preText = TextFragment::factoryMethod(0, beginText, _textStore);
+    auto preSound = SoundFragment::factoryMethod(0, beginSound, _soundStore);
+    auto postText = TextFragment::factoryMethod(endText, textLength, _textStore);
+    auto postSound = SoundFragment::factoryMethod(endSound, soundDuration, _soundStore);
+
+    _logic->makeBind(preText, preSound, "", 0);
+    _logic->makeBind(postText, postSound, "", n-1);
 }
 
 QList <qint64> BindMaker::getCorelationFunc(const QStringList &recognizedString) const

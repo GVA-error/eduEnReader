@@ -83,6 +83,7 @@ public:
 
     QString documentTitle() const;
 
+    qint64 length() const { return _text.length(); }
 
     //QStringList getAllWordVarints(const QString& word) const;
 

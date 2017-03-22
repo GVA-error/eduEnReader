@@ -165,6 +165,9 @@ void UIController::getExample()
 
 void UIController::getExamplesFor(const QString& seekablePhrase)
 {
+    // TODO УБРАТЬ!!!
+    //makeBind();
+
     if (seekablePhrase.length() == 0)
         return;
     _example.clear();
@@ -315,6 +318,37 @@ void UIController::makeBind()
 //    p.noiseReduse("A2.wav");
 
 //    return;
+
+    if (_f_reconizing)
+        return;
+
+    QFile file("Log.txt");
+
+    file.open(QFile::WriteOnly);
+    QTextStream fileStream(&file);
+    QTime curTime;
+    fileStream << "Begin binding time: " << curTime.toString();
+
+    _f_reconizing = true;
+    QDir curDir;
+    QStringList bindFiles = curDir.entryList(QStringList("*.mp4"));
+    for (QString mp4 : bindFiles)
+    {
+        QUrl url = QUrl::fromLocalFile(mp4);
+        fileStream << "File " << url.toString() << " begin: " << curTime.toString();
+        createBindFile(url);
+        //BindMaker bm(_textStore, _soundStore, _logic);
+        _bindMaker->setSplitSize(5.0f, 3.0f);
+        _bindMaker->start();
+        fileStream << "File " << url.toString() << " end: " << curTime.toString();
+        break;
+    }
+
+
+    fileStream << "End binding time: " << curTime.toString();
+
+
+    return;
 
 
     if (_f_reconizing)
