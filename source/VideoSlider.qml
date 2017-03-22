@@ -2,7 +2,6 @@ import QtQuick 2.8
 
 import QtMultimedia 5.8
 import QtQuick.Controls 2.1
-import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
 import SoundStoreModul 1.1

@@ -214,7 +214,7 @@ void BindMaker::addEdgeBinds()
     SoundFragment::PTR lastSound = _logic->getSound(n-1);
 
     qint64 textLength = _textStore->length();
-    qreal soundDuration = _soundStore->duration();
+    qreal soundDuration = _soundStore->fullDuration();
 
     qreal beginSound = firstSound->begin();
     qreal beginText = firstText->begin();

@@ -54,15 +54,12 @@ TextArea {
             homePage.textArea.setCurY(beginY - cynhTopPading)
         else
         {
-            console.log(" ")
-            console.log(endY)
-            console.log(thisYEnd)
             if (beginY < thisYBegin)
                 homePage.textArea.setCurY(beginY - cynhTopPading)
             if (endY > thisYEnd)
                 homePage.textArea.setCurY(endY - thisHeight + cynhBottpmPading)
         }
-        uiControler.markCurText()
+        //uiControler.markCurText()
     }
 
 

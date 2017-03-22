@@ -21,7 +21,8 @@ public:
     void setFileUrl(const QUrl& url) override; // TODO Добавить потдержку относительных путей
     QUrl fileUrl() const override;
 
-    qreal duration() { return _finishPos - _startPos;}
+    qreal fullDuration() { (qreal)duration() / 1000; }
+
 signals:
     void posChanged();
 public slots:
@@ -60,8 +61,8 @@ protected:
     const qint32 _epsilonTime = 5;
 
     SoundStore(QObject * parent = 0, Flags flags = 0);
-
     qint64 duration() const ;//override;
+
 };
 
 #endif // SOUNDSTORE_H

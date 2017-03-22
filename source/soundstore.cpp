@@ -59,7 +59,11 @@ void SoundStore::posChanched(qint64 newPos)
 void SoundStore::setPosPersent(qreal pos)
 {
     qint64 fullDuretion = duration();
-    qint64 realPos = fullDuretion * pos + _startPos * 1000;
+    qreal start = _startPos;
+    if (start < 0)
+        start = 0;
+
+    qint64 realPos = fullDuretion * pos + start * 1000;
     setPosition(realPos);
     //emit posChanged(); // Походу уже вызывается
 }
@@ -127,7 +131,10 @@ qreal SoundStore::getPersentPos() const
     qint64 fullDuretion = duration();
     if (fullDuretion <= 0)
         fullDuretion = 1;
-    qint64 curDuration = position() - _startPos * 1000;
+    qreal start = _startPos;
+    if (start < 0)
+        start = 0;
+    qint64 curDuration = position() - start * 1000;
     if (curDuration < 0)
         curDuration = 0;
     qreal posPersent = (qreal)curDuration / (qreal)fullDuretion;

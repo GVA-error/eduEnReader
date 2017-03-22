@@ -71,8 +71,10 @@ ToolBar {
                 onClicked: {
                     if (homePage.isExampleShowing())
                         mainRoot.goHome()
-                    else
+                    else{
                         mainRoot.goExamples()
+                        exampleTextEdit.forceActiveFocus()
+                    }
                 }
             }
 

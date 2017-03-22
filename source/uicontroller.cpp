@@ -14,6 +14,22 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _sellectTimer.start();
 }
 
+void UIController::setDocument(TextStore* TS) {
+    _textStore =  TextStore::PTR(TS);
+    QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
+    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+    if (_textStore.isNull() == false && _soundStore.isNull() == false)
+        initBindMaker(_textStore, _soundStore, _logic);
+}
+
+void UIController::setSoundStore(SoundStore* TS) {
+    _soundStore =  SoundStore::PTR(TS);
+    QObject::connect(_soundStore.data(), SIGNAL(posChanged()), this, SLOT(setCursorPosInTimePos()));
+    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+    if (_textStore.isNull() == false && _soundStore.isNull() == false)
+        initBindMaker(_textStore, _soundStore, _logic);
+}
+
 void UIController::startSellectTimer()
 {
     QString sellectedString = _textStore->getSellectedStreing();
@@ -53,22 +69,6 @@ bool UIController::getMouseIsPressed() const
 void UIController::setMouseIsPressed(bool& newValue)
 {
     mouseIsPressed = newValue;
-}
-
-void UIController::setDocument(TextStore* TS) {
-    _textStore =  TextStore::PTR(TS);
-    QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
-    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
-    if (_textStore.isNull() == false && _soundStore.isNull() == false)
-        initBindMaker(_textStore, _soundStore, _logic);
-}
-
-void UIController::setSoundStore(SoundStore* TS) {
-    _soundStore =  SoundStore::PTR(TS);
-    QObject::connect(_soundStore.data(), SIGNAL(posChanged()), this, SLOT(setCursorPosInTimePos()));
-    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
-    if (_textStore.isNull() == false && _soundStore.isNull() == false)
-        initBindMaker(_textStore, _soundStore, _logic);
 }
 
 QStringList UIController::getExampleList() const
