@@ -57,7 +57,6 @@ QList <qint64> TextStore::getWordPositions(const QString& word) const
     QString text = getString();
     QString curTextPart = text;
 
-
     //QStringList textList = text.split(_prefixAndPostFix);
     QList <qint64> rezList;
 
@@ -111,14 +110,15 @@ QString TextStore::getSellectedStreing() const
     return sellectedString;
 }
 
-qint64 TextStore::getCursorPos() const
-{
-    return _cursorPosition;
-}
+//qint64 TextStore::getCursorPos() const
+//{
+
+//    return _cursorPosition;
+//}
 
 void TextStore::saveHome()
 {
-    _saved_curPosition = getCursorPos();
+    _saved_curPosition = cursorPosition();
     _saved_url = _fileUrl;
 }
 
@@ -162,6 +162,7 @@ void TextStore::setFileUrl(const QUrl &url)
             {
                 _doc->setHtml(data);
                 _doc->setModified(false);
+                setCursorPosition(0);
             }
             emit textChanged();
             emit documentTitleChanged();
@@ -222,6 +223,8 @@ QString TextStore::text() const
 
 void TextStore::setSelectionByWord(qint32 pos)
 {
+    if (pos < 0)
+        pos = 0;
     QTextCursor cursor = textCursor();
     cursor.setPosition(pos);
     cursor.select(QTextCursor::WordUnderCursor);
@@ -235,7 +238,10 @@ void TextStore::setCursorPosition(int position)
     if (position == _cursorPosition)
         return;
 
-    _cursorPosition = position;
+    if (position < 0)
+        _cursorPosition = 0;
+    else
+        _cursorPosition = position;
 
     reset();
 }
@@ -255,12 +261,17 @@ void TextStore::reset()
 QTextCursor TextStore::textCursor() const
 {
     QTextCursor cursor = QTextCursor(_doc);
-    if (_selectionStart != _selectionEnd) {
+    if (_selectionStart != _selectionEnd &&
+            _selectionStart>=0 && _selectionEnd>=0)
+    {
         cursor.setPosition(_selectionStart);
         cursor.setPosition(_selectionEnd, QTextCursor::KeepAnchor);
-    } else {
-        cursor.setPosition(_cursorPosition);
     }
+    else if (_cursorPosition >= 0)
+        cursor.setPosition(_cursorPosition);
+    else
+        cursor.setPosition(0);
+
     return cursor;
 }
 
@@ -281,18 +292,26 @@ void TextStore::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 
 void TextStore::setSelectionStart(int position)
 {
-    _selectionStart = position;
+    if (position>0)
+        _selectionStart = position;
+    else
+        _selectionStart = 0;
     emit selectionStartChanged();
 }
 
 void TextStore::setSelectionEnd(int position)
 {
-    _selectionEnd = position;
+    if (position > 0)
+        _selectionEnd = position;
+    else
+        _selectionEnd = 0;
     emit selectionEndChanged();
 }
 
 void TextStore::setAlignment(Qt::Alignment a)
 {
+    if (_selectionStart < 0 || _selectionEnd < 0)
+        return;
     QTextBlockFormat fmt;
     fmt.setAlignment((Qt::Alignment) a);
     QTextCursor cursor = QTextCursor(_doc);

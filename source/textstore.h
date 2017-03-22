@@ -51,7 +51,7 @@ public:
 
     QString getString(qint64 begin, qint64 end) const;
     QString getString() const;
-    qint64 getCursorPos() const;
+   // qint64 getCursorPos() const;
 
     QQuickItem *target() { return _target; }
 
@@ -61,7 +61,12 @@ public:
     void setSelectionStart(int position);
     void setSelectionEnd(int position);
 
-    int cursorPosition() const { return _cursorPosition; }
+    int cursorPosition() const
+    {
+        if (_cursorPosition < 0)
+            return 0;
+        return _cursorPosition;
+    }
     int selectionStart() const { return _selectionStart; }
     int selectionEnd() const { return _selectionEnd; }
 

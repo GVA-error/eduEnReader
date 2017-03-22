@@ -214,6 +214,8 @@ qint64 Logic::posInWavToPosInText(qreal soundPos) const
     Bind sellectedBind = getBindFromSoundPos(soundPos);
     auto sellectedText = sellectedBind.text;
     qint64 posInText = sellectedText->begin();
+    if (posInText < 0)
+        return 0;
     return posInText;
 }
 

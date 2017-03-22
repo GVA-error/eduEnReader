@@ -125,17 +125,26 @@ QUrl UIController::getCommentUrlWithName(const QString &name) const
 
 qint32 UIController::getMidMarkable() const
 {
-    return _logic->getTextMidPosCurBind();
+    qint32 rezPos = _logic->getTextMidPosCurBind();
+    if (rezPos < 0)
+        return 0;
+    return rezPos;
 }
 
 qint32 UIController::getBeginMarkable() const
 {
-    return _logic->getTextBeginPosCurBind();
+    qint32 rezPos = _logic->getTextBeginPosCurBind();
+    if (rezPos < 0)
+        return 0;
+    return rezPos;
 }
 
 qint32 UIController::getEndMarkable() const
 {
-    return _logic->getTextEndPosCurBind();
+    qint32 rezPos = _logic->getTextEndPosCurBind();
+    if (rezPos < 0)
+        return 0;
+    return rezPos;
 }
 
 void UIController::playExample(QString ID)
@@ -220,14 +229,14 @@ void UIController::setCursorPosInTimePos()
     qreal timePos = _soundStore->getTimePos();
     qint64 textPos = _logic->posInWavToPosInText(timePos);
     if (textPos >= 0)
-        _textStore->setCursorPosition(textPos + 1); // Чтобы не сбивалось окно при округлении
+        _textStore->setCursorPosition(textPos);
 }
 
 void UIController::setTimePosInCursorPos()
 {
     if (_f_home == false || canNotSync())
         return;
-    qint64 textPos = _textStore->getCursorPos();
+    qint64 textPos = _textStore->cursorPosition();
     qreal newSoundPos = _logic->posInTxtToPosInWav(textPos);
 
     qreal curSoundPos = _soundStore->getTimePos();
@@ -243,7 +252,7 @@ void UIController::cursorPosChanged()
 {
     if (_f_home == false)
         return;
-    qint64 cursorPos = _textStore->getCursorPos();
+    qint64 cursorPos = _textStore->cursorPosition();
     markCurText();
     auto newComments = _logic->getCommentNamesonTextPos(cursorPos);
     setCommentList(newComments);
@@ -254,7 +263,7 @@ void UIController::markCurText()
 {
     if (_f_home == false)
         return;
-    qint64 cursorPos = _textStore->getCursorPos();
+    qint64 cursorPos = _textStore->cursorPosition();
     if (cursorPos <= 0)
         return;
     _textStore->setAllUnMarkText(); // Костыль от глюка TextArea с не всегда устанвливаемым фоном
