@@ -53,5 +53,7 @@
         <file>PageHome_Read.qml</file>
         <file>images/not-synch.png</file>
         <file>images/synch.png</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>fonts/fontello.ttf</file>
     </qresource>
 </RCC>

@@ -761,6 +761,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../MainVideoView.qml \
 		../HtmlView.qml \
 		../QMLSoundGraph.qml \
+		../qtquickcontrols2.conf \
 		../ListDialog.qml \
 		../ControlPanel.qml \
 		../PageSettings_Read.qml \
@@ -809,7 +810,8 @@ qrc_qml.cpp: ../qml.qrc \
 		../images/filenew.png \
 		../images/zoomout.png \
 		../images/fileopen.png \
-		../images/stop.png
+		../images/stop.png \
+		../fonts/fontello.ttf
 	/home/gva/Qt/5.8/gcc_64/bin/rcc -name qml ../qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
