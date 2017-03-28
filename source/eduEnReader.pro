@@ -1,93 +1,68 @@
-TEMPLATE = app
 
 qtHaveModule(widgets): QT += widgets
 QT += qml quick quickcontrols2
-CONFIG += c++11
-CONFIG += qt plugin
-LIBS += -lsndfile
 QT += multimedia multimediawidgets
 QT += webengine
 QT += webenginewidgets
 
-SOURCES += main.cpp \
-    soundstore.cpp \
-    logic.cpp \
-    soundfragment.cpp \
-    textfragment.cpp \
-    textstore.cpp \
-    uicontroller.cpp \
-    ASR/asr.cpp \
-    ASR/bindmaker.cpp \
-    ASR/datapreparation.cpp \
-    ASR/metrics.cpp \
-    ASR/wavworker.cpp \
-    store.cpp \
-    fragment.cpp \
-    ASR/scripter.cpp
+CONFIG += c++11
+CONFIG += qt plugin
 
-RESOURCES += \
-    qml.qrc
+LIBS += -lsndfile
+
+SOURCES += main.cpp \
+    cpp/fragment.cpp \
+    cpp/logic.cpp \
+    cpp/soundfragment.cpp \
+    cpp/soundstore.cpp \
+    cpp/store.cpp \
+    cpp/textfragment.cpp \
+    cpp/textstore.cpp \
+    cpp/uicontroller.cpp \
+    cpp/ASR/asr.cpp \
+    cpp/ASR/bindmaker.cpp \
+    cpp/ASR/datapreparation.cpp \
+    cpp/ASR/metrics.cpp \
+    cpp/ASR/scripter.cpp \
+    cpp/ASR/wavworker.cpp
+
+RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
+# Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
-# Default rules for deployment.
-#include(deployment.pri)
 
-HEADERS += \
-    soundstore.h \
-    logic.h \
-    soundfragment.h \
-    textfragment.h \
-    textstore.h \
-    uicontroller.h \
-    ASR/asr.h \
-    ASR/bindmaker.h \
-    ASR/datapreparation.h \
-    ASR/metrics.h \
-    ASR/wavworker.h \
-    store.h \
-    fragment.h \
-    webtranslator.h \
-    ASR/scripter.h
-
-DISTFILES += \
-    images/editcopy.png \
-    images/editcut.png \
-    images/editpaste.png \
-    images/editredo.png \
-    images/editundo.png \
-    images/exportpdf.png \
-    images/filenew.png \
-    images/fileopen.png \
-    images/fileprint.png \
-    images/filesave.png \
-    images/qt-logo.png \
-    images/textbold.png \
-    images/textcenter.png \
-    images/textitalic.png \
-    images/textjustify.png \
-    images/textleft.png \
-    images/textright.png \
-    images/textunder.png \
-    images/zoomin.png \
-    images/zoomout.png \
-    main.qml \
-    WebViewDialog.qml \
-    VideoController.qml \
-    TopMenu.qml \
-    SimpleDialog.qml \
-    QMLToolBarSeparator.qml \
-    QMLSoundGraph.qml \
-    QMLScroolBar.qml \
-    QMLButtonStyle.qml \
-    ListDialog.qml \
-    HtmlView.qml \
-    TopToolBar.qml
-
+# The following define makes your compiler emit warnings if you use
+# any feature of Qt which as been marked deprecated (the exact warnings
+# depend on your compiler). Please consult the documentation of the
+# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+# You can also make your code fail to compile if you use deprecated APIs.
+# In order to do so, uncomment the following line.
+# You can also select to disable deprecated APIs only up to a certain version of Qt.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+# Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    cpp/featurefuncs.h \
+    cpp/fragment.h \
+    cpp/logic.h \
+    cpp/soundfragment.h \
+    cpp/soundstore.h \
+    cpp/store.h \
+    cpp/textfragment.h \
+    cpp/textstore.h \
+    cpp/uicontroller.h \
+    cpp/ASR/asr.h \
+    cpp/ASR/bindmaker.h \
+    cpp/ASR/datapreparation.h \
+    cpp/ASR/metrics.h \
+    cpp/ASR/scripter.h \
+    cpp/ASR/wavworker.h
