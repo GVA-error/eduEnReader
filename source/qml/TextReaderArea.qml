@@ -49,13 +49,13 @@ TextArea {
         var thisHeight = homePage.textArea.getCurHeigth();
         var thisYEnd = thisYBegin + thisHeight - cynhBottpmPading;
 
-        if (endY - beginY > thisHeight - cynhTopPading)
+        if (endY - beginY >= thisHeight - cynhTopPading)
             homePage.textArea.setCurY(beginY - cynhTopPading)
         else
         {
-            if (beginY < thisYBegin)
+            if (beginY <= thisYBegin)
                 homePage.textArea.setCurY(beginY - cynhTopPading)
-            if (endY > thisYEnd)
+            if (endY > thisYEnd && endY - thisHeight + cynhBottpmPading > thisYBegin)
                 homePage.textArea.setCurY(endY - thisHeight + cynhBottpmPading)
         }
         //uiControler.markCurText()

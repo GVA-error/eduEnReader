@@ -395,7 +395,6 @@ void UIController::makeBind()
         break;
     }
 
-
     fileStream << "End binding time: " << curTime.toString();
 
 
