@@ -710,7 +710,7 @@ void Logic::fromString(Comment&, QString stringComment, TextStore::PTR text)
     QString stringUrl;
     QTextStream sourceString(&stringComment);
     sourceString >> stringUrl >> name >> begin >> end;
-    url = QUrl(stringUrl);
+    url = QUrl::fromLocalFile(stringUrl);
 
     auto commented = TextFragment::factoryMethod(begin, end, text);
 
