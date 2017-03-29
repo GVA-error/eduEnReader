@@ -59,6 +59,7 @@ class UIController : public QObject
     Q_OBJECT
     Q_PROPERTY(TextStore* document READ getDocument WRITE setDocument) // NOTIFY не нужен так как при использовании с ГУИ инициализация идёт в начале,
     Q_PROPERTY(SoundStore* soundStore READ getSoundStore WRITE setSoundStore) // иначе нотификация не нужна.
+    Q_PROPERTY(QStringList bindFilesListModel READ getbindFilesList WRITE setbindFilesList NOTIFY bindFilesListChanged)
     Q_PROPERTY(QStringList exampleListModel READ getExampleList WRITE setExampleList NOTIFY exampleListChanged)
     Q_PROPERTY(QStringList commentListModel READ getCommentList WRITE setCommentList NOTIFY commentListChanged)
     Q_PROPERTY(bool mouseIsPressed WRITE setMouseIsPressed)
@@ -75,11 +76,16 @@ public:
     void setDocument(TextStore* TS);
     void setSoundStore(SoundStore* TS);
 
+    QStringList getbindFilesList() const;
+    void setbindFilesList(const QStringList& newBindFiles);
+
+
     QStringList getExampleList() const;
     void setExampleList(const QStringList& newExamples);
 
     QStringList getCommentList() const;
     void setCommentList(QStringList newComments);
+
 
     TextStore* getDocument();
     SoundStore* getSoundStore();
@@ -87,6 +93,7 @@ public:
 signals:
     void soundSellectionChanged();
     void textSellectionChanged();
+    void bindFilesListChanged();
     void exampleListChanged();
     void commentListChanged();
     void examplesSizeChanged();
@@ -96,6 +103,7 @@ public slots:
     void saveHome();
     void home();
 
+    void synchBndFileList();
     void openBindFile(const QUrl &bindFileName);
     void saveBindFile(const QUrl &bindFileName);
     void createBindFile(const QUrl &soundFileName);
@@ -124,7 +132,10 @@ public slots:
     void getExample();
     void getExamplesFor(const QString& seekablePhrase);
 
+    void goOutHome() { _f_home = false; }
+
     QUrl getCommentUrlWithName(const QString& name) const;
+    QUrl getBindFileUrlWithName(const QString& name) const;
 
     qint32 getMidMarkable() const;
     qint32 getBeginMarkable() const;
@@ -145,9 +156,11 @@ private:
     SoundStore::PTR _soundStore; //bool _f_setSound;
     TextStore::PTR _textStore;  //bool _f_setText;
     BindMaker::PTR _bindMaker;
+    QStringList _bindFilesList; // Модель для гуи
     QStringList _exampleList; // Модель для гуи
     QStringList _commentList; // Модель для гуи
-    QMap <QString, Logic::Example> _example;
+    QMap <QString, Logic::Example> _example; // Для обработки клика по списку примеров
+    QMap <QString, QUrl> _bindFile; // Для обработки клика по скписку бинд файлов
 
     bool _f_reconizing;
     bool _f_home; // Нужен для возврата домой

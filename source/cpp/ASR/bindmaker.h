@@ -36,6 +36,7 @@ signals:
     void process(qreal& persent); // Нужна для обновления индикатора процесса в GUI.
 public slots:
     void handleRecognized(const QString& fileName, const QStringList &);
+    void runInThisThread(){ run(); }
 protected:
     void run(); // запускает процесс биндинга
 private:

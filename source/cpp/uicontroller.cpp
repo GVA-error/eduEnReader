@@ -49,6 +49,8 @@ SoundStore* UIController::getSoundStore()
 
 void UIController::saveHome()
 {
+    if (!_f_home)
+        return;
     _soundStore->saveHome();
     _textStore->saveHome();
     _f_home = true;
@@ -69,6 +71,35 @@ bool UIController::getMouseIsPressed() const
 void UIController::setMouseIsPressed(bool& newValue)
 {
     mouseIsPressed = newValue;
+}
+
+void UIController::synchBndFileList()
+{
+    QDir curDir;
+    QList <QFileInfo> bindInfoList;
+    _bindFilesList.clear();
+    _bindFilesList.clear();
+    bindInfoList = curDir.entryInfoList(QStringList("*.bnd"));
+    for (auto bindInfo : bindInfoList)
+    {
+        QString filePath = bindInfo.absoluteFilePath();
+        QUrl bindUrl = QUrl::fromLocalFile(filePath);
+        QString name = bindInfo.baseName();
+        _bindFile[name] = bindUrl;
+        _bindFilesList.push_back(name);
+    }
+    emit bindFilesListChanged();
+}
+
+QStringList UIController::getbindFilesList() const
+{
+    return _bindFilesList;
+}
+
+void UIController::setbindFilesList(const QStringList& newBindFiles)
+{
+    _bindFilesList = newBindFiles;
+    emit bindFilesListChanged();
 }
 
 QStringList UIController::getExampleList() const
@@ -117,6 +148,12 @@ void UIController::addComment(const QUrl& commentUrl, const QString &name)
     _logic->makeComment(sellectedFragment, commentUrl, name);
 }
 
+QUrl UIController::getBindFileUrlWithName(const QString& name) const
+{
+    QUrl bindFileUrl = _bindFile.value(name);
+    return bindFileUrl;
+}
+
 QUrl UIController::getCommentUrlWithName(const QString &name) const
 {
     QUrl commentUrl = _logic->getCommentUrlsonName(name);
@@ -159,7 +196,7 @@ void UIController::playExample(QString ID)
     if (_f_home)
         saveHome();
 
-    _f_home = false;
+    goOutHome();
     _soundStore->setFileUrl(url, begin, end);
     _soundStore->start();
     _textStore->setText(text);
@@ -289,6 +326,7 @@ void UIController::createBindFile(const QUrl &soundFileName)
 void UIController::openBindFile(const QUrl &arg)
 {
     QString fileName = arg.toLocalFile();
+    qDebug() << fileName;
     _logic->readFromFile(fileName, _textStore, _soundStore);
     saveHome();
     _logic->unMarkAllBindedText();
@@ -320,6 +358,9 @@ void UIController::makeBind()
     //auto examples = _logic->getExamples(QString("swi"), true);
     //_bindMaker->start();
     //_logic->bindLogicHanding();
+ //  _bindMaker->setSplitSize(5.0f, 3.0f);
+  //  _bindMaker->runInThisThread();
+  //  _logic->bindLogicHanding();
     _logic->writeInFile(_textStore, _soundStore);
     return;
 

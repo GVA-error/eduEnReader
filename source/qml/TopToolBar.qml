@@ -13,7 +13,7 @@ import UiControlerModul 1.1
 ToolBar {
     leftPadding: 10
     topPadding: 10
-    bottomPadding : 5
+    bottomPadding : 10
     Material.elevation: 6
     id : root
     function setExampleText(text){
@@ -29,7 +29,7 @@ ToolBar {
             QMLButtonStyle {
                 fix_width : 100
                 text: "open"
-                onClicked: openDialog.open()
+                onClicked: mainRoot.openFile() // openDialog.open()
             }
             ToolSeparator {
                 leftPadding: 15

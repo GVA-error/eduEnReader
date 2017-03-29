@@ -739,6 +739,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../qml/SimpleDialog.qml \
 		../qml/QMLToolBarSeparator.qml \
 		../qml/VideoSlider.qml \
+		../qml/FileOpenDialog.qml \
 		../qml/QMLButtonStyle.qml \
 		../qml/QMLScroolBar.qml \
 		../qml/TopToolBar.qml \

@@ -117,7 +117,7 @@ TextArea {
             selectedNameFilter.index: 1
             nameFilters : ["Bind file (*.html)"]
             folder: appPath
-            property int number: 21
+            property int number: 100
             onAccepted : {
                 homePage.homeUiControler.addComment(file, "comment_" + number.toString())
                 number += 1

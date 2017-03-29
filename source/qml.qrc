@@ -56,5 +56,6 @@
         <file>qml/images/view-sort-ascending.png</file>
         <file>qml/images/zoomin.png</file>
         <file>qml/images/zoomout.png</file>
+        <file>qml/FileOpenDialog.qml</file>
     </qresource>
 </RCC>
