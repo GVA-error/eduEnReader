@@ -51,12 +51,16 @@ public:
     void createFromNewSoundFile(const QString& fileName, TextStore::PTR, SoundStore::PTR);
 
     // pos - номер бинда перед которым будет вставлен бинд
-    void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString& recognizedText, qint64 pos = -1);
+    void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, qint64 pos = -1);
+    void addRecognizedString(const QStringList& recognizedString, SoundFragment::PTR sound, QString fileName = QString());
+    void addRecognizedString(const QStringList& recognizedString, qreal beginSound, qreal endSound, QString fileName = QString());
+    bool haveRecognizedString() { _recognizedStrings.empty() == false; }
+
     void makeComment(TextFragment::PTR text, QUrl url, const QString &name);
 
-    QStringList getRecognizedStrings() const { return _recognizedStrings; }
-    qreal getRecognizedStringBegin(qint64 stringNumber) const { return _recognizedStringPosBegin.value(stringNumber);}
-    qreal getRecognizedStringEnd(qint64 stringNumber) const { return _recognizedStringPosEnd.value(stringNumber);}
+    QMap <QString, QStringList> getRecognizedStrings() const { return _recognizedStrings; }
+    QMap <QString, qreal> getRecognizedStringBeginList() const { return _recognizedStringPosBegin; }
+    QMap <QString, qreal> getRecognizedStringEndList() const { return _recognizedStringPosEnd; }
 
     // Нужны для динамического позиционирования
     qint64 posInWavToPosInText(qreal) const; // по позиции в секундах, узнаёт позицию в интерпретированнном тексте
@@ -133,15 +137,14 @@ private:
     // Нужно для подсветки и дихотомического поиска соответствующего выделения
     QVector <Bind> _bindVector;
     QVector <Comment> _commentsVector; // Комментарии к тексту
-    QStringList _recognizedStrings; // Распознаные строки из файла, нужны для быстрого перепросчёта
-    QMap <qint64, qreal> _recognizedStringPosBegin; // позициия в звуковом файле для каждого элемента _recognizedStrings
-    QMap <qint64, qreal> _recognizedStringPosEnd;
+    QMap <QString, QStringList> _recognizedStrings; // Распознаные строки из файла, нужны для быстрого перепросчёта
+    QMap <QString, qreal> _recognizedStringPosBegin; // позициия в звуковом файле для каждого элемента _recognizedStrings
+    QMap <QString, qreal> _recognizedStringPosEnd;
 
     // Добавление с сохранением порядка
     // Так же гарантирует что одновременно в списке биндов не будет ссылок на разные источники
     // pos - номер бинда перед которым будет вставлен бинд
     void addInBindList(const Bind&, qint64 pos = -1);
-    void addInRecognizedList(const QString& recognizedString, qreal beginSound, qreal endSound);
     void addInCommentList(const Comment&);
 
     QVector <Bind>::iterator getBindOnTextPos(qint64 pos); // Поиск бинда сответствующего позиции тексте
@@ -159,7 +162,7 @@ private:
     QString toString(const Comment &) const;
     void fromString(Comment&, QString stringComment, TextStore::PTR text);
     void fromString(Bind&, QString bindString, SoundStore::PTR sound, TextStore::PTR text) const;
-    void fromString(QString& str, qreal& posBigin, qreal &posEnd, QString source) const; // нужна для чтения распозноного текста
+    void fromString(QStringList& str, qreal& posBigin, qreal &posEnd, QString source) const; // нужна для чтения распозноного текста
 
     // Нужно для подсветки текущего фрагмента
     Bind getBindFromSoundPos(qreal) const;

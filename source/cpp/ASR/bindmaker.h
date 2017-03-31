@@ -35,7 +35,6 @@ public:
 signals:
     void process(qreal& persent); // Нужна для обновления индикатора процесса в GUI.
 public slots:
-    void handleRecognized(const QString& fileName, const QStringList &);
     void runInThisThread(){ run(); }
 protected:
     void run(); // запускает процесс биндинга
@@ -67,11 +66,13 @@ private:
     QStringList _textList;
     QList <qint64> _textPos; // сопостовляет позицию в _textList с настоящей позицией в тексте
    // QMap <qint64, qint64> _posInText; // Узнаём по позиции в _textList позицию в тексте
-    void fillInTextData(const QString& text); // заполняет _textList и _posInText
+    void textPreparetion(const QString& text); // заполняет _textList и _posInText
 
-    void preparetion(qreal splitSize, qreal diff = 0.0f); // В случаи фиксированного разбиения
-    void preparetion(const QStringList &recognizedStrings); // В случаи известного разбиения // Из _logic
+    void soundPreparetion(qreal splitSize, qreal diff = 0.0f); // В случаи фиксированного разбиения
+    void soundPreparetion(); // В случаи известного разбиения // Из _logic
     void preparetion();
+    void recognizing();
+    void binding();
 
     qreal calcProgress() const;
     bool recognizeIsFinished();

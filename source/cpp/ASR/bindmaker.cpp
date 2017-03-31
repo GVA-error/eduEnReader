@@ -36,49 +36,37 @@ void BindMaker::clear()
 
 void BindMaker::preparetion()
 {
-    auto recognizedStrings = _logic->getRecognizedStrings();
-    if (recognizedStrings.empty())
-        preparetion(_splitSize, _diff);
-    else
-        preparetion(recognizedStrings);
-}
-
-void BindMaker::preparetion(const QStringList& recognizedStrings)
-{
+    qDebug() << "******* Preparetion *******";
     clear();
-    _logic->clear(false);
-    qreal curStringNumber = 0;
-    QList <QStringList> fileStrings;
-
-    for (auto string : recognizedStrings)
+    if (_logic->haveRecognizedString())
     {
-        QStringList splitedString = string.split(" ");
-        fileStrings.push_back(splitedString);
+        _logic->clear(true); // Если занимались деление файла - старые распознаные данные считаем устаревшими
+        soundPreparetion(_splitSize, _diff);
     }
-
-    for (auto recognizedString : fileStrings) // Всё нормально, нам важен только порядок
+    else
     {
-        QString ID = QString().number(curStringNumber);
-        _fileParts.push_back(ID);
-        qreal begin = _logic->getRecognizedStringBegin(curStringNumber);
-        qreal end = _logic->getRecognizedStringEnd(curStringNumber);
-        _fileBeginOffset[ID] = begin;
-        _fileEndOffset[ID] = end;
-        curStringNumber++;
-        _recognizedStrings[ID] = recognizedString;
+        _logic->clear(false);
+        soundPreparetion();
     }
 
     for (auto name : _fileParts)
         _processList[name] = false;
 
     QString text = _textStore->getString();
-    fillInTextData(text);
+    textPreparetion(text);
 }
 
-void BindMaker::preparetion(qreal splitSize, qreal diff)
+void BindMaker::soundPreparetion()
 {
-    clear();
-    _logic->clear(true);
+    _recognizedStrings = _logic->getRecognizedStrings();
+
+    _fileBeginOffset = _logic->getRecognizedStringBeginList();
+    _fileEndOffset = _logic->getRecognizedStringEndList();
+    _fileParts = _recognizedStrings.keys();
+}
+
+void BindMaker::soundPreparetion(qreal splitSize, qreal diff)
+{
     assert(splitSize - diff > 0);
     QUrl url = _soundStore->fileUrl();
     QString videoFile = url.toLocalFile();
@@ -92,33 +80,17 @@ void BindMaker::preparetion(qreal splitSize, qreal diff)
         _preparator.splitFile(wavFile, min, max);
     }
     _fileParts = _preparator.getFileNameList();
-
-
-    for (auto file : _fileParts)
-        _asr->recognize(file);
-
-    // TODO Стоит возвращать мап сразу
-    for (auto name = _fileParts.begin(); name != _fileParts.end(); name++)
-    {
-        _fileBeginOffset[*name] = _preparator.getFileBegin(*name);
-        _fileEndOffset[*name] = _preparator.getFileEnd(*name);
-        _recognizedStrings[*name] = _asr->getRecognized(*name);
-    }
-
-    for (auto name : _fileParts)
-        _processList[name] = false;
-
-    QString text = _textStore->getString();
-    fillInTextData(text);
+    _fileBeginOffset = _preparator.getFileBeginList();
+    _fileEndOffset = _preparator.getFileEndList();
 }
 
-void BindMaker::fillInTextData(const QString& text)
+void BindMaker::textPreparetion(const QString& text)
 {
     int curWordLength = 0;
     int beginPos = 0;
     for (qint64 i = 0; i<text.length(); i++)
     {
-        char curSimbol = text.at(i).toLatin1();
+        char curSimbol = text.at(i).toLatin1(); // TODO использовать регулярку
         if (isalpha(curSimbol) || curSimbol == '\'') // Апострофы считаем частью слова
         {
             if (curWordLength == 0)
@@ -130,53 +102,64 @@ void BindMaker::fillInTextData(const QString& text)
             QString nextWord = text.mid(beginPos, curWordLength);
             nextWord = nextWord.toLower();
             deleteNotAlpha(nextWord);
-            //qint64 curNumber = _textList.size();
             _textList.push_back(nextWord);
             _textPos.push_back(beginPos);
-            //_posInText[curNumber] = i;
             curWordLength = 0;
         }
     }
 }
 
-void BindMaker::run()
+void BindMaker::recognizing()
 {
-    preparetion();
-    if (_processList.empty())
+    if (_recognizedStrings.empty())
     {
-        qDebug() << "U not have prepeared data" << "\n";
-        return;
+        qDebug() << "******* Recognizing *******";
+        for (auto file : _fileParts)
+        {
+            _asr->recognize(file);
+            QStringList recognized = _asr->getRecognized(file);
+            _recognizedStrings[file] = recognized;
+            qreal begin = _fileBeginOffset[file];
+            qreal end = _fileEndOffset[file];
+            _logic->addRecognizedString(recognized, begin, end, file);
+        }
     }
+}
 
-    if (_textList.empty())
-        return;
-    qDebug() << "******* Recognizing *******";
-    // Тут можно парралелить
+void BindMaker::binding()
+{
+    qDebug() << "******* Calculate local mins *******";
     for (auto nextPart : _fileParts)
     {
-        QStringList recognizedString;
         qDebug() << "\nHandle file: " << nextPart;
-        recognizedString = _recognizedStrings[nextPart];
-        handleRecognized(nextPart, recognizedString);
+        _processList[nextPart] = true;
+        qreal progress = calcProgress();
+        emit SIGNAL(process(progress));
+        calcLocalMin(nextPart);
     }
+    qDebug() << "******* Binding *******";
     useLocalMinToFind_bind();
 }
 
-void BindMaker::handleRecognized(const QString& fileName, const QStringList& recognizedString)
+void BindMaker::run()
 {
-    _processList[fileName] = true;
-    qreal progress = calcProgress();
-    emit SIGNAL(process(progress));
-
-    calcLocalMin(fileName);
-
+    preparetion();
+    if (_textList.empty())
+    {
+        qDebug() << "U have not text data" << "\n";
+        return;
+    }
     if (recognizeIsFinished())
-        emit SIGNAL(bindingIsFinished(_bind));
+    {
+        qDebug() << "U have not prepeared sound data" << "\n";
+        return;
+    }
+    recognizing();
+    binding();
 }
 
 void BindMaker::useLocalMinToFind_bind()
 {
-    qDebug() << "******* Binding *******";
     _logic->clear(true);
     qint64 curLastTextPos = -1;
     for (auto partFileName : _fileParts)
@@ -192,11 +175,9 @@ void BindMaker::useLocalMinToFind_bind()
                 continue;
             beginText = localMim;
             qint64 lengthText = _textLength[partFileName];
-            endText = beginText + lengthText;
+            endText = beginText + lengthText * 2 / 3; // TODO деление пополам проверить
             auto textFragment = TextFragment::factoryMethod(beginText, endText, _textStore);
-            QStringList recognized = _recognizedStrings[partFileName];
-            QString recognizedString = recognized.join(" "); // TODO проверить делелние
-            _logic->makeBind(textFragment, soundFragment, recognizedString);
+            _logic->makeBind(textFragment, soundFragment);
             break;
         }
         curLastTextPos = beginText;
@@ -225,8 +206,8 @@ void BindMaker::addEdgeBinds()
     auto postText = TextFragment::factoryMethod(endText, textLength, _textStore);
     auto postSound = SoundFragment::factoryMethod(endSound, soundDuration, _soundStore);
 
-    _logic->makeBind(preText, preSound, "", 0);
-    _logic->makeBind(postText, postSound, "", n-1);
+    _logic->makeBind(preText, preSound, 0);
+    _logic->makeBind(postText, postSound, n-1);
 }
 
 QList <qint64> BindMaker::getCorelationFunc(const QStringList &recognizedString) const

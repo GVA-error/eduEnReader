@@ -33,9 +33,9 @@ public:
     void splitFile(const QString& fileName, qreal minSplitSize, qreal maxSplitSize, const QDir& outDirrectory = SPLIT_DIR);
 
     // Методы возвращающие результат операций подготовки
-    QStringList getFileNameList() { return _rezFileNameList; }
-    qreal getFileBegin(const QString& fileName) { return _rezFileBeginOffset.take(fileName); }
-    qreal getFileEnd(const QString& fileName) { return _rezFileEndOffset.take(fileName); }
+    QStringList getFileNameList() const { return _rezFileNameList; }
+    QMap <QString, qreal> getFileBeginList() const { return _rezFileBeginOffset; }
+    QMap <QString, qreal> getFileEndList() const { return _rezFileEndOffset; }
 
     // Нужно для соблюдения дискретизации
    // bool fileIsCorrect(const QString& fileName);

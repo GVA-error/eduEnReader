@@ -383,17 +383,12 @@ void Logic::unMarkAllBindedText()
         unmarkBind(bind);
 }
 
-void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, const QString &recognizedText, qint64 pos)
+void Logic::makeBind(TextFragment::PTR text, SoundFragment::PTR sound, qint64 pos)
 {
     Bind b;
     b.text = text;
     b.sound = sound;
-
-    qreal soundBegin = sound->begin();
-    qreal soundEnd = sound->end();
-
-    addInBindList(b);
-    addInRecognizedList(recognizedText, soundBegin, soundEnd);
+    addInBindList(b, pos);
 }
 
 void Logic::addInBindList(const Bind& bind, qint64 pos)
@@ -419,7 +414,6 @@ void Logic::makeComment(TextFragment::PTR text, QUrl url, const QString& name)
     c.name = name;
     c.commented = text;
     c.commentUrl = url;
-
     addInCommentList(c);
 }
 
@@ -428,12 +422,23 @@ void Logic::addInCommentList(const Comment& comment)
     _commentsVector.push_back(comment);
 }
 
-void Logic::addInRecognizedList(const QString& recognizedString, qreal beginSound, qreal endSound)
+void Logic::addRecognizedString(const QStringList& recognizedString, SoundFragment::PTR sound, QString fileName)
 {
-    qint64 posInRecStrings = _recognizedStrings.size();
-    _recognizedStrings.push_back(recognizedString);
-    _recognizedStringPosBegin[posInRecStrings] = beginSound;
-    _recognizedStringPosEnd[posInRecStrings] = endSound;
+    qreal soundBegin = sound->begin();
+    qreal soundEnd = sound->end();
+    addRecognizedString(recognizedString, soundBegin, soundEnd, fileName);
+}
+
+void Logic::addRecognizedString(const QStringList& recognizedString, qreal beginSound, qreal endSound, QString fileName)
+{
+    if (fileName.length() == 0)
+    {
+        qint64 ID = _recognizedStrings.size();
+        fileName = QString().number(ID);
+    }
+    _recognizedStrings[fileName] = recognizedString;
+    _recognizedStringPosBegin[fileName] = beginSound;
+    _recognizedStringPosEnd[fileName] = endSound;
 }
 
 bool Logic::haveIntersaption(const Bind &A, const Bind &B) const
@@ -555,15 +560,16 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
         QString curStringBind = toString(bind);
         fileStream << par_Bind << " " << curStringBind << "\n";
     }
-    qint64 i = 0;
-    for (auto str : _recognizedStrings)
+
+    for (auto id : _recognizedStrings.keys())
     {
-        qreal posBegin = _recognizedStringPosBegin[i];
-        qreal posEnd = _recognizedStringPosEnd[i];
-        QString stringTrimmed = str.trimmed();
-        fileStream << par_RecognizedString << " " << stringTrimmed << " "
-                   << posBegin << " " << posEnd <<  "\n";
-        i++;
+        QStringList str = _recognizedStrings[id];
+        qreal posBegin = _recognizedStringPosBegin[id];
+        qreal posEnd = _recognizedStringPosEnd[id];
+        fileStream << par_RecognizedString << " ";
+        for (auto word : str)
+            fileStream << word << " ";
+        fileStream << posBegin << " " << posEnd <<  "\n";
     }
     for (auto comment : _commentsVector)
     {
@@ -654,17 +660,13 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         addInCommentList(nextComment);
     }
 
-    qint64 i = 0;
     for (auto recognizedStr : recognizedStrings)
     {
-        QString rec;
+        QStringList rec;
         qreal begin;
         qreal end;
         fromString(rec, begin, end, recognizedStr);
-        _recognizedStrings.push_back(rec);
-        _recognizedStringPosBegin[i] = begin;
-        _recognizedStringPosEnd[i] = end;
-        i++;
+        addRecognizedString(rec, begin, end);
     }
     file.close();
 }
@@ -736,14 +738,13 @@ void Logic::fromString(Bind& bind, QString bindString, SoundStore::PTR sound, Te
     bind.text = textFragment;
 }
 
-void Logic::fromString(QString& str, qreal& posBegin, qreal& posEnd, QString source) const
+void Logic::fromString(QStringList& str, qreal& posBegin, qreal& posEnd, QString source) const
 {
-    QStringList splitedStr = source.split(" ", QString::SplitBehavior::SkipEmptyParts);
-    QString stringBegin = *(splitedStr.end() - 2);
-    QString stringEnd = *(splitedStr.end() - 1);
+    str = source.split(" ", QString::SplitBehavior::SkipEmptyParts);
+    QString stringBegin = *(str.end() - 2);
+    QString stringEnd = *(str.end() - 1);
     posBegin = stringBegin.toDouble();
     posEnd = stringEnd.toDouble();
-    splitedStr.pop_back();
-    splitedStr.pop_back();
-    str = splitedStr.join(" ");
+    str.pop_back();
+    str.pop_back();
 }
