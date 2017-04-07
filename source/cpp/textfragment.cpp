@@ -1,15 +1,31 @@
 #include "textfragment.h"
 
+bool TextFragment::isPhraseInMidSentance(const QString& phrase) const
+{
+    QString curString = getString();
+    auto endIndexBegin = curString.indexOf(_sentenceEndSymbols);
+    auto endIndexEnd = curString.lastIndexOf(_sentenceEndSymbols);
+
+    auto phraseIndex = curString.indexOf(phrase, endIndexBegin);
+    if (endIndexEnd < 0 || endIndexBegin < 0 || phraseIndex < 0)
+        return false;
+    if (phraseIndex <= endIndexEnd)
+        return true;
+    return false;
+}
+
 bool TextFragment::haveSentanceEndPrev(const QString& phrase) const
 {
     QString curString = getString();
     auto endIndex = curString.indexOf(_sentenceEndSymbols);
     if (endIndex == -1)
         return false;
-    auto phraseIndex = curString.indexOf(phrase, endIndex);
-    if (phraseIndex == -1)
+    auto phraseIndex = curString.indexOf(phrase);
+    if (phraseIndex < 0)
         return false;
-    return true;
+    if (phraseIndex >= endIndex)
+        return true;
+    return false;
 }
 
 bool TextFragment::haveSentanceEndPost(const QString& phrase) const
@@ -18,10 +34,12 @@ bool TextFragment::haveSentanceEndPost(const QString& phrase) const
     auto endIndex = curString.lastIndexOf(_sentenceEndSymbols);
     if (endIndex == -1)
         return false;
-    auto phraseIndex = curString.lastIndexOf(phrase, endIndex);
-    if (phraseIndex == -1)
+    auto phraseIndex = curString.lastIndexOf(phrase);
+    if (phraseIndex < 0)
         return false;
-    return true;
+    if (phraseIndex <= endIndex)
+        return true;
+    return false;
 }
 
 bool TextFragment::havePhraseOnMid(const QString& phrase, qreal egeOffset) const

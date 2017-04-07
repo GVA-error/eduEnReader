@@ -22,6 +22,7 @@ public:
 
     QColor getRandomMarkColor(); // Случайный цвет подсветки текста
 
+    bool isPhraseInMidSentance(const QString& phrase) const; // Проверяет обрамлена ли хотя бы одна фраза символами конца строки
     bool haveSentanceEndPrev(const QString& phrase) const;// Проверет есть ли знак конца строки перед фразой
     bool haveSentanceEndPost(const QString& phrase) const;// .. После
 

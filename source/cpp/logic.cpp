@@ -117,12 +117,14 @@ void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd,
     if (_findInSequence == false)
         return;
 
-    for (auto curAdd = firstAdd;; curAdd += step)
+    for (auto curAdd = firstAdd; curAdd != _bindVector.end() ; curAdd += step)
     {
         auto text = curBind.text;
         if (step == -1 && text->haveSentanceEndPrev(seekablePhrase))
             break;
         if (step == 1 && text->haveSentanceEndPost(seekablePhrase))
+            break;
+        if (text->isPhraseInMidSentance(seekablePhrase))
             break;
 
         if (step == 1)
@@ -172,7 +174,9 @@ QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
         }
         else
             continue;
-        rezList.push_back(summBind);
+        if (rezList.empty() ||
+                isEquils(rezList.back(), summBind) == false) // TODO Возможно стоит проверять все бинды на эквивалентность
+            rezList.push_back(summBind);
     }
 
     _bindVector.pop_front();
