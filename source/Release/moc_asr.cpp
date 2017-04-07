@@ -147,7 +147,7 @@ void IASR::recognizeFinished(const QString & _t1)
 }
 struct qt_meta_stringdata_ASRLinuxKaldi_t {
     QByteArrayData data[5];
-    char stringdata0[61];
+    char stringdata0[67];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -157,14 +157,14 @@ struct qt_meta_stringdata_ASRLinuxKaldi_t {
 static const qt_meta_stringdata_ASRLinuxKaldi_t qt_meta_stringdata_ASRLinuxKaldi = {
     {
 QT_MOC_LITERAL(0, 0, 13), // "ASRLinuxKaldi"
-QT_MOC_LITERAL(1, 14, 16), // "stringRecognized"
-QT_MOC_LITERAL(2, 31, 0), // ""
-QT_MOC_LITERAL(3, 32, 19), // "allStringRecognized"
-QT_MOC_LITERAL(4, 52, 8) // "exitCode"
+QT_MOC_LITERAL(1, 14, 22), // "handleRecognizedString"
+QT_MOC_LITERAL(2, 37, 0), // ""
+QT_MOC_LITERAL(3, 38, 19), // "allStringRecognized"
+QT_MOC_LITERAL(4, 58, 8) // "exitCode"
 
     },
-    "ASRLinuxKaldi\0stringRecognized\0\0"
-    "allStringRecognized\0exitCode"
+    "ASRLinuxKaldi\0handleRecognizedString\0"
+    "\0allStringRecognized\0exitCode"
 };
 #undef QT_MOC_LITERAL
 
@@ -198,7 +198,7 @@ void ASRLinuxKaldi::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         ASRLinuxKaldi *_t = static_cast<ASRLinuxKaldi *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->stringRecognized(); break;
+        case 0: _t->handleRecognizedString(); break;
         case 1: _t->allStringRecognized((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }

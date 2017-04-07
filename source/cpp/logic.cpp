@@ -12,7 +12,7 @@ Logic::Logic()
     //    _lastTempMarkPos.append(zeroBind);
 }
 
-Logic::Bind Logic::summ(const Bind& left, const Bind& right)
+Logic::Bind Logic::summ(const Bind& left, const Bind& right) const
 {
     if (isEquils(left, zeroBind))
         return right;
@@ -111,6 +111,33 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, q
     return rezList;
 }
 
+void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const
+{
+    assert(step == -1 || step == 1);
+    if (_findInSequence == false)
+        return;
+
+    for (auto curAdd = firstAdd;; curAdd += step)
+    {
+        auto text = curBind.text;
+        if (step == -1 && text->haveSentanceEndPrev(seekablePhrase))
+            break;
+        if (step == 1 && text->haveSentanceEndPost(seekablePhrase))
+            break;
+
+        if (step == 1)
+            curBind = summ(curBind, *curAdd);
+        else
+            curBind = summ(*curAdd, curBind);
+
+        if (curAdd == _bindVector.begin())
+            break;
+        if (curAdd + step == _bindVector.end())
+            break;
+    }
+
+}
+
 QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
 {
     QList <Logic::Bind> rezList;
@@ -124,17 +151,28 @@ QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
         Bind next = *(curBind+1);
         Bind prev = *(curBind-1);
         TextFragment::PTR cutTextFragmend = (*curBind).text;
+        Bind summBind = *curBind;
         if (cutTextFragmend->havePhraseOnMid(seekablePhrase))
-            rezList.push_back(*curBind);
+        {
+            addWhileNotFindSentenceEnd(curBind-1, summBind, seekablePhrase, -1);
+            addWhileNotFindSentenceEnd(curBind+1, summBind, seekablePhrase, 1);
+        }
         else if (cutTextFragmend->havePhraseOnBegin(seekablePhrase))
         {
-            Bind summBind = summ(prev, *curBind);
-            rezList.push_back(summBind);
+            summBind = summ(prev, summBind);
+            if (curBind-1 != _bindVector.begin())
+                addWhileNotFindSentenceEnd(curBind-2, summBind, seekablePhrase, -1);
+            addWhileNotFindSentenceEnd(curBind+1, summBind, seekablePhrase, 1);
         } else if (cutTextFragmend->havePhraseOnEnd(seekablePhrase))
         {
-            Bind summBind = summ(*curBind, next);
-            rezList.push_back(summBind);
+            summBind = summ(summBind, next);
+            addWhileNotFindSentenceEnd(curBind-1, summBind, seekablePhrase, -1);
+            if (curBind+1 != _bindVector.end())
+                addWhileNotFindSentenceEnd(curBind+2, summBind, seekablePhrase, 1);
         }
+        else
+            continue;
+        rezList.push_back(summBind);
     }
 
     _bindVector.pop_front();

@@ -22,6 +22,9 @@ public:
 
     QColor getRandomMarkColor(); // Случайный цвет подсветки текста
 
+    bool haveSentanceEndPrev(const QString& phrase) const;// Проверет есть ли знак конца строки перед фразой
+    bool haveSentanceEndPost(const QString& phrase) const;// .. После
+
     // egeOffset - какую часть фрагмента считаем не верно распознаной
     bool havePhraseOnMid(const QString& phrase, qreal egeOffset = 0.25) const;
     bool havePhraseOnBegin(const QString& phrase, qreal egeOffset = 0.25) const;
@@ -29,6 +32,9 @@ public:
 
     virtual ~TextFragment() {}
 private:
+    const QRegExp _sentenceEndSymbols = QRegExp("[.!?]"); // Символы конца строки
+    //const QRegularExpression _sentenceBeginSymbols = QRegularExpression("^(A-Z)"); // .. Начала
+
     friend class Fragment <TextFragment, TextStore::PTR, qint64>;
     TextFragment() = delete;
     // В глобальных координатах

@@ -18,7 +18,7 @@ Rectangle{
         anchors.fill: parent
         onClicked: {
             if (source.state === SoundStore.PlayingState)
-                source.stop()
+                source.pause()
             else
                 source.start()
         }

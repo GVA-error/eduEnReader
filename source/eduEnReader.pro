@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     cpp/ASR/datapreparation.cpp \
     cpp/ASR/metrics.cpp \
     cpp/ASR/scripter.cpp \
-    cpp/ASR/wavworker.cpp
+    cpp/ASR/wavworker.cpp \
+    cpp/ASR/graph.cpp
 
 RESOURCES += qml.qrc
 
@@ -65,4 +66,5 @@ HEADERS += \
     cpp/ASR/datapreparation.h \
     cpp/ASR/metrics.h \
     cpp/ASR/scripter.h \
-    cpp/ASR/wavworker.h
+    cpp/ASR/wavworker.h \
+    cpp/ASR/graph.h

@@ -1,5 +1,29 @@
 #include "textfragment.h"
 
+bool TextFragment::haveSentanceEndPrev(const QString& phrase) const
+{
+    QString curString = getString();
+    auto endIndex = curString.indexOf(_sentenceEndSymbols);
+    if (endIndex == -1)
+        return false;
+    auto phraseIndex = curString.indexOf(phrase, endIndex);
+    if (phraseIndex == -1)
+        return false;
+    return true;
+}
+
+bool TextFragment::haveSentanceEndPost(const QString& phrase) const
+{
+    QString curString = getString();
+    auto endIndex = curString.lastIndexOf(_sentenceEndSymbols);
+    if (endIndex == -1)
+        return false;
+    auto phraseIndex = curString.lastIndexOf(phrase, endIndex);
+    if (phraseIndex == -1)
+        return false;
+    return true;
+}
+
 bool TextFragment::havePhraseOnMid(const QString& phrase, qreal egeOffset) const
 {   
     assert(egeOffset > 0 && egeOffset < 0.5);

@@ -49,6 +49,8 @@ void BindMaker::preparetion()
         soundPreparetion();
     }
 
+    sortFileParts();
+
     for (auto name : _fileParts)
         _processList[name] = false;
 
@@ -63,6 +65,27 @@ void BindMaker::soundPreparetion()
     _fileBeginOffset = _logic->getRecognizedStringBeginList();
     _fileEndOffset = _logic->getRecognizedStringEndList();
     _fileParts = _recognizedStrings.keys();
+}
+
+void BindMaker::sortFileParts()
+{
+    QMap <qreal, QString> mids;
+    QList <qreal> midKeys;
+    for (auto str : _fileParts)
+    {
+        qreal begin = _fileBeginOffset[str];
+        qreal end = _fileBeginOffset[str];
+        qreal mid = (begin + end) / 2;
+        mids[mid] = str;
+        midKeys.push_back(mid);
+    }
+    qSort(midKeys);
+    _fileParts.clear();
+    for (auto midKey : midKeys)
+    {
+        QString nextString = mids[midKey];
+        _fileParts.push_back(nextString);
+    }
 }
 
 void BindMaker::soundPreparetion(qreal splitSize, qreal diff)
@@ -158,10 +181,91 @@ void BindMaker::run()
     binding();
 }
 
+void BindMaker::fillInGraph(Graph &g)
+{
+    qint32 curID = 0;
+    for (auto curFile = _fileParts.begin(); curFile != _fileParts.end(); curFile++)
+        for (auto localMin : _localMin[*curFile])
+        {
+            _localMinToID[*curFile][localMin] = curID;
+            _IDToFileName[curID] = *curFile;
+            _IDToLoacalMin[curID] = localMin;
+            curID++;
+        }
+
+    for (auto curFile = _fileParts.begin(); curFile+1 != _fileParts.end(); curFile++)
+        for (qint32 i = 1; curFile+i !=_fileParts.end(); i++)
+            for (auto localMin : _localMin[*curFile])
+            {
+                auto nextFile = curFile + i;
+                qint32 beginID = _localMinToID[*curFile][localMin];
+                qint32 endID = getLocalMinEnd(*curFile, localMin, *nextFile);
+                assert(beginID < curID && endID < curID);
+                assert(*curFile != *nextFile);
+                assert(beginID != endID);
+                if (endID != -1 && beginID != -1)
+                    g.addEdge(beginID, endID);
+            }
+}
+
+// Локальный минимум конца, если данный локальный минимум соответствует реальной позиции в тексте
+qint64 BindMaker::getLocalMinEnd(const QString& fileName, qint32 localMinBegin, const QString& nextFileName) const
+{
+    QStringList recognizedStringWordList = _recognizedStrings.value(fileName);
+    QString recognizedString = recognizedStringWordList.join(" ");
+    qint64 recSize = recognizedString.size();
+    qint64 minOffset = recSize * 2 / 3;
+
+    qint64 rezLocalMin=-1;
+    for (auto localMin : _localMin.value(nextFileName))
+        if (localMin > localMinBegin + minOffset)
+        {
+            rezLocalMin = localMin;
+            break;
+        }
+
+    if (rezLocalMin == -1)
+        return -1;
+    qint32 rezID = _localMinToID.value(nextFileName).value(rezLocalMin);
+    return rezID;
+}
+
+void BindMaker::addBinsFromList(const QList<qint32> &localMinsIDlist) const
+{
+    for (auto curID = localMinsIDlist.begin(); curID+1 != localMinsIDlist.end(); curID++)
+    {
+        QString fileStringBegin = _IDToFileName[*curID];
+        QString fileStringEnd = _IDToFileName[*(curID+1)];
+        qreal beginSound = _fileBeginOffset[fileStringBegin];
+        qreal endSound = _fileBeginOffset[fileStringEnd]; // Начало следующего считаем концом предыдущего
+        auto soundFragment = SoundFragment::factoryMethod(beginSound, endSound, _soundStore);
+
+        qint64 beginText = _IDToLoacalMin[*curID];
+        qint64 endText = _IDToLoacalMin[*(curID+1)];
+        auto textFragment = TextFragment::factoryMethod(beginText, endText, _textStore);
+
+        _logic->makeBind(textFragment, soundFragment);
+    }
+}
+
+qint32 BindMaker::getLocalMinNumber() const
+{
+    qint32 rezNumber = 0;
+    for (QString file : _fileParts)
+        rezNumber += _localMin[file].size();
+    return rezNumber;
+}
+
 void BindMaker::useLocalMinToFind_bind()
 {
-    _logic->clear(true);
-    qint64 curLastTextPos = -1;
+    qint32 localMinNumber = getLocalMinNumber();
+    Graph g(localMinNumber+1);
+    fillInGraph(g);
+    auto IDPath = g.longestPath();
+    addBinsFromList(IDPath);
+
+    //_logic->clear(false);
+   /* qint64 curLastTextPos = -1;
     for (auto partFileName : _fileParts)
     {
         qreal beginSound = _fileBeginOffset[partFileName];
@@ -181,7 +285,7 @@ void BindMaker::useLocalMinToFind_bind()
             break;
         }
         curLastTextPos = beginText;
-    }
+    }*/
 }
 
 void BindMaker::addEdgeBinds()
@@ -313,8 +417,6 @@ void BindMaker::calcLocalMin(const QString &partFileName, qreal maxWrongPersent)
         qDebug() << "Something wrong.";
     return;
 }
-
-
 
 qreal BindMaker::calcProgress() const
 {

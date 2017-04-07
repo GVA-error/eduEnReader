@@ -6,10 +6,10 @@
 ASRLinuxKaldi::ASRLinuxKaldi()
 {
     _console = new QProcess();
-    QObject::connect(_console, SIGNAL(readyReadStandardOutput()),
-                     this, SLOT(stringRecognized()));
-    QObject::connect(_console, SIGNAL(finished(int)),
-                     this, SLOT(allStringRecognized(int)));
+    //QObject::connect(_console, SIGNAL(readyReadStandardOutput()),
+    //                 this, SLOT(stringRecognized()));
+    //QObject::connect(_console, SIGNAL(finished(int)),
+     //                this, SLOT(allStringRecognized(int)));
 }
 
 QStringList ASRLinuxKaldi::getRecognized(const QString& fileName) const
@@ -33,7 +33,7 @@ void ASRLinuxKaldi::recognize(const QStringList& fileNames)
     startRecognizeScript(args);
 }
 
-void ASRLinuxKaldi::stringRecognized()
+void ASRLinuxKaldi::handleRecognizedString()
 {
     QString consoleOutput = _console->readAllStandardOutput();
     int exp_index = consoleOutput.indexOf(".wav");
@@ -49,11 +49,14 @@ void ASRLinuxKaldi::stringRecognized()
         _file_name = "wtf";
 
     outputList.pop_front();
-    for (auto word : outputList)
+    for (QString word : outputList)
     {
         word = word.toLower();
+        if (word.length() == 0 || word == "\n")
+            continue;
         _fileSpeach[_file_name].push_back(word);
     }
+    qDebug() << "recognized " << _fileSpeach[_file_name];
 }
 
 void ASRLinuxKaldi::allStringRecognized(int exitCode)
@@ -94,8 +97,8 @@ void ASRLinuxKaldi::startRecognizeScript(const QStringList &args)
     qint32 exitCode = -3;
     if(_console->waitForFinished(-1))
     {
-       exitCode = _console->exitCode();
-
+        exitCode = _console->exitCode();
+        handleRecognizedString();
     }
 }
 

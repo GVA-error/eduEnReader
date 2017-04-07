@@ -4,6 +4,10 @@
 #include <QObject>
 #include <QMap>
 #include <QThread>
+#include <QtAlgorithms>
+#include <QSet>
+#include <QStringList>
+#include "graph.h"
 #include "metrics.h"
 #include "cpp/textstore.h"
 #include "cpp/soundstore.h"
@@ -31,6 +35,7 @@ public:
     }
     explicit BindMaker(TextStore::PTR textStore, SoundStore::PTR soundStore, Logic::PTR logic);
     BindMaker() = delete;
+
     // Подготавливает звуковой файл к распознанию
 signals:
     void process(qreal& persent); // Нужна для обновления индикатора процесса в GUI.
@@ -62,10 +67,33 @@ private:
     QMap <QString, QList<qint64>> _localMin; // Локальные минимумы кореляционной функции частей файла (слов) к исходному тексту (в словах)
     QMap <QString, qint64> _textLength; // Количество символов в каждой распознаной строке
 
+    // Описание кореляционной таблици
+    /*QMap <QString, qint32> _tableStringToFileName;
+    QMap <qint32, QString> _fileNameToTableString;
+    QMap <qint32, qint32> _tableColumnToLocalMin;
+    QMap <qint32, qint32> _localMinToTableColumn;
+    QVector<QVector, QVector<bool>> _localMinsTable;
+    */
+    // ID для графа
+    QMap <qint32, qint32> _IDToLoacalMin;
+    QMap <QString, QMap <qint32, qint32>> _localMinToID;
+    QMap <qint32, QString> _IDToFileName;
+
     // Список слов текста и их позции в исходном тексте
     QStringList _textList;
     QList <qint64> _textPos; // сопостовляет позицию в _textList с настоящей позицией в тексте
-   // QMap <qint64, qint64> _posInText; // Узнаём по позиции в _textList позицию в тексте
+
+    // Заполняет мапы для графа и сам граф
+    void fillInGraph(Graph& g);
+    // ID локальный минимум конца, если данный локальный минимум соответствует реальной позиции в тексте
+    qint64 getLocalMinEnd(const QString& fileName, qint32 localMinBegin, const QString& nextFileName) const;
+    // Добавляет бинды  соответствующие списку ID
+    void addBinsFromList(const QList<qint32> &localMinsIDlist) const;
+
+    // Общее количество локальных минимумов - нужно для формирования графа
+    qint32 getLocalMinNumber() const;
+
+    // QMap <qint64, qint64> _posInText; // Узнаём по позиции в _textList позицию в тексте
     void textPreparetion(const QString& text); // заполняет _textList и _posInText
 
     void soundPreparetion(qreal splitSize, qreal diff = 0.0f); // В случаи фиксированного разбиения
@@ -73,6 +101,8 @@ private:
     void preparetion();
     void recognizing();
     void binding();
+
+    void sortFileParts();
 
     qreal calcProgress() const;
     bool recognizeIsFinished();
@@ -82,7 +112,7 @@ private:
     void useLocalMinToFind_bind();
 
     // Добавляет бинд в начало и конец
-    void addEdgeBinds(); // TODO Не работает
+    void addEdgeBinds(); // TODO Не работает, на и ненужна пока
 
     // Вычисляем точки локальных минимумов
     // maxWrongPersent = [0..1.0f] - максимально допустимая степень непохожести.
@@ -93,9 +123,9 @@ private:
     // Сейчас считаеться кореляция распознонова к тексту
     // Берутся части из текста размером с распознаные
     // Возможно стоит делать наоборот, по скольку часть текста может быть не распознано
-    // При этом маловероятно что после очистки от шума буде распознано что то лишнее
+    // При этом маловероятно что после очистки от шума будет распознано что то лишнее
     // однако на данном этапе мы не избавляемся от звуков не являющихся голосом
-    // Плюс так мы можем добавлять лишнее в тексте и оно будет проигнорировано
+    // Плюс так мы можем добавлять лишнее в тексте, оно будет проигнорировано
     QList <qint64> getCorelationFunc(const QStringList &recognizedString) const;
 
     // Нужна для поиска локального минимума кореляии текстов

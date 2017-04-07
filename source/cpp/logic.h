@@ -95,6 +95,8 @@ private:
     Logic();
     enum FileTypes{ sound, text, binds, undefined };
 
+    const bool _findInSequence = true; // Поиск только целыми предложениями
+
     // Расширения потдерживаемых форматов файлов
     // Нужны для утановления типа открываемого файла или коректности охраняемого url
     const QStringList textFileExtension = {".txt", ""};
@@ -172,6 +174,8 @@ private:
     // Нужно для нахождения примеров
     QList<Bind> getBindsWithPhrase(const QString& seekablePhrase);
 
+    void addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const;
+
     bool isEquils(const Bind& left, const Bind& right) const {
         auto l_sound = left.sound;
         auto l_text = left.text;
@@ -181,7 +185,7 @@ private:
                l_sound->begin() == r_sound->begin() && l_sound->end() == r_sound->end();
     }
 
-    Bind summ(const Bind& left, const Bind& right);
+    Bind summ(const Bind& left, const Bind& right) const;
 };
 
 #endif // LOGIC_H

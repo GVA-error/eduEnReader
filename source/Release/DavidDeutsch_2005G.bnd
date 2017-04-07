@@ -1,0 +1,288 @@
+textStore DavidDeutsch_2005G.html
+MD5TextStore MD5
+soundStore DavidDeutsch_2005G.mp4
+MD5SoundStore MD5
+Bind 10 208 13.7 17.2
+Bind 208 290 17.2 25.3
+Bind 290 473 25.3 39.7
+Bind 473 504 39.7 43.7
+Bind 504 603 43.7 55.4
+Bind 603 661 55.4 60.1
+Bind 661 778 60.1 68.3
+Bind 778 1016 68.3 83.4
+Bind 1016 1055 83.4 89.2
+Bind 1055 1346 89.2 109.4
+Bind 1346 1461 109.4 117.5
+Bind 1461 1545 117.5 123.8
+Bind 1545 1681 123.8 135.6
+Bind 1681 1711 135.6 143.3
+Bind 1711 1757 143.3 146.4
+Bind 1757 1841 146.4 153.5
+Bind 1841 1995 153.5 167.1
+Bind 1995 2151 167.1 175.6
+Bind 2151 2243 175.6 183.9
+Bind 2243 2261 183.9 185.9
+Bind 2261 2413 185.9 197.3
+Bind 2413 2497 197.3 203.7
+Bind 2497 2565 203.7 210.2
+Bind 2565 2875 210.2 238.5
+Bind 2875 3125 238.5 261.8
+Bind 3125 3203 261.8 267.2
+Bind 3203 3332 267.2 276.2
+Bind 3332 3441 276.2 285.4
+Bind 3441 3573 285.4 295.9
+Bind 3573 3642 295.9 301.2
+Bind 3642 3875 301.2 320.6
+Bind 3875 4016 320.6 331.2
+Bind 4016 4106 331.2 339.9
+Bind 4106 4198 339.9 345.9
+Bind 4198 4320 345.9 354.2
+Bind 4320 4463 354.2 362.6
+Bind 4463 4555 362.6 371.2
+Bind 4555 4642 371.2 378.8
+Bind 4642 4798 378.8 388.8
+Bind 4798 4911 388.8 398
+Bind 4911 4947 398 402.1
+Bind 4947 5022 402.1 406.2
+Bind 5022 5145 406.2 413.9
+Bind 5145 5254 413.9 423
+Bind 5254 5272 423 426.8
+Bind 5272 5319 426.8 429.9
+Bind 5319 5370 429.9 433.9
+Bind 5370 5480 433.9 443.9
+Bind 5480 5528 443.9 448.5
+Bind 5528 5694 448.5 458.5
+Bind 5694 5807 458.5 468.6
+Bind 5807 6023 468.6 482.8
+Bind 6023 6160 482.8 493.1
+Bind 6160 6317 493.1 506.3
+Bind 6317 6466 506.3 516.8
+Bind 6466 6537 516.8 522.1
+Bind 6537 6713 522.1 535.1
+Bind 6713 6791 535.1 540.4
+Bind 6791 6882 540.4 546.7
+Bind 6882 6957 546.7 552.7
+Bind 6957 7172 552.7 565.9
+Bind 7172 7203 565.9 568.6
+Bind 7203 7396 568.6 579.5
+Bind 7396 7547 579.5 589.9
+Bind 7547 7654 589.9 600.5
+Bind 7654 7794 600.5 611.5
+Bind 7794 7993 611.5 623.8
+Bind 7993 8055 623.8 628.8
+Bind 8055 8235 628.8 641.4
+Bind 8235 8435 641.4 653.6
+Bind 8435 8441 653.6 656
+Bind 8441 8512 656 662.6
+Bind 8512 8610 662.6 669.5
+Bind 8610 8727 669.5 677.8
+Bind 8727 8870 677.8 695.4
+Bind 8870 9057 695.4 699.7
+Bind 9057 9087 699.7 702.5
+Bind 9087 9150 702.5 705.8
+Bind 9150 9246 705.8 712.5
+Bind 9246 9457 712.5 720.7
+Bind 9457 9766 720.7 743
+Bind 9766 9951 743 753.5
+Bind 9951 10055 753.5 760.9
+Bind 10055 10226 760.9 775.6
+Bind 10226 10332 775.6 783.5
+Bind 10332 10388 783.5 789
+Bind 10388 10471 789 797
+Bind 10471 10601 797 806.1
+Bind 10601 10693 806.1 812.2
+Bind 10693 10840 812.2 825.8
+Bind 10840 10899 825.8 829.6
+Bind 10899 11062 829.6 839.6
+Bind 11062 11164 839.6 846
+Bind 11164 11270 846 853.8
+Bind 11270 11552 853.8 870.2
+Bind 11552 11642 870.2 878.3
+Bind 11642 11674 878.3 881
+Bind 11674 11841 881 893.9
+Bind 11841 11870 893.9 896.2
+Bind 11870 12149 896.2 915.6
+Bind 12149 12252 915.6 923.5
+Bind 12252 12277 923.5 927.8
+Bind 12277 12326 927.8 931.6
+Bind 12326 12474 931.6 939.9
+Bind 12474 12611 939.9 946.6
+Bind 12611 12705 946.6 953.9
+Bind 12705 12780 953.9 959.9
+Bind 12780 12952 959.9 969.2
+Bind 12952 13070 969.2 979
+Bind 13070 13181 979 985.7
+Bind 13181 13248 985.7 989.9
+Bind 13248 13299 989.9 994.3
+Bind 13299 13515 994.3 1006.5
+Bind 13515 13608 1006.5 1012.8
+Bind 13608 13704 1012.8 1018.9
+Bind 13704 13844 1018.9 1030.8
+Bind 13844 13907 1030.8 1035.5
+Bind 13907 13947 1035.5 1040.1
+Bind 13947 13975 1040.1 1043.4
+Bind 13975 14084 1043.4 1050
+Bind 14084 14192 1050 1056.9
+Bind 14192 14364 1056.9 1068.3
+Bind 14364 14421 1068.3 1072.8
+Bind 14421 14497 1072.8 1080.1
+Bind 14497 14609 1080.1 1085.5
+Bind 14609 14740 1085.5 1092.7
+Bind 14740 14879 1092.7 1101.5
+Bind 14879 15062 1101.5 1115.5
+Bind 15062 15124 1115.5 1132.2
+RecognizedString for 0 7.9
+RecognizedString but i have to tell you in sorry wrecked it but i'm never did like wiley illiterate mike and i think we can just about make do with one everything hundred meaning so 760.9 775.6
+RecognizedString he should also makers few bolero home target knees with our specific knowing that needed to survive the ongoing talinda view 829.6 839.6
+RecognizedString no the phoenix of a human grey 398 402.1
+RecognizedString rude hardly be more online the physics of thirty yet 402.1 406.2
+RecognizedString we couldn't survivor nice and eating language greystone when trying to describe what would be like in wonderful jet 406.2 413.9
+RecognizedString who big like experiencing a superman over floating put at point blank grange anthem millions of you the prime 413.9 423
+RecognizedString and yet that jet 423 426.8
+RecognizedString happen a precisely suck your way 426.8 429.9
+RecognizedString billion reviews later on the other side of the univer 429.9 433.9
+RecognizedString some bit of chemicals come hurt accurately describe and mobile and for big unexplained above oh heard your efron 433.9 443.9
+RecognizedString what was half relieve there in reality 443.9 448.5
+RecognizedString the one who depot fixing the brain contains accurate working model of the over the quays are pookie poo superficial image of it my can take that as well 448.5 458.5
+RecognizedString oh hurry who old believe call motor human history 79.1 83.4
+RecognizedString neatly suited to stay 39.7 43.7
+RecognizedString but unexplanatory model babu the same mathematical relationship on the same parul for novak is knowledge 458.5 468.6
+RecognizedString and if i want to mating in all the please fullness which the wants rugby resemble the other is increasing prime wire drunk or no 468.6 479.4
+RecognizedString so below the physic heavy special property 479.4 482.8
+RecognizedString the musical obtuse at home like each other a they could possibly be and nevertheless in body hussaine mathematical incall who got care 482.8 493.1
+RecognizedString i need to do it more on more so from 493.1 496.8
+RecognizedString so we all the chemicals community print this chemical dumb head universe i let it be structure paints hayes 496.8 506.3
+RecognizedString who ever increasing precision with structure of everything miss play hello other places in the univer he's a hub pretty and painted itself 506.3 516.8
+RecognizedString the structural and ho f150 of read of people reality 516.8 522.1
+RecognizedString so far from the to griffin the fact that the vivek allow the or even monday the different happen he's one of my important think about the physical whoa 522.1 535.1
+RecognizedString we will survivor only take this for supernova go off the light is away from will be dead 839.6 846
+RecognizedString well how did the so assistant not a vow environment in follower 535.1 540.4
+RecognizedString ah evolution or grey sheena the golden ah and operated existence and and mookie portal our utah survival 43.7 55.4
+RecognizedString a via this special relationship and directive uva more one thing that from 540.4 546.7
+RecognizedString true about even though wall need is that her wrong in person 546.7 552.7
+RecognizedString one thing is throughout the day would it be building it overview it with any special predict fiddler special defend station no miracles in vo hit delete simply with breathe think that we have here in apongo 552.7 565.9
+RecognizedString one of them is martha because 565.9 568.6
+RecognizedString well the the the other growth of knowledge forwarding nation processing major processing it computation complicated private computer no no no make you can get out matter 568.6 579.5
+RecognizedString wheels elite energy make the computer and move from hawking to make the media all effect on which me record emily that we were banan 579.5 589.9
+RecognizedString gladly list tangible that your boobies sensual bobby open ended creation of nolan like monet she is 589.9 598.3
+RecognizedString everything now 598.3 600.5
+RecognizedString martin racism ethan written the book about a boner ability to asked old faithful asked me victim 846 853.8
+RecognizedString how how environment in on dated with evidently happened to get round to testing lithium on youtube law gravity about three hundred years ago 600.5 611.5
+RecognizedString what evidently did to do that we you knew that we're we're pulling download every square metre olivia for billions of you before that the movie to o o four billion videos awkward 611.5 623.8
+RecognizedString and now they this idea the dramatic name stay shipper 55.4 60.1
+RecognizedString open the same screwball the other burn or no 623.8 628.8
+RecognizedString whatever the who discover the fundamental prove boyfriend his is it here just for the like on our planner how location 628.8 637.6
+RecognizedString saturated rather than bundle so we mcguire lady 637.6 641.4
+RecognizedString mountain intergalactic space lowes free free wrecked with it's for the open integration of no are at the lower possible for problem recorded mts holding golf elba 641.4 653.6
+RecognizedString or is it 653.6 656
+RecognizedString no actually let's just another pero kill misconception because 656 662.6
+RecognizedString imagine a cube out there any galactic played the same survive at our home for me 662.6 669.5
+RecognizedString love find fairmont gone wrong and magoo orton eq 853.8 857.7
+RecognizedString how about you with variant levi human bandit that feel me that it can hey over a million poem of laka 669.5 677.8
+RecognizedString the million pounds is enough to makes a 677.8 681.2
+RecognizedString 681.2 695.4
+RecognizedString and the idea there if a how high buffet hit the university in black ugly post file inside is 60.1 68.3
+RecognizedString and and performing brother elements in so on viber 695.4 699.7
+RecognizedString put me in a comprehensive will univer 699.7 702.5
+RecognizedString if something is a bidding by the did it 702.5 705.8
+RecognizedString then water possibly prevent them from doing other than knowing how do you know the weather for my of annoying me 705.8 712.5
+RecognizedString nova so who flame a well if you can do that beedel nothing of an entity surviving fantasia nubia fusion rapper 712.5 720.7
+RecognizedString and and evidence well again dog out that acumen faith really badoo tyga telescope even wanted perdon bay lime lookout and you see the same galaxy ugly do from here 720.7 734.4
+RecognizedString harrison we better than mervish option and beat lisa civilization adelia fifty percent shown surviving printer effie to talk about the local compton 857.7 868.1
+RecognizedString none of with more powerful helicopter be up the ball the planets by mobility tubeum africa they can learn them all the pigment 734.4 743
+RecognizedString locally there you are public lighter than learn own i could probably they can chemistry thor 743 749
+RecognizedString 749 753.5
+RecognizedString because we would take several hundred million years to get to the nearest life bearing planet and bye 753.5 760.9
+RecognizedString all we have always depend on and will you get the one camping less of a lady but nowhere else to go now the second thing that for everyone already know zipper 68.3 79.1
+RecognizedString don't either wheather 868.1 870.2
+RecognizedString probability did the right degree to discuss dizzy and but i do briefing about that you can survive 870.2 878.3
+RecognizedString then we can fail to survive 878.3 881
+RecognizedString nah it depends not on chance put on the weather we create grimm relevant no lately time are the laying here ignore the whole unprotected see she know xp all the time 881 893.9
+RecognizedString in fact intergalactic space dove contain all agree record is three open into creation of nolan 775.6 783.5
+RecognizedString the like patients n 893.9 896.2
+RecognizedString they overwhelming road yorkie of olathe she know who will i they have ever existed a now history at if we wanted bd sections of ah 896.2 904.9
+RecognizedString human beings all know old man wobble on addison 83.4 89.2
+RecognizedString 904.9 915.6
+RecognizedString namely now special relationship cooper or google how ability to create a new explanation 915.6 923.5
+RecognizedString you knowledge be a hall of existed 923.5 927.8
+RecognizedString so let me know apply then who to power cavity are 927.8 931.6
+RecognizedString no lo because i want to advocate anybody can a solution that if illustrate the kind of the let me lick until receive global warming 931.6 939.9
+RecognizedString no i'm if it is but i'm not right kind of is eating in regards to global warming either lane 939.9 946.6
+RecognizedString and bill rational pink were lame into do take seriously the bailing scientific theory 946.6 953.9
+RecognizedString any such you anywhere in the univer prude become 783.5 789
+RecognizedString manicotti that theory it's already too late to avoided is off hall 953.9 959.9
+RecognizedString it's true that albert option at the moment to prevent co2 emissions 959.9 964.5
+RecognizedString with from loving notre pro colded strain ponytail mccarthy lick me in it 964.5 969.2
+RecognizedString stephen hawking famous lee said we're just a chemicals come on the surface over typical planets in orbit round the typical fall his mouth gutter typical galaxy in on thorne 89.2 103.5
+RecognizedString all off one hundred rupees to dollar whatever it is then bradley's already a disaster by any reasonable major and 969.2 979
+RecognizedString the actions that advocate in a lot of or so problem nelly was fine violet 979 985.7
+RecognizedString so it's already too late to void it and it probably hasn't been too late 985.7 989.9
+RecognizedString who void it ever things be more anyone realize the danger 989.9 994.3
+RecognizedString who probably already too late in the ninety seven when the best available find typically ripping off put industrial emissions we're about to city played the new i say to be in billion with die 994.3 1006.5
+RecognizedString never less love that think we're family and i don't know why it is movie calming public dubai 1006.5 1012.8
+RecognizedString hussain kind of a hoggard we are here bruno leach of how to do so what present bear 789 797
+RecognizedString it is quick home always no woman no avenue pending law 1012.8 1018.9
+RecognizedString and how the salvi advocate less than probably morocco then that not going to be my goblet really but no precautions and no precaution re principle 1018.9 1030.8
+RecognizedString henna void problem but we do not yet whole c 1030.8 1035.5
+RecognizedString hence bullied a from of problem dixie 1035.5 1040.1
+RecognizedString no the for the to painted one those is penndot saying that 103.5 109.4
+RecognizedString nokia problem avoiding 1040.1 1043.4
+RecognizedString who's true with an ounce at prevention eagle who pound the you're the governor if we know wallpaper been 1043.4 1050
+RecognizedString you been punched in the nose bed at the files of medicine the insist to teach you how to avoid punky 1050 1056.9
+RecognizedString get medical greens tee hee yours and completed on prevention only that it wouldn't let she very little of either for the woven wandering at the moment wit 1056.9 1068.3
+RecognizedString plans to all reduction to guess ignition at all 1068.3 1072.8
+RecognizedString so when no nina uniquely optical intergalactic space is capable of breaking open industry lubbock lacey 797 806.1
+RecognizedString it would be home in wooden blinds to reduce the temperature in a week plant need patli attend vehicle 1072.8 1080.1
+RecognizedString i'm not at all call efficiently and jaden wolford cloudy did bright 1080.1 1085.5
+RecognizedString call the near events place to eat like the from like away and encouraging aquatic over you the emo carbon dioxide 1085.5 1092.7
+RecognizedString at the moment the they are bridge refer dunno central the human effort replaced with problemo problem general 1092.7 1101.5
+RecognizedString we problems that we are not a where off yet he ability port rhine lord this year good law of avoiding indefinitely 1101.5 1110.7
+RecognizedString where do very on typical places in nice you didn't song on the second one is saying that the with cheap way san 109.4 117.5
+RecognizedString does our no not at the so they problem with opp survival 1110.7 1115.5
+RecognizedString so page to stone tablet and call home them 1115.5 1122.9
+RecognizedString on wanted from a problems aw only one yellow one call problem are inevitable 1122.9 1132.2
+RecognizedString oh well are inevitable 1132.2 1141.4
+RecognizedString then so it's almost every other environment for with you are so iis a polluted a 806.1 812.2
+RecognizedString 1141.4 1144
+RecognizedString the specially if you were dhabi to other the to leave by into inform ally kisses 117.5 123.8
+RecognizedString then they seem i'm a little bit or to cunt licker the trouble by that the prevent them from show me your bleed wall 123.8 135.6
+RecognizedString and i'm they all so lonely stop with whisper 135.6 143.3
+RecognizedString where the second one typical 143.3 146.4
+RecognizedString well you visit fickle place well electric around no looking a random direction on wii 146.4 153.5
+RecognizedString how to 7.9 13.7
+RecognizedString oh and a chemicals gum and and i'm latino typical of the univer asshole you gonna do ethiopian did mile nothing direction 153.5 167.1
+RecognizedString hello back and you'll see any wolves or chemical come at all easier for me for the other boomer 167.1 175.6
+RecognizedString will see who somnath assoc stem and stars on the who optical of the universe law 175.6 183.9
+RecognizedString limiting factor there and hear the not resources equipment put knowledge nigger 812.2 821.1
+RecognizedString film in galaxies 183.9 185.9
+RecognizedString and and and most places in leevag typical leyton univer who's noelia any vera though so let's go out furniture we outside the galaxy 185.9 197.3
+RecognizedString and the back and the other use calicut who was fire alarm lay down confirmed law firm 197.3 203.7
+RecognizedString this point we come i hundred cowl who light years on here 203.7 210.2
+RecognizedString what we spill nowhere near the typical place to get to typical play you got to go of how time his ball of fur 210.2 221.1
+RecognizedString would you be galactic trying and the water plant loop life deepika whatever typical please reply well 221.1 230.3
+RecognizedString i can norma sixpence ted has arranged a high resolution he martian virtual reality rendering 230.3 238.5
+RecognizedString you're welcome evelyn the faithfully surprising 13.7 17.2
+RecognizedString oh easy galactic spike them you coming to galactic both so can we have the hockey barbecue 238.5 247.6
+RecognizedString 247.6 249.8
+RecognizedString no this kola macomb knowledge pay you 821.1 825.8
+RecognizedString well not why not wiper make a b c a amy's galactic space is black upgraded are we illegal pitched all the so da 249.8 261.8
+RecognizedString what if you were to looking at the nearest dog you use 261.8 267.2
+RecognizedString alaska what exploded the supernova an you'd be staring direct vs it at the moment we eat like review 267.2 276.2
+RecognizedString these doodle baby see even a you lima that will be the da united love is five five hundred 276.2 285.4
+RecognizedString as supernova is so right so brilliant any then put it would kill you stone dead at a range of several lightyear 285.4 295.9
+RecognizedString romantic ally completed so far away you andy's pool 295.9 301.2
+RecognizedString also very cold out there lesson read agree bob appaluse error 301.2 307.3
+RecognizedString 307.3 318.3
+RecognizedString fell trying do that but i will uninstall with toothpaste for everyone already knows 17.2 25.3
+RecognizedString glass how 318.3 320.6
+RecognizedString may i like to go to make us you'll very special 825.8 829.6
+RecognizedString blueprint at typical places on this device unlocked with how are you typical this place in the purple 320.6 331.2
+RecognizedString no how do we know about that environment that for far away and so different the alien 331.2 339.9
+RecognizedString from anything lazy pull the are our environment in the omaha he 339.9 345.9
+RecognizedString creating nude more does that mean what about the even urba van lonely jiffy for money from here with philip boat 345.9 354.2
+RecognizedString can you see things the month off record quasar quite dog originally men pavi stella object in tease 354.2 362.6
+RecognizedString think that looks like solve and then i'll stop and we know what they all ha 362.6 371.2
+RecognizedString helium views account million the lightyear the way material at the center of over galaxy pila 371.2 378.8
+RecognizedString who was the supermassive black hole an intense magnetic field directed some of the energy all that gravitational blah samantha 378.8 388.8
+RecognizedString find out in the full tremendous yes and you lumen a to load pooper brilliant or the his trillion lung 388.8 398
+RecognizedString when the performing practice something that has been known for most oh recorded history the left is third planets are all the so assistant or i'm fireman tool whatever is 25.3 39.7

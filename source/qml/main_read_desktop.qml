@@ -34,7 +34,7 @@ ApplicationWindow {
         homePage.homeUiControler.goOutHome()
         pageView.setCurrentIndex(1)
         homePage.homeSoundStore.stop()
-        //homePage.homeUiControler.makeBind()
+      //  homePage.homeUiControler.makeBind()
     }
     function goExamples(){
           homePage.homeUiControler.saveHome()

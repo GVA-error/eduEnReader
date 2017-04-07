@@ -48,7 +48,7 @@ signals:
    // void recognizeBegan();
    // void recognizeFinished(const QString& fileName);
 public slots:
-    void stringRecognized();
+    void handleRecognizedString();
     void allStringRecognized(int exitCode);
 private:
     // Путь до скрипта распознования

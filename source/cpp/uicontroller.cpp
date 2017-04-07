@@ -355,20 +355,11 @@ void UIController::makeBind()
     //_textStore->setFileUrl(textUrl);
     //_soundStore->setFileUrl(soundUrl);
 
-    //auto examples = _logic->getExamples(QString("swi"), true);
-    //_bindMaker->start();
-    //_logic->bindLogicHanding();
- //  _bindMaker->setSplitSize(5.0f, 3.0f);
-  //  _bindMaker->runInThisThread();
-  //  _logic->bindLogicHanding();
+    _bindMaker->runInThisThread();
+   // _logic->bindLogicHanding();
     _logic->writeInFile(_textStore, _soundStore);
+
     return;
-
-//    DataPreparation p;
-//    p.extractAudio("A2.mp4");
-//    p.noiseReduse("A2.wav");
-
-//    return;
 
     if (_f_reconizing)
         return;
@@ -382,7 +373,7 @@ void UIController::makeBind()
 
     _f_reconizing = true;
     QDir curDir;
-    QStringList bindFiles = curDir.entryList(QStringList("*.mp4"));
+    QStringList bindFiles = curDir.entryList(QStringList("DavidDeutsch_2005G.mp4"));
     for (QString mp4 : bindFiles)
     {
         QUrl url = QUrl::fromLocalFile(mp4);
@@ -390,7 +381,9 @@ void UIController::makeBind()
         createBindFile(url);
         //BindMaker bm(_textStore, _soundStore, _logic);
         _bindMaker->setSplitSize(5.0f, 3.0f);
-        _bindMaker->start();
+        _bindMaker->runInThisThread();
+       // _logic->bindLogicHanding();
+        _logic->writeInFile(_textStore, _soundStore);
         fileStream << "File " << url.toString() << " end: " << curTime.toString();
         break;
     }
