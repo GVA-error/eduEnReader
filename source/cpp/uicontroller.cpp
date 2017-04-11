@@ -73,6 +73,31 @@ void UIController::setMouseIsPressed(bool& newValue)
     mouseIsPressed = newValue;
 }
 
+void UIController::synchTitle(const QString& bindFileName)
+{
+    QUrl url = _bindFile[bindFileName];
+    QString title = _logic->getTitle(url);
+    _bindTitles[bindFileName] = title.trimmed();
+}
+
+// TODO Хранить в логике картинку
+QUrl UIController::getImageUrl(const QString& bindFile) const
+{
+    QUrl bindUrl = _bindFile.value(bindFile);
+    QString base = bindUrl.toLocalFile();
+    QStringList splited = base.split('.');
+    splited.pop_back();
+    splited.push_back("jpeg");
+    QString stringImageUrl = splited.join('.');
+    QUrl rezUrl = QUrl::fromLocalFile(stringImageUrl);
+    return rezUrl;
+}
+
+QString UIController::getTitle(const QString &bindFile) const
+{
+    return _bindTitles.value(bindFile);
+}
+
 void UIController::synchBndFileList()
 {
     QDir curDir;
@@ -87,6 +112,8 @@ void UIController::synchBndFileList()
         QString name = bindInfo.baseName();
         _bindFile[name] = bindUrl;
         _bindFilesList.push_back(name);
+        synchTitle(name);
+
     }
     emit bindFilesListChanged();
 }
@@ -100,6 +127,17 @@ void UIController::setbindFilesList(const QStringList& newBindFiles)
 {
     _bindFilesList = newBindFiles;
     emit bindFilesListChanged();
+}
+
+QStringList UIController::getMatirealsList() const
+{
+    return _matirealsList;
+}
+
+void UIController::setMatirealsList(const QStringList& newMatireals)
+{
+    _matirealsList = newMatireals;
+    emit matirealsListChanged();
 }
 
 QStringList UIController::getExampleList() const
@@ -146,6 +184,12 @@ void UIController::addComment(const QUrl& commentUrl, const QString &name)
 {
     auto sellectedFragment = getSellectedText();
     _logic->makeComment(sellectedFragment, commentUrl, name);
+}
+
+QUrl UIController::getMatirealUrlWithName(const QString& name) const
+{
+    QUrl matirealUrl = _matirealUrl.value(name);
+    return matirealUrl;
 }
 
 QUrl UIController::getBindFileUrlWithName(const QString& name) const
@@ -198,9 +242,39 @@ void UIController::playExample(QString ID)
 
     goOutHome();
     _soundStore->setFileUrl(url, begin, end);
+    _soundStore->stop();
     _soundStore->start();
     _textStore->setText(text);
     _textStore->setWorldMark(word);
+}
+
+void UIController::getMatireals()
+{
+    QString sellectedString = _textStore->getSellectedStreing();
+    getMatirealsFor(sellectedString);
+}
+
+void UIController::getMatirealsFor(const QString& seekablePhrase)
+{
+    _matirealsList.clear();
+    auto patterns = _logic->getPatterns();
+    for (Logic::Pattern p : patterns)
+    {
+        QUrl rezUrl;
+        QString matirealString = _logic->getUrlFromPattern(p, seekablePhrase);
+        if (p._type == Logic::file)
+        {
+            if (QFile::exists(matirealString) == false)
+                continue;
+            rezUrl = QUrl::fromLocalFile(matirealString);
+        }
+        if (p._type == Logic::webPlus)
+            rezUrl = QUrl(matirealString);
+        QString title = p._title;
+        _matirealsList.push_back(title);
+        _matirealUrl[title] = rezUrl;
+    }
+    setMatirealsList(_matirealsList);
 }
 
 void UIController::getExample()
@@ -211,9 +285,6 @@ void UIController::getExample()
 
 void UIController::getExamplesFor(const QString& seekablePhrase)
 {
-    // TODO УБРАТЬ!!!
-    //makeBind();
-
     if (seekablePhrase.length() == 0)
         return;
     _example.clear();

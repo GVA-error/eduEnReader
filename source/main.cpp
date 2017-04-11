@@ -10,6 +10,10 @@
 #include <QFontDatabase>
 #include <QQuickStyle>
 #include <QtWebEngine>
+
+#include <VLCQtCore/Common.h>
+#include <VLCQtQml/QmlVideoPlayer.h>
+
 #include "cpp/textstore.h"
 #include "cpp/soundstore.h"
 #include "cpp/uicontroller.h"
@@ -30,6 +34,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("appPath", appPath);
 
     QtWebEngine::initialize();
+    VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins");
+    VlcQmlVideoPlayer::registerPlugin();
 
     qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");

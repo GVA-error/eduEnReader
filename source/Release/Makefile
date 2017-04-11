@@ -36,7 +36,7 @@ DISTNAME      = eduEnReader1.0.0
 DISTDIR = /home/gva/eduEnReader/source/Release/.tmp/eduEnReader1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/gva/Qt/5.8/gcc_64/lib -Wl,-rpath-link,/home/gva/Qt/5.8/gcc_64/lib
-LIBS          = $(SUBLIBS) -lsndfile -L/home/gva/Qt/5.8/gcc_64/lib -lQt5MultimediaWidgets -lQt5WebEngineWidgets -lQt5PrintSupport -lQt5Widgets -lQt5QuickControls2 -lQt5WebEngine -lQt5WebEngineCore -lQt5Quick -lQt5Multimedia -lQt5Gui -lQt5WebChannel -lQt5Qml -lQt5Network -lQt5Positioning -lQt5Core -lGL -lpthread -lpulse-mainloop-glib -lpulse -lglib-2.0 
+LIBS          = $(SUBLIBS) -lsndfile -lVLCQtCore -lVLCQtQml -L/home/gva/Qt/5.8/gcc_64/lib -lQt5MultimediaWidgets -lQt5WebEngineWidgets -lQt5PrintSupport -lQt5Widgets -lQt5QuickControls2 -lQt5WebEngine -lQt5WebEngineCore -lQt5Quick -lQt5Multimedia -lQt5Gui -lQt5WebChannel -lQt5Qml -lQt5Network -lQt5Positioning -lQt5Core -lGL -lpthread -lpulse-mainloop-glib -lpulse -lglib-2.0 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -734,6 +734,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../qml/MainVideoView.qml \
 		../qml/HtmlView.qml \
 		../qml/QMLSoundGraph.qml \
+		../qml/PageOpen_read.qml \
 		../qml/ListDialog.qml \
 		../qml/ControlPanel.qml \
 		../qml/main_read_desktop.qml \
@@ -742,6 +743,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../qml/TextReaderArea.qml \
 		../qml/SimpleDialog.qml \
 		../qml/QMLToolBarSeparator.qml \
+		../qml/PageTranslationHelp.qml \
 		../qml/VideoSlider.qml \
 		../qml/FileOpenDialog.qml \
 		../qml/QMLButtonStyle.qml \

@@ -1,30 +1,22 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.1
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.1
 
-Rectangle {
+Button {
     id: buttonStyle
 
-    property variant text
+    //property variant text
     property int fix_width
-    property bool checked: false
+    //property bool checked: false
 
     signal clicked
 
     height: text.height + 20;
     width: fix_width
-    border.width: 1
-    radius: 4
+   // border.width: 1
+   // radius: 4
     smooth: true
-
-    gradient: Gradient {
-        GradientStop {
-            position: 0.0
-            color: !mouseArea.pressed && !checked ? activePalette.light : activePalette.button
-        }
-        GradientStop {
-            position: 1.0
-            color: !mouseArea.pressed && !checked ? activePalette.button : activePalette.dark
-        }
-    }
 
     onFocusChanged : {
         if (focus)
@@ -37,13 +29,5 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         onClicked: buttonStyle.clicked()
-    }
-
-    Text {
-        id: text
-        anchors.centerIn:parent
-        font.pointSize: 10
-        text: parent.text
-        color: activePalette.buttonText
     }
 }

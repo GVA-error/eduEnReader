@@ -5,16 +5,20 @@
 #include <QMediaPlayer>
 #include <QSharedPointer>
 #include <QTimer>
+
+#include <VLCQtCore/Common.h>
+#include <VLCQtQml/QmlVideoPlayer.h>
+
 #include <assert.h>
 #include "store.h"
 
-class SoundStore : public QMediaPlayer, public Store <SoundStore>
+class SoundStore : public VlcQmlVideoPlayer, public Store <SoundStore>
 {
     Q_OBJECT
     Q_PROPERTY(qreal position READ getPersentPos WRITE setPosPersent NOTIFY posChanged)
-    Q_PROPERTY(QAbstractVideoSurface* videoSurface READ getVideoSurface WRITE setVideoSurface) // Для потдержки Qml MediaPlayer
+  //  Q_PROPERTY(QAbstractVideoSurface* videoSurface READ getVideoSurface WRITE setVideoSurface) // Для потдержки Qml MediaPlayer
 public:
-    SoundStore(QObject * parent = 0, Flags flags = 0);
+    SoundStore(QObject * parent = 0);
     virtual ~SoundStore() {
        // qDebug() << "~SoundStore()";
     }
@@ -29,7 +33,7 @@ signals:
 public slots:
     void setPosReal(qreal); // позиция устанавливается в секундах
     void setPosPersent(qreal); // позиция устанавливаеться в проентах
-    qreal getPersentPos() const; // Процент воспроизведёного
+    qreal getPersentPos(); // Процент воспроизведёного
     qreal getTimePos() const;
     void start(); // Использовать вместо play TODO - Перегрузить
     void stop();
@@ -39,8 +43,8 @@ public slots:
     void home();
 
     // Для потдержки Qml MediaPlayer
-    void setVideoSurface(QAbstractVideoSurface* surface);
-    QAbstractVideoSurface* getVideoSurface() const;
+    //void setVideoSurface(QAbstractVideoSurface* surface);
+    //QAbstractVideoSurface* getVideoSurface() const;
 
 protected:
     friend class Store <SoundStore>;
@@ -50,11 +54,12 @@ protected:
     // Моменты начала и конца воспроизведения файла.
     qreal _startPos;
     qreal _finishPos;
+    QList <qreal> _tmpTimeStartFinish; // по скольку втдео воспроизводиться в другом потоке, храним тут просьбу пользователя о установке start и finish
 
     // Сохраненное состояние
     qreal _saved_startPos;
     qreal _saved_finishPos;
-    qint64 _saved_curPos;
+    qreal _saved_curPos;
     QUrl _saved_lastOpenedUrl;
 
     // Нужно чтобы таймер не запускался на 0 - 1, что моэет вызвать притормаживание

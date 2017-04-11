@@ -10,6 +10,57 @@ Logic::Logic()
     _lastTempMarkPos = zeroBind;
     //for (qint32 i = 0; i<_lastTempMarkListSize; i++)
     //    _lastTempMarkPos.append(zeroBind);
+    synchPatterns();
+}
+
+void Logic::synchPatterns()
+{
+    QFile confFile(_sourceConfigFile);
+    if (!confFile.open(QFile::ReadOnly | QFile::Text))
+    {
+        qDebug() << "Config file is not open" << "\n";
+        return;
+    }
+    QTextStream confStream(&confFile);
+    QString buff = "";
+    while (!confStream.atEnd())
+    {
+        Pattern curPattern;
+        confStream >> buff;
+        if (buff == par_Title)
+        {
+            curPattern._title = confStream.readLine();
+            confStream >> buff;
+            if (buff != par_Type)
+                qCritical("Error pattern type");
+            QString buff = confStream.readLine();
+            if (buff == "file")
+                curPattern._type = patternTypes::file;
+            else if (buff == "net+")
+                curPattern._type = patternTypes::webPlus;
+            else
+                qCritical() << "Incorrect pattern type";
+            if (buff != par_Pattern)
+                qCritical() << "Error source pattern";
+            curPattern._pattern = confStream.readLine();
+            _patternList.push_back(curPattern);
+        }
+    }
+}
+
+QString Logic::getUrlFromPattern(const Pattern &p, QString str) const
+{
+    str = str.trimmed();
+    if (p._type == Logic::webPlus)
+    {
+        QStringList buff = str.split(" ");
+        str = buff.join("+");
+    }
+    QString rezStr = p._pattern;
+    QStringList buff = rezStr.split("SEEKIT");
+    rezStr = buff.join(str);
+
+    return rezStr;
 }
 
 Logic::Bind Logic::summ(const Bind& left, const Bind& right) const
@@ -34,6 +85,28 @@ Logic::Bind Logic::summ(const Bind& left, const Bind& right) const
     summBind.text = summText;
 
     return summBind;
+}
+
+QString Logic::getTitle(const QUrl& bindFileName) const
+{
+    //QFileInfo fileInfo(bindFileName);
+    QString stringName = bindFileName.toLocalFile();
+    QFile bindFile(stringName);
+    if (!bindFile.open(QFile::ReadOnly | QFile::Text))
+    {
+        qDebug() << "File is not open" << "\n";
+        return "";
+    }
+    QTextStream bindStream(&bindFile);
+    QString buff = "";
+    QString title;
+    while (!bindStream.atEnd())
+    {
+        bindStream >> buff;
+        if (buff == par_Title)
+            title = bindStream.readLine();
+    }
+    return title;
 }
 
 TextFragment::PTR Logic::getText(qint64 pos) const
@@ -148,8 +221,13 @@ QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
     _bindVector.push_back(zeroBind);
 
     auto curBind = _bindVector.begin() + 1;
+    qint32 curnumber = 0; // TODO для дебага
+
     for (;curBind != _bindVector.end() - 1; curBind++)
     {
+        curnumber++;
+        if (curnumber > 76)
+            curnumber += 10;
         Bind next = *(curBind+1);
         Bind prev = *(curBind-1);
         TextFragment::PTR cutTextFragmend = (*curBind).text;

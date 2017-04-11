@@ -25,14 +25,14 @@ ApplicationWindow {
     Material.accent : Material.LightBlue
 
     function goHome(){
-        pageView.setCurrentIndex(0)
+        pageView.setCurrentIndex(1)
         homePage.showComments()
         homePage.homeUiControler.home()
     }
     function goSettings(){
         homePage.homeUiControler.saveHome()
         homePage.homeUiControler.goOutHome()
-        pageView.setCurrentIndex(1)
+        pageView.setCurrentIndex(3)
         homePage.homeSoundStore.stop()
       //  homePage.homeUiControler.makeBind()
     }
@@ -40,25 +40,29 @@ ApplicationWindow {
           homePage.homeUiControler.saveHome()
           homePage.showExamples()
     }
+    function goTranslitionHelp(){
+        homePage.homeUiControler.saveHome()
+        homePage.homeUiControler.goOutHome()
+        pageView.setCurrentIndex(2)
+        homePage.homeSoundStore.stop()
+      //  homePage.homeUiControler.makeBind()
+    }
 
-    function openFile(){
+    function goOpenFile(){
         homePage.homeUiControler.synchBndFileList()
-        openBindFileDialog.showDialog()
+        pageView.setCurrentIndex(0)
+        //openBindFileDialog.showDialog()
     }
 
     header : TopToolBar { id : mainToolBar }
     SwipeView  /*StackView*/ {
         id: pageView
         anchors.fill: parent
+        currentIndex : 0
+        PageOpen_read { id : openPage }
         PageHome_Read { id : homePage }
-        PageSettings_Read {}
-    }
-
-    FileOpenDialog{
-        id : openBindFileDialog
-        fileModel: homePage.homeUiControler.bindFilesListModel
-        openFunction: homePage.homeUiControler.openBindFile
-        getUrlFunction : homePage.homeUiControler.getBindFileUrlWithName
+        PageTranslationHelp { id : translitionHelpPage }
+        PageSettings_Read { id : settingPage }
     }
 
     //MessageDialog { id : errorDialog }

@@ -33,17 +33,25 @@ TextArea {
 
     property int cynhTopPading : 45
     property int cynhBottpmPading : 55
+    property int lastMidY : 0 // нужно чтобы уменьшить частоту синхронизации
+    property int minDY : 1 // и это тоже
 
     function syncSoundAndSliderPosition()
     {
         if (homePage.homeUiControler.dontSynch)
             return;
+
         var mid = uiControler.getMidMarkable();
+        var midY = positionToRectangle(mid).y;
+        if (Math.abs(lastMidY - midY) < minDY)
+            return;
+        lastMidY = midY;
+
         var begin = uiControler.getBeginMarkable();
         var end = uiControler.getEndMarkable();
-        var midY = positionToRectangle(mid).y;
         var beginY = positionToRectangle(begin).y;
         var endY = positionToRectangle(end).y;
+
 
         var thisYBegin = homePage.textArea.getCurY();
         var thisHeight = homePage.textArea.getCurHeigth();
@@ -58,7 +66,7 @@ TextArea {
             if (endY > thisYEnd && endY - thisHeight + cynhBottpmPading > thisYBegin)
                 homePage.textArea.setCurY(endY - thisHeight + cynhBottpmPading)
         }
-        //uiControler.markCurText()
+        uiControler.markCurText()
     }
 
 

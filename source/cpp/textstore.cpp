@@ -90,8 +90,8 @@ QString TextStore::getString(qint64 begin, qint64 end) const
     if (end < begin)
         end = begin = 0; // TODO а это стереть
 
-    if (begin == 5174)
-        return str.mid(begin, end - begin);
+    //if (begin == 5174)
+   //     return str.mid(begin, end - begin);
 
     return str.mid(begin, end - begin);
 }

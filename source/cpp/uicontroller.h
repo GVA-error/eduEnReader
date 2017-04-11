@@ -15,8 +15,6 @@
 /* TODO LIST
  *
  * Ближайший план:
- * 1) Вывод примеров, как целого предложения. // word . word
- * 2) Кнопка скрыть текст
  * 3) 4 страници: Выбор лекции, вывод видео (основная), справочные материалы, настройки
  *      3.1) Виджет для выбора лекций квадратами.
  *      3.2) Редизайн основной страници.
@@ -25,6 +23,10 @@
  * 5) Правка биндов
  * 6) Рефакторинг. Выделение класса настроек, вынесение в скриптер распознования строк, скриптер - часть настроек
  * 7) Windows XP? Обдумать
+ *
+ * Баг репорт:
+ * Из-за проблем с кодировкой строка размер строки ограничен - проверить на винде
+ *
  *
  * Заметки:
  *
@@ -70,6 +72,7 @@ class UIController : public QObject
     Q_PROPERTY(SoundStore* soundStore READ getSoundStore WRITE setSoundStore) // иначе нотификация не нужна.
     Q_PROPERTY(QStringList bindFilesListModel READ getbindFilesList WRITE setbindFilesList NOTIFY bindFilesListChanged)
     Q_PROPERTY(QStringList exampleListModel READ getExampleList WRITE setExampleList NOTIFY exampleListChanged)
+    Q_PROPERTY(QStringList matirealsListModel READ getMatirealsList WRITE setMatirealsList NOTIFY matirealsListChanged)
     Q_PROPERTY(QStringList commentListModel READ getCommentList WRITE setCommentList NOTIFY commentListChanged)
     Q_PROPERTY(bool mouseIsPressed WRITE setMouseIsPressed)
     Q_PROPERTY(qint32 examplesSize READ getExamplesSize WRITE setExamplesSize NOTIFY examplesSizeChanged)
@@ -85,17 +88,6 @@ public:
     void setDocument(TextStore* TS);
     void setSoundStore(SoundStore* TS);
 
-    QStringList getbindFilesList() const;
-    void setbindFilesList(const QStringList& newBindFiles);
-
-
-    QStringList getExampleList() const;
-    void setExampleList(const QStringList& newExamples);
-
-    QStringList getCommentList() const;
-    void setCommentList(QStringList newComments);
-
-
     TextStore* getDocument();
     SoundStore* getSoundStore();
 
@@ -106,12 +98,27 @@ signals:
     void exampleListChanged();
     void commentListChanged();
     void examplesSizeChanged();
+    void matirealsListChanged();
     void diffSizeChanged();
 public slots:
+
+    QStringList getbindFilesList() const;
+    void setbindFilesList(const QStringList& newBindFiles);
+
+    QStringList getExampleList() const;
+    void setExampleList(const QStringList& newExamples);
+
+    QStringList getCommentList() const;
+    void setCommentList(QStringList newComments);
+
+    QStringList getMatirealsList() const;
+    void setMatirealsList(const QStringList& newMatireals);
 
     void saveHome();
     void home();
 
+    QUrl getImageUrl(const QString& bindFile) const;
+    QString getTitle(const QString& bindFile) const;
     void synchBndFileList();
     void openBindFile(const QUrl &bindFileName);
     void saveBindFile(const QUrl &bindFileName);
@@ -141,10 +148,15 @@ public slots:
     void getExample();
     void getExamplesFor(const QString& seekablePhrase);
 
+    // Для поиска материалов по выделенному слову или введёному пользователем
+    void getMatireals();
+    void getMatirealsFor(const QString& seekablePhrase);
+
     void goOutHome() { _f_home = false; }
 
     QUrl getCommentUrlWithName(const QString& name) const;
     QUrl getBindFileUrlWithName(const QString& name) const;
+    QUrl getMatirealUrlWithName(const QString& name) const;
 
     qint32 getMidMarkable() const;
     qint32 getBeginMarkable() const;
@@ -168,14 +180,18 @@ private:
     QStringList _bindFilesList; // Модель для гуи
     QStringList _exampleList; // Модель для гуи
     QStringList _commentList; // Модель для гуи
+    QStringList _matirealsList; // Модель для гуи
     QMap <QString, Logic::Example> _example; // Для обработки клика по списку примеров
     QMap <QString, QUrl> _bindFile; // Для обработки клика по скписку бинд файлов
+    QMap <QString, QString> _bindTitles; // Для отображения списка бинд файлов
+    QMap <QString, QUrl> _matirealUrl; // Для выдачи пользователю справочной информации из материалов
 
     bool _f_reconizing;
     bool _f_home; // Нужен для возврата домой
 
     const QString _baseTranslateURL = "http://www.multitran.com/m.exe?l1=1&l2=2&s="; // +word0+word1 ..
 
+    void synchTitle(const QString &bindFile);
     TextFragment::PTR getSellectedText();
     void setSellectionText(TextFragment::PTR);
     void setSellectionText(qint64 begin, qint64 end);

@@ -9,6 +9,7 @@ CONFIG += c++11
 CONFIG += qt plugin
 
 LIBS += -lsndfile
+LIBS += -lVLCQtCore -lVLCQtQml
 
 SOURCES += main.cpp \
     cpp/fragment.cpp \

@@ -17,8 +17,8 @@ SimpleDialog {
         title: "Lectures list"
         onSelected : {
             var fileUrl = getUrlFunction(str);
-            openFunction(fileUrl)
             hideDialog()
+            openFunction(fileUrl)
         }
     }
 }

@@ -13,6 +13,8 @@ import UiControlerModul 1.1
 
 Page {
     title: "settings"
+    property bool showText : textShowing.checked
+
     GroupBox {
         id: gridBox
         Layout.fillWidth: true
@@ -20,12 +22,14 @@ Page {
 
         GridLayout {
             id: gridLayout
-            rows: 3
+            rows: 4
             flow: GridLayout.TopToBottom
             width:  parent.width
             Label { text: "Text color mark" }
             Label { text: "Examples size" }
             Label { text: "Difference of examples size +-" }
+            Label { text: "Show text" }
+
 
             ToolButton {
                 id: colorButton
@@ -69,6 +73,11 @@ Page {
                     if (text.length == 0)
                        text = "0";
                 }
+            }
+
+            CheckBox{
+                id : textShowing
+                checked: true
             }
         }
     }

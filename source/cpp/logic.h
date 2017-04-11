@@ -28,11 +28,22 @@ public:
         qreal start;
         qreal end;
     };
+    enum patternTypes{ file, webPlus };
+    struct Pattern{
+        QString _title;
+        QString _pattern;
+        patternTypes _type;
+    };
+
+    bool isFileTipe(const QString& type);
 
     // Формирование списка примеров по искомой фразе
     // findInThisFile - искать ли в текущем файле
     QList <Example> getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile = false) const;
     QList <Example> getExamplesInThis(const QString& seakablePhrase, qreal minDuration, qreal maxDuration); // Ищет только в текущем файле
+
+    QString getUrlFromPattern(const Pattern&, QString str) const;
+    QList <Pattern> getPatterns() { return _patternList; }
 
     QString getCurBndFileName() const { return _curBndFileName; }
 
@@ -90,6 +101,8 @@ public:
     qint64 roundToBindTextPos(qint64) const;
     qreal roundToBindSoundPos(qreal) const;
 
+    QString getTitle(const QUrl& bindFile) const;
+
     void clear(bool clearRecognized);
 private:
     Logic();
@@ -97,12 +110,19 @@ private:
 
     const bool _findInSequence = true; // Поиск только целыми предложениями
 
+    // Конфиг с патернами для поиска переводов
+    const QString _sourceConfigFile = "sources.conf";
+    QList <Pattern> _patternList;
+
     // Расширения потдерживаемых форматов файлов
     // Нужны для утановления типа открываемого файла или коректности охраняемого url
     const QStringList textFileExtension = {".txt", ""};
     const QStringList soundFileExtension = {".wav", ""};
     const QStringList bindFileExtension = {".bind", ""};
     // Константы для записи и парсинга файлов
+    const QString par_Title = QString("title");
+    const QString par_Pattern = QString("pattern");
+    const QString par_Type = QString("type");
     const QString par_SoundStore = QString("soundStore");
     const QString par_TextStore = QString("textStore");
     const QString par_TextStoreHash = QString("MD5TextStore");
@@ -111,9 +131,6 @@ private:
     const QString par_Comment = QString("Comment");
     const QString par_RecognizedString = QString("RecognizedString");
     const QString par_RecognizedStringPos = QString("RecognizedStringPos");
-
-    // Нужен для установления типа файла при открытии
-    FileTypes getFileType(const QString&) const;
 
     struct Bind{
         TextFragment::PTR text;
@@ -150,6 +167,11 @@ private:
     void addInCommentList(const Comment&);
 
     QVector <Bind>::iterator getBindOnTextPos(qint64 pos); // Поиск бинда сответствующего позиции тексте
+
+    // Нужен для установления типа файла при открытии
+    FileTypes getFileType(const QString&) const;
+
+    void synchPatterns();
 
     // Нужно переписать для динамических биндов
     bool haveIntersaption(const Bind&) const;

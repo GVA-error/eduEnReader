@@ -57,6 +57,7 @@ Item {
         header: Rectangle {
             width: parent.width
             height: 40
+            visible: title !== ""
             border {
                 color: "black"
                 width: 1

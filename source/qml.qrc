@@ -57,5 +57,7 @@
         <file>qml/images/zoomin.png</file>
         <file>qml/images/zoomout.png</file>
         <file>qml/FileOpenDialog.qml</file>
+        <file>qml/PageTranslationHelp.qml</file>
+        <file>qml/PageOpen_read.qml</file>
     </qresource>
 </RCC>

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SoundStore_t {
-    QByteArrayData data[18];
-    char stringdata0[197];
+    QByteArrayData data[13];
+    char stringdata0[121];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,20 +43,13 @@ QT_MOC_LITERAL(8, 79, 4), // "stop"
 QT_MOC_LITERAL(9, 84, 13), // "stopStopTimer"
 QT_MOC_LITERAL(10, 98, 8), // "saveHome"
 QT_MOC_LITERAL(11, 107, 4), // "home"
-QT_MOC_LITERAL(12, 112, 15), // "setVideoSurface"
-QT_MOC_LITERAL(13, 128, 22), // "QAbstractVideoSurface*"
-QT_MOC_LITERAL(14, 151, 7), // "surface"
-QT_MOC_LITERAL(15, 159, 15), // "getVideoSurface"
-QT_MOC_LITERAL(16, 175, 8), // "position"
-QT_MOC_LITERAL(17, 184, 12) // "videoSurface"
+QT_MOC_LITERAL(12, 112, 8) // "position"
 
     },
     "SoundStore\0posChanged\0\0setPosReal\0"
     "setPosPersent\0getPersentPos\0getTimePos\0"
     "start\0stop\0stopStopTimer\0saveHome\0"
-    "home\0setVideoSurface\0QAbstractVideoSurface*\0"
-    "surface\0getVideoSurface\0position\0"
-    "videoSurface"
+    "home\0position"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,28 +59,26 @@ static const uint qt_meta_data_SoundStore[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
-       2,   92, // properties
+      10,   14, // methods
+       1,   78, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
+       1,    0,   64,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   75,    2, 0x0a /* Public */,
-       4,    1,   78,    2, 0x0a /* Public */,
-       5,    0,   81,    2, 0x0a /* Public */,
-       6,    0,   82,    2, 0x0a /* Public */,
-       7,    0,   83,    2, 0x0a /* Public */,
-       8,    0,   84,    2, 0x0a /* Public */,
-       9,    0,   85,    2, 0x0a /* Public */,
-      10,    0,   86,    2, 0x0a /* Public */,
-      11,    0,   87,    2, 0x0a /* Public */,
-      12,    1,   88,    2, 0x0a /* Public */,
-      15,    0,   91,    2, 0x0a /* Public */,
+       3,    1,   65,    2, 0x0a /* Public */,
+       4,    1,   68,    2, 0x0a /* Public */,
+       5,    0,   71,    2, 0x0a /* Public */,
+       6,    0,   72,    2, 0x0a /* Public */,
+       7,    0,   73,    2, 0x0a /* Public */,
+       8,    0,   74,    2, 0x0a /* Public */,
+       9,    0,   75,    2, 0x0a /* Public */,
+      10,    0,   76,    2, 0x0a /* Public */,
+      11,    0,   77,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -102,15 +93,11 @@ static const uint qt_meta_data_SoundStore[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 13,   14,
-    0x80000000 | 13,
 
  // properties: name, type, flags
-      16, QMetaType::QReal, 0x00495003,
-      17, 0x80000000 | 13, 0x0009510b,
+      12, QMetaType::QReal, 0x00495003,
 
  // properties: notify_signal_id
-       0,
        0,
 
        0        // eod
@@ -134,9 +121,6 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->stopStopTimer(); break;
         case 8: _t->saveHome(); break;
         case 9: _t->home(); break;
-        case 10: _t->setVideoSurface((*reinterpret_cast< QAbstractVideoSurface*(*)>(_a[1]))); break;
-        case 11: { QAbstractVideoSurface* _r = _t->getVideoSurface();
-            if (_a[0]) *reinterpret_cast< QAbstractVideoSurface**>(_a[0]) = _r; }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -157,7 +141,6 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< qreal*>(_v) = _t->getPersentPos(); break;
-        case 1: *reinterpret_cast< QAbstractVideoSurface**>(_v) = _t->getVideoSurface(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -166,7 +149,6 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         void *_v = _a[0];
         switch (_id) {
         case 0: _t->setPosPersent(*reinterpret_cast< qreal*>(_v)); break;
-        case 1: _t->setVideoSurface(*reinterpret_cast< QAbstractVideoSurface**>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -175,7 +157,7 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
 }
 
 const QMetaObject SoundStore::staticMetaObject = {
-    { &QMediaPlayer::staticMetaObject, qt_meta_stringdata_SoundStore.data,
+    { &VlcQmlVideoPlayer::staticMetaObject, qt_meta_stringdata_SoundStore.data,
       qt_meta_data_SoundStore,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
@@ -192,38 +174,38 @@ void *SoundStore::qt_metacast(const char *_clname)
         return static_cast<void*>(const_cast< SoundStore*>(this));
     if (!strcmp(_clname, "Store<SoundStore>"))
         return static_cast< Store<SoundStore>*>(const_cast< SoundStore*>(this));
-    return QMediaPlayer::qt_metacast(_clname);
+    return VlcQmlVideoPlayer::qt_metacast(_clname);
 }
 
 int SoundStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QMediaPlayer::qt_metacall(_c, _id, _a);
+    _id = VlcQmlVideoPlayer::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 10;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 2;
+        _id -= 1;
     }
 #endif // QT_NO_PROPERTIES
     return _id;

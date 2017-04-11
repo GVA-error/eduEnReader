@@ -9,12 +9,12 @@ import SoundStoreModul 1.1
 Rectangle{
     id : root
     property var source;
-    VideoOutput {
-       id : videoOutput;
+    SoundStore {
+       id : soundStore;
        anchors.fill: parent;
-       source: root.source
-   }
-   MouseArea{
+       //source: root.source
+    }
+    MouseArea{
         anchors.fill: parent
         onClicked: {
             if (source.state === SoundStore.PlayingState)
@@ -22,5 +22,5 @@ Rectangle{
             else
                 source.start()
         }
-   }
+    }
 }

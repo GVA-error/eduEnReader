@@ -22,13 +22,13 @@ Rectangle{
         width: 30
         background: Rectangle {
             Image {
-                source: soundStore.state == SoundStore.PlayingState ? "images/stop.png" : "images/play.png"
+                source: soundStore.state === 3 ? "images/stop.png" : "images/play.png"
             }
 
         //Material.foreground: Material.accent
         }
         onClicked: {
-            if (soundStore.state == SoundStore.PlayingState)
+            if (soundStore.state === 3)
                 soundStore.stop()
             else
                 soundStore.start()
@@ -44,13 +44,13 @@ Rectangle{
         //        x : (root.width - mainVideoView.width) / 2;
      //   y : 200;
         height: root.height;
-        width: mainVideoView.width - playButton.width - centraliseButton.width;
+        width: mainVideoView.width - playButton.width - centraliseButton.width - homeButton.width;
         anchors.bottom:  root.bottom
     }
     Button {
         id : centraliseButton
         y : 5
-        width: 30
+        width: 40
         anchors.left:  videoSlider.right
         background: Rectangle {
             Image {
@@ -60,6 +60,21 @@ Rectangle{
         //Material.foreground: Material.accent
         onClicked: {
             homePage.homeUiControler.dontSynch = !homePage.homeUiControler.dontSynch;
+        }
+    }
+    Button {
+        id : homeButton
+        y : 5
+        width: 30
+        anchors.left:  centraliseButton.right
+        background: Rectangle {
+            Image {
+                source: "images/go-home.png"
+            }
+        }
+        //Material.foreground: Material.accent
+        onClicked: {
+            goHome()
         }
     }
 }

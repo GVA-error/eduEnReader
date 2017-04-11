@@ -28,8 +28,9 @@ ToolBar {
             id: fileRow
             QMLButtonStyle {
                 fix_width : 100
-                text: "open"
-                onClicked: mainRoot.openFile() // openDialog.open()
+                text: "Lectures"
+                checked: pageView.currentIndex == 0
+                onClicked: mainRoot.goOpenFile() // openDialog.open()
             }
             ToolSeparator {
                 leftPadding: 15
@@ -43,7 +44,7 @@ ToolBar {
             QMLButtonStyle {
                 fix_width : 100
                 text: "home"
-                checked: pageView.currentIndex == 0
+                checked: pageView.currentIndex == 1
                 onClicked: mainRoot.goHome()
             }
 //            ToolSeparator {
@@ -51,16 +52,22 @@ ToolBar {
 //            }
         }
         Row {
+            id: translationHelp
+            QMLButtonStyle {
+                fix_width : 100
+                text: "Matireals"
+                checked: pageView.currentIndex == 2
+                onClicked: mainRoot.goTranslitionHelp()
+            }
+        }
+        Row {
             id: settingsRow
             QMLButtonStyle {
                 fix_width : 100
                 text: "settings"
-                checked: pageView.currentIndex == 1
+                checked: pageView.currentIndex == 3
                 onClicked: mainRoot.goSettings()
             }
-//            ToolSeparator {
-//                contentItem.visible: fileRow.y === editRow.y
-//            }
         }
         Row {
             id: exampleRow
@@ -78,25 +85,27 @@ ToolBar {
                     }
                 }
             }
-
             Label{
                 text: " "
                 //y : 10
                 visible: homePage.isExampleShowing()
             }
             TextField {
+                placeholderText: qsTr("Enter word or phrase")
+                padding: 7
                 visible: homePage.isExampleShowing()
                 id : exampleTextEdit
                 text: ""
                 Material.accent: Material.LightBlue
                 onTextChanged: {
                     homePage.setExamples(text)
+                    pageView.setCurrentIndex(1)
                 }
             }
         }
     }
 
-    FileDialog {
+   /* FileDialog {
         id: openDialog
         fileMode: FileDialog.OpenFile
         selectedNameFilter.index: 1
@@ -105,6 +114,6 @@ ToolBar {
         onAccepted : {
                 homePage.homeUiControler.openBindFile(file)
         }
-    }
+    }*/
 }
 

@@ -60,18 +60,34 @@ Page {
         }
     }
 
-    // Видео
-    MainVideoView{
+    // Видео    
+    Rectangle{
         id : mainVideoView
         //anchors.top : parent.top;
         anchors.bottom: controlPanel.top;
-        source : soundStore
-        //anchors.right : soundToolBar.right
         x : 10 //(parent.width - width) / 3
         y : 10
         width: parent.width * 2 / 3
         height: 480
         color: "black"
+        SoundStore {
+           id : soundStore;
+           anchors.fill: parent;
+           //source: root.source
+           onPosChanged: {
+               textArea.syncSoundAndSliderPosition()
+           }
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                console.log(soundStore.state)
+                if (soundStore.state === 3)
+                    soundStore.pause()
+                else
+                    soundStore.start()
+            }
+        }
     }
 
 
@@ -79,7 +95,7 @@ Page {
     ControlPanel{
         id : controlPanel
         anchors.top: mainVideoView.bottom
-        //anchors.bottom: parent.bottom
+        //anchors.right : parent.right
         width: parent.width
         //anchors.fill: parent
         x : mainVideoView.x
@@ -87,6 +103,7 @@ Page {
 
     Flickable {
         id: flickableTextArea
+        visible: settingPage.showText === true
         anchors.top: controlPanel.bottom
         anchors.bottom: parent.bottom
         width: parent.width
@@ -119,6 +136,9 @@ Page {
             if (!dontSynch)
                 textArea.syncSoundAndSliderPosition()
         }
+        Component.onCompleted: {
+            synchBndFileList()
+        }
     }
 
     TextStore {
@@ -134,12 +154,12 @@ Page {
             errorDialog.visible = true
         }
     }
-    SoundStore {
+  /*  SoundStore {
         id : soundStore
         onPosChanged: {
             textArea.syncSoundAndSliderPosition()
         }
-    }
+    }*/
     WebViewDialog{
         id: translateDialog
         contentText: qsTr("Translate")

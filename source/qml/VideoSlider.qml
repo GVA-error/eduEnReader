@@ -53,7 +53,7 @@ Rectangle { // Ползунок
         onPressedChanged: {
             if (pressed)
             {
-                if (source.state === SoundStore.PlayingState)
+                if (source.state === 3)
                     oldPlayingStateIsPlaying = true
                 else
                     oldPlayingStateIsPlaying = false
