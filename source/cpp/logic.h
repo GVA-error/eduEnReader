@@ -20,6 +20,15 @@ public:
         return rezPtr;
     }
 
+    struct Bind{
+        TextFragment::PTR text;
+        SoundFragment::PTR sound;
+    };
+    struct Comment{
+        QString name;
+        TextFragment::PTR commented;
+        QUrl commentUrl;
+    };
     struct Example{
         QUrl realUrl;
         QString FileName;
@@ -35,7 +44,7 @@ public:
         patternTypes _type;
     };
 
-    bool isFileTipe(const QString& type);
+    qint32 moreOrLess(Bind bind, qreal soundPos, qint64 textPos) const;
 
     // Формирование списка примеров по искомой фразе
     // findInThisFile - искать ли в текущем файле
@@ -111,7 +120,7 @@ private:
     const bool _findInSequence = true; // Поиск только целыми предложениями
 
     // Конфиг с патернами для поиска переводов
-    const QString _sourceConfigFile = "sources.conf";
+    const QString _sourceConfigFile = "./configs/sources.conf";
     QList <Pattern> _patternList;
 
     // Расширения потдерживаемых форматов файлов
@@ -132,29 +141,23 @@ private:
     const QString par_RecognizedString = QString("RecognizedString");
     const QString par_RecognizedStringPos = QString("RecognizedStringPos");
 
-    struct Bind{
-        TextFragment::PTR text;
-        SoundFragment::PTR sound;
-    };
-    struct Comment{
-        QString name;
-        TextFragment::PTR commented;
-        QUrl commentUrl;
-    };
-
     // Возвращается если не нашли подходящего бинда
     // Иницилизирован в конструкторе
-    Bind zeroBind; // Не стоит модифицировать, нейтрален отнасительно суммирования
+    Bind zeroBind; // Не стоит модифицировать, нейтрален отнасительно суммирования + используеться в лямдах
     Bind tempBind; // служит как временная переменная которую можно поменять, но она не на что не повличет
 
     QString _curBndFileName;
 
     //const qint32 _lastTempMarkListSize = 7;
-    Bind _lastTempMarkPos;
+   // Bind _lastTempMarkPos;
+    QVector<Bind>::const_iterator _lastBindIterator;
 
     // Упорядоченное множество биндов
     // Нужно для подсветки и дихотомического поиска соответствующего выделения
     QVector <Bind> _bindVector;
+    // Кеш, середин биндов
+    QVector <qint32> _bindMid;
+
     QVector <Comment> _commentsVector; // Комментарии к тексту
     QMap <QString, QStringList> _recognizedStrings; // Распознаные строки из файла, нужны для быстрого перепросчёта
     QMap <QString, qreal> _recognizedStringPosBegin; // позициия в звуковом файле для каждого элемента _recognizedStrings
@@ -189,9 +192,10 @@ private:
     void fromString(QStringList& str, qreal& posBigin, qreal &posEnd, QString source) const; // нужна для чтения распозноного текста
 
     // Нужно для подсветки текущего фрагмента
-    Bind getBindFromSoundPos(qreal) const;
-    Bind getBindFromTextPos(qint64) const;
-    Bind getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const;
+    QVector <Bind>::const_iterator getBindFromSoundPos(qreal) const;
+    QVector <Bind>::const_iterator getBindFromTextPos(qint64) const;
+    // так как никогда не ищем одновременно по звуку и тексту используем "Or"
+    QVector <Bind>::const_iterator getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const;
 
     // Нужно для нахождения примеров
     QList<Bind> getBindsWithPhrase(const QString& seekablePhrase);

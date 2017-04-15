@@ -17,14 +17,25 @@
 #include "cpp/textstore.h"
 #include "cpp/soundstore.h"
 #include "cpp/uicontroller.h"
+#include "cpp/Utilits/setting.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    Settings::setDefaults("Video/DpiScaling:AA_EnableHighDpiScaling;");
+
+    int enum_index = qt_getQtMetaObject()->indexOfEnumerator("ApplicationAttribute");
+    QString dpiScaling = Settings::get(Settings::DpiScaling, Settings::Video).toString();
+    auto enumerator = qt_getQtMetaObject()->enumerator(enum_index);
+    Qt::ApplicationAttribute dpiScalingKey = (Qt::ApplicationAttribute)(enumerator.keysToValue(dpiScaling.toLatin1()));
+
     Application app(argc, argv);
+    QCoreApplication::setAttribute(dpiScalingKey);
     Application::setApplicationName("eduEnReader");
+    QApplication::setOrganizationName("gva-error");
 
     QQmlApplicationEngine engine;
+
+    //Settings::setDefaults("Video/Regim: value2");
 
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
@@ -40,7 +51,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");
     qmlRegisterType<SoundStore>("SoundStoreModul", 1, 1, "SoundStore");
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main_read_desktop.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/PC_READ_main.qml")));
 
     if (engine.rootObjects().isEmpty())
         return -1;

@@ -8,7 +8,7 @@
 
 // Базовый класс хранилища данных
 // TODO Добавить проверки на нулевые указатели.
-class SoundStore;
+//class SoundStore;
 template <class StoreType> // Нужна для фабрики
 class Store
 {
@@ -47,12 +47,27 @@ public:
         return fileString;
     }
 
-    // Важно: читает из локального url
-    void fromString(QString storeString)
+    bool isRemoteSource(QString storeString)
     {
-        QFileInfo localFile(storeString);
-        QString apsoluteStringUrl = localFile.absoluteFilePath();
-        QUrl fileUrl = QUrl::fromLocalFile(apsoluteStringUrl);
+        auto httpI = storeString.indexOf("http");
+        if (httpI !=0)
+            return false;
+        return true;
+    }
+
+    void fromString(QString storeString, QString curPath)
+    {
+        QUrl fileUrl;
+        bool isRemote = isRemoteSource(storeString);
+        if (isRemote)
+            fileUrl = QUrl(storeString);
+        else
+        {
+            storeString = curPath + "/" + storeString;
+            QFileInfo localFile(storeString);
+            QString apsoluteStringUrl = localFile.absoluteFilePath();
+            fileUrl = QUrl::fromLocalFile(apsoluteStringUrl);
+        }
         setFileUrl(fileUrl);
     }
 

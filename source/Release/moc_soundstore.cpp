@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SoundStore_t {
-    QByteArrayData data[13];
-    char stringdata0[121];
+    QByteArrayData data[18];
+    char stringdata0[201];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,19 +34,26 @@ static const qt_meta_stringdata_SoundStore_t qt_meta_stringdata_SoundStore = {
 QT_MOC_LITERAL(0, 0, 10), // "SoundStore"
 QT_MOC_LITERAL(1, 11, 10), // "posChanged"
 QT_MOC_LITERAL(2, 22, 0), // ""
-QT_MOC_LITERAL(3, 23, 10), // "setPosReal"
-QT_MOC_LITERAL(4, 34, 13), // "setPosPersent"
-QT_MOC_LITERAL(5, 48, 13), // "getPersentPos"
-QT_MOC_LITERAL(6, 62, 10), // "getTimePos"
-QT_MOC_LITERAL(7, 73, 5), // "start"
-QT_MOC_LITERAL(8, 79, 4), // "stop"
-QT_MOC_LITERAL(9, 84, 13), // "stopStopTimer"
-QT_MOC_LITERAL(10, 98, 8), // "saveHome"
-QT_MOC_LITERAL(11, 107, 4), // "home"
-QT_MOC_LITERAL(12, 112, 8) // "position"
+QT_MOC_LITERAL(3, 23, 21), // "isExampleStateChanged"
+QT_MOC_LITERAL(4, 45, 19), // "playingStateChanged"
+QT_MOC_LITERAL(5, 65, 12), // "playingState"
+QT_MOC_LITERAL(6, 78, 14), // "bufferingState"
+QT_MOC_LITERAL(7, 93, 9), // "isExample"
+QT_MOC_LITERAL(8, 103, 10), // "setPosReal"
+QT_MOC_LITERAL(9, 114, 13), // "setPosPersent"
+QT_MOC_LITERAL(10, 128, 13), // "getPersentPos"
+QT_MOC_LITERAL(11, 142, 10), // "getTimePos"
+QT_MOC_LITERAL(12, 153, 5), // "start"
+QT_MOC_LITERAL(13, 159, 4), // "stop"
+QT_MOC_LITERAL(14, 164, 13), // "stopStopTimer"
+QT_MOC_LITERAL(15, 178, 8), // "saveHome"
+QT_MOC_LITERAL(16, 187, 4), // "home"
+QT_MOC_LITERAL(17, 192, 8) // "position"
 
     },
-    "SoundStore\0posChanged\0\0setPosReal\0"
+    "SoundStore\0posChanged\0\0isExampleStateChanged\0"
+    "playingStateChanged\0playingState\0"
+    "bufferingState\0isExample\0setPosReal\0"
     "setPosPersent\0getPersentPos\0getTimePos\0"
     "start\0stop\0stopStopTimer\0saveHome\0"
     "home\0position"
@@ -59,31 +66,41 @@ static const uint qt_meta_data_SoundStore[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
-       1,   78, // properties
+      15,   14, // methods
+       2,  108, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x06 /* Public */,
+       1,    0,   89,    2, 0x06 /* Public */,
+       3,    0,   90,    2, 0x06 /* Public */,
+       4,    0,   91,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   65,    2, 0x0a /* Public */,
-       4,    1,   68,    2, 0x0a /* Public */,
-       5,    0,   71,    2, 0x0a /* Public */,
-       6,    0,   72,    2, 0x0a /* Public */,
-       7,    0,   73,    2, 0x0a /* Public */,
-       8,    0,   74,    2, 0x0a /* Public */,
-       9,    0,   75,    2, 0x0a /* Public */,
-      10,    0,   76,    2, 0x0a /* Public */,
-      11,    0,   77,    2, 0x0a /* Public */,
+       5,    0,   92,    2, 0x0a /* Public */,
+       6,    0,   93,    2, 0x0a /* Public */,
+       7,    0,   94,    2, 0x0a /* Public */,
+       8,    1,   95,    2, 0x0a /* Public */,
+       9,    1,   98,    2, 0x0a /* Public */,
+      10,    0,  101,    2, 0x0a /* Public */,
+      11,    0,  102,    2, 0x0a /* Public */,
+      12,    0,  103,    2, 0x0a /* Public */,
+      13,    0,  104,    2, 0x0a /* Public */,
+      14,    0,  105,    2, 0x0a /* Public */,
+      15,    0,  106,    2, 0x0a /* Public */,
+      16,    0,  107,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Int,
+    QMetaType::Int,
+    QMetaType::Bool,
     QMetaType::Void, QMetaType::QReal,    2,
     QMetaType::Void, QMetaType::QReal,    2,
     QMetaType::QReal,
@@ -95,10 +112,12 @@ static const uint qt_meta_data_SoundStore[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-      12, QMetaType::QReal, 0x00495003,
+      17, QMetaType::QReal, 0x00495003,
+       7, QMetaType::Bool, 0x00495001,
 
  // properties: notify_signal_id
        0,
+       1,
 
        0        // eod
 };
@@ -110,17 +129,25 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->posChanged(); break;
-        case 1: _t->setPosReal((*reinterpret_cast< qreal(*)>(_a[1]))); break;
-        case 2: _t->setPosPersent((*reinterpret_cast< qreal(*)>(_a[1]))); break;
-        case 3: { qreal _r = _t->getPersentPos();
+        case 1: _t->isExampleStateChanged(); break;
+        case 2: _t->playingStateChanged(); break;
+        case 3: { qint32 _r = _t->playingState();
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
+        case 4: { qint32 _r = _t->bufferingState();
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
+        case 5: { bool _r = _t->isExample();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 6: _t->setPosReal((*reinterpret_cast< qreal(*)>(_a[1]))); break;
+        case 7: _t->setPosPersent((*reinterpret_cast< qreal(*)>(_a[1]))); break;
+        case 8: { qreal _r = _t->getPersentPos();
             if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
-        case 4: { qreal _r = _t->getTimePos();
+        case 9: { qreal _r = _t->getTimePos();
             if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
-        case 5: _t->start(); break;
-        case 6: _t->stop(); break;
-        case 7: _t->stopStopTimer(); break;
-        case 8: _t->saveHome(); break;
-        case 9: _t->home(); break;
+        case 10: _t->start(); break;
+        case 11: _t->stop(); break;
+        case 12: _t->stopStopTimer(); break;
+        case 13: _t->saveHome(); break;
+        case 14: _t->home(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -133,6 +160,20 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
                 return;
             }
         }
+        {
+            typedef void (SoundStore::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SoundStore::isExampleStateChanged)) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            typedef void (SoundStore::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SoundStore::playingStateChanged)) {
+                *result = 2;
+                return;
+            }
+        }
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
@@ -141,6 +182,7 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< qreal*>(_v) = _t->getPersentPos(); break;
+        case 1: *reinterpret_cast< bool*>(_v) = _t->isExample(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -183,29 +225,29 @@ int SoundStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 15;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 1;
+        _id -= 2;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -215,6 +257,18 @@ int SoundStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void SoundStore::posChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+}
+
+// SIGNAL 1
+void SoundStore::isExampleStateChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
+}
+
+// SIGNAL 2
+void SoundStore::playingStateChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

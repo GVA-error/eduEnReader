@@ -2,26 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>qml/ControlPanel.qml</file>
-        <file>qml/DialogBackground.qml</file>
-        <file>qml/FileDialogs.qml</file>
-        <file>qml/HtmlView.qml</file>
-        <file>qml/ListDialog.qml</file>
-        <file>qml/MainVideoView.qml</file>
-        <file>qml/PageExamples_Read.qml</file>
-        <file>qml/PageHome_Read.qml</file>
-        <file>qml/PageSettings_Read.qml</file>
-        <file>qml/QMLButtonStyle.qml</file>
-        <file>qml/QMLScroolBar.qml</file>
-        <file>qml/QMLSoundGraph.qml</file>
-        <file>qml/QMLToolBarSeparator.qml</file>
-        <file>qml/SimpleDialog.qml</file>
-        <file>qml/TextReaderArea.qml</file>
-        <file>qml/TopMenu.qml</file>
-        <file>qml/TopToolBar.qml</file>
-        <file>qml/VideoSlider.qml</file>
-        <file>qml/WebViewDialog.qml</file>
-        <file>qml/main_read_desktop.qml</file>
         <file>fonts/fontello.ttf</file>
         <file>qml/images/bind.png</file>
         <file>qml/images/editcopy.png</file>
@@ -56,8 +36,28 @@
         <file>qml/images/view-sort-ascending.png</file>
         <file>qml/images/zoomin.png</file>
         <file>qml/images/zoomout.png</file>
-        <file>qml/FileOpenDialog.qml</file>
-        <file>qml/PageTranslationHelp.qml</file>
-        <file>qml/PageOpen_read.qml</file>
+        <file>qml/QML_WebViewDialog.qml</file>
+        <file>qml/QML_VideoSlider.qml</file>
+        <file>qml/QML_ToolBarSeparator.qml</file>
+        <file>qml/QML_TextReaderArea.qml</file>
+        <file>qml/QML_SoundGraph.qml</file>
+        <file>qml/QML_SimpleDialog.qml</file>
+        <file>qml/QML_ScroolBar.qml</file>
+        <file>qml/QML_PageTranslationHelp.qml</file>
+        <file>qml/QML_MainVideoView.qml</file>
+        <file>qml/QML_ListDialog.qml</file>
+        <file>qml/QML_HtmlView.qml</file>
+        <file>qml/QML_FileOpenDialog.qml</file>
+        <file>qml/QML_FileDialogs.qml</file>
+        <file>qml/QML_DialogBackground.qml</file>
+        <file>qml/QML_ComboBox.qml</file>
+        <file>qml/PC_READ_TopToolBar.qml</file>
+        <file>qml/PC_READ_PageSettings.qml</file>
+        <file>qml/PC_READ_PageOpen.qml</file>
+        <file>qml/PC_READ_PageHome.qml</file>
+        <file>qml/PC_QML_ToolBarButton.qml</file>
+        <file>qml/PC_READ_ControlPanel.qml</file>
+        <file>qml/PC_READ_main.qml</file>
+        <file>qml/images/cant-go-home.png</file>
     </qresource>
 </RCC>

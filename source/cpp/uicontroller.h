@@ -15,12 +15,12 @@
 /* TODO LIST
  *
  * Ближайший план:
- * 3) 4 страници: Выбор лекции, вывод видео (основная), справочные материалы, настройки
- *      3.1) Виджет для выбора лекций квадратами.
- *      3.2) Редизайн основной страници.
- *      3.3) Хидер с брутербродом.
- * 4) Заполнение справочных материалов из конфига
- * 5) Правка биндов
+ * 0) Убрать дубли примеров
+ * 1) Кнопка удаления лекций
+ * 2) Кнопки удаления и добавления комментариев
+ * 3) Создание лекций
+ * 4) Правка биндов
+ * 5) Прогрес
  * 6) Рефакторинг. Выделение класса настроек, вынесение в скриптер распознования строк, скриптер - часть настроек
  * 7) Windows XP? Обдумать
  *
@@ -81,7 +81,6 @@ class UIController : public QObject
 public:
     explicit UIController(QObject *parent = 0);
 
-    bool mouseIsPressed;
     bool getMouseIsPressed() const;
     void setMouseIsPressed(bool& newValue);
 
@@ -150,7 +149,7 @@ public slots:
 
     // Для поиска материалов по выделенному слову или введёному пользователем
     void getMatireals();
-    void getMatirealsFor(const QString& seekablePhrase);
+    void getMatirealsFor(QString seekablePhrase);
 
     void goOutHome() { _f_home = false; }
 
@@ -172,6 +171,7 @@ private:
     const qint32 _sellectingTime = 500; // ..
     qreal _examplesSize; // Храним в qreal, пока пользователь оперирует только целыми значениями
     qreal _diffSize;
+    bool _mouseIsPressed;
 
     Logic::PTR _logic;
     SoundStore::PTR _soundStore; //bool _f_setSound;

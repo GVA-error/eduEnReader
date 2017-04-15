@@ -7,7 +7,7 @@ Logic::Logic()
     zeroBind.text = TextFragment::factoryMethod(-1, -1, TextStore::PTR());
     tempBind.sound = SoundFragment::factoryMethod(-1.0f, -1.0f, SoundStore::PTR());
     tempBind.text = TextFragment::factoryMethod(-1, -1, TextStore::PTR());
-    _lastTempMarkPos = zeroBind;
+    _lastBindIterator = _bindVector.constEnd();
     //for (qint32 i = 0; i<_lastTempMarkListSize; i++)
     //    _lastTempMarkPos.append(zeroBind);
     synchPatterns();
@@ -31,18 +31,30 @@ void Logic::synchPatterns()
         {
             curPattern._title = confStream.readLine();
             confStream >> buff;
+            buff = buff.trimmed();
             if (buff != par_Type)
                 qCritical("Error pattern type");
-            QString buff = confStream.readLine();
+            QString buff = confStream.readLine().trimmed();
             if (buff == "file")
                 curPattern._type = patternTypes::file;
             else if (buff == "net+")
                 curPattern._type = patternTypes::webPlus;
             else
+            {
                 qCritical() << "Incorrect pattern type";
+                continue;
+            }
+            confStream >> buff;
+            buff = buff.trimmed();
             if (buff != par_Pattern)
                 qCritical() << "Error source pattern";
-            curPattern._pattern = confStream.readLine();
+            curPattern._pattern = confStream.readLine().trimmed();
+            if (curPattern._type == patternTypes::file)
+            {
+                QString curDir = QDir::currentPath();
+                curPattern._pattern = curDir + curPattern._pattern;
+            }
+
             _patternList.push_back(curPattern);
         }
     }
@@ -60,7 +72,7 @@ QString Logic::getUrlFromPattern(const Pattern &p, QString str) const
     QStringList buff = rezStr.split("SEEKIT");
     rezStr = buff.join(str);
 
-    return rezStr;
+    return rezStr.trimmed();
 }
 
 Logic::Bind Logic::summ(const Bind& left, const Bind& right) const
@@ -210,7 +222,6 @@ void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd,
         if (curAdd + step == _bindVector.end())
             break;
     }
-
 }
 
 QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
@@ -292,10 +303,10 @@ QList <QString> Logic::getCommentNamesonTextPos(qint64 pos) const
     QList <QString> rezList;
     qint64 begin, end;
     begin = end = pos;
-    Bind b = getBindFromTextPos(pos);
-    if (!isEquils(b, zeroBind))
+    auto b = getBindFromTextPos(pos);
+    if (b != _bindVector.end())
     {
-        auto text = b.text;
+        auto text = (*b).text;
         begin = text->begin();
         end = text->end();
     }
@@ -331,113 +342,168 @@ QUrl Logic::getCommentUrlsonName(const QString& name) const
 
 qint64 Logic::posInWavToPosInText(qreal soundPos) const
 {
-    Bind sellectedBind = getBindFromSoundPos(soundPos);
-    auto sellectedText = sellectedBind.text;
-    qint64 posInText = sellectedText->begin();
-    if (posInText < 0)
+    auto sellectedBind = getBindFromSoundPos(soundPos);
+    if (sellectedBind == _bindVector.end())
         return 0;
+    auto sellectedText = (*sellectedBind).text;
+    qint64 posInText = sellectedText->begin();
     return posInText;
 }
 
 qreal Logic::posInTxtToPosInWav(qint64 textPos) const
 {
-    Bind sellectedBind = getBindFromTextPos(textPos);
-    auto sellectedSound = sellectedBind.sound;
+    auto sellectedBind = getBindFromTextPos(textPos);
+    if (sellectedBind == _bindVector.end())
+        return 0;
+    auto sellectedSound = (*sellectedBind).sound;
     qreal posInSound = sellectedSound->begin();
     return posInSound;
 }
 
 qint32 Logic::getTextBeginPosCurBind() const
 {
-    auto curBind = _lastTempMarkPos;
-    auto text = curBind.text;
+    auto curBind = _lastBindIterator;
+    if (curBind == _bindVector.constEnd())
+        return 0;
+    auto text = (*curBind).text;
     qint32 begin = text->begin();
     return begin;
 }
 
 qint32 Logic::getTextEndPosCurBind() const
 {
-    auto curBind = _lastTempMarkPos;
-    auto text = curBind.text;
+    auto curBind = _lastBindIterator;
+    if (curBind == _bindVector.constEnd())
+        return 0;
+    auto text = (*curBind).text;
     qint32 end = text->end();
     return end;
 }
 
 qint32 Logic::getTextMidPosCurBind() const
 {
-    auto curBind = _lastTempMarkPos;
-    auto text = curBind.text;
+    auto curBind = _lastBindIterator;
+    if (curBind == _bindVector.constEnd())
+        return 0;
+    auto text = (*curBind).text;
     qint32 mid = text->mid();
     return mid;
 }
 
 void Logic::markBindFromSoundPos(qreal soundPos)
 {
-    Bind markableBind = getBindFromSoundPos(soundPos);
-    if (isEquils(markableBind, zeroBind))
+    auto markableBind = getBindFromSoundPos(soundPos);
+    if (markableBind == _bindVector.constEnd())
         return;
-    auto markableText = markableBind.text;
+    auto markableText = (*markableBind).text;
     markableText->mark();
 }
 
 void Logic::markBindFromTextPos(qint64 textPos)
 {
-    Bind markableBind = getBindFromTextPos(textPos);
-    if (isEquils(markableBind, zeroBind))
+    auto markableBind = getBindFromTextPos(textPos);
+    if (markableBind == _bindVector.constEnd())
         return;
-    auto markableText = markableBind.text;
+    auto markableText = (*markableBind).text;
     markableText->mark();
 }
 
 void Logic::unMarkBindFromSoundPos(qreal soundPos)
 {
-    Bind markableBind = getBindFromSoundPos(soundPos);
-    if (isEquils(markableBind, zeroBind))
+    auto markableBind = getBindFromSoundPos(soundPos);
+    if (markableBind == _bindVector.constEnd())
         return;
-    auto markableText = markableBind.text;
+    auto markableText = (*markableBind).text;
     markableText->unmark();
 }
 
 void Logic::unMarkBindFromTextPos(qint64 textPos)
 {
-    Bind markableBind = getBindFromTextPos(textPos);
-    if (isEquils(markableBind, zeroBind))
+    auto markableBind = getBindFromTextPos(textPos);
+    if (markableBind == _bindVector.constEnd())
         return;
-    auto markableText = markableBind.text;
+    auto markableText = (*markableBind).text;
     markableText->unmark();
 }
 
-Logic::Bind Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const
+qint32 Logic::moreOrLess(Bind bind, qreal soundPos, qint64 textPos) const
 {
-    if (_bindVector.empty())
-        return zeroBind;
-    for (auto bind = _bindVector.end()-1;;bind--)
-    {
-        auto curSound = (*bind).sound;
-        auto curText = (*bind).text;
-        if (curSound->isBelongs(soundPos) || curText->isBelongs(textPos))
-            return *bind;
-        if (bind == _bindVector.begin())
-            break;
+    SoundFragment::PTR soundFragment = bind.sound;
+    TextFragment::PTR textFragment = bind.text;
 
-    }
-    return zeroBind;
+    assert(isEquils(bind, zeroBind) == false);
+
+    if (soundFragment->isBelongs(soundPos) || textFragment->isBelongs(textPos))
+        return 0;
+
+    // так как sound или text позиции могут быть трицательными используем это неравенство
+    if (soundFragment->end() < soundPos || textFragment->end() < textPos)
+        return -1;
+
+    return 1;
 }
 
-Logic::Bind Logic::getBindFromSoundPos(qreal soundPos) const
+QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const
+{
+    if (_bindVector.empty())
+        return _bindVector.end();
+    assert (soundPos < 0 || textPos < 0);
+    //auto cur = qLowerBound(data.begin(), data.end(), 3);
+
+    // Проверяем последний и следующий за ним
+    if (_lastBindIterator != _bindVector.end())
+    {
+        if (moreOrLess(*_lastBindIterator, soundPos, textPos) == 0)
+            return _lastBindIterator;
+        auto nextBind = _lastBindIterator+1;
+        if (nextBind != _bindVector.constEnd())
+            if (moreOrLess(*nextBind, soundPos, textPos) == 0)
+                return nextBind;
+    }
+
+    // Ищем во всех
+    auto lamdaLessThen = [soundPos, textPos, this](const Logic::Bind& left, const Logic::Bind& right)
+    { // для понимания как работает лямда лучше взглянуть на реализацию qLowerBound
+        auto realLeft = left;
+        if (isEquils(realLeft, zeroBind))
+            realLeft = right;
+        else
+            assert(isEquils(left, zeroBind) == false);;
+
+        bool rez = false;
+        if (moreOrLess(realLeft, soundPos, textPos) == -1)
+            rez = true;
+        else
+            rez = false;
+
+        if (isEquils(left, zeroBind))
+            rez = !rez; // так как мы меняли левый с правым
+        return rez;
+    };
+    auto founded = qLowerBound(_bindVector.constBegin(), _bindVector.constEnd(), zeroBind, lamdaLessThen);
+    if (founded != _bindVector.end())
+        if (moreOrLess(*founded, soundPos, textPos) == 0)
+            return founded;
+    return _bindVector.end();
+}
+
+QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundPos(qreal soundPos) const
 {
     return getBindFromSoundOrTextPos(soundPos, -1);
 }
 
-Logic::Bind Logic::getBindFromTextPos(qint64 textPos) const
+QVector <Logic::Bind>::const_iterator Logic::getBindFromTextPos(qint64 textPos) const
 {
+    // TODO проверить только при клике?
     return getBindFromSoundOrTextPos(-1, textPos);
 }
 
 qint64 Logic::roundToBindTextPos(qint64 textPos) const
 {
     auto bind = getBindFromTextPos(textPos);
-    auto text = bind.text;
+    if (bind == _bindVector.end())
+        return 0;
+    auto text = (*bind).text;
     qint64 rez = text->begin();
     return rez;
 }
@@ -445,7 +511,9 @@ qint64 Logic::roundToBindTextPos(qint64 textPos) const
 qreal Logic::roundToBindSoundPos(qreal soundPos) const
 {
     auto bind = getBindFromSoundPos(soundPos);
-    auto sound = bind.sound;
+    if (bind == _bindVector.end())
+        return 0;
+    auto sound = (*bind).sound;
     qint64 rez = sound->begin();
     return rez;
 }
@@ -475,20 +543,22 @@ void Logic::tempMarkBindInTextPos(qint64 pos)
     //unMarkAllBindedText();
     unmarkLastBind();
     auto curBind = getBindFromTextPos(pos);
-    markBind(curBind);
-    _lastTempMarkPos = curBind;
-    //_lastTempMarkPos.push_back(curBind);
-    //_lastTempMarkPos.pop_front();
+    _lastBindIterator = curBind;
+    if (curBind == _bindVector.end())
+        return;
+    markBind(*curBind);
 }
 
 void Logic::markLastBind()
 {
-    markBind(_lastTempMarkPos);
+    if (_lastBindIterator != _bindVector.constEnd())
+        markBind(*_lastBindIterator);
 }
 
 void Logic::unmarkLastBind()
 {
-    unmarkBind(_lastTempMarkPos);
+    if (_lastBindIterator != _bindVector.constEnd())
+        unmarkBind(*_lastBindIterator);
 }
 
 void Logic::markAllBindedText()
@@ -591,6 +661,12 @@ QVector <Logic::Bind>::iterator Logic::getBindOnTextPos(qint64 textPos)
     return _bindVector.begin();
 }
 
+void Logic::markBind(const QList<Bind>& bindList)
+{
+    for (auto bind : bindList)
+        markBind(bind);
+}
+
 void Logic::markBind(const Bind& bind)
 {
     auto text = bind.text;
@@ -605,12 +681,6 @@ void Logic::unmarkBind(const Bind& bind)
     if (text.isNull())
         return;
     text->unmark();
-}
-
-void Logic::markBind(const QList<Bind>& bindList)
-{
-    for (auto bind : bindList)
-        markBind(bind);
 }
 
 void Logic::unmarkBind(const QList<Bind>& bindList)
@@ -749,16 +819,14 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     QString realHashText;
     QString realHashSound;
     QString curPath = QFileInfo(fileName).absolutePath();
-    textStoreString = curPath + "/" + textStoreString;
-    soundStoreString = curPath + "/" + soundStoreString;
     if (!textStore.isNull())
     {
-        textStore->fromString(textStoreString);
+        textStore->fromString(textStoreString, curPath);
         realHashText = textStore->getHash();
     }
     if (!soundStore.isNull())
     {
-        soundStore->fromString(soundStoreString);
+        soundStore->fromString(soundStoreString, curPath);
         realHashSound = soundStore->getHash();
     }
 
@@ -788,6 +856,10 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         fromString(rec, begin, end, recognizedStr);
         addRecognizedString(rec, begin, end);
     }
+
+    if (_bindVector.empty() == false)
+        _lastBindIterator = _bindVector.begin();
+
     file.close();
 }
 

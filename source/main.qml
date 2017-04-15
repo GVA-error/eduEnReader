@@ -1,8 +1,18 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QtMultimedia 5.8
+/* Этот файл нужен для развёртывания под Windows */
+
+import QtQuick 2.8
 import QtWebEngine 1.4
+
+import QtMultimedia 5.8
+import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
+import QtQuick.Layouts 1.3
+import QtQuick.Window 2.0
+import QtQuick.Dialogs 1.2
+
+import TextStoreModul 1.0
+import SoundStoreModul 1.1
+import UiControlerModul 1.1
 
 ApplicationWindow {
     visible: true

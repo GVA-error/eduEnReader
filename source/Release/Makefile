@@ -63,14 +63,16 @@ SOURCES       = ../main.cpp \
 		../cpp/ASR/metrics.cpp \
 		../cpp/ASR/scripter.cpp \
 		../cpp/ASR/wavworker.cpp \
-		../cpp/ASR/graph.cpp qrc_qml.cpp \
+		../cpp/ASR/graph.cpp \
+		../cpp/Utilits/setting.cpp qrc_qml.cpp \
 		moc_soundstore.cpp \
 		moc_textstore.cpp \
 		moc_uicontroller.cpp \
 		moc_asr.cpp \
 		moc_bindmaker.cpp \
 		moc_datapreparation.cpp \
-		moc_scripter.cpp
+		moc_scripter.cpp \
+		moc_setting.cpp
 OBJECTS       = main.o \
 		fragment.o \
 		logic.o \
@@ -87,6 +89,7 @@ OBJECTS       = main.o \
 		scripter.o \
 		wavworker.o \
 		graph.o \
+		setting.o \
 		qrc_qml.o \
 		moc_soundstore.o \
 		moc_textstore.o \
@@ -94,7 +97,8 @@ OBJECTS       = main.o \
 		moc_asr.o \
 		moc_bindmaker.o \
 		moc_datapreparation.o \
-		moc_scripter.o
+		moc_scripter.o \
+		moc_setting.o
 DIST          = ../../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.8/gcc_64/mkspecs/common/unix.conf \
 		../../../../Qt/5.8/gcc_64/mkspecs/common/linux.conf \
@@ -265,8 +269,7 @@ DIST          = ../../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.8/gcc_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.8/gcc_64/mkspecs/features/lex.prf \
-		../../eduEnReader.pro ../cpp/featurefuncs.h \
-		../cpp/fragment.h \
+		../../eduEnReader.pro ../cpp/fragment.h \
 		../cpp/logic.h \
 		../cpp/soundfragment.h \
 		../cpp/soundstore.h \
@@ -280,7 +283,8 @@ DIST          = ../../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../cpp/ASR/metrics.h \
 		../cpp/ASR/scripter.h \
 		../cpp/ASR/wavworker.h \
-		../cpp/ASR/graph.h ../main.cpp \
+		../cpp/ASR/graph.h \
+		../cpp/Utilits/setting.h ../main.cpp \
 		../cpp/fragment.cpp \
 		../cpp/logic.cpp \
 		../cpp/soundfragment.cpp \
@@ -295,7 +299,8 @@ DIST          = ../../../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../cpp/ASR/metrics.cpp \
 		../cpp/ASR/scripter.cpp \
 		../cpp/ASR/wavworker.cpp \
-		../cpp/ASR/graph.cpp
+		../cpp/ASR/graph.cpp \
+		../cpp/Utilits/setting.cpp
 QMAKE_TARGET  = eduEnReader
 DESTDIR       = 
 TARGET        = eduEnReader
@@ -699,8 +704,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../cpp/featurefuncs.h ../cpp/fragment.h ../cpp/logic.h ../cpp/soundfragment.h ../cpp/soundstore.h ../cpp/store.h ../cpp/textfragment.h ../cpp/textstore.h ../cpp/uicontroller.h ../cpp/ASR/asr.h ../cpp/ASR/bindmaker.h ../cpp/ASR/datapreparation.h ../cpp/ASR/metrics.h ../cpp/ASR/scripter.h ../cpp/ASR/wavworker.h ../cpp/ASR/graph.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../cpp/fragment.cpp ../cpp/logic.cpp ../cpp/soundfragment.cpp ../cpp/soundstore.cpp ../cpp/store.cpp ../cpp/textfragment.cpp ../cpp/textstore.cpp ../cpp/uicontroller.cpp ../cpp/ASR/asr.cpp ../cpp/ASR/bindmaker.cpp ../cpp/ASR/datapreparation.cpp ../cpp/ASR/metrics.cpp ../cpp/ASR/scripter.cpp ../cpp/ASR/wavworker.cpp ../cpp/ASR/graph.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../cpp/fragment.h ../cpp/logic.h ../cpp/soundfragment.h ../cpp/soundstore.h ../cpp/store.h ../cpp/textfragment.h ../cpp/textstore.h ../cpp/uicontroller.h ../cpp/ASR/asr.h ../cpp/ASR/bindmaker.h ../cpp/ASR/datapreparation.h ../cpp/ASR/metrics.h ../cpp/ASR/scripter.h ../cpp/ASR/wavworker.h ../cpp/ASR/graph.h ../cpp/Utilits/setting.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../cpp/fragment.cpp ../cpp/logic.cpp ../cpp/soundfragment.cpp ../cpp/soundstore.cpp ../cpp/store.cpp ../cpp/textfragment.cpp ../cpp/textstore.cpp ../cpp/uicontroller.cpp ../cpp/ASR/asr.cpp ../cpp/ASR/bindmaker.cpp ../cpp/ASR/datapreparation.cpp ../cpp/ASR/metrics.cpp ../cpp/ASR/scripter.cpp ../cpp/ASR/wavworker.cpp ../cpp/ASR/graph.cpp ../cpp/Utilits/setting.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -731,29 +736,28 @@ qrc_qml.cpp: ../qml.qrc \
 		../../../Qt/5.8/gcc_64/bin/rcc \
 		../qtquickcontrols2.conf \
 		../main.qml \
-		../qml/MainVideoView.qml \
-		../qml/HtmlView.qml \
-		../qml/QMLSoundGraph.qml \
-		../qml/PageOpen_read.qml \
-		../qml/ListDialog.qml \
-		../qml/ControlPanel.qml \
-		../qml/main_read_desktop.qml \
-		../qml/PageSettings_Read.qml \
-		../qml/FileDialogs.qml \
-		../qml/TextReaderArea.qml \
-		../qml/SimpleDialog.qml \
-		../qml/QMLToolBarSeparator.qml \
-		../qml/PageTranslationHelp.qml \
-		../qml/VideoSlider.qml \
-		../qml/FileOpenDialog.qml \
-		../qml/QMLButtonStyle.qml \
-		../qml/QMLScroolBar.qml \
-		../qml/TopToolBar.qml \
-		../qml/PageExamples_Read.qml \
-		../qml/DialogBackground.qml \
-		../qml/TopMenu.qml \
-		../qml/WebViewDialog.qml \
-		../qml/PageHome_Read.qml \
+		../qml/QML_DialogBackground.qml \
+		../qml/PC_READ_ControlPanel.qml \
+		../qml/QML_FileDialogs.qml \
+		../qml/QML_PageTranslationHelp.qml \
+		../qml/PC_QML_ToolBarButton.qml \
+		../qml/QML_TextReaderArea.qml \
+		../qml/QML_FileOpenDialog.qml \
+		../qml/PC_READ_main.qml \
+		../qml/QML_MainVideoView.qml \
+		../qml/PC_READ_TopToolBar.qml \
+		../qml/QML_VideoSlider.qml \
+		../qml/QML_ScroolBar.qml \
+		../qml/PC_READ_PageHome.qml \
+		../qml/QML_SimpleDialog.qml \
+		../qml/PC_READ_PageOpen.qml \
+		../qml/PC_READ_PageSettings.qml \
+		../qml/QML_ComboBox.qml \
+		../qml/QML_ToolBarSeparator.qml \
+		../qml/QML_SoundGraph.qml \
+		../qml/QML_HtmlView.qml \
+		../qml/QML_WebViewDialog.qml \
+		../qml/QML_ListDialog.qml \
 		../qml/images/textunder.png \
 		../qml/images/editredo.png \
 		../qml/images/textjustify.png \
@@ -771,6 +775,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../qml/images/editcut.png \
 		../qml/images/editcopy.png \
 		../qml/images/filesave.png \
+		../qml/images/cant-go-home.png \
 		../qml/images/package_games_puzzle.png \
 		../qml/images/textcenter.png \
 		../qml/images/not-synch.png \
@@ -796,9 +801,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -dM -E -o moc_predefs.h ../../../Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_soundstore.cpp moc_textstore.cpp moc_uicontroller.cpp moc_asr.cpp moc_bindmaker.cpp moc_datapreparation.cpp moc_scripter.cpp
+compiler_moc_header_make_all: moc_soundstore.cpp moc_textstore.cpp moc_uicontroller.cpp moc_asr.cpp moc_bindmaker.cpp moc_datapreparation.cpp moc_scripter.cpp moc_setting.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_soundstore.cpp moc_textstore.cpp moc_uicontroller.cpp moc_asr.cpp moc_bindmaker.cpp moc_datapreparation.cpp moc_scripter.cpp
+	-$(DEL_FILE) moc_soundstore.cpp moc_textstore.cpp moc_uicontroller.cpp moc_asr.cpp moc_bindmaker.cpp moc_datapreparation.cpp moc_scripter.cpp moc_setting.cpp
 moc_soundstore.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
@@ -1667,6 +1672,82 @@ moc_scripter.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/bin/moc
 	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../cpp/ASR/scripter.h -o moc_scripter.cpp
 
+moc_setting.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qvector.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qset.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QMetaEnum \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmetaobject.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QRegExp \
+		../../../Qt/5.8/gcc_64/include/QtCore/QStringList \
+		../../../Qt/5.8/gcc_64/include/QtCore/QVariant \
+		../../../Qt/5.8/gcc_64/include/QtCore/QFile \
+		../../../Qt/5.8/gcc_64/include/QtCore/qfile.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
+		../cpp/Utilits/setting.h \
+		moc_predefs.h \
+		../../../Qt/5.8/gcc_64/bin/moc
+	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../cpp/Utilits/setting.h -o moc_setting.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all:
@@ -1891,7 +1972,12 @@ main.o: ../main.cpp ../../../Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/5.8/gcc_64/include/QtCore/QProcess \
 		../../../Qt/5.8/gcc_64/include/QtCore/qprocess.h \
 		../cpp/ASR/wavworker.h \
-		../cpp/ASR/asr.h
+		../cpp/ASR/asr.h \
+		../cpp/Utilits/setting.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QMetaEnum \
+		../../../Qt/5.8/gcc_64/include/QtCore/QRegExp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 fragment.o: ../cpp/fragment.cpp ../cpp/fragment.h \
@@ -3518,6 +3604,80 @@ graph.o: ../cpp/ASR/graph.cpp ../cpp/ASR/graph.h \
 		../../../Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graph.o ../cpp/ASR/graph.cpp
 
+setting.o: ../cpp/Utilits/setting.cpp ../cpp/Utilits/setting.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qvector.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qset.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QMetaEnum \
+		../../../Qt/5.8/gcc_64/include/QtCore/qmetaobject.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QRegExp \
+		../../../Qt/5.8/gcc_64/include/QtCore/QStringList \
+		../../../Qt/5.8/gcc_64/include/QtCore/QVariant \
+		../../../Qt/5.8/gcc_64/include/QtCore/QFile \
+		../../../Qt/5.8/gcc_64/include/QtCore/qfile.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/qfiledevice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o setting.o ../cpp/Utilits/setting.cpp
+
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
@@ -3541,6 +3701,9 @@ moc_datapreparation.o: moc_datapreparation.cpp
 
 moc_scripter.o: moc_scripter.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_scripter.o moc_scripter.cpp
+
+moc_setting.o: moc_setting.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_setting.o moc_setting.cpp
 
 ####### Install
 

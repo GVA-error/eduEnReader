@@ -57,9 +57,6 @@ public:
 
     void setTarget(QQuickItem *target);
 
-    void setCursorPosition(int position);
-    void setSelectionStart(int position);
-    void setSelectionEnd(int position);
 
     int cursorPosition() const
     {
@@ -93,6 +90,9 @@ public:
     //QStringList getAllWordVarints(const QString& word) const;
 
 public Q_SLOTS:
+    void setSelectionStart(int position);
+    void setSelectionEnd(int position);
+    void setCursorPosition(int position);
     QString getSellectedStreing() const;
     void setSelectionByWord(qint32 pos);
     void setBold(bool arg);

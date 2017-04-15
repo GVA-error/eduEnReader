@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     cpp/ASR/metrics.cpp \
     cpp/ASR/scripter.cpp \
     cpp/ASR/wavworker.cpp \
-    cpp/ASR/graph.cpp
+    cpp/ASR/graph.cpp \
+    cpp/Utilits/setting.cpp
 
 RESOURCES += qml.qrc
 
@@ -53,7 +54,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    cpp/featurefuncs.h \
     cpp/fragment.h \
     cpp/logic.h \
     cpp/soundfragment.h \
@@ -68,4 +68,5 @@ HEADERS += \
     cpp/ASR/metrics.h \
     cpp/ASR/scripter.h \
     cpp/ASR/wavworker.h \
-    cpp/ASR/graph.h
+    cpp/ASR/graph.h \
+    cpp/Utilits/setting.h

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UIController_t {
-    QByteArrayData data[78];
-    char stringdata0[1119];
+    QByteArrayData data[79];
+    char stringdata0[1142];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -93,22 +93,23 @@ QT_MOC_LITERAL(58, 818, 15), // "getMatirealsFor"
 QT_MOC_LITERAL(59, 834, 9), // "goOutHome"
 QT_MOC_LITERAL(60, 844, 21), // "getCommentUrlWithName"
 QT_MOC_LITERAL(61, 866, 22), // "getBindFileUrlWithName"
-QT_MOC_LITERAL(62, 889, 14), // "getMidMarkable"
-QT_MOC_LITERAL(63, 904, 16), // "getBeginMarkable"
-QT_MOC_LITERAL(64, 921, 14), // "getEndMarkable"
-QT_MOC_LITERAL(65, 936, 10), // "canNotSync"
-QT_MOC_LITERAL(66, 947, 19), // "recognizeIsFinished"
-QT_MOC_LITERAL(67, 967, 8), // "document"
-QT_MOC_LITERAL(68, 976, 10), // "TextStore*"
-QT_MOC_LITERAL(69, 987, 10), // "soundStore"
-QT_MOC_LITERAL(70, 998, 11), // "SoundStore*"
-QT_MOC_LITERAL(71, 1010, 18), // "bindFilesListModel"
-QT_MOC_LITERAL(72, 1029, 16), // "exampleListModel"
-QT_MOC_LITERAL(73, 1046, 18), // "matirealsListModel"
-QT_MOC_LITERAL(74, 1065, 16), // "commentListModel"
-QT_MOC_LITERAL(75, 1082, 14), // "mouseIsPressed"
-QT_MOC_LITERAL(76, 1097, 12), // "examplesSize"
-QT_MOC_LITERAL(77, 1110, 8) // "diffSize"
+QT_MOC_LITERAL(62, 889, 22), // "getMatirealUrlWithName"
+QT_MOC_LITERAL(63, 912, 14), // "getMidMarkable"
+QT_MOC_LITERAL(64, 927, 16), // "getBeginMarkable"
+QT_MOC_LITERAL(65, 944, 14), // "getEndMarkable"
+QT_MOC_LITERAL(66, 959, 10), // "canNotSync"
+QT_MOC_LITERAL(67, 970, 19), // "recognizeIsFinished"
+QT_MOC_LITERAL(68, 990, 8), // "document"
+QT_MOC_LITERAL(69, 999, 10), // "TextStore*"
+QT_MOC_LITERAL(70, 1010, 10), // "soundStore"
+QT_MOC_LITERAL(71, 1021, 11), // "SoundStore*"
+QT_MOC_LITERAL(72, 1033, 18), // "bindFilesListModel"
+QT_MOC_LITERAL(73, 1052, 16), // "exampleListModel"
+QT_MOC_LITERAL(74, 1069, 18), // "matirealsListModel"
+QT_MOC_LITERAL(75, 1088, 16), // "commentListModel"
+QT_MOC_LITERAL(76, 1105, 14), // "mouseIsPressed"
+QT_MOC_LITERAL(77, 1120, 12), // "examplesSize"
+QT_MOC_LITERAL(78, 1133, 8) // "diffSize"
 
     },
     "UIController\0soundSellectionChanged\0"
@@ -134,13 +135,14 @@ QT_MOC_LITERAL(77, 1110, 8) // "diffSize"
     "playExample\0ID\0getExample\0getExamplesFor\0"
     "seekablePhrase\0getMatireals\0getMatirealsFor\0"
     "goOutHome\0getCommentUrlWithName\0"
-    "getBindFileUrlWithName\0getMidMarkable\0"
-    "getBeginMarkable\0getEndMarkable\0"
-    "canNotSync\0recognizeIsFinished\0document\0"
-    "TextStore*\0soundStore\0SoundStore*\0"
-    "bindFilesListModel\0exampleListModel\0"
-    "matirealsListModel\0commentListModel\0"
-    "mouseIsPressed\0examplesSize\0diffSize"
+    "getBindFileUrlWithName\0getMatirealUrlWithName\0"
+    "getMidMarkable\0getBeginMarkable\0"
+    "getEndMarkable\0canNotSync\0recognizeIsFinished\0"
+    "document\0TextStore*\0soundStore\0"
+    "SoundStore*\0bindFilesListModel\0"
+    "exampleListModel\0matirealsListModel\0"
+    "commentListModel\0mouseIsPressed\0"
+    "examplesSize\0diffSize"
 };
 #undef QT_MOC_LITERAL
 
@@ -150,68 +152,69 @@ static const uint qt_meta_data_UIController[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      52,   14, // methods
-       9,  364, // properties
+      53,   14, // methods
+       9,  372, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        8,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  274,    2, 0x06 /* Public */,
-       3,    0,  275,    2, 0x06 /* Public */,
-       4,    0,  276,    2, 0x06 /* Public */,
-       5,    0,  277,    2, 0x06 /* Public */,
-       6,    0,  278,    2, 0x06 /* Public */,
-       7,    0,  279,    2, 0x06 /* Public */,
-       8,    0,  280,    2, 0x06 /* Public */,
-       9,    0,  281,    2, 0x06 /* Public */,
+       1,    0,  279,    2, 0x06 /* Public */,
+       3,    0,  280,    2, 0x06 /* Public */,
+       4,    0,  281,    2, 0x06 /* Public */,
+       5,    0,  282,    2, 0x06 /* Public */,
+       6,    0,  283,    2, 0x06 /* Public */,
+       7,    0,  284,    2, 0x06 /* Public */,
+       8,    0,  285,    2, 0x06 /* Public */,
+       9,    0,  286,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      10,    0,  282,    2, 0x0a /* Public */,
-      11,    1,  283,    2, 0x0a /* Public */,
-      13,    0,  286,    2, 0x0a /* Public */,
-      14,    1,  287,    2, 0x0a /* Public */,
-      16,    0,  290,    2, 0x0a /* Public */,
-      17,    1,  291,    2, 0x0a /* Public */,
-      19,    0,  294,    2, 0x0a /* Public */,
-      20,    1,  295,    2, 0x0a /* Public */,
-      22,    0,  298,    2, 0x0a /* Public */,
-      23,    0,  299,    2, 0x0a /* Public */,
-      24,    1,  300,    2, 0x0a /* Public */,
-      26,    1,  303,    2, 0x0a /* Public */,
-      27,    0,  306,    2, 0x0a /* Public */,
-      28,    1,  307,    2, 0x0a /* Public */,
-      30,    1,  310,    2, 0x0a /* Public */,
-      31,    1,  313,    2, 0x0a /* Public */,
-      33,    0,  316,    2, 0x0a /* Public */,
-      34,    2,  317,    2, 0x0a /* Public */,
-      36,    1,  322,    2, 0x0a /* Public */,
-      38,    0,  325,    2, 0x0a /* Public */,
-      39,    0,  326,    2, 0x0a /* Public */,
-      40,    0,  327,    2, 0x0a /* Public */,
-      41,    0,  328,    2, 0x0a /* Public */,
-      42,    0,  329,    2, 0x0a /* Public */,
-      43,    0,  330,    2, 0x0a /* Public */,
-      44,    0,  331,    2, 0x0a /* Public */,
-      45,    1,  332,    2, 0x0a /* Public */,
-      47,    0,  335,    2, 0x0a /* Public */,
-      48,    1,  336,    2, 0x0a /* Public */,
-      50,    0,  339,    2, 0x0a /* Public */,
-      51,    0,  340,    2, 0x0a /* Public */,
-      52,    1,  341,    2, 0x0a /* Public */,
-      54,    0,  344,    2, 0x0a /* Public */,
-      55,    1,  345,    2, 0x0a /* Public */,
-      57,    0,  348,    2, 0x0a /* Public */,
-      58,    1,  349,    2, 0x0a /* Public */,
-      59,    0,  352,    2, 0x0a /* Public */,
-      60,    1,  353,    2, 0x0a /* Public */,
-      61,    1,  356,    2, 0x0a /* Public */,
-      62,    0,  359,    2, 0x0a /* Public */,
-      63,    0,  360,    2, 0x0a /* Public */,
-      64,    0,  361,    2, 0x0a /* Public */,
-      65,    0,  362,    2, 0x0a /* Public */,
-      66,    0,  363,    2, 0x09 /* Protected */,
+      10,    0,  287,    2, 0x0a /* Public */,
+      11,    1,  288,    2, 0x0a /* Public */,
+      13,    0,  291,    2, 0x0a /* Public */,
+      14,    1,  292,    2, 0x0a /* Public */,
+      16,    0,  295,    2, 0x0a /* Public */,
+      17,    1,  296,    2, 0x0a /* Public */,
+      19,    0,  299,    2, 0x0a /* Public */,
+      20,    1,  300,    2, 0x0a /* Public */,
+      22,    0,  303,    2, 0x0a /* Public */,
+      23,    0,  304,    2, 0x0a /* Public */,
+      24,    1,  305,    2, 0x0a /* Public */,
+      26,    1,  308,    2, 0x0a /* Public */,
+      27,    0,  311,    2, 0x0a /* Public */,
+      28,    1,  312,    2, 0x0a /* Public */,
+      30,    1,  315,    2, 0x0a /* Public */,
+      31,    1,  318,    2, 0x0a /* Public */,
+      33,    0,  321,    2, 0x0a /* Public */,
+      34,    2,  322,    2, 0x0a /* Public */,
+      36,    1,  327,    2, 0x0a /* Public */,
+      38,    0,  330,    2, 0x0a /* Public */,
+      39,    0,  331,    2, 0x0a /* Public */,
+      40,    0,  332,    2, 0x0a /* Public */,
+      41,    0,  333,    2, 0x0a /* Public */,
+      42,    0,  334,    2, 0x0a /* Public */,
+      43,    0,  335,    2, 0x0a /* Public */,
+      44,    0,  336,    2, 0x0a /* Public */,
+      45,    1,  337,    2, 0x0a /* Public */,
+      47,    0,  340,    2, 0x0a /* Public */,
+      48,    1,  341,    2, 0x0a /* Public */,
+      50,    0,  344,    2, 0x0a /* Public */,
+      51,    0,  345,    2, 0x0a /* Public */,
+      52,    1,  346,    2, 0x0a /* Public */,
+      54,    0,  349,    2, 0x0a /* Public */,
+      55,    1,  350,    2, 0x0a /* Public */,
+      57,    0,  353,    2, 0x0a /* Public */,
+      58,    1,  354,    2, 0x0a /* Public */,
+      59,    0,  357,    2, 0x0a /* Public */,
+      60,    1,  358,    2, 0x0a /* Public */,
+      61,    1,  361,    2, 0x0a /* Public */,
+      62,    1,  364,    2, 0x0a /* Public */,
+      63,    0,  367,    2, 0x0a /* Public */,
+      64,    0,  368,    2, 0x0a /* Public */,
+      65,    0,  369,    2, 0x0a /* Public */,
+      66,    0,  370,    2, 0x0a /* Public */,
+      67,    0,  371,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
@@ -263,6 +266,7 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::Void,
     QMetaType::QUrl, QMetaType::QString,   35,
     QMetaType::QUrl, QMetaType::QString,   35,
+    QMetaType::QUrl, QMetaType::QString,   35,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
@@ -270,15 +274,15 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-      67, 0x80000000 | 68, 0x0009510b,
-      69, 0x80000000 | 70, 0x0009510b,
-      71, QMetaType::QStringList, 0x00495003,
+      68, 0x80000000 | 69, 0x0009510b,
+      70, 0x80000000 | 71, 0x0009510b,
       72, QMetaType::QStringList, 0x00495003,
       73, QMetaType::QStringList, 0x00495003,
       74, QMetaType::QStringList, 0x00495003,
-      75, QMetaType::Bool, 0x00095102,
-      76, QMetaType::Int, 0x00495103,
+      75, QMetaType::QStringList, 0x00495003,
+      76, QMetaType::Bool, 0x00095102,
       77, QMetaType::Int, 0x00495103,
+      78, QMetaType::Int, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -352,21 +356,23 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 40: _t->getExample(); break;
         case 41: _t->getExamplesFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 42: _t->getMatireals(); break;
-        case 43: _t->getMatirealsFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 43: _t->getMatirealsFor((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 44: _t->goOutHome(); break;
         case 45: { QUrl _r = _t->getCommentUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 46: { QUrl _r = _t->getBindFileUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 47: { qint32 _r = _t->getMidMarkable();
+        case 47: { QUrl _r = _t->getMatirealUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
+        case 48: { qint32 _r = _t->getMidMarkable();
             if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 48: { qint32 _r = _t->getBeginMarkable();
+        case 49: { qint32 _r = _t->getBeginMarkable();
             if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 49: { qint32 _r = _t->getEndMarkable();
+        case 50: { qint32 _r = _t->getEndMarkable();
             if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 50: { bool _r = _t->canNotSync();
+        case 51: { bool _r = _t->canNotSync();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 51: _t->recognizeIsFinished(); break;
+        case 52: _t->recognizeIsFinished(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -500,13 +506,13 @@ int UIController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 52)
+        if (_id < 53)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 52;
+        _id -= 53;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 52)
+        if (_id < 53)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 52;
+        _id -= 53;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

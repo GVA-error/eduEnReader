@@ -65,12 +65,12 @@ void UIController::home(){
 
 bool UIController::getMouseIsPressed() const
 {
-    return mouseIsPressed;
+    return _mouseIsPressed;
 }
 
 void UIController::setMouseIsPressed(bool& newValue)
 {
-    mouseIsPressed = newValue;
+    _mouseIsPressed = newValue;
 }
 
 void UIController::synchTitle(const QString& bindFileName)
@@ -188,7 +188,7 @@ void UIController::addComment(const QUrl& commentUrl, const QString &name)
 
 QUrl UIController::getMatirealUrlWithName(const QString& name) const
 {
-    QUrl matirealUrl = _matirealUrl.value(name);
+    QUrl matirealUrl = _matirealUrl.value(name.trimmed());
     return matirealUrl;
 }
 
@@ -239,8 +239,8 @@ void UIController::playExample(QString ID)
 
     if (_f_home)
         saveHome();
-
     goOutHome();
+
     _soundStore->setFileUrl(url, begin, end);
     _soundStore->stop();
     _soundStore->start();
@@ -254,9 +254,10 @@ void UIController::getMatireals()
     getMatirealsFor(sellectedString);
 }
 
-void UIController::getMatirealsFor(const QString& seekablePhrase)
+void UIController::getMatirealsFor(QString seekablePhrase)
 {
     _matirealsList.clear();
+    seekablePhrase = seekablePhrase.toLower();
     auto patterns = _logic->getPatterns();
     for (Logic::Pattern p : patterns)
     {
@@ -270,7 +271,7 @@ void UIController::getMatirealsFor(const QString& seekablePhrase)
         }
         if (p._type == Logic::webPlus)
             rezUrl = QUrl(matirealString);
-        QString title = p._title;
+        QString title = p._title.trimmed();
         _matirealsList.push_back(title);
         _matirealUrl[title] = rezUrl;
     }
@@ -337,13 +338,14 @@ void UIController::setCursorPosInTimePos()
     qreal timePos = _soundStore->getTimePos();
     qint64 textPos = _logic->posInWavToPosInText(timePos);
     if (textPos >= 0)
-        _textStore->setCursorPosition(textPos);
+        _textStore->setCursorPosition(textPos+1);
 }
 
 void UIController::setTimePosInCursorPos()
 {
-    if (_f_home == false || canNotSync())
+    if (_f_home == false || canNotSync() || _mouseIsPressed)
         return;
+
     qint64 textPos = _textStore->cursorPosition();
     qreal newSoundPos = _logic->posInTxtToPosInWav(textPos);
 
@@ -364,7 +366,7 @@ void UIController::cursorPosChanged()
     markCurText();
     auto newComments = _logic->getCommentNamesonTextPos(cursorPos);
     setCommentList(newComments);
-    setTimePosInCursorPos();
+    //setTimePosInCursorPos();
 }
 
 void UIController::markCurText()
@@ -374,7 +376,7 @@ void UIController::markCurText()
     qint64 cursorPos = _textStore->cursorPosition();
     if (cursorPos <= 0)
         return;
-    _textStore->setAllUnMarkText(); // Костыль от глюка TextArea с не всегда устанвливаемым фоном
+    //_textStore->setAllUnMarkText(); // Костыль от глюка старого TextArea с не всегда устанвливаемым фоном, если возникнет вновь вернуть
     _logic->tempMarkBindInTextPos(cursorPos);
 }
 
