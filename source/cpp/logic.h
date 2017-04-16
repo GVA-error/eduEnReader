@@ -44,6 +44,7 @@ public:
         patternTypes _type;
     };
 
+    bool isNormalBind(const QVector <Logic::Bind>::const_iterator bindIterator) const;
     qint32 moreOrLess(Bind bind, qreal soundPos, qint64 textPos) const;
 
     // Формирование списка примеров по искомой фразе
@@ -74,7 +75,7 @@ public:
     void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, qint64 pos = -1);
     void addRecognizedString(const QStringList& recognizedString, SoundFragment::PTR sound, QString fileName = QString());
     void addRecognizedString(const QStringList& recognizedString, qreal beginSound, qreal endSound, QString fileName = QString());
-    bool haveRecognizedString() { _recognizedStrings.empty() == false; }
+    bool haveRecognizedString() { return _recognizedStrings.empty() == false; }
 
     void makeComment(TextFragment::PTR text, QUrl url, const QString &name);
 
@@ -207,6 +208,8 @@ private:
         auto l_text = left.text;
         auto r_sound = right.sound;
         auto r_text = right.text;
+        if (r_text.isNull() || r_sound.isNull() || l_text.isNull() || l_sound.isNull())
+            return false;
         return l_text->begin() == r_text->begin() && l_text->end() == r_text->end() &&
                l_sound->begin() == r_sound->begin() && l_sound->end() == r_sound->end();
     }

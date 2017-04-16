@@ -27,7 +27,7 @@ TextArea {
     topPadding: 0
     bottomPadding: 0
     background: null
-    readOnly: true
+    //readOnly: true
     mouseSelectionMode : TextInput.SelectWords
 
     Component.onCompleted: contentItem.interactive = false

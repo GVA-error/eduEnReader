@@ -40,13 +40,13 @@ void BindMaker::preparetion()
     clear();
     if (_logic->haveRecognizedString())
     {
-        _logic->clear(true); // Если занимались деление файла - старые распознаные данные считаем устаревшими
-        soundPreparetion(_splitSize, _diff);
+        _logic->clear(false);
+        soundPreparetion();
     }
     else
     {
-        _logic->clear(false);
-        soundPreparetion();
+        _logic->clear(true); // Если занимались деление файла - старые распознаные данные считаем устаревшими
+        soundPreparetion(_splitSize, _diff);
     }
 
     sortFileParts();

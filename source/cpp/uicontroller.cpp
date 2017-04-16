@@ -429,7 +429,7 @@ void UIController::makeBind()
     //_soundStore->setFileUrl(soundUrl);
 
     _bindMaker->runInThisThread();
-   // _logic->bindLogicHanding();
+    _logic->bindLogicHanding();
     _logic->writeInFile(_textStore, _soundStore);
 
     return;
@@ -446,7 +446,7 @@ void UIController::makeBind()
 
     _f_reconizing = true;
     QDir curDir;
-    QStringList bindFiles = curDir.entryList(QStringList("DavidDeutsch_2005G.mp4"));
+    QStringList bindFiles = curDir.entryList(QStringList("MikkoHypponen_2011G-480p.mp4"));
     for (QString mp4 : bindFiles)
     {
         QUrl url = QUrl::fromLocalFile(mp4);
@@ -461,6 +461,7 @@ void UIController::makeBind()
         break;
     }
 
+    _f_reconizing = false;
     fileStream << "End binding time: " << curTime.toString();
 
 

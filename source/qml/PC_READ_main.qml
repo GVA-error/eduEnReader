@@ -31,11 +31,11 @@ ApplicationWindow {
         homePage.textArea.synch(true)
     }
     function goSettings(){
-        homePage.homeUiControler.saveHome()
+      /*  homePage.homeUiControler.saveHome()
         homePage.homeUiControler.goOutHome()
         pageView.setCurrentIndex(3)
-        homePage.homeSoundStore.stop()
-      //  homePage.homeUiControler.makeBind()
+        homePage.homeSoundStore.stop()*/
+        homePage.homeUiControler.makeBind()
     }
     function goExamples(){
           homePage.homeUiControler.saveHome()

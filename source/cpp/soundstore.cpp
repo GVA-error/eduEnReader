@@ -52,7 +52,7 @@ void SoundStore::home()
     //        && _saved_finishPos == _finishPos) // Мы и так дома
     //    return;
     setFileUrl(_saved_lastOpenedUrl);
-    //if (_saved_payed)
+    //if (_saved_payed)"Если "Если бы я был бы я был
         start();
     if (_saved_curPos > 0)
     {

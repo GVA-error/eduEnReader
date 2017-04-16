@@ -443,20 +443,38 @@ qint32 Logic::moreOrLess(Bind bind, qreal soundPos, qint64 textPos) const
     return 1;
 }
 
+bool Logic::isNormalBind(const QVector <Logic::Bind>::const_iterator bindIterator) const
+{
+    if (bindIterator == _bindVector.constEnd())
+        return false;
+    auto bind = *bindIterator;
+    if (isEquils(bind, zeroBind))
+        return false;
+    auto bind_sound = bind.sound;
+    auto bind_text = bind.text;
+    if (bind_sound.isNull() || bind_text.isNull())
+        return false;
+    return true;
+}
+
 QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const
 {
     if (_bindVector.empty())
         return _bindVector.end();
+    if (isNormalBind(_lastBindIterator) == false)
+        return _bindVector.begin();
+
     assert (soundPos < 0 || textPos < 0);
     //auto cur = qLowerBound(data.begin(), data.end(), 3);
 
     // Проверяем последний и следующий за ним
     if (_lastBindIterator != _bindVector.end())
     {
-        if (moreOrLess(*_lastBindIterator, soundPos, textPos) == 0)
+        Bind lastBind = (*_lastBindIterator);
+        if (moreOrLess(lastBind, soundPos, textPos) == 0)
             return _lastBindIterator;
         auto nextBind = _lastBindIterator+1;
-        if (nextBind != _bindVector.constEnd())
+        if (isNormalBind(nextBind))
             if (moreOrLess(*nextBind, soundPos, textPos) == 0)
                 return nextBind;
     }
@@ -542,11 +560,15 @@ void Logic::tempMarkBindInTextPos(qint64 pos)
 {
     //unMarkAllBindedText();
     unmarkLastBind();
-    auto curBind = getBindFromTextPos(pos);
-    _lastBindIterator = curBind;
-    if (curBind == _bindVector.end())
+    auto curBindIterator = getBindFromTextPos(pos);
+
+    if (curBindIterator == _bindVector.constEnd())
         return;
-    markBind(*curBind);
+    Bind curBind = *curBindIterator;
+    if (curBind.sound.isNull() || curBind.text.isNull())
+        return;
+    _lastBindIterator = curBindIterator;
+    markBind(curBind);
 }
 
 void Logic::markLastBind()
@@ -857,9 +879,10 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         addRecognizedString(rec, begin, end);
     }
 
-    if (_bindVector.empty() == false)
+    if (_bindVector.empty())
+        _lastBindIterator = _bindVector.end();
+    else
         _lastBindIterator = _bindVector.begin();
-
     file.close();
 }
 
