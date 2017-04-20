@@ -5,13 +5,16 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _logic = Logic::factoryMethod();
     _f_reconizing = false;
     _f_home = true;
-    _examplesSize = 30;
-    _diffSize = 30;
+    QML_Settings s; // TODO Заменить на сигнальную архитектуру
+    _examplesSize = s.exampleSize();
+    _diffSize = s.exampleDiff();
    // _exampleList.push_back("1");
    // _exampleList.push_back("2");
 
     //connect(this, SIGNAL(textSellectionChanged()), this, SLOT(startSellectTimer()));
     _sellectTimer.start();
+    _curDir = QDir("lectures");
+    _opening = false;
 }
 
 void UIController::setDocument(TextStore* TS) {
@@ -28,6 +31,35 @@ void UIController::setSoundStore(SoundStore* TS) {
     // По скольку последовательность вызовов setDocument и setSoundStore пишу так
     if (_textStore.isNull() == false && _soundStore.isNull() == false)
         initBindMaker(_textStore, _soundStore, _logic);
+}
+
+QUrl UIController::curCommentUrl()
+{
+    return _curCommentUrl;
+}
+
+void UIController::setCurCommentUrl(const QUrl& newUrl)
+{
+    _curCommentUrl = newUrl;
+    emit curCommentUrlChanged();
+}
+
+bool UIController::isDir(const QString& name) const
+{
+    if (_dirs.contains(name))
+        return true;
+    return false;
+}
+
+QDir UIController::getDir(const QString& name) const
+{
+    return _dirs.value(name);
+}
+
+void UIController::setCurDir(const QString& name)
+{
+    _curDir = _dirs.value(name);
+    synchBndFileList();
 }
 
 void UIController::startSellectTimer()
@@ -47,9 +79,9 @@ SoundStore* UIController::getSoundStore()
     return _soundStore.data();
 }
 
-void UIController::saveHome()
+void UIController::saveHome(bool push)
 {
-    if (!_f_home)
+    if (!_f_home && push == false)
         return;
     _soundStore->saveHome();
     _textStore->saveHome();
@@ -80,31 +112,41 @@ void UIController::synchTitle(const QString& bindFileName)
     _bindTitles[bindFileName] = title.trimmed();
 }
 
-// TODO Хранить в логике картинку
+// TODO Хранить в логике картинку?
 QUrl UIController::getImageUrl(const QString& bindFile) const
 {
+    if (bindFile == ".")
+        return _defaultUpDirPicture;
     QUrl bindUrl = _bindFile.value(bindFile);
     QString base = bindUrl.toLocalFile();
     QStringList splited = base.split('.');
     splited.pop_back();
     splited.push_back("jpeg");
     QString stringImageUrl = splited.join('.');
+    if (QFile::exists(stringImageUrl) == false)
+        if (isDir(bindFile))
+            return _defaultDirPicture;
+        else
+            return _defaultLecturePicture;
     QUrl rezUrl = QUrl::fromLocalFile(stringImageUrl);
     return rezUrl;
 }
 
 QString UIController::getTitle(const QString &bindFile) const
 {
-    return _bindTitles.value(bindFile);
+    QString title = _bindTitles.value(bindFile);
+    if (title == "")
+        title = QFileInfo(bindFile).baseName();
+    return title;
 }
 
 void UIController::synchBndFileList()
 {
-    QDir curDir;
+    //QDir curDir;
     QList <QFileInfo> bindInfoList;
     _bindFilesList.clear();
     _bindFilesList.clear();
-    bindInfoList = curDir.entryInfoList(QStringList("*.bnd"));
+    bindInfoList = _curDir.entryInfoList(QStringList("*.bnd"));
     for (auto bindInfo : bindInfoList)
     {
         QString filePath = bindInfo.absoluteFilePath();
@@ -113,8 +155,29 @@ void UIController::synchBndFileList()
         _bindFile[name] = bindUrl;
         _bindFilesList.push_back(name);
         synchTitle(name);
-
     }
+    auto lstDirs = _curDir.entryList(QDir::Dirs);
+    for (auto dirString : lstDirs)
+    {
+        if (dirString == "." || dirString == "..")
+            continue;
+        dirString = _curDir.absolutePath() + "/" + dirString;
+        QFileInfo dirInfo = QFileInfo(dirString);
+        QString name = dirInfo.baseName();
+        QDir dir = QDir(dirInfo.absoluteFilePath());
+        _dirs[name] = dir;
+        _bindFilesList.push_back(name);
+    }
+    QString backName = ".";
+    QStringList buff = _curDir.absolutePath().split("/");
+    buff.pop_back();
+    QString rezPath = buff.join("/");
+    if (rezPath != QDir().currentPath())
+    {
+        _dirs[backName] = rezPath;
+        _bindFilesList.push_back(backName);
+    }
+
     emit bindFilesListChanged();
 }
 
@@ -169,6 +232,14 @@ void UIController::setCommentList(QStringList newComments)
             newComments.removeOne(d);
     }
     _commentList = newComments;
+    QString curCommentName;
+    if (_commentList.empty() == false)
+    {
+        curCommentName = _commentList.front(); // TODO Возможно стоит оптимизировать
+        setCurCommentUrl(_logic->getCommentUrlsonName(curCommentName));
+    }
+    else
+        setCurCommentUrl(QUrl(""));
     emit commentListChanged();
 }
 
@@ -206,7 +277,9 @@ QUrl UIController::getCommentUrlWithName(const QString &name) const
 
 qint32 UIController::getMidMarkable() const
 {
-    qint32 rezPos = _logic->getTextMidPosCurBind();
+    qint32 rezPos = -1;
+    if (_logic.isNull() == false)
+        rezPos = _logic->getTextMidPosCurBind();
     if (rezPos < 0)
         return 0;
     return rezPos;
@@ -374,9 +447,11 @@ void UIController::markCurText()
     if (_f_home == false)
         return;
     qint64 cursorPos = _textStore->cursorPosition();
-    if (cursorPos <= 0)
+    if (cursorPos < 0)
         return;
     //_textStore->setAllUnMarkText(); // Костыль от глюка старого TextArea с не всегда устанвливаемым фоном, если возникнет вновь вернуть
+    if (_logic.isNull())
+        return;
     _logic->tempMarkBindInTextPos(cursorPos);
 }
 
@@ -398,11 +473,16 @@ void UIController::createBindFile(const QUrl &soundFileName)
 
 void UIController::openBindFile(const QUrl &arg)
 {
+    if (_opening)
+        return;
+    _opening = true;
+    setCurCommentUrl(QUrl(""));
     QString fileName = arg.toLocalFile();
     qDebug() << fileName;
     _logic->readFromFile(fileName, _textStore, _soundStore);
-    saveHome();
+    saveHome(true);
     _logic->unMarkAllBindedText();
+    _opening = false;
 }
 
 void UIController::saveBindFile(const QUrl &arg)
@@ -428,11 +508,11 @@ void UIController::makeBind()
     //_textStore->setFileUrl(textUrl);
     //_soundStore->setFileUrl(soundUrl);
 
-    _bindMaker->runInThisThread();
-    _logic->bindLogicHanding();
-    _logic->writeInFile(_textStore, _soundStore);
+//    _bindMaker->runInThisThread();
+//    _logic->bindLogicHanding();
+//    _logic->writeInFile(_textStore, _soundStore);
 
-    return;
+//    return;
 
     if (_f_reconizing)
         return;
@@ -446,7 +526,7 @@ void UIController::makeBind()
 
     _f_reconizing = true;
     QDir curDir;
-    QStringList bindFiles = curDir.entryList(QStringList("MikkoHypponen_2011G-480p.mp4"));
+    QStringList bindFiles = curDir.entryList(QStringList("*.mp4"));
     for (QString mp4 : bindFiles)
     {
         QUrl url = QUrl::fromLocalFile(mp4);
@@ -458,7 +538,7 @@ void UIController::makeBind()
        // _logic->bindLogicHanding();
         _logic->writeInFile(_textStore, _soundStore);
         fileStream << "File " << url.toString() << " end: " << curTime.toString();
-        break;
+       // break;
     }
 
     _f_reconizing = false;

@@ -27,7 +27,7 @@ SOURCES += main.cpp \
     cpp/ASR/scripter.cpp \
     cpp/ASR/wavworker.cpp \
     cpp/ASR/graph.cpp \
-    cpp/Utilits/setting.cpp
+    cpp/Utilits/setting.cpp \
 
 RESOURCES += qml.qrc
 

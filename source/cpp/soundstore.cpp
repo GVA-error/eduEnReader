@@ -52,7 +52,7 @@ void SoundStore::home()
     //        && _saved_finishPos == _finishPos) // Мы и так дома
     //    return;
     setFileUrl(_saved_lastOpenedUrl);
-    //if (_saved_payed)"Если "Если бы я был бы я был
+    //if (_saved_payed)
         start();
     if (_saved_curPos > 0)
     {
@@ -212,13 +212,20 @@ void SoundStore::setFileUrl(const QUrl& url, qreal start, qreal finish)
 
 void SoundStore::setFileUrl(const QUrl& url)
 {
+    if (url.isValid() == false)
+        return;
+    if (isRemoteSource(url.toLocalFile()) == false)
+        if (QFile::exists(url.toString()))
+            return;
     VlcQmlVideoPlayer::setUrl(url);
+
     _lastOpenedUrl = url;
     VlcQmlVideoPlayer::setVolume(100);
     VlcQmlVideoPlayer::pause();
     _finishPos = -1;
     _startPos = -1;
     _isExample = false;
+    qDebug() << state();
 }
 
 QUrl SoundStore::fileUrl() const

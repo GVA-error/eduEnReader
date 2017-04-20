@@ -36,6 +36,27 @@ Page {
         z : 3
         Page{// Список комментариев
             visible: exampleCommentsPageLits.currentIndex == 0
+            padding: 10
+            Flickable {
+                id: flickable
+                anchors.fill: parent
+                flickableDirection: Flickable.VerticalFlick
+                TextArea.flickable:
+                QML_TextReaderArea {
+                    id : commentArrea
+                    text: commentDoc.text
+                    textFormat: Qt.RichText
+                    readOnly: true
+                }
+                ScrollBar.vertical: ScrollBar {}
+                TextStore{
+                    id : commentDoc
+                    target: commentArrea
+                    fileUrl : uiControler.curCommentUrl;
+                }
+            }
+
+/*          // Старый диолог
             QML_ListDialog{
                 id : comments;
                 anchors.fill: parent
@@ -46,7 +67,7 @@ Page {
                     commentDialog.openHtml(fileUrl)
                     commentDialog.showDialog()
                 }
-            }
+            }*/
         }
         Page{// Список примеров
             visible: exampleCommentsPageLits.currentIndex == 1
@@ -114,7 +135,7 @@ Page {
         Component.onCompleted: contentItem.interactive = false
         propagateComposedEvents: false
         onPressed: {
-            console.log("CLICKED FALSE")
+           // console.log("CLICKED FALSE")
             mouse.accepted = true
         }
     }
@@ -171,7 +192,6 @@ Page {
         selectionStart: textArea.selectionStart
         selectionEnd: textArea.selectionEnd
         textColor: "Black"
-
         onError: {
             errorDialog.text = message
             errorDialog.visible = true

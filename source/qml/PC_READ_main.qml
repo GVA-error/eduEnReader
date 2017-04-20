@@ -31,10 +31,10 @@ ApplicationWindow {
         homePage.textArea.synch(true)
     }
     function goSettings(){
-      /*  homePage.homeUiControler.saveHome()
-        homePage.homeUiControler.goOutHome()
-        pageView.setCurrentIndex(3)
-        homePage.homeSoundStore.stop()*/
+        //homePage.homeUiControler.saveHome()
+        //homePage.homeUiControler.goOutHome()
+        //pageView.setCurrentIndex(3)
+        //homePage.homeSoundStore.stop()
         homePage.homeUiControler.makeBind()
     }
     function goExamples(){
@@ -67,6 +67,18 @@ ApplicationWindow {
         PC_READ_PageHome { id : homePage }
         QML_PageTranslationHelp { id : translitionHelpPage }
         PC_READ_PageSettings { id : settingPage }
+    }
+
+    QML_WaitDialog{
+        id : waitDialog
+        anchors.fill: parent
+        z : 100
+        MouseArea{
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: {
+
+            }
+        }
     }
 
     //MessageDialog { id : errorDialog }

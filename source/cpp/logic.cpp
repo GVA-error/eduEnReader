@@ -150,11 +150,29 @@ qint64 Logic::getBindNumber() const
     return _bindVector.size();
 }
 
+void Logic::getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask) const
+{
+    QFileInfoList fileInfoList = curDir.entryInfoList(mask);
+    for (auto fileInfo : fileInfoList)
+    {
+        QString addingFile = fileInfo.absoluteFilePath();
+        rezList.push_back(addingFile);
+    }
+    QStringList allDirs = curDir.entryList(QDir::Dirs);
+    for (auto dirString : allDirs)
+    {
+        if (dirString == "." || dirString == "..")
+            continue;
+        QDir nextDir = curDir.absolutePath() + "/" + dirString;
+        getAllFiles(rezList, nextDir, mask);
+    }
+}
+
 QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile) const
 {
     QList <Logic::Example> rezList;
-    QDir curDir;
-    QStringList bindFiles = curDir.entryList(QStringList("*.bnd"));
+    QStringList bindFiles;
+    getAllFiles(bindFiles, QDir(), QStringList("*.bnd"));
     TextStore::PTR tmp_textStore = TextStore::factoryMethod();
     SoundStore::PTR tmp_soundStore = SoundStore::factoryMethod();
     Logic tmp_logic;
@@ -202,7 +220,7 @@ void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd,
     if (_findInSequence == false)
         return;
 
-    for (auto curAdd = firstAdd; curAdd != _bindVector.end() ; curAdd += step)
+    for (auto curAdd = firstAdd; curAdd != _bindVector.constEnd() ; curAdd += step)
     {
         auto text = curBind.text;
         if (step == -1 && text->haveSentanceEndPrev(seekablePhrase))
@@ -219,7 +237,7 @@ void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd,
 
         if (curAdd == _bindVector.begin())
             break;
-        if (curAdd + step == _bindVector.end())
+        if (curAdd + step == _bindVector.constEnd())
             break;
     }
 }
@@ -234,7 +252,7 @@ QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
     auto curBind = _bindVector.begin() + 1;
     qint32 curnumber = 0; // TODO для дебага
 
-    for (;curBind != _bindVector.end() - 1; curBind++)
+    for (;curBind != _bindVector.constEnd() - 1; curBind++)
     {
         curnumber++;
         if (curnumber > 76)
@@ -258,7 +276,7 @@ QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
         {
             summBind = summ(summBind, next);
             addWhileNotFindSentenceEnd(curBind-1, summBind, seekablePhrase, -1);
-            if (curBind+1 != _bindVector.end())
+            if (curBind+1 != _bindVector.constEnd())
                 addWhileNotFindSentenceEnd(curBind+2, summBind, seekablePhrase, 1);
         }
         else
@@ -304,7 +322,7 @@ QList <QString> Logic::getCommentNamesonTextPos(qint64 pos) const
     qint64 begin, end;
     begin = end = pos;
     auto b = getBindFromTextPos(pos);
-    if (b != _bindVector.end())
+    if (b != _bindVector.constEnd())
     {
         auto text = (*b).text;
         begin = text->begin();
@@ -343,7 +361,7 @@ QUrl Logic::getCommentUrlsonName(const QString& name) const
 qint64 Logic::posInWavToPosInText(qreal soundPos) const
 {
     auto sellectedBind = getBindFromSoundPos(soundPos);
-    if (sellectedBind == _bindVector.end())
+    if (sellectedBind == _bindVector.constEnd())
         return 0;
     auto sellectedText = (*sellectedBind).text;
     qint64 posInText = sellectedText->begin();
@@ -353,7 +371,7 @@ qint64 Logic::posInWavToPosInText(qreal soundPos) const
 qreal Logic::posInTxtToPosInWav(qint64 textPos) const
 {
     auto sellectedBind = getBindFromTextPos(textPos);
-    if (sellectedBind == _bindVector.end())
+    if (sellectedBind == _bindVector.constEnd())
         return 0;
     auto sellectedSound = (*sellectedBind).sound;
     qreal posInSound = sellectedSound->begin();
@@ -386,6 +404,8 @@ qint32 Logic::getTextMidPosCurBind() const
     if (curBind == _bindVector.constEnd())
         return 0;
     auto text = (*curBind).text;
+    if (text.isNull())
+        return 0;
     qint32 mid = text->mid();
     return mid;
 }
@@ -447,12 +467,12 @@ bool Logic::isNormalBind(const QVector <Logic::Bind>::const_iterator bindIterato
 {
     if (bindIterator == _bindVector.constEnd())
         return false;
-    auto bind = *bindIterator;
-    if (isEquils(bind, zeroBind))
-        return false;
+    Bind bind = *bindIterator;
     auto bind_sound = bind.sound;
     auto bind_text = bind.text;
     if (bind_sound.isNull() || bind_text.isNull())
+        return false;
+    if (isEquils(bind, zeroBind))
         return false;
     return true;
 }
@@ -460,7 +480,7 @@ bool Logic::isNormalBind(const QVector <Logic::Bind>::const_iterator bindIterato
 QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const
 {
     if (_bindVector.empty())
-        return _bindVector.end();
+        return _bindVector.constEnd();
     if (isNormalBind(_lastBindIterator) == false)
         return _bindVector.begin();
 
@@ -468,7 +488,7 @@ QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundOrTextPos(qreal sou
     //auto cur = qLowerBound(data.begin(), data.end(), 3);
 
     // Проверяем последний и следующий за ним
-    if (_lastBindIterator != _bindVector.end())
+    if (_lastBindIterator != _bindVector.constEnd())
     {
         Bind lastBind = (*_lastBindIterator);
         if (moreOrLess(lastBind, soundPos, textPos) == 0)
@@ -499,10 +519,10 @@ QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundOrTextPos(qreal sou
         return rez;
     };
     auto founded = qLowerBound(_bindVector.constBegin(), _bindVector.constEnd(), zeroBind, lamdaLessThen);
-    if (founded != _bindVector.end())
+    if (founded != _bindVector.constEnd())
         if (moreOrLess(*founded, soundPos, textPos) == 0)
             return founded;
-    return _bindVector.end();
+    return _bindVector.constEnd();
 }
 
 QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundPos(qreal soundPos) const
@@ -519,7 +539,7 @@ QVector <Logic::Bind>::const_iterator Logic::getBindFromTextPos(qint64 textPos) 
 qint64 Logic::roundToBindTextPos(qint64 textPos) const
 {
     auto bind = getBindFromTextPos(textPos);
-    if (bind == _bindVector.end())
+    if (bind == _bindVector.constEnd())
         return 0;
     auto text = (*bind).text;
     qint64 rez = text->begin();
@@ -529,7 +549,7 @@ qint64 Logic::roundToBindTextPos(qint64 textPos) const
 qreal Logic::roundToBindSoundPos(qreal soundPos) const
 {
     auto bind = getBindFromSoundPos(soundPos);
-    if (bind == _bindVector.end())
+    if (bind == _bindVector.constEnd())
         return 0;
     auto sound = (*bind).sound;
     qint64 rez = sound->begin();
@@ -562,9 +582,13 @@ void Logic::tempMarkBindInTextPos(qint64 pos)
     unmarkLastBind();
     auto curBindIterator = getBindFromTextPos(pos);
 
+    Bind curBind;
     if (curBindIterator == _bindVector.constEnd())
-        return;
-    Bind curBind = *curBindIterator;
+        if (_bindVector.empty())
+            return;
+        else
+            curBindIterator = _bindVector.begin();
+    curBind = *curBindIterator;
     if (curBind.sound.isNull() || curBind.text.isNull())
         return;
     _lastBindIterator = curBindIterator;
@@ -579,7 +603,7 @@ void Logic::markLastBind()
 
 void Logic::unmarkLastBind()
 {
-    if (_lastBindIterator != _bindVector.constEnd())
+    if (_lastBindIterator != _bindVector.constEnd() && _bindVector.empty() == false)
         unmarkBind(*_lastBindIterator);
 }
 
@@ -670,9 +694,9 @@ bool Logic::haveIntersaption(const Bind& newBind) const
     return false;
 }
 
-QVector <Logic::Bind>::iterator Logic::getBindOnTextPos(qint64 textPos)
+QVector <Logic::Bind>::const_iterator Logic::getBindOnTextPos(qint64 textPos)
 {
-    for (auto bind = _bindVector.begin(); bind != _bindVector.end(); bind++)
+    for (auto bind = _bindVector.begin(); bind != _bindVector.constEnd(); bind++)
     {
         auto curBind = *bind;
         auto curText = curBind.text;
@@ -713,6 +737,7 @@ void Logic::unmarkBind(const QList<Bind>& bindList)
 
 void Logic::createFromNewSoundFile(const QString& fileName, TextStore::PTR text, SoundStore::PTR sound)
 {
+    this->clear(true);
     QFileInfo fileInfo(fileName);
     assert(fileInfo.exists());
     QString base = fileInfo.path() + "/" + fileInfo.completeBaseName();
@@ -736,6 +761,8 @@ void Logic::writeInFile(TextStore::PTR textStore, SoundStore::PTR soundStore)
 
 void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, SoundStore::PTR soundStore)
 {
+    unMarkAllBindedText(); // чтобы не сохранять выделения
+    _lastBindIterator = _bindVector.constEnd();
     QString textStoreString;
     QString soundStoreString;
     QString textHashString;
@@ -866,7 +893,7 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     for (auto commentString : commentListString)
     {
         Comment nextComment;
-        fromString(nextComment, commentString, textStore);
+        fromString(curPath, nextComment, commentString, textStore);
         addInCommentList(nextComment);
     }
 
@@ -880,7 +907,7 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     }
 
     if (_bindVector.empty())
-        _lastBindIterator = _bindVector.end();
+        _lastBindIterator = _bindVector.constEnd();
     else
         _lastBindIterator = _bindVector.begin();
     file.close();
@@ -918,7 +945,7 @@ QString Logic::toString(const Comment & comment) const{
     return rez;
 }
 
-void Logic::fromString(Comment&, QString stringComment, TextStore::PTR text)
+void Logic::fromString(QString curPath, Comment& newComment, QString stringComment, TextStore::PTR text)
 {
     QUrl url;
     QString name;
@@ -927,16 +954,13 @@ void Logic::fromString(Comment&, QString stringComment, TextStore::PTR text)
     QString stringUrl;
     QTextStream sourceString(&stringComment);
     sourceString >> stringUrl >> name >> begin >> end;
-    url = QUrl::fromLocalFile(stringUrl);
+    url = QUrl::fromLocalFile(curPath + "/" + stringUrl);
 
     auto commented = TextFragment::factoryMethod(begin, end, text);
 
-    Comment newComment;
     newComment.commented = commented;
     newComment.commentUrl = url;
     newComment.name = name;
-
-    addInCommentList(newComment);
 }
 
 void Logic::fromString(Bind& bind, QString bindString, SoundStore::PTR sound, TextStore::PTR text) const

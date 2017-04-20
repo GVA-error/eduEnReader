@@ -33,11 +33,6 @@ Page {
                 anchors.margins: 5
                 anchors.fill: parent
                 clip: true
-               // color: model.color
-                border {
-                    color: "black"
-                    width: 1
-                }
                 Rectangle{
                     id : image
                     anchors.top: parent.top
@@ -45,11 +40,11 @@ Page {
                     anchors.left: parent.left
                     height: view.cellWidth * 3 / 4
                     width: view.cellWidth
-                    color: "black"
+                    color: "transparent"
                     Image {
                         anchors.fill: image
                         source: homePage.homeUiControler.getImageUrl(modelData)
-                        fillMode: Image.PreserveAspectFit
+                        z : image.z - 1
                     }
                     border {
                         color: "black"
@@ -63,21 +58,42 @@ Page {
                     anchors.right : parent.right
                     renderType: Text.NativeRendering
                     padding: 10
+                    visible: modelData != "."
                     wrapMode: Text.Wrap
                     text: homePage.homeUiControler.getTitle(modelData)
-                    //modelData + " asd asda sdasdasdasdasdasd as asdsdasd asdasdasd  asdasd"
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         view.currentIndex = model.index
-                        var url = homePage.homeUiControler.getBindFileUrlWithName(modelData)
-                        homePage.homeUiControler.openBindFile(url)
-                        goHome()
+                        if (homePage.homeUiControler.isDir(modelData))
+                            homePage.homeUiControler.setCurDir(modelData)
+                        else
+                        {
+                            goHome()
+                            var url = homePage.homeUiControler.getBindFileUrlWithName(modelData)
+                            openTimer.url = url
+                            console.log(url)
+                            waitDialog.contentText = "Preparation: " + modelData
+                            waitDialog.showDialog()
+                            openTimer.start()
+                            //openTimer.
+                        }
                     }
                 }
             }
+        }
+    }
+    Timer {
+        id: openTimer
+        repeat: false
+        interval: 200
+        property url url : ""
+        onTriggered: {
+            console.log(openTimer.url)
+            homePage.homeUiControler.openBindFile(openTimer.url)
+            waitDialog.hideDialog()
         }
     }
 

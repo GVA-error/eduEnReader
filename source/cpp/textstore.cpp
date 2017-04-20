@@ -15,9 +15,10 @@ TextStore::TextStore()
     , _saved_url(QUrl())
     , _saved_curPosition(0)
     , _mousePresed(false)
-    , _markColor(_defaultColor)
 {
+    _markColor = QML_Settings().textMarkColor(); // TODO Заменить на согналы
 }
+
 
 //qint64 TextStore::indexOfPrefixOrPostFix(const QString& str, qint64 leftOffset) const
 //{
@@ -170,6 +171,9 @@ void TextStore::setFileUrl(const QUrl &url)
             reset();
         }
     }
+    else if (_doc)
+        _doc->clear();
+
     emit fileUrlChanged();
 }
 

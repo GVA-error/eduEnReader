@@ -68,6 +68,7 @@ Rectangle{
         onClicked: {
             if (soundStore.isExample)
                 goHome()
+                showComments()
         }
     }
 }

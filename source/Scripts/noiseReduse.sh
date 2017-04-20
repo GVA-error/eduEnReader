@@ -17,4 +17,4 @@
 # 3 - noise file
 
 sox $3 -n noiseprof noise.prof
-sox $1 $2 noisered noise.prof 0.05 lowpass 70 highpass 3400 norm compand 0.05,0.2 6:-54,-84,-36,-36,-24,-24,0,-12 0 -84 0.2
+sox $1 $2 noisered noise.prof 0.2 lowpass 70 highpass 3400 norm compand 0.02,0.20 5:-60,-40,-10 -5 -90 0.1

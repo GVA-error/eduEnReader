@@ -21,13 +21,13 @@ TextArea {
     focus: true
     selectByMouse: true
     persistentSelection: true
-    baseUrl: "qrc:/"
+    //baseUrl: "qrc:/"
     leftPadding: 6
     rightPadding: 6
     topPadding: 0
     bottomPadding: 0
     background: null
-    //readOnly: true
+    readOnly: true
     mouseSelectionMode : TextInput.SelectWords
 
     Component.onCompleted: contentItem.interactive = false
@@ -87,7 +87,7 @@ TextArea {
         id : mouseArea
         Component.onCompleted: contentItem.interactive = false
         onPressed: {
-            console.log("CLICKED")
+          //  console.log("CLICKED")
             var clickedTextPos = positionAt(mouseX, mouseY)
             document.setCursorPosition(clickedTextPos);
             uiControler.setTimePosInCursorPos()
@@ -176,14 +176,14 @@ TextArea {
                 number += 1
             }
         }
-
+/*
         ColorDialog {
             id: colorDialog
             color: homePage.homeDocument.markColor
             onAccepted: {
                 document.setTextColor(color)
             }
-        }
+        }*/
     }
 }
 

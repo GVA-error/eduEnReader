@@ -43,7 +43,10 @@ ToolBar {
                 fix_width : 100
                 text: "Video"
                 checked: pageView.currentIndex === 1
-                onClicked: mainRoot.goHome()
+                onClicked: {
+                    if (waitDialog.visible == false)
+                        mainRoot.goHome()
+                }
             }
         }
         Row {

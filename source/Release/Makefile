@@ -758,6 +758,7 @@ qrc_qml.cpp: ../qml.qrc \
 		../qml/QML_HtmlView.qml \
 		../qml/QML_WebViewDialog.qml \
 		../qml/QML_ListDialog.qml \
+		../qml/QML_WaitDialog.qml \
 		../qml/images/textunder.png \
 		../qml/images/editredo.png \
 		../qml/images/textjustify.png \
@@ -1672,8 +1673,7 @@ moc_scripter.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/bin/moc
 	/home/gva/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/gva/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/gva/eduEnReader/source -I/home/gva/Qt/5.8/gcc_64/include -I/home/gva/Qt/5.8/gcc_64/include/QtMultimediaWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtPrintSupport -I/home/gva/Qt/5.8/gcc_64/include/QtWidgets -I/home/gva/Qt/5.8/gcc_64/include/QtQuickControls2 -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngine -I/home/gva/Qt/5.8/gcc_64/include/QtWebEngineCore -I/home/gva/Qt/5.8/gcc_64/include/QtQuick -I/home/gva/Qt/5.8/gcc_64/include/QtMultimedia -I/home/gva/Qt/5.8/gcc_64/include/QtGui -I/home/gva/Qt/5.8/gcc_64/include/QtWebChannel -I/home/gva/Qt/5.8/gcc_64/include/QtQml -I/home/gva/Qt/5.8/gcc_64/include/QtNetwork -I/home/gva/Qt/5.8/gcc_64/include/QtPositioning -I/home/gva/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/c++/4.8/x86_64-suse-linux -I/usr/include/c++/4.8/backward -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../cpp/ASR/scripter.h -o moc_scripter.cpp
 
-moc_setting.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
-		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
+moc_setting.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
@@ -1721,6 +1721,8 @@ moc_setting.cpp: ../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
@@ -3605,8 +3607,7 @@ graph.o: ../cpp/ASR/graph.cpp ../cpp/ASR/graph.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graph.o ../cpp/ASR/graph.cpp
 
 setting.o: ../cpp/Utilits/setting.cpp ../cpp/Utilits/setting.h \
-		../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
-		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
@@ -3654,6 +3655,8 @@ setting.o: ../cpp/Utilits/setting.cpp ../cpp/Utilits/setting.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.8/gcc_64/include/QtCore/QSettings \
+		../../../Qt/5.8/gcc_64/include/QtCore/qsettings.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \

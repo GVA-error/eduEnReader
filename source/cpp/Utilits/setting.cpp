@@ -2,6 +2,23 @@
 
 const QString Settings::_settingsFile = "./configs/settings.conf";
 
+
+QML_Settings::QML_Settings(QObject* parent): QObject(parent)
+{
+    setDefaults();
+}
+
+void QML_Settings::setDefaults()
+{
+    QString defaultString;
+    defaultString+= "TextViewer/TextMarkColor:230_209_209_255;";
+    defaultString+= "TextViewer/ShowLectureText:true;";
+    defaultString+= "TextViewer/ShowExampleText:true;";
+    defaultString+= "TextViewer/ExampleSize:20;";
+    defaultString+= "TextViewer/ExampleDiff:20;";
+    Settings::setDefaults(defaultString);
+}
+
 Settings::Settings()
     : conf(_settingsFile, QSettings::NativeFormat){
     const QMetaObject &mo = staticMetaObject;

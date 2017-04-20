@@ -59,5 +59,6 @@
         <file>qml/PC_READ_ControlPanel.qml</file>
         <file>qml/PC_READ_main.qml</file>
         <file>qml/images/cant-go-home.png</file>
+        <file>qml/QML_WaitDialog.qml</file>
     </qresource>
 </RCC>

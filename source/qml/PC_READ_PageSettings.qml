@@ -10,11 +10,16 @@ import QtQuick.Dialogs 1.2
 
 import TextStoreModul 1.0
 import UiControlerModul 1.1
+import QML_SettingsModul 1.0
 
 Page {
     title: "settings"
     property bool showLectureText : textLectureShowing.checked
     property bool showExampleText : textExamplesShowing.checked
+
+    QML_Settings{
+        id : settingsStore
+    }
 
     GroupBox {
         id: gridBox
@@ -39,16 +44,17 @@ Page {
                     id: colorRect
                     anchors.fill: parent
                     radius: 4
-                    color: homePage.homeDocument.markColor
+                    color: settingsStore.textMarkColor
                 }
                 onClicked: {
                     colorDialog.open()
                 }
                 ColorDialog {
                     id: colorDialog
-                    color: homePage.homeDocument.markColor
+                    color: settingsStore.textMarkColor
                     onAccepted: {
                         colorRect.color = color
+                        settingsStore.textMarkColor = color
                         homePage.homeDocument.markColor = color
                     }
                 }
@@ -56,8 +62,9 @@ Page {
             TextField {
                 id : fromExamplesSize
                 validator: IntValidator { bottom:0; top: 1000}
-                text: homePage.homeUiControler.examplesSize
+                text: settingsStore.exampleSize
                 onTextChanged: {
+                    settingsStore.exampleSize = text*1
                     homePage.homeUiControler.examplesSize = text*1
                     if (text.length == 0)
                        text = "0";
@@ -67,8 +74,9 @@ Page {
             TextField {
                 id : diffExamplesSize
                 validator: IntValidator { bottom:0; top: 1000}
-                text: homePage.homeUiControler.diffSize
+                text: settingsStore.exampleDiff
                 onTextChanged:{
+                    settingsStore.exampleDiff = text*1
                     homePage.homeUiControler.diffSize = text*1
                     if (text.length == 0)
                        text = "0";
@@ -76,12 +84,20 @@ Page {
             }
             CheckBox{
                 id : textLectureShowing
-                checked: true
+                checked: settingsStore.showLectureText
+                onCheckedChanged: {
+                    settingsStore.showLectureText = checked
+                    homePage.textArea
+                }
             }
             CheckBox{
                 id : textExamplesShowing
-                checked: true
+                checked: settingsStore.showExampleText
+                onCheckedChanged: {
+                    settingsStore.showExampleText = checked
+                }
             }
         }
     }
 }
+

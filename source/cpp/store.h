@@ -65,6 +65,8 @@ public:
         {
             storeString = curPath + "/" + storeString;
             QFileInfo localFile(storeString);
+            if (localFile.exists() == false)
+                return;
             QString apsoluteStringUrl = localFile.absoluteFilePath();
             fileUrl = QUrl::fromLocalFile(apsoluteStringUrl);
         }

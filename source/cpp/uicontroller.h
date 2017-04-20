@@ -14,6 +14,8 @@
 
 /* TODO LIST
  *
+ *  Новый компаунд: 0.02,0.20 5:-60,-40,-10 -5 -90 0.1
+ *
  * Ближайший план:
  * 0) Убрать дубли примеров
  * 1) Кнопка удаления лекций
@@ -21,7 +23,7 @@
  * 3) Создание лекций
  * 4) Правка биндов
  * 5) Прогрес
- * 6) Рефакторинг. Выделение класса настроек, вынесение в скриптер распознования строк, скриптер - часть настроек
+ * 6) Буферизация - показ
  * 7) Windows XP? Обдумать
  *
  * Баг репорт:
@@ -64,6 +66,7 @@
  * X) Система уравнений букв - показать неверность
  * X) Балансировка колличества букв
  * X) Вторичная разбивка по мидам уже разбитых при распозновании
+ * X) График зависимости средней длинны от константы порога локальных минимумов
 */
 class UIController : public QObject
 {
@@ -77,6 +80,7 @@ class UIController : public QObject
     Q_PROPERTY(bool mouseIsPressed WRITE setMouseIsPressed)
     Q_PROPERTY(qint32 examplesSize READ getExamplesSize WRITE setExamplesSize NOTIFY examplesSizeChanged)
     Q_PROPERTY(qint32 diffSize READ getDiffSize WRITE setDiffSize NOTIFY diffSizeChanged)
+    Q_PROPERTY(QUrl curCommentUrl READ curCommentUrl WRITE setCurCommentUrl NOTIFY curCommentUrlChanged)
 
 public:
     explicit UIController(QObject *parent = 0);
@@ -99,6 +103,7 @@ signals:
     void examplesSizeChanged();
     void matirealsListChanged();
     void diffSizeChanged();
+    void curCommentUrlChanged();
 public slots:
 
     QStringList getbindFilesList() const;
@@ -110,10 +115,13 @@ public slots:
     QStringList getCommentList() const;
     void setCommentList(QStringList newComments);
 
+    QUrl curCommentUrl();
+    void setCurCommentUrl(const QUrl&);
+
     QStringList getMatirealsList() const;
     void setMatirealsList(const QStringList& newMatireals);
 
-    void saveHome();
+    void saveHome(bool push = false);
     void home();
 
     QUrl getImageUrl(const QString& bindFile) const;
@@ -133,7 +141,8 @@ public slots:
     void unmarkLastText();
     void startSellectTimer();
 
-    void setExamplesSize(qint32 newSize){ _examplesSize = newSize; }
+    void setExamplesSize(qint32 newSize){
+        _examplesSize = newSize; }
     qint32 getExamplesSize(){ return _examplesSize; }
     void setDiffSize(qint32 newDiff){
         _diffSize = newDiff;
@@ -157,6 +166,12 @@ public slots:
     QUrl getBindFileUrlWithName(const QString& name) const;
     QUrl getMatirealUrlWithName(const QString& name) const;
 
+    // Нужны для qml виджета PageOpen
+    // Является ли путь к bind файлу на самом деле папкой.
+    bool isDir(const QString& name) const;
+    void setCurDir(const QString &name);
+    QDir getDir(const QString& name) const;
+
     qint32 getMidMarkable() const;
     qint32 getBeginMarkable() const;
     qint32 getEndMarkable() const;
@@ -169,9 +184,13 @@ protected slots:
 private:
     QTime _sellectTimer; // Следит чтобы во время выделения текста и немного погодя не производилось синхронизаций со звуком, из-за глюка с пропагейшеном
     const qint32 _sellectingTime = 500; // ..
+    const QUrl _defaultLecturePicture = QUrl::fromLocalFile("./default.jpeg");
+    const QUrl _defaultDirPicture = QUrl::fromLocalFile("./defaultDir.jpeg");
+    const QUrl _defaultUpDirPicture = QUrl::fromLocalFile("./defaultUpDir.jpeg");
     qreal _examplesSize; // Храним в qreal, пока пользователь оперирует только целыми значениями
     qreal _diffSize;
     bool _mouseIsPressed;
+    bool _opening;
 
     Logic::PTR _logic;
     SoundStore::PTR _soundStore; //bool _f_setSound;
@@ -186,9 +205,16 @@ private:
     QMap <QString, QString> _bindTitles; // Для отображения списка бинд файлов
     QMap <QString, QUrl> _matirealUrl; // Для выдачи пользователю справочной информации из материалов
 
+    QUrl _curCommentUrl;
+
+    // Нужно для виджета PageOpen
+    QDir _curDir; // Текущая директория
+    QMap <QString, QDir> _dirs; // Папки из текущей директории
+
     bool _f_reconizing;
     bool _f_home; // Нужен для возврата домой
 
+    // TODO Убрать - не используеться
     const QString _baseTranslateURL = "http://www.multitran.com/m.exe?l1=1&l2=2&s="; // +word0+word1 ..
 
     void synchTitle(const QString &bindFile);

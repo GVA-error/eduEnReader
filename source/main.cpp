@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");
     qmlRegisterType<SoundStore>("SoundStoreModul", 1, 1, "SoundStore");
+    qmlRegisterType<QML_Settings>("QML_SettingsModul", 1, 0, "QML_Settings");
     engine.load(QUrl(QStringLiteral("qrc:/qml/PC_READ_main.qml")));
 
     if (engine.rootObjects().isEmpty())

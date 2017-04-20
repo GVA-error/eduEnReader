@@ -7,6 +7,7 @@
 #include <QtCore/QTextCodec>
 #include <assert.h>
 #include "store.h"
+#include "Utilits/setting.h"
 
 #include <qqmlfile.h>
 
@@ -44,7 +45,7 @@ class TextStore : public QObject, public Store <TextStore>
     Q_PROPERTY(QColor markColor READ getMarkColor WRITE setMarkCalor NOTIFY markColorChanged)
 
 public:
-    const QColor _defaultColor = QColor("#e6d1d1");
+   // const QColor _defaultColor = QColor("#e6d1d1");
    // const QStringList _prefixAndPostFix = { " ", ",", "!", "?", ":", "(", ")"};
     TextStore();
     virtual ~TextStore(){}

@@ -52,6 +52,9 @@ public:
     QList <Example> getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile = false) const;
     QList <Example> getExamplesInThis(const QString& seakablePhrase, qreal minDuration, qreal maxDuration); // Ищет только в текущем файле
 
+    // Рекурсивно находит все файлы в корневом каталоге
+    void getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask) const;
+
     QString getUrlFromPattern(const Pattern&, QString str) const;
     QList <Pattern> getPatterns() { return _patternList; }
 
@@ -170,7 +173,7 @@ private:
     void addInBindList(const Bind&, qint64 pos = -1);
     void addInCommentList(const Comment&);
 
-    QVector <Bind>::iterator getBindOnTextPos(qint64 pos); // Поиск бинда сответствующего позиции тексте
+    QVector <Bind>::const_iterator getBindOnTextPos(qint64 pos); // Поиск бинда сответствующего позиции тексте
 
     // Нужен для установления типа файла при открытии
     FileTypes getFileType(const QString&) const;
@@ -188,7 +191,7 @@ private:
 
     QString toString(const Bind &) const;
     QString toString(const Comment &) const;
-    void fromString(Comment&, QString stringComment, TextStore::PTR text);
+    void fromString(QString curPath, Comment&, QString stringComment, TextStore::PTR text);
     void fromString(Bind&, QString bindString, SoundStore::PTR sound, TextStore::PTR text) const;
     void fromString(QStringList& str, qreal& posBigin, qreal &posEnd, QString source) const; // нужна для чтения распозноного текста
 
