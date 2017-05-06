@@ -12,7 +12,7 @@ SoundStore::SoundStore(QObject *parent)
     connect(&_timerToStop, SIGNAL(timeout()), this, SLOT(stopStopTimer()));
 
     setVolume(100);
-    setAutoplay(false);
+   // setAutoplay(true);
     setPosition(0);
     _isExample = false;
     _saved_payed = false;
@@ -52,8 +52,10 @@ void SoundStore::home()
     //        && _saved_finishPos == _finishPos) // Мы и так дома
     //    return;
     setFileUrl(_saved_lastOpenedUrl);
-    //if (_saved_payed)
+    if (_saved_payed)
         start();
+    else
+        stop();
     if (_saved_curPos > 0)
     {
         setPosition(_saved_curPos);

@@ -8,29 +8,64 @@ UIController::UIController(QObject *parent) : QObject(parent)
     QML_Settings s; // TODO Заменить на сигнальную архитектуру
     _examplesSize = s.exampleSize();
     _diffSize = s.exampleDiff();
-   // _exampleList.push_back("1");
-   // _exampleList.push_back("2");
 
-    //connect(this, SIGNAL(textSellectionChanged()), this, SLOT(startSellectTimer()));
     _sellectTimer.start();
     _curDir = QDir("lectures");
-    _opening = false;
+    _opening = false;    
 }
 
 void UIController::setDocument(TextStore* TS) {
     _textStore =  TextStore::PTR(TS);
     QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
-    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+    // По скольку последовательность вызовов setDocument и setSoundStore заранее неизвестна
     if (_textStore.isNull() == false && _soundStore.isNull() == false)
+    {
         initBindMaker(_textStore, _soundStore, _logic);
+        initLogicReader(_textStore, _soundStore, _logic);
+    }
 }
 
 void UIController::setSoundStore(SoundStore* TS) {
     _soundStore =  SoundStore::PTR(TS);
     QObject::connect(_soundStore.data(), SIGNAL(posChanged()), this, SLOT(setCursorPosInTimePos()));
-    // По скольку последовательность вызовов setDocument и setSoundStore пишу так
+    // По скольку последовательность вызовов setDocument и setSoundStore заранее неизвестна
     if (_textStore.isNull() == false && _soundStore.isNull() == false)
+    {
         initBindMaker(_textStore, _soundStore, _logic);
+        initLogicReader(_textStore, _soundStore, _logic);
+    }
+}
+
+void UIController::stopAllThreads()
+{
+    //_logicReader->exit();
+    _bindMaker->quit();
+    if(!_bindMaker->wait(3000)) //Wait until it actually has terminated (max. 3 sec)
+    {
+        _bindMaker->terminate(); //Thread didn't exit in time, probably deadlocked, terminate it!
+        _bindMaker->wait(); //We have to wait again here!
+    }
+    //_bindMaker->exit();
+}
+
+void UIController::addTextInComment(const QString& commentName, const QString& text, const QColor& textColor)
+{
+    QUrl commentUrl = _logic->getCommentUrlsonName(commentName);
+    TextStore::PTR tmpTextStore = TextStore::factoryMethod();
+    tmpTextStore->setFileUrl(commentUrl);
+    tmpTextStore->addTextForComment(text, textColor);
+    tmpTextStore.clear();
+}
+
+QString UIController::title() const
+{
+    QString title = _logic->getTitle();
+    return title;
+}
+
+void UIController::setTitle(const QString& newTitle)
+{
+    _logic->setTitle(newTitle);
 }
 
 QUrl UIController::curCommentUrl()
@@ -112,6 +147,42 @@ void UIController::synchTitle(const QString& bindFileName)
     _bindTitles[bindFileName] = title.trimmed();
 }
 
+QString UIController::soundSource() const
+{
+    if (_soundStore.isNull())
+        return QString("");
+    QString curSource = _soundStore->fileUrl().toString();
+    return curSource;
+}
+
+void UIController::setSoundSource(const QString& source)
+{
+   // QString curPath = QUrl::fromLocalFile(QDir::currentPath() + "/").toString();
+    QString newSource = source;
+    //if (source.indexOf(curPath) == 0)
+    //    newSource = source.mid(curPath.length(), source.length() - curPath.length());
+    //else
+    //    newSource = source;
+    QUrl newSourceUrl;
+    if (SoundStore::isRemoteSource(newSource))
+        newSourceUrl = QUrl(newSource);
+    else
+        newSourceUrl = QUrl::fromLocalFile(newSource);
+    _soundStore->setFileUrl(QUrl(source));
+}
+
+void UIController::setPreviewForCurLecture(const QUrl& url)
+{
+    QString stringSourceUrl = url.toLocalFile();
+    QString curBind = _logic->getCurBndFileName();
+    QFileInfo sourceFileInfo = QFileInfo(stringSourceUrl);
+    QString curExtention = sourceFileInfo.suffix();
+    assert(curExtention=="jpeg");
+    QFileInfo curBindInfo(curBind);
+    QString newPeviewStringUrl = curBindInfo.absolutePath() + "/" + curBindInfo.baseName() + ".jpeg";
+    QFile::copy(stringSourceUrl, newPeviewStringUrl);
+}
+
 // TODO Хранить в логике картинку?
 QUrl UIController::getImageUrl(const QString& bindFile) const
 {
@@ -179,6 +250,17 @@ void UIController::synchBndFileList()
     }
 
     emit bindFilesListChanged();
+}
+
+QString UIController::curState() const
+{
+    return _curState;
+}
+
+void UIController::setCurState(const QString& newState)
+{
+    _curState = newState;
+    emit curStateChanged();
 }
 
 QStringList UIController::getbindFilesList() const
@@ -251,10 +333,18 @@ TextFragment::PTR UIController::getSellectedText()
     return rezFragment;
 }
 
-void UIController::addComment(const QUrl& commentUrl, const QString &name)
+QUrl UIController::addComment()
+{
+    QString uniqName = _logic->getUniqCommentName();
+    QUrl commentUrl = QUrl::fromLocalFile(uniqName);
+    addComment(commentUrl);
+    return commentUrl;
+}
+
+void UIController::addComment(const QUrl& commentUrl)
 {
     auto sellectedFragment = getSellectedText();
-    _logic->makeComment(sellectedFragment, commentUrl, name);
+    _logic->makeComment(sellectedFragment, commentUrl);
 }
 
 QUrl UIController::getMatirealUrlWithName(const QString& name) const
@@ -269,10 +359,64 @@ QUrl UIController::getBindFileUrlWithName(const QString& name) const
     return bindFileUrl;
 }
 
+void UIController::markComment(const QString& name)
+{
+    _logic->markCommentWithName(name);
+}
+
+void UIController::unmarkComment(const QString& name)
+{
+    _logic->unmarkCommentWithName(name);
+}
+
 QUrl UIController::getCommentUrlWithName(const QString &name) const
 {
     QUrl commentUrl = _logic->getCommentUrlsonName(name);
     return commentUrl;
+}
+
+void UIController::deleteCommentWithName(const QString& name)
+{
+    _logic->deleteComment(name);
+    synchCommentList();
+}
+
+void UIController::deleteBindWithName(const QString& name)
+{
+    QString bindName = getBindFileUrlWithName(name).toLocalFile();
+    if (bindName.length() == 0)
+        bindName = _dirs.value(name).absolutePath();
+    assert(bindName.length() != 0);
+    deleteBind(bindName);
+}
+
+void UIController::deleteBind(const QString& fileName)
+{
+    if (fileName.indexOf(".bnd") != -1)
+    {
+        assert(QFile().exists(fileName));
+        Logic::PTR deletedLogic = Logic::factoryMethod();
+        deletedLogic->readFromFile(fileName, nullptr, nullptr);
+        deletedLogic->deleteAllFiles();
+    }
+    else
+    {
+        if (QDir(fileName).exists() == false)
+        {
+            if (QFile::exists(fileName))
+                QFile::remove(fileName);
+            return;
+        }
+        // Это директория
+        auto allDirFiles = QDir(fileName).entryInfoList();
+        for (auto file : allDirFiles)
+        {
+            QString baseName = file.baseName();
+            if (baseName != "")
+                deleteBind(file.absoluteFilePath());
+        }
+        QDir(fileName).removeRecursively();
+    }
 }
 
 qint32 UIController::getMidMarkable() const
@@ -391,8 +535,15 @@ void UIController::getExamplesFor(const QString& seekablePhrase)
 
 void UIController::initBindMaker(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic)
 {
-    _bindMaker = BindMaker::factoryMethod(text, sound, logic);
-    connect(_bindMaker.data(), SIGNAL(finished()), this, SLOT(recognizeIsFinished()));
+    _bindMaker = TsBindingProcess::factoryMethod(text, sound, logic);
+    connect(_bindMaker.data(), SIGNAL(finished()), this, SLOT(handleNextOrFinish()));
+    connect(_bindMaker.data(), SIGNAL(stateChanged(QString)), this, SLOT(setCurState(QString)));
+}
+
+void UIController::initLogicReader(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic)
+{
+    _logicReader = BindOpenProcess::factoryMethod(text, sound, logic);
+   // connect(_logicReader.data(), SIGNAL(finished()), this, SLOT(openingFinished()));
 }
 
 void UIController::recognizeIsFinished()
@@ -401,6 +552,14 @@ void UIController::recognizeIsFinished()
     _logic->bindLogicHanding();
     _logic->writeInFile(fileName, _textStore, _soundStore);
     _f_reconizing = false;
+}
+
+void UIController::openingFinished()
+{
+    saveHome(true);
+    _opening = false;
+    emit titleChanged();
+    emit soundSourceChanged();
 }
 
 void UIController::setCursorPosInTimePos()
@@ -431,15 +590,25 @@ void UIController::setTimePosInCursorPos()
         _soundStore->setPosReal(newSoundPos);
 }
 
+// TODO Добавить работу с выделением
+void UIController::synchCommentList()
+{
+    qint64 cursorPos = _textStore->cursorPosition();
+    auto sellection = getSellectedText();
+    QList <QString> newComments;
+    if (sellection->size()!=0)
+        newComments = _logic->getCommentNamesonTextPos(sellection);
+    else
+        newComments = _logic->getCommentNamesonTextPos(cursorPos);
+    setCommentList(newComments);
+}
+
 void UIController::cursorPosChanged()
 {
     if (_f_home == false)
         return;
-    qint64 cursorPos = _textStore->cursorPosition();
     markCurText();
-    auto newComments = _logic->getCommentNamesonTextPos(cursorPos);
-    setCommentList(newComments);
-    //setTimePosInCursorPos();
+    synchCommentList();
 }
 
 void UIController::markCurText()
@@ -483,6 +652,9 @@ void UIController::openBindFile(const QUrl &arg)
     saveHome(true);
     _logic->unMarkAllBindedText();
     _opening = false;
+    emit titleChanged();
+    emit soundSourceChanged();
+    //_waitToOpen = "";
 }
 
 void UIController::saveBindFile(const QUrl &arg)
@@ -501,6 +673,90 @@ QString UIController::formUrlToTranslateSellected()
     return rezUrl;
 }
 
+void UIController::handleNextOrFinish()
+{
+    _f_bindSequnceProcess[_curBinding] = true;
+    QStringList::Iterator nextVideoIterator = find_if(_bindSiqence.begin(), _bindSiqence.end(), [this](const QString& curFile){
+        if (_f_bindSequnceProcess.value(curFile) == false)
+            return true;
+    });
+    if (nextVideoIterator == _bindSiqence.end())
+    {
+        QString endState = _bindMaker->endState;
+        setCurState(endState);
+        return;
+    }
+    QString nextVideoString = *nextVideoIterator;
+    _curBinding = nextVideoString;
+    _bindMaker->setFileName(nextVideoString);
+    _bindMaker->start();
+    emit curStateChanged();
+}
+
+QString UIController::getCurStateBindSequnce()
+{
+    QString curState;
+    QTextStream rezState(&curState);
+    qint32 compliteNumber = count_if(_bindSiqence.begin(), _bindSiqence.end(), [this](const QString& cur){
+        if (_f_bindSequnceProcess.value(cur) == true)
+            return true;
+        return false;
+    });
+    qint32 allNumber = _bindSiqence.size();
+    if (allNumber == 0)
+        allNumber = 1;
+    qreal complitePersen = (qreal)compliteNumber / (qreal)allNumber;
+    if (allNumber == compliteNumber)
+        return _bindMaker->endState;
+    rezState << "Full complite persent : " << complitePersen;
+    return curState;
+}
+
+void UIController::initBindingSequence()
+{
+    _bindSiqence.clear();
+    _f_bindSequnceProcess.clear();
+    QString stringBindLocation = Settings::get(Settings::BindLocation, Settings::Location).toString();
+    QDir dirBindLocation = QDir(stringBindLocation);
+    QStringList videos;
+    _logic->getAllFiles(videos, dirBindLocation, QStringList("*.mp4"));
+    for (auto videoFileString : videos)
+    {
+        QFileInfo videoFileInfo = QFileInfo(videoFileString);
+        QString outBindName = videoFileInfo.absolutePath() + "/" + videoFileInfo.baseName() + ".bnd";
+        if (QFile::exists(outBindName))
+            continue;
+        QString bindPretendent = videoFileInfo.absoluteFilePath();
+        _bindSiqence.push_back(bindPretendent);
+        _f_bindSequnceProcess[bindPretendent] = false;
+    }
+}
+
+void UIController::allTsBinding()
+{
+    QString curState = getCurStateBindSequnce();
+    setCurState(curState);
+    initBindingSequence();
+    if (_bindSiqence.empty())
+    {
+        handleNextOrFinish();
+        return;
+    }
+    QString firstFile = _bindSiqence.front();
+    _bindMaker->setFileName(firstFile);
+    _curBinding = firstFile;
+    _bindMaker->start();
+}
+
+void UIController::allStBinding()
+{
+
+}
+
+void UIController::curUserStBinding(){
+
+}
+
 void UIController::makeBind()
 {
     //QUrl soundUrl = QUrl::fromLocalFile("/home/gva-error/eduEnReader/eduEnReader/tests/test.wav");
@@ -514,35 +770,35 @@ void UIController::makeBind()
 
 //    return;
 
-    if (_f_reconizing)
-        return;
+//    if (_f_reconizing)
+//        return;
 
-    QFile file("Log.txt");
+//    QFile file("Log.txt");
 
-    file.open(QFile::WriteOnly);
-    QTextStream fileStream(&file);
-    QTime curTime;
-    fileStream << "Begin binding time: " << curTime.toString();
+//    file.open(QFile::WriteOnly);
+//    QTextStream fileStream(&file);
+//    QTime curTime;
+//    fileStream << "Begin binding time: " << curTime.toString();
 
-    _f_reconizing = true;
-    QDir curDir;
-    QStringList bindFiles = curDir.entryList(QStringList("*.mp4"));
-    for (QString mp4 : bindFiles)
-    {
-        QUrl url = QUrl::fromLocalFile(mp4);
-        fileStream << "File " << url.toString() << " begin: " << curTime.toString();
-        createBindFile(url);
-        //BindMaker bm(_textStore, _soundStore, _logic);
-        _bindMaker->setSplitSize(5.0f, 3.0f);
-        _bindMaker->runInThisThread();
-       // _logic->bindLogicHanding();
-        _logic->writeInFile(_textStore, _soundStore);
-        fileStream << "File " << url.toString() << " end: " << curTime.toString();
-       // break;
-    }
+//    _f_reconizing = true;
+//    QDir curDir;
+//    QStringList bindFiles = curDir.entryList(QStringList("*.mp4"));
+//    for (QString mp4 : bindFiles)
+//    {
+//        QUrl url = QUrl::fromLocalFile(mp4);
+//        fileStream << "File " << url.toString() << " begin: " << curTime.toString();
+//        createBindFile(url);
+//        //BindMaker bm(_textStore, _soundStore, _logic);
+//        _bindMaker->setSplitSize(5.0f, 3.0f);
+//        _bindMaker->runInThisThread();
+//       // _logic->bindLogicHanding();
+//        _logic->writeInFile(_textStore, _soundStore);
+//        fileStream << "File " << url.toString() << " end: " << curTime.toString();
+//       // break;
+//    }
 
-    _f_reconizing = false;
-    fileStream << "End binding time: " << curTime.toString();
+//    _f_reconizing = false;
+//    fileStream << "End binding time: " << curTime.toString();
 
 
     return;

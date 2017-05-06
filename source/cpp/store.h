@@ -47,7 +47,7 @@ public:
         return fileString;
     }
 
-    bool isRemoteSource(QString storeString)
+    static bool isRemoteSource(QString storeString)
     {
         auto httpI = storeString.indexOf("http");
         if (httpI !=0)

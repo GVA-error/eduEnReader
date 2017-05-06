@@ -34,6 +34,7 @@ public:
     }
 
     void setEnd(IndexType newEnd) { _end = newEnd; }
+    void setBegin(IndexType newBegin) { _begin = newBegin; }
     // Методы в глобальных координатах
     IndexType begin() const { return _begin; }
     IndexType end() const { return _end; }

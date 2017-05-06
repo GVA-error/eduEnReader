@@ -16,21 +16,27 @@ Page {
     title: "settings"
     property bool showLectureText : textLectureShowing.checked
     property bool showExampleText : textExamplesShowing.checked
+    padding: 10
 
     QML_Settings{
         id : settingsStore
     }
 
     GroupBox {
+        Component.onCompleted: contentItem.interactive = false
         id: gridBox
         Layout.fillWidth: true
-        leftPadding: 100
+        width: 2 / 3 * parent.width
+        leftPadding: 50
+        rightPadding: 50
 
         GridLayout {
             id: gridLayout
             rows: 5
             flow: GridLayout.TopToBottom
-            width:  parent.width
+            width: parent.width
+            rowSpacing: 10
+            columnSpacing: 30
 
             Label { text: "Text color mark" }
             Label { text: "Examples size" }
@@ -63,6 +69,7 @@ Page {
                 id : fromExamplesSize
                 validator: IntValidator { bottom:0; top: 1000}
                 text: settingsStore.exampleSize
+                Layout.fillWidth: true
                 onTextChanged: {
                     settingsStore.exampleSize = text*1
                     homePage.homeUiControler.examplesSize = text*1
@@ -75,6 +82,7 @@ Page {
                 id : diffExamplesSize
                 validator: IntValidator { bottom:0; top: 1000}
                 text: settingsStore.exampleDiff
+                Layout.fillWidth: true
                 onTextChanged:{
                     settingsStore.exampleDiff = text*1
                     homePage.homeUiControler.diffSize = text*1

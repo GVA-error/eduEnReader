@@ -75,9 +75,12 @@ Page {
                             var url = homePage.homeUiControler.getBindFileUrlWithName(modelData)
                             openTimer.url = url
                             console.log(url)
+                            homePage.homeUiControler.setForOpening(url)
                             waitDialog.contentText = "Preparation: " + modelData
-                            waitDialog.showDialog()
-                            openTimer.start()
+                            waitDialog.curStateFunction = homePage.homeUiControler.openState()
+                            waitDialog.doFunction = homePage.homeUiControler.openWaited()
+                            waitDialog.start()
+                            //openTimer.start()
                             //openTimer.
                         }
                     }
@@ -85,7 +88,7 @@ Page {
             }
         }
     }
-    Timer {
+    /*Timer {
         id: openTimer
         repeat: false
         interval: 200
@@ -95,6 +98,12 @@ Page {
             homePage.homeUiControler.openBindFile(openTimer.url)
             waitDialog.hideDialog()
         }
+    }*/
+
+    QML_WaitDialog{
+        id : waitDialog
+        anchors.fill: parent
+        z : 100
     }
 
 

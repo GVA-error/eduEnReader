@@ -4,16 +4,15 @@ import QtWebEngine 1.4
 
 Item {
     id: root
-    signal back
     property alias contentText: dialogText.text
-    property real baseW : 3/4 * width;
-    property real baseH : 3/4 * height;
+    property real baseW : 6/7 * width;
+    property real baseH : 6/7 * height;
     anchors.fill: parent
     visible: false
     QML_DialogBackground {
         id: dialogBackground
         onBackClicked: {
-            hideDialog()
+            //hideDialog()
         }
     }
     Rectangle {
@@ -42,30 +41,8 @@ Item {
 
             font.pixelSize: 16
 
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-        }
-        Text {
-            id: textBack
-            text: qsTr("Back")
-            color: "black"
-            visible: true
-
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.margins: 16
-
-            font.pixelSize: 24
-
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-
-            MouseArea {
-                anchors.centerIn: parent
-                width: parent.paintedWidth
-                height: parent.paintedHeight
-                onClicked: back()
-            }
+            //verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
         }
     }
     function showDialog() {

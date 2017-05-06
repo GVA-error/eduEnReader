@@ -1,0 +1,18 @@
+ffmpeg version 3.2.4 Copyright (c) 2000-2017 the FFmpeg developers
+  built with gcc 4.8 (SUSE Linux)
+  configuration: --prefix=/usr --libdir=/usr/lib64 --shlibdir=/usr/lib64 --incdir=/usr/include/ffmpeg --extra-cflags='-fmessage-length=0 -grecord-gcc-switches -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g' --optflags='-fmessage-length=0 -grecord-gcc-switches -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g' --disable-htmlpages --enable-pic --disable-stripping --enable-shared --disable-static --enable-gpl --disable-openssl --enable-avresample --enable-libcdio --enable-gnutls --enable-ladspa --enable-libass --enable-libbluray --enable-libcelt --enable-libcdio --enable-libdc1394 --enable-libfreetype --enable-libgsm --enable-libopenjpeg --enable-libopus --enable-libpulse --enable-libschroedinger --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libwebp --enable-netcdf --enable-vaapi --enable-vdpau --enable-libfdk_aac --enable-nonfree --enable-libmp3lame --enable-libtwolame --enable-libx264 --enable-libx265 --enable-libxvid --enable-x11grab
+  libavutil      55. 34.101 / 55. 34.101
+  libavcodec     57. 64.101 / 57. 64.101
+  libavformat    57. 56.101 / 57. 56.101
+  libavdevice    57.  1.100 / 57.  1.100
+  libavfilter     6. 65.100 /  6. 65.100
+  libavresample   3.  1.  0 /  3.  1.  0
+  libswscale      4.  2.100 /  4.  2.100
+  libswresample   2.  3.100 /  2.  3.100
+  libpostproc    54.  1.100 / 54.  1.100
+Trailing options were found on the commandline.
+Guessed Channel Layout for Input Stream #0.0 : mono
+Input #0, wav, from '/home/gva/eduEnReader/source/Release/split/32_DavidChristian_2011.wav':
+  Duration: 00:00:03.03, bitrate: 256 kb/s
+    Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 16000 Hz, mono, s16, 256 kb/s
+At least one output file must be specified

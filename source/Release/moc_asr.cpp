@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../cpp/ASR/asr.h"
+#include "../cpp/Binding/asr.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -145,30 +145,30 @@ void IASR::recognizeFinished(const QString & _t1)
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
-struct qt_meta_stringdata_ASRLinuxKaldi_t {
+struct qt_meta_stringdata_ASRScripter_t {
     QByteArrayData data[5];
-    char stringdata0[67];
+    char stringdata0[65];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_ASRLinuxKaldi_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_ASRScripter_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_ASRLinuxKaldi_t qt_meta_stringdata_ASRLinuxKaldi = {
+static const qt_meta_stringdata_ASRScripter_t qt_meta_stringdata_ASRScripter = {
     {
-QT_MOC_LITERAL(0, 0, 13), // "ASRLinuxKaldi"
-QT_MOC_LITERAL(1, 14, 22), // "handleRecognizedString"
-QT_MOC_LITERAL(2, 37, 0), // ""
-QT_MOC_LITERAL(3, 38, 19), // "allStringRecognized"
-QT_MOC_LITERAL(4, 58, 8) // "exitCode"
+QT_MOC_LITERAL(0, 0, 11), // "ASRScripter"
+QT_MOC_LITERAL(1, 12, 22), // "handleRecognizedString"
+QT_MOC_LITERAL(2, 35, 0), // ""
+QT_MOC_LITERAL(3, 36, 19), // "allStringRecognized"
+QT_MOC_LITERAL(4, 56, 8) // "exitCode"
 
     },
-    "ASRLinuxKaldi\0handleRecognizedString\0"
-    "\0allStringRecognized\0exitCode"
+    "ASRScripter\0handleRecognizedString\0\0"
+    "allStringRecognized\0exitCode"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_ASRLinuxKaldi[] = {
+static const uint qt_meta_data_ASRScripter[] = {
 
  // content:
        7,       // revision
@@ -192,10 +192,10 @@ static const uint qt_meta_data_ASRLinuxKaldi[] = {
        0        // eod
 };
 
-void ASRLinuxKaldi::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void ASRScripter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        ASRLinuxKaldi *_t = static_cast<ASRLinuxKaldi *>(_o);
+        ASRScripter *_t = static_cast<ASRScripter *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->handleRecognizedString(); break;
@@ -205,26 +205,26 @@ void ASRLinuxKaldi::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     }
 }
 
-const QMetaObject ASRLinuxKaldi::staticMetaObject = {
-    { &IASR::staticMetaObject, qt_meta_stringdata_ASRLinuxKaldi.data,
-      qt_meta_data_ASRLinuxKaldi,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+const QMetaObject ASRScripter::staticMetaObject = {
+    { &IASR::staticMetaObject, qt_meta_stringdata_ASRScripter.data,
+      qt_meta_data_ASRScripter,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
-const QMetaObject *ASRLinuxKaldi::metaObject() const
+const QMetaObject *ASRScripter::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *ASRLinuxKaldi::qt_metacast(const char *_clname)
+void *ASRScripter::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_ASRLinuxKaldi.stringdata0))
-        return static_cast<void*>(const_cast< ASRLinuxKaldi*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_ASRScripter.stringdata0))
+        return static_cast<void*>(const_cast< ASRScripter*>(this));
     return IASR::qt_metacast(_clname);
 }
 
-int ASRLinuxKaldi::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int ASRScripter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = IASR::qt_metacall(_c, _id, _a);
     if (_id < 0)

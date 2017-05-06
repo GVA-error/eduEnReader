@@ -20,14 +20,17 @@ SOURCES += main.cpp \
     cpp/textfragment.cpp \
     cpp/textstore.cpp \
     cpp/uicontroller.cpp \
-    cpp/ASR/asr.cpp \
-    cpp/ASR/bindmaker.cpp \
-    cpp/ASR/datapreparation.cpp \
-    cpp/ASR/metrics.cpp \
-    cpp/ASR/scripter.cpp \
-    cpp/ASR/wavworker.cpp \
-    cpp/ASR/graph.cpp \
+    cpp/Binding/asr.cpp \
+    cpp/Binding/bindmaker.cpp \
+    cpp/Binding/datapreparation.cpp \
+    cpp/Binding/metrics.cpp \
+    cpp/Binding/scripter.cpp \
+    cpp/Binding/wavworker.cpp \
+    cpp/Binding/graph.cpp \
     cpp/Utilits/setting.cpp \
+    cpp/Processes/process.cpp \
+    cpp/Processes/bindopenprocess.cpp \
+    cpp/Processes/tsbindingprocess.cpp
 
 RESOURCES += qml.qrc
 
@@ -62,11 +65,14 @@ HEADERS += \
     cpp/textfragment.h \
     cpp/textstore.h \
     cpp/uicontroller.h \
-    cpp/ASR/asr.h \
-    cpp/ASR/bindmaker.h \
-    cpp/ASR/datapreparation.h \
-    cpp/ASR/metrics.h \
-    cpp/ASR/scripter.h \
-    cpp/ASR/wavworker.h \
-    cpp/ASR/graph.h \
-    cpp/Utilits/setting.h
+    cpp/Binding/asr.h \
+    cpp/Binding/bindmaker.h \
+    cpp/Binding/datapreparation.h \
+    cpp/Binding/metrics.h \
+    cpp/Binding/scripter.h \
+    cpp/Binding/wavworker.h \
+    cpp/Binding/graph.h \
+    cpp/Utilits/setting.h \
+    cpp/Processes/process.h \
+    cpp/Processes/bindopenprocess.h \
+    cpp/Processes/tsbindingprocess.h

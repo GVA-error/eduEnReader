@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_TextStore_t {
-    QByteArrayData data[68];
-    char stringdata0[843];
+    QByteArrayData data[74];
+    char stringdata0[932];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -51,54 +51,60 @@ QT_MOC_LITERAL(16, 251, 20), // "documentTitleChanged"
 QT_MOC_LITERAL(17, 272, 5), // "error"
 QT_MOC_LITERAL(18, 278, 7), // "message"
 QT_MOC_LITERAL(19, 286, 16), // "markColorChanged"
-QT_MOC_LITERAL(20, 303, 17), // "setSelectionStart"
-QT_MOC_LITERAL(21, 321, 8), // "position"
-QT_MOC_LITERAL(22, 330, 15), // "setSelectionEnd"
-QT_MOC_LITERAL(23, 346, 17), // "setCursorPosition"
-QT_MOC_LITERAL(24, 364, 19), // "getSellectedStreing"
-QT_MOC_LITERAL(25, 384, 18), // "setSelectionByWord"
-QT_MOC_LITERAL(26, 403, 3), // "pos"
-QT_MOC_LITERAL(27, 407, 7), // "setBold"
-QT_MOC_LITERAL(28, 415, 3), // "arg"
-QT_MOC_LITERAL(29, 419, 9), // "setItalic"
-QT_MOC_LITERAL(30, 429, 12), // "setUnderline"
-QT_MOC_LITERAL(31, 442, 11), // "setFontSize"
-QT_MOC_LITERAL(32, 454, 12), // "setTextColor"
-QT_MOC_LITERAL(33, 467, 11), // "setMarkText"
-QT_MOC_LITERAL(34, 479, 14), // "setAllMarkText"
-QT_MOC_LITERAL(35, 494, 13), // "setUnMarkText"
-QT_MOC_LITERAL(36, 508, 16), // "setAllUnMarkText"
-QT_MOC_LITERAL(37, 525, 12), // "setWorldMark"
-QT_MOC_LITERAL(38, 538, 4), // "word"
-QT_MOC_LITERAL(39, 543, 13), // "setFontFamily"
-QT_MOC_LITERAL(40, 557, 10), // "setFileUrl"
-QT_MOC_LITERAL(41, 568, 7), // "setText"
-QT_MOC_LITERAL(42, 576, 6), // "saveAs"
-QT_MOC_LITERAL(43, 583, 8), // "fileType"
-QT_MOC_LITERAL(44, 592, 16), // "setDocumentTitle"
-QT_MOC_LITERAL(45, 609, 8), // "saveHome"
-QT_MOC_LITERAL(46, 618, 4), // "home"
-QT_MOC_LITERAL(47, 623, 12), // "setMarkCalor"
-QT_MOC_LITERAL(48, 636, 1), // "c"
-QT_MOC_LITERAL(49, 638, 12), // "getMarkColor"
-QT_MOC_LITERAL(50, 651, 6), // "target"
-QT_MOC_LITERAL(51, 658, 11), // "QQuickItem*"
-QT_MOC_LITERAL(52, 670, 14), // "cursorPosition"
-QT_MOC_LITERAL(53, 685, 14), // "selectionStart"
-QT_MOC_LITERAL(54, 700, 12), // "selectionEnd"
-QT_MOC_LITERAL(55, 713, 9), // "textColor"
-QT_MOC_LITERAL(56, 723, 10), // "fontFamily"
-QT_MOC_LITERAL(57, 734, 9), // "alignment"
-QT_MOC_LITERAL(58, 744, 13), // "Qt::Alignment"
-QT_MOC_LITERAL(59, 758, 4), // "bold"
-QT_MOC_LITERAL(60, 763, 6), // "italic"
-QT_MOC_LITERAL(61, 770, 9), // "underline"
-QT_MOC_LITERAL(62, 780, 8), // "fontSize"
-QT_MOC_LITERAL(63, 789, 16), // "defaultFontSizes"
-QT_MOC_LITERAL(64, 806, 7), // "fileUrl"
-QT_MOC_LITERAL(65, 814, 4), // "text"
-QT_MOC_LITERAL(66, 819, 13), // "documentTitle"
-QT_MOC_LITERAL(67, 833, 9) // "markColor"
+QT_MOC_LITERAL(20, 303, 20), // "someSellectedChanged"
+QT_MOC_LITERAL(21, 324, 17), // "someOpenedChanged"
+QT_MOC_LITERAL(22, 342, 17), // "setSelectionStart"
+QT_MOC_LITERAL(23, 360, 8), // "position"
+QT_MOC_LITERAL(24, 369, 15), // "setSelectionEnd"
+QT_MOC_LITERAL(25, 385, 17), // "setCursorPosition"
+QT_MOC_LITERAL(26, 403, 19), // "getSellectedStreing"
+QT_MOC_LITERAL(27, 423, 13), // "someSellected"
+QT_MOC_LITERAL(28, 437, 18), // "setSelectionByWord"
+QT_MOC_LITERAL(29, 456, 3), // "pos"
+QT_MOC_LITERAL(30, 460, 7), // "setBold"
+QT_MOC_LITERAL(31, 468, 3), // "arg"
+QT_MOC_LITERAL(32, 472, 9), // "setItalic"
+QT_MOC_LITERAL(33, 482, 12), // "setUnderline"
+QT_MOC_LITERAL(34, 495, 11), // "setFontSize"
+QT_MOC_LITERAL(35, 507, 12), // "setTextColor"
+QT_MOC_LITERAL(36, 520, 11), // "setMarkText"
+QT_MOC_LITERAL(37, 532, 14), // "setAllMarkText"
+QT_MOC_LITERAL(38, 547, 13), // "setUnMarkText"
+QT_MOC_LITERAL(39, 561, 16), // "setAllUnMarkText"
+QT_MOC_LITERAL(40, 578, 12), // "setWorldMark"
+QT_MOC_LITERAL(41, 591, 4), // "word"
+QT_MOC_LITERAL(42, 596, 13), // "setFontFamily"
+QT_MOC_LITERAL(43, 610, 10), // "setFileUrl"
+QT_MOC_LITERAL(44, 621, 7), // "setText"
+QT_MOC_LITERAL(45, 629, 6), // "saveAs"
+QT_MOC_LITERAL(46, 636, 8), // "fileType"
+QT_MOC_LITERAL(47, 645, 4), // "save"
+QT_MOC_LITERAL(48, 650, 16), // "setDocumentTitle"
+QT_MOC_LITERAL(49, 667, 8), // "saveHome"
+QT_MOC_LITERAL(50, 676, 4), // "home"
+QT_MOC_LITERAL(51, 681, 12), // "setMarkCalor"
+QT_MOC_LITERAL(52, 694, 1), // "c"
+QT_MOC_LITERAL(53, 696, 12), // "getMarkColor"
+QT_MOC_LITERAL(54, 709, 19), // "getDefaultMarkColor"
+QT_MOC_LITERAL(55, 729, 10), // "someOpened"
+QT_MOC_LITERAL(56, 740, 6), // "target"
+QT_MOC_LITERAL(57, 747, 11), // "QQuickItem*"
+QT_MOC_LITERAL(58, 759, 14), // "cursorPosition"
+QT_MOC_LITERAL(59, 774, 14), // "selectionStart"
+QT_MOC_LITERAL(60, 789, 12), // "selectionEnd"
+QT_MOC_LITERAL(61, 802, 9), // "textColor"
+QT_MOC_LITERAL(62, 812, 10), // "fontFamily"
+QT_MOC_LITERAL(63, 823, 9), // "alignment"
+QT_MOC_LITERAL(64, 833, 13), // "Qt::Alignment"
+QT_MOC_LITERAL(65, 847, 4), // "bold"
+QT_MOC_LITERAL(66, 852, 6), // "italic"
+QT_MOC_LITERAL(67, 859, 9), // "underline"
+QT_MOC_LITERAL(68, 869, 8), // "fontSize"
+QT_MOC_LITERAL(69, 878, 16), // "defaultFontSizes"
+QT_MOC_LITERAL(70, 895, 7), // "fileUrl"
+QT_MOC_LITERAL(71, 903, 4), // "text"
+QT_MOC_LITERAL(72, 908, 13), // "documentTitle"
+QT_MOC_LITERAL(73, 922, 9) // "markColor"
 
     },
     "TextStore\0targetChanged\0\0cursorPositionChanged\0"
@@ -108,22 +114,24 @@ QT_MOC_LITERAL(67, 833, 9) // "markColor"
     "underlineChanged\0fontSizeChanged\0"
     "defaultFontSizesChanged\0fileUrlChanged\0"
     "textChanged\0documentTitleChanged\0error\0"
-    "message\0markColorChanged\0setSelectionStart\0"
+    "message\0markColorChanged\0someSellectedChanged\0"
+    "someOpenedChanged\0setSelectionStart\0"
     "position\0setSelectionEnd\0setCursorPosition\0"
-    "getSellectedStreing\0setSelectionByWord\0"
-    "pos\0setBold\0arg\0setItalic\0setUnderline\0"
-    "setFontSize\0setTextColor\0setMarkText\0"
-    "setAllMarkText\0setUnMarkText\0"
-    "setAllUnMarkText\0setWorldMark\0word\0"
-    "setFontFamily\0setFileUrl\0setText\0"
-    "saveAs\0fileType\0setDocumentTitle\0"
-    "saveHome\0home\0setMarkCalor\0c\0getMarkColor\0"
-    "target\0QQuickItem*\0cursorPosition\0"
-    "selectionStart\0selectionEnd\0textColor\0"
-    "fontFamily\0alignment\0Qt::Alignment\0"
-    "bold\0italic\0underline\0fontSize\0"
-    "defaultFontSizes\0fileUrl\0text\0"
-    "documentTitle\0markColor"
+    "getSellectedStreing\0someSellected\0"
+    "setSelectionByWord\0pos\0setBold\0arg\0"
+    "setItalic\0setUnderline\0setFontSize\0"
+    "setTextColor\0setMarkText\0setAllMarkText\0"
+    "setUnMarkText\0setAllUnMarkText\0"
+    "setWorldMark\0word\0setFontFamily\0"
+    "setFileUrl\0setText\0saveAs\0fileType\0"
+    "save\0setDocumentTitle\0saveHome\0home\0"
+    "setMarkCalor\0c\0getMarkColor\0"
+    "getDefaultMarkColor\0someOpened\0target\0"
+    "QQuickItem*\0cursorPosition\0selectionStart\0"
+    "selectionEnd\0textColor\0fontFamily\0"
+    "alignment\0Qt::Alignment\0bold\0italic\0"
+    "underline\0fontSize\0defaultFontSizes\0"
+    "fileUrl\0text\0documentTitle\0markColor"
 };
 #undef QT_MOC_LITERAL
 
@@ -133,57 +141,63 @@ static const uint qt_meta_data_TextStore[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      41,   14, // methods
-      16,  296, // properties
+      47,   14, // methods
+      18,  332, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      17,       // signalCount
+      19,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  219,    2, 0x06 /* Public */,
-       3,    0,  220,    2, 0x06 /* Public */,
-       4,    0,  221,    2, 0x06 /* Public */,
-       5,    0,  222,    2, 0x06 /* Public */,
-       6,    0,  223,    2, 0x06 /* Public */,
-       7,    0,  224,    2, 0x06 /* Public */,
-       8,    0,  225,    2, 0x06 /* Public */,
-       9,    0,  226,    2, 0x06 /* Public */,
-      10,    0,  227,    2, 0x06 /* Public */,
-      11,    0,  228,    2, 0x06 /* Public */,
-      12,    0,  229,    2, 0x06 /* Public */,
-      13,    0,  230,    2, 0x06 /* Public */,
-      14,    0,  231,    2, 0x06 /* Public */,
-      15,    0,  232,    2, 0x06 /* Public */,
-      16,    0,  233,    2, 0x06 /* Public */,
-      17,    1,  234,    2, 0x06 /* Public */,
-      19,    0,  237,    2, 0x06 /* Public */,
+       1,    0,  249,    2, 0x06 /* Public */,
+       3,    0,  250,    2, 0x06 /* Public */,
+       4,    0,  251,    2, 0x06 /* Public */,
+       5,    0,  252,    2, 0x06 /* Public */,
+       6,    0,  253,    2, 0x06 /* Public */,
+       7,    0,  254,    2, 0x06 /* Public */,
+       8,    0,  255,    2, 0x06 /* Public */,
+       9,    0,  256,    2, 0x06 /* Public */,
+      10,    0,  257,    2, 0x06 /* Public */,
+      11,    0,  258,    2, 0x06 /* Public */,
+      12,    0,  259,    2, 0x06 /* Public */,
+      13,    0,  260,    2, 0x06 /* Public */,
+      14,    0,  261,    2, 0x06 /* Public */,
+      15,    0,  262,    2, 0x06 /* Public */,
+      16,    0,  263,    2, 0x06 /* Public */,
+      17,    1,  264,    2, 0x06 /* Public */,
+      19,    0,  267,    2, 0x06 /* Public */,
+      20,    0,  268,    2, 0x06 /* Public */,
+      21,    0,  269,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      20,    1,  238,    2, 0x0a /* Public */,
-      22,    1,  241,    2, 0x0a /* Public */,
-      23,    1,  244,    2, 0x0a /* Public */,
-      24,    0,  247,    2, 0x0a /* Public */,
-      25,    1,  248,    2, 0x0a /* Public */,
-      27,    1,  251,    2, 0x0a /* Public */,
-      29,    1,  254,    2, 0x0a /* Public */,
-      30,    1,  257,    2, 0x0a /* Public */,
-      31,    1,  260,    2, 0x0a /* Public */,
-      32,    1,  263,    2, 0x0a /* Public */,
-      33,    0,  266,    2, 0x0a /* Public */,
-      34,    0,  267,    2, 0x0a /* Public */,
-      35,    0,  268,    2, 0x0a /* Public */,
-      36,    0,  269,    2, 0x0a /* Public */,
-      37,    1,  270,    2, 0x0a /* Public */,
-      39,    1,  273,    2, 0x0a /* Public */,
-      40,    1,  276,    2, 0x0a /* Public */,
-      41,    1,  279,    2, 0x0a /* Public */,
-      42,    2,  282,    2, 0x0a /* Public */,
-      44,    1,  287,    2, 0x0a /* Public */,
-      45,    0,  290,    2, 0x0a /* Public */,
-      46,    0,  291,    2, 0x0a /* Public */,
-      47,    1,  292,    2, 0x0a /* Public */,
-      49,    0,  295,    2, 0x0a /* Public */,
+      22,    1,  270,    2, 0x0a /* Public */,
+      24,    1,  273,    2, 0x0a /* Public */,
+      25,    1,  276,    2, 0x0a /* Public */,
+      26,    0,  279,    2, 0x0a /* Public */,
+      27,    0,  280,    2, 0x0a /* Public */,
+      28,    1,  281,    2, 0x0a /* Public */,
+      30,    1,  284,    2, 0x0a /* Public */,
+      32,    1,  287,    2, 0x0a /* Public */,
+      33,    1,  290,    2, 0x0a /* Public */,
+      34,    1,  293,    2, 0x0a /* Public */,
+      35,    1,  296,    2, 0x0a /* Public */,
+      36,    0,  299,    2, 0x0a /* Public */,
+      37,    0,  300,    2, 0x0a /* Public */,
+      38,    0,  301,    2, 0x0a /* Public */,
+      39,    0,  302,    2, 0x0a /* Public */,
+      40,    1,  303,    2, 0x0a /* Public */,
+      42,    1,  306,    2, 0x0a /* Public */,
+      43,    1,  309,    2, 0x0a /* Public */,
+      44,    1,  312,    2, 0x0a /* Public */,
+      45,    2,  315,    2, 0x0a /* Public */,
+      47,    0,  320,    2, 0x0a /* Public */,
+      48,    1,  321,    2, 0x0a /* Public */,
+      49,    0,  324,    2, 0x0a /* Public */,
+      50,    0,  325,    2, 0x0a /* Public */,
+      51,    1,  326,    2, 0x0a /* Public */,
+      53,    0,  329,    2, 0x0a /* Public */,
+      54,    0,  330,    2, 0x0a /* Public */,
+      55,    0,  331,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -203,50 +217,58 @@ static const uint qt_meta_data_TextStore[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   18,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,   21,
-    QMetaType::Void, QMetaType::Int,   21,
-    QMetaType::Void, QMetaType::Int,   21,
+    QMetaType::Void, QMetaType::Int,   23,
+    QMetaType::Void, QMetaType::Int,   23,
+    QMetaType::Void, QMetaType::Int,   23,
     QMetaType::QString,
-    QMetaType::Void, QMetaType::Int,   26,
-    QMetaType::Void, QMetaType::Bool,   28,
-    QMetaType::Void, QMetaType::Bool,   28,
-    QMetaType::Void, QMetaType::Bool,   28,
-    QMetaType::Void, QMetaType::Int,   28,
-    QMetaType::Void, QMetaType::QColor,   28,
+    QMetaType::Bool,
+    QMetaType::Void, QMetaType::Int,   29,
+    QMetaType::Void, QMetaType::Bool,   31,
+    QMetaType::Void, QMetaType::Bool,   31,
+    QMetaType::Void, QMetaType::Bool,   31,
+    QMetaType::Void, QMetaType::Int,   31,
+    QMetaType::Void, QMetaType::QColor,   31,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   38,
-    QMetaType::Void, QMetaType::QString,   28,
-    QMetaType::Void, QMetaType::QUrl,   28,
-    QMetaType::Void, QMetaType::QString,   28,
-    QMetaType::Void, QMetaType::QUrl, QMetaType::QString,   28,   43,
-    QMetaType::Void, QMetaType::QString,   28,
+    QMetaType::Void, QMetaType::QString,   41,
+    QMetaType::Void, QMetaType::QString,   31,
+    QMetaType::Void, QMetaType::QUrl,   31,
+    QMetaType::Void, QMetaType::QString,   31,
+    QMetaType::Void, QMetaType::QUrl, QMetaType::QString,   31,   46,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   31,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QColor,   48,
+    QMetaType::Void, QMetaType::QColor,   52,
     QMetaType::QColor,
+    QMetaType::QColor,
+    QMetaType::Bool,
 
  // properties: name, type, flags
-      50, 0x80000000 | 51, 0x0049510b,
-      52, QMetaType::Int, 0x00495103,
-      53, QMetaType::Int, 0x00495103,
-      54, QMetaType::Int, 0x00495103,
-      55, QMetaType::QColor, 0x00495103,
-      56, QMetaType::QString, 0x00495103,
-      57, 0x80000000 | 58, 0x0049510b,
-      59, QMetaType::Bool, 0x00495103,
-      60, QMetaType::Bool, 0x00495103,
-      61, QMetaType::Bool, 0x00495103,
-      62, QMetaType::Int, 0x00495103,
-      63, QMetaType::QStringList, 0x00495001,
-      64, QMetaType::QUrl, 0x00495103,
-      65, QMetaType::QString, 0x00495103,
-      66, QMetaType::QString, 0x00495103,
-      67, QMetaType::QColor, 0x00495003,
+      56, 0x80000000 | 57, 0x0049510b,
+      58, QMetaType::Int, 0x00495103,
+      59, QMetaType::Int, 0x00495103,
+      60, QMetaType::Int, 0x00495103,
+      61, QMetaType::QColor, 0x00495103,
+      62, QMetaType::QString, 0x00495103,
+      63, 0x80000000 | 64, 0x0049510b,
+      65, QMetaType::Bool, 0x00495103,
+      66, QMetaType::Bool, 0x00495103,
+      67, QMetaType::Bool, 0x00495103,
+      68, QMetaType::Int, 0x00495103,
+      69, QMetaType::QStringList, 0x00495001,
+      70, QMetaType::QUrl, 0x00495103,
+      71, QMetaType::QString, 0x00495103,
+      72, QMetaType::QString, 0x00495103,
+      73, QMetaType::QColor, 0x00495003,
+      27, QMetaType::Bool, 0x00495001,
+      55, QMetaType::Bool, 0x00495001,
 
  // properties: notify_signal_id
        0,
@@ -265,6 +287,8 @@ static const uint qt_meta_data_TextStore[] = {
       13,
       14,
       16,
+      17,
+      18,
 
  // enums: name, flags, count, data
 
@@ -296,32 +320,41 @@ void TextStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 14: _t->documentTitleChanged(); break;
         case 15: _t->error((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 16: _t->markColorChanged(); break;
-        case 17: _t->setSelectionStart((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->setSelectionEnd((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 19: _t->setCursorPosition((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: { QString _r = _t->getSellectedStreing();
+        case 17: _t->someSellectedChanged(); break;
+        case 18: _t->someOpenedChanged(); break;
+        case 19: _t->setSelectionStart((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 20: _t->setSelectionEnd((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 21: _t->setCursorPosition((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 22: { QString _r = _t->getSellectedStreing();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 21: _t->setSelectionByWord((*reinterpret_cast< qint32(*)>(_a[1]))); break;
-        case 22: _t->setBold((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 23: _t->setItalic((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 24: _t->setUnderline((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 25: _t->setFontSize((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 26: _t->setTextColor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
-        case 27: _t->setMarkText(); break;
-        case 28: _t->setAllMarkText(); break;
-        case 29: _t->setUnMarkText(); break;
-        case 30: _t->setAllUnMarkText(); break;
-        case 31: _t->setWorldMark((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 32: _t->setFontFamily((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 33: _t->setFileUrl((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 34: _t->setText((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 35: _t->saveAs((*reinterpret_cast< const QUrl(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 36: _t->setDocumentTitle((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 37: _t->saveHome(); break;
-        case 38: _t->home(); break;
-        case 39: _t->setMarkCalor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
-        case 40: { QColor _r = _t->getMarkColor();
+        case 23: { bool _r = _t->someSellected();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 24: _t->setSelectionByWord((*reinterpret_cast< qint32(*)>(_a[1]))); break;
+        case 25: _t->setBold((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 26: _t->setItalic((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 27: _t->setUnderline((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 28: _t->setFontSize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 29: _t->setTextColor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
+        case 30: _t->setMarkText(); break;
+        case 31: _t->setAllMarkText(); break;
+        case 32: _t->setUnMarkText(); break;
+        case 33: _t->setAllUnMarkText(); break;
+        case 34: _t->setWorldMark((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 35: _t->setFontFamily((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 36: _t->setFileUrl((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 37: _t->setText((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 38: _t->saveAs((*reinterpret_cast< const QUrl(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 39: _t->save(); break;
+        case 40: _t->setDocumentTitle((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 41: _t->saveHome(); break;
+        case 42: _t->home(); break;
+        case 43: _t->setMarkCalor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
+        case 44: { QColor _r = _t->getMarkColor();
             if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = _r; }  break;
+        case 45: { QColor _r = _t->getDefaultMarkColor();
+            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = _r; }  break;
+        case 46: { bool _r = _t->someOpened();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -446,6 +479,20 @@ void TextStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
                 return;
             }
         }
+        {
+            typedef void (TextStore::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&TextStore::someSellectedChanged)) {
+                *result = 17;
+                return;
+            }
+        }
+        {
+            typedef void (TextStore::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&TextStore::someOpenedChanged)) {
+                *result = 18;
+                return;
+            }
+        }
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
@@ -476,6 +523,8 @@ void TextStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 13: *reinterpret_cast< QString*>(_v) = _t->text(); break;
         case 14: *reinterpret_cast< QString*>(_v) = _t->documentTitle(); break;
         case 15: *reinterpret_cast< QColor*>(_v) = _t->getMarkColor(); break;
+        case 16: *reinterpret_cast< bool*>(_v) = _t->someSellected(); break;
+        case 17: *reinterpret_cast< bool*>(_v) = _t->someOpened(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -532,29 +581,29 @@ int TextStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 41)
+        if (_id < 47)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 41;
+        _id -= 47;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 41)
+        if (_id < 47)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 41;
+        _id -= 47;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 16;
+        _id -= 18;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -661,6 +710,18 @@ void TextStore::error(QString _t1)
 void TextStore::markColorChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 16, Q_NULLPTR);
+}
+
+// SIGNAL 17
+void TextStore::someSellectedChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 17, Q_NULLPTR);
+}
+
+// SIGNAL 18
+void TextStore::someOpenedChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 18, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Settings_t {
-    QByteArrayData data[11];
-    char stringdata0[119];
+    QByteArrayData data[13];
+    char stringdata0[141];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,18 +35,21 @@ QT_MOC_LITERAL(0, 0, 8), // "Settings"
 QT_MOC_LITERAL(1, 9, 7), // "Section"
 QT_MOC_LITERAL(2, 17, 5), // "Video"
 QT_MOC_LITERAL(3, 23, 10), // "TextViewer"
-QT_MOC_LITERAL(4, 34, 3), // "Key"
-QT_MOC_LITERAL(5, 38, 10), // "DpiScaling"
-QT_MOC_LITERAL(6, 49, 15), // "ShowLectureText"
-QT_MOC_LITERAL(7, 65, 15), // "ShowExampleText"
-QT_MOC_LITERAL(8, 81, 13), // "TextMarkColor"
-QT_MOC_LITERAL(9, 95, 11), // "ExampleSize"
-QT_MOC_LITERAL(10, 107, 11) // "ExampleDiff"
+QT_MOC_LITERAL(4, 34, 8), // "Location"
+QT_MOC_LITERAL(5, 43, 3), // "Key"
+QT_MOC_LITERAL(6, 47, 10), // "DpiScaling"
+QT_MOC_LITERAL(7, 58, 15), // "ShowLectureText"
+QT_MOC_LITERAL(8, 74, 15), // "ShowExampleText"
+QT_MOC_LITERAL(9, 90, 13), // "TextMarkColor"
+QT_MOC_LITERAL(10, 104, 11), // "ExampleSize"
+QT_MOC_LITERAL(11, 116, 11), // "ExampleDiff"
+QT_MOC_LITERAL(12, 128, 12) // "BindLocation"
 
     },
-    "Settings\0Section\0Video\0TextViewer\0Key\0"
-    "DpiScaling\0ShowLectureText\0ShowExampleText\0"
-    "TextMarkColor\0ExampleSize\0ExampleDiff"
+    "Settings\0Section\0Video\0TextViewer\0"
+    "Location\0Key\0DpiScaling\0ShowLectureText\0"
+    "ShowExampleText\0TextMarkColor\0ExampleSize\0"
+    "ExampleDiff\0BindLocation"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,18 +67,20 @@ static const uint qt_meta_data_Settings[] = {
        0,       // signalCount
 
  // enums: name, flags, count, data
-       1, 0x0,    2,   22,
-       4, 0x0,    6,   26,
+       1, 0x0,    3,   22,
+       5, 0x0,    7,   28,
 
  // enum data: key, value
        2, uint(Settings::Video),
        3, uint(Settings::TextViewer),
-       5, uint(Settings::DpiScaling),
-       6, uint(Settings::ShowLectureText),
-       7, uint(Settings::ShowExampleText),
-       8, uint(Settings::TextMarkColor),
-       9, uint(Settings::ExampleSize),
-      10, uint(Settings::ExampleDiff),
+       4, uint(Settings::Location),
+       6, uint(Settings::DpiScaling),
+       7, uint(Settings::ShowLectureText),
+       8, uint(Settings::ShowExampleText),
+       9, uint(Settings::TextMarkColor),
+      10, uint(Settings::ExampleSize),
+      11, uint(Settings::ExampleDiff),
+      12, uint(Settings::BindLocation),
 
        0        // eod
 };

@@ -16,6 +16,7 @@ void QML_Settings::setDefaults()
     defaultString+= "TextViewer/ShowExampleText:true;";
     defaultString+= "TextViewer/ExampleSize:20;";
     defaultString+= "TextViewer/ExampleDiff:20;";
+    defaultString+= "Location/BindLocation:lectures;";
     Settings::setDefaults(defaultString);
 }
 

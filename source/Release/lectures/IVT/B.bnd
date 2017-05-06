@@ -1,0 +1,401 @@
+title 
+textStore B.html
+MD5TextStore MD5
+soundStore B.mp4
+MD5SoundStore MD5
+Bind 129 192 15.7 22.5
+Bind 192 227 22.5 26
+Bind 227 335 26 34.3
+Bind 335 430 34.3 40.2
+Bind 430 511 40.2 45.9
+Bind 511 534 45.9 48.9
+Bind 534 716 48.9 59.1
+Bind 716 814 59.1 62.8
+Bind 814 938 62.8 70.7
+Bind 938 1067 70.7 77.9
+Bind 1067 1116 77.9 81.2
+Bind 1116 1175 81.2 85.5
+Bind 1175 1278 85.5 92
+Bind 1278 1353 92 99
+Bind 1353 1424 99 104.1
+Bind 1424 1486 104.1 108
+Bind 1486 1574 108 113.3
+Bind 1574 1611 113.3 115.6
+Bind 1611 1759 115.6 123.5
+Bind 1759 1881 123.5 131.9
+Bind 1881 1948 131.9 135.8
+Bind 1948 2046 135.8 142.4
+Bind 2046 2129 142.4 147.8
+Bind 2129 2203 147.8 152.3
+Bind 2203 2317 152.3 159.9
+Bind 2317 2342 159.9 162
+Bind 2342 2451 162 168.2
+Bind 2451 2612 168.2 178.7
+Bind 2612 2649 178.7 181.5
+Bind 2649 2694 181.5 184.2
+Bind 2694 2814 184.2 191.6
+Bind 2814 2892 191.6 195.9
+Bind 2892 2990 195.9 202.4
+Bind 2990 3086 202.4 209.4
+Bind 3086 3115 209.4 213.3
+Bind 3115 3219 213.3 219.8
+Bind 3219 3290 219.8 225.8
+Bind 3290 3378 225.8 232.2
+Bind 3378 3427 232.2 235.1
+Bind 3427 3557 235.1 244.1
+Bind 3557 3600 244.1 246.6
+Bind 3600 3714 246.6 254.8
+Bind 3714 3767 254.8 258.5
+Bind 3767 3986 258.5 267.9
+Bind 3986 4110 267.9 274.6
+Bind 4110 4148 274.6 278.6
+Bind 4148 4199 278.6 282.7
+Bind 4199 4310 282.7 290.3
+Bind 4310 4438 290.3 296.7
+Bind 4438 4516 296.7 301.1
+Bind 4516 4585 301.1 305.9
+Bind 4585 4692 305.9 310.6
+Bind 4692 4782 310.6 317.8
+Bind 4782 4900 317.8 321.8
+Bind 4900 5034 321.8 328.9
+Bind 5034 5062 328.9 331.2
+Bind 5062 5181 331.2 340.1
+Bind 5181 5228 340.1 344.1
+Bind 5228 5316 344.1 351
+Bind 5316 5377 351 354.9
+Bind 5377 5476 354.9 360.4
+Bind 5476 5639 360.4 370.8
+Bind 5639 5682 370.8 373.7
+Bind 5682 5771 373.7 379.7
+Bind 5771 5821 379.7 384.1
+Bind 5821 5904 384.1 390
+Bind 5904 6052 390 398.3
+Bind 6052 6123 398.3 402.2
+Bind 6123 6293 402.2 412.3
+Bind 6293 6443 412.3 419.7
+Bind 6443 6505 419.7 422.8
+Bind 6505 6618 422.8 428.6
+Bind 6618 6686 428.6 432.1
+Bind 6686 6824 432.1 439.9
+Bind 6824 6994 439.9 449.9
+Bind 6994 7092 449.9 455.8
+Bind 7092 7132 455.8 460
+Bind 7132 7303 460 467.7
+Bind 7303 7395 467.7 473.9
+Bind 7395 7511 473.9 479
+Bind 7511 7660 479 485.9
+Bind 7660 7714 485.9 489.5
+Bind 7714 7836 489.5 495.8
+Bind 7836 7941 495.8 505.5
+Bind 7941 8082 505.5 512.4
+Bind 8082 8216 512.4 520.3
+Bind 8216 8274 520.3 525.9
+Bind 8274 8341 525.9 529.7
+Bind 8341 8496 529.7 539.5
+Bind 8496 8553 539.5 543.1
+Bind 8553 8629 543.1 549.1
+Bind 8629 8664 549.1 552.6
+Bind 8664 8853 552.6 563.9
+Bind 8853 8949 563.9 569.5
+Bind 8949 8989 569.5 572.1
+Bind 8989 9039 572.1 575.5
+Bind 9039 9089 575.5 577.9
+Bind 9089 9220 577.9 586
+Bind 9220 9326 586 592.6
+Bind 9326 9361 592.6 595.8
+Bind 9361 9422 595.8 599.5
+Bind 9422 9499 599.5 604.3
+Bind 9499 9626 604.3 611
+Bind 9626 9684 611 613.7
+Bind 9684 9774 613.7 619
+Bind 9774 9903 619 626.9
+Bind 9903 9937 626.9 629
+Bind 9937 10003 629 633.5
+Bind 10003 10068 633.5 638.4
+Bind 10068 10282 638.4 647.7
+Bind 10282 10405 647.7 653.3
+Bind 10405 10477 653.3 657.6
+Bind 10477 10552 657.6 664
+Bind 10552 10628 664 670.9
+Bind 10628 10723 670.9 673.8
+Bind 10723 10786 673.8 678.3
+Bind 10786 10922 678.3 687.5
+Bind 10922 10961 687.5 690.6
+Bind 10961 11085 690.6 700
+Bind 11085 11219 700 707.1
+Bind 11219 11299 707.1 711.8
+Bind 11299 11379 711.8 719.2
+Bind 11379 11450 719.2 722.4
+Bind 11450 11560 722.4 730.6
+Bind 11560 11587 730.6 733.1
+Bind 11587 11765 733.1 743.1
+Bind 11765 11920 743.1 749
+Bind 11920 11980 749 753.7
+Bind 11980 12126 753.7 761.8
+Bind 12126 12172 761.8 764.8
+Bind 12172 12238 764.8 768.5
+Bind 12238 12272 768.5 771.5
+Bind 12272 12375 771.5 779.3
+Bind 12375 12454 779.3 783.3
+Bind 12454 12542 783.3 787.9
+Bind 12542 12658 787.9 793.8
+Bind 12658 12763 793.8 800.1
+Bind 12763 12895 800.1 809.5
+Bind 12895 12940 809.5 812.1
+Bind 12940 13021 812.1 816.2
+Bind 13021 13190 816.2 826.4
+Bind 13190 13316 826.4 833.6
+Bind 13316 13433 833.6 838.9
+Bind 13433 13453 838.9 841.8
+Bind 13453 13606 841.8 850.8
+Bind 13606 13638 850.8 853.4
+Bind 13638 13688 853.4 856.2
+Bind 13688 13761 856.2 861.7
+Bind 13761 13838 861.7 866.6
+Bind 13838 13919 866.6 872
+Bind 13919 13968 872 876
+Bind 13968 14124 876 885.1
+Bind 14124 14217 885.1 891.3
+Bind 14217 14404 891.3 899.9
+Bind 14404 14497 899.9 904.2
+Bind 14497 14630 904.2 910.9
+Bind 14630 14668 910.9 913.5
+Bind 14668 14800 913.5 921
+Bind 14800 14880 921 925.5
+Bind 14880 15086 925.5 935.3
+Bind 15086 15139 935.3 938.1
+Bind 15139 15269 938.1 945.7
+Bind 15269 15410 945.7 952.7
+Bind 15410 15471 952.7 957.8
+Bind 15471 15583 957.8 965.1
+Bind 15583 15644 965.1 969.6
+Bind 15644 15752 969.6 977.9
+Bind 15752 15806 977.9 982.3
+Bind 15806 15902 982.3 989.5
+Bind 15902 15958 989.5 992.5
+Bind 15958 16106 992.5 1001.8
+Bind 16106 16171 1001.8 1006.3
+Bind 16171 16265 1006.3 1012.2
+Bind 16265 16300 1012.2 1014.4
+Bind 16300 16454 1014.4 1023
+Bind 16454 16520 1023 1028.8
+Bind 16520 16579 1028.8 1032.8
+Bind 16579 16626 1032.8 1035.8
+Bind 16626 16760 1035.8 1042.5
+Bind 16760 16823 1042.5 1046.3
+Bind 16823 16957 1046.3 1052.5
+Bind 16957 17030 1052.5 1056.2
+Bind 17030 17199 1056.2 1067.3
+Bind 17199 17304 1067.3 1070.9
+Bind 17304 17390 1070.9 1076.4
+Bind 17390 17496 1076.4 1081.8
+Bind 17496 17597 1081.8 1089.6
+Bind 17597 17730 1089.6 1097.7
+Bind 17730 17824 1097.7 1102.9
+Bind 17824 17933 1102.9 1108.9
+Bind 17933 18036 1108.9 1114.9
+Bind 18036 18077 1114.9 1117.7
+Bind 18077 18224 1117.7 1126.9
+Bind 18224 18290 1126.9 1131.9
+RecognizedString yes 0 2.2
+RecognizedString d i d n a sparkling new form 575.5 577.9
+RecognizedString let me just tell you how the super string theory what is it was a the're the tries to answer the question what are the basic fundamental 577.9 586
+RecognizedString indivisible on horrible can stay shorts making up everything in the world around us 586 592.6
+RecognizedString the idea is like this so imagine 592.6 595.8
+RecognizedString we look at a familiar object just a candle holder 595.8 599.5
+RecognizedString imagine that we want to figure out what it is made out so we going to journey deep in 599.5 604.3
+RecognizedString why the object exam in the can stitch wants to deep inside the all know yos officially far down you have adams 604.3 611
+RecognizedString we also all know the adams not the end of the story 611 613.7
+RecognizedString they have little electrons it's warm miranda central nucleus with neutron protons 613.7 619
+RecognizedString even the neutrons and protons it's more particles inside of them known as quarts that is work conventional idea stop 619 626.9
+RecognizedString you don't know whether it's right or wrong and i pnl discussion 59.1 62.8
+RecognizedString here's the new idea string theory 626.9 629
+RecognizedString deep inside any of these particles there is something else 629 633.5
+RecognizedString something else is dancing filament of energy it looks like a vibrating string 633.5 638.4
+RecognizedString that's where the idea string theory comes from and just like the vibrating strings that you just sona chela can vibrating different patterns these can also vibrating different patterns 638.4 647.7
+RecognizedString they don't produce different musical notes rather they produce the different particles making up the world around us 647.7 653.3
+RecognizedString that these ideas are correct this is what the ultra microscopic landscape 653.3 657.6
+RecognizedString of the universe looks like it's built up a huge number of the little tiny filament 657.6 664
+RecognizedString a vibrating energy vibrating indifferent frequencies different frequencies produce the different particles 664 670.9
+RecognizedString different particles are responsible 670.9 673.8
+RecognizedString for all the rich this in the world around and they're you see unification 673.8 678.3
+RecognizedString fairmont switching the next to use my telephone it right or wrong less ideas had a major impact on physics in the last century 62.8 70.7
+RecognizedString because matter particles electrons in forks radiation particles photon gravity cats are all built up from one entity 678.3 687.5
+RecognizedString some matter and the forces of nature o 687.5 690.6
+RecognizedString are put together under the rubric vibrating strings and that's what you mean by a unified fury a here is the catch 690.6 700
+RecognizedString when you study the mathematics or string theory you find the doesn't work in a universe that just has three dimensional space 700 707.1
+RecognizedString it doesn't work any universe with for dimensional space nor five nor sex 707.1 711.8
+RecognizedString finally you can study the equation show that it works only any universe that has ten dimensions of space 711.8 719.2
+RecognizedString and one dimension of time 719.2 722.4
+RecognizedString leaders right back to this idea of gluten klein that are world when appropriately described has more dimensions 722.4 730.6
+RecognizedString than the ones that we say 730.6 733.1
+RecognizedString now you might think about that say well ok enough yeah baxter dimensions in really tidy curled up yet perhaps perhaps we won't see them if there's mona but 733.1 743.1
+RecognizedString continue to inform a lot of cutting edge research i'd like to tell you something about the story this extra dimensions 70.7 77.9
+RecognizedString you know if there's a little tiny civilization agree people walkman diner you make them small enough we want see them either 743.1 749
+RecognizedString that is true one of the other predictions of string theory 749 753.7
+RecognizedString no that's not one of the other predictions of string theory blood erase the question are we just trying to hideaway these actually dimensions 753.7 761.8
+RecognizedString or do they tell or something about the world 761.8 764.8
+RecognizedString and the remaining tom i'd like to tell you to features of them 764.8 768.5
+RecognizedString first is many of a believe that 768.5 771.5
+RecognizedString does actor dimensions hold the answer to what perhaps is the deepest question in theoretical physics 771.5 779.3
+RecognizedString theoretical science in that question is this when we look around the world 779.3 783.3
+RecognizedString as scientists of damn for last hundred years there appear to be about twenty numbers 783.3 787.9
+RecognizedString that really describe our universities are numbers like the mass of the particles like electrons in court 787.9 793.8
+RecognizedString so are we go to begin need a backstory 77.9 81.2
+RecognizedString strength of gravity this train to electromagnetic force alyssa about twenty numbers that happen measured 793.8 800.1
+RecognizedString with incredible proceed and but nobody has an explanation for why the numbers have the particular values that they do now 800.1 809.5
+RecognizedString does string theory often answer not yet 809.5 812.1
+RecognizedString what we believe the answer for why those numbers have devise a jumeirah live 812.1 816.2
+RecognizedString on the form of the actor dimensions in the wonderful thing is if pose numbers had any other by is than known once the universe as we know it wouldn't exist 816.2 826.4
+RecognizedString this is a deep question why this number so finally to stars to shinin planets form when we recognize 826.4 833.6
+RecognizedString thank you fiddle with those numbers if i had twenty dials up you're in a let you come up infidel does numbers 833.6 838.9
+RecognizedString almost any feeling makes 838.9 841.8
+RecognizedString the universe disappear to can we explain does twenty numbers and string theory suggested the twenty numbers have to do with the actor dimensions 841.8 850.8
+RecognizedString let me show you how can we 850.8 853.4
+RecognizedString go to nineteen oh seven this is a year when einstein is 81.2 85.5
+RecognizedString talk about the actor dimensions in string theory 853.4 856.2
+RecognizedString it's not one actually dimension as in the older ideas of closer and klein 856.2 861.7
+RecognizedString this is what string theory says about the actor dimensions they have a very rich 861.7 866.6
+RecognizedString internet wind geometry this is an example of something on a zack labia shape 866.6 872
+RecognizedString name is and all that important but as you can see the 872 876
+RecognizedString extra dimensions fold in on themselves in inter twine in a very interesting shape interesting structure any ideas that if this is what 876 885.1
+RecognizedString the actually dimensions look like then the microscopic landscape of our universe all around us 885.1 891.3
+RecognizedString would look like this on the tiniest of scales when you swing your handy moving around is actor dimensions over and over again but they're so small that we wouldn't know it 891.3 899.9
+RecognizedString so what is the physical implication no relevant plus twenty numbers consider this 899.9 904.2
+RecognizedString you look at the instrument or french or notice a t vibrations of air streams are affected by the shape of the instrument 904.2 910.9
+RecognizedString bath in glow of having discover the special theory of relativity indecisive take on a new 85.5 92
+RecognizedString now in string theory all the numbers 910.9 913.5
+RecognizedString i reflections of the way strings can vibrate to just does air streams are affected by the twist send turns instrument 913.5 921
+RecognizedString strings themselves be affected by the vibration or patterns in geometry 921 925.5
+RecognizedString within which they are moving slow me bring some strings into the story and if you watch the little feliz vibrating around the be her in a second right there north away vibrate 925.5 935.3
+RecognizedString is affected by the geometry the actor dimensions 935.3 938.1
+RecognizedString so if we knew exactly what the actor demented looks like we don't yet but if we did we should be able to calculate the allowed notes 938.1 945.7
+RecognizedString the allowed vibration or patterns and if we could talk loud by bracelet patterns we should be able to calculate 945.7 952.7
+RecognizedString does twenty numbers fb answer that we get from are calculations 952.7 957.8
+RecognizedString agrees with the values of those numbers that have been determine through details in precise experiment tation 957.8 965.1
+RecognizedString this in many ways would be the first fundamental explanation 965.1 969.6
+RecognizedString project to try to understand fully legrand purvis have force of gravity 92 99
+RecognizedString for why the structure of the universe is the way it is now the second su that i want to finish up with is 969.6 977.9
+RecognizedString how my we test for the next to dimensions more 977.9 982.3
+RecognizedString directly is this just an interesting mathematical structure that might be able to explain some 982.3 989.5
+RecognizedString previously unexplained features of the world 989.5 992.5
+RecognizedString or kemy actually test for the jack dimensions in we think as i think very exciting that the next five years are so we may be able to test 992.5 1001.8
+RecognizedString for the existence of these actor dimensions here's how it goes 1001.8 1006.3
+RecognizedString in cern geneva switzerland machine is being built the large hadron collider 1006.3 1012.2
+RecognizedString it's machine that will send particles 1012.2 1014.4
+RecognizedString around tunnel opposite directions near the speed of light every so often does particles will be aim that each other to lose ahead on collision 1014.4 1023
+RecognizedString the hope is that if the collision as enough energy it may a jacked 1023 1028.8
+RecognizedString and in the moment there are many people around who father dad 99 104.1
+RecognizedString some of the debrief from the collision from our dimensions 1028.8 1032.8
+RecognizedString forcing it to enter into the other dimensions 1032.8 1035.8
+RecognizedString how we know it what will measure the amount of energy after the collision compare at three math energy before 1035.8 1042.5
+RecognizedString actors less energy after the collision number four 1042.5 1046.3
+RecognizedString just be evidence at the energy has drift away and for drift away the right pattern that we can calculate disobey evidence 1046.3 1052.5
+RecognizedString at the actor dimensions are there let me show the idea visually 1052.5 1056.2
+RecognizedString so magine we have a certain kinda particles polar grab a ton that's kind of debris we expect to be a jacket out if the dimensions a real here's had experiment will go 1056.2 1067.3
+RecognizedString you take is particles you slam together you slam it together 1067.3 1070.9
+RecognizedString nf we are write some of the energy that collision will going to debris that flies off 1070.9 1076.4
+RecognizedString into these actually dimensions so this is a kind of experiment that will be looking at the next five 1076.4 1081.8
+RecognizedString project already been resolve newton given the world 104.1 108
+RecognizedString seven two ten years yourself and if this experiment bears fruit if we see that kind of particle jacket 1081.8 1089.6
+RecognizedString by noticing apples less energy in our dimensions then when we begin this will show the dimensions are real 1089.6 1097.7
+RecognizedString enemy this is a really remarkable store in a remarkable opportunity going back to newton 1097.7 1102.9
+RecognizedString absolute space didn't provide anything button arena est in which the events the universe take place 1102.9 1108.9
+RecognizedString einstein comes along is as well space and time can war pink curve that's what gravity is and now 1108.9 1114.9
+RecognizedString string theory comes along and says yes 1114.9 1117.7
+RecognizedString gravity quantum mechanics electra magnum altogether one package but only if the universe has more dimensions than the ones that we see 1117.7 1126.9
+RecognizedString and this is an experiment that may test for them in our lifetime 1126.9 1131.9
+RecognizedString mazing possibility thank you very much 1131.9 1134.4
+RecognizedString 1134.4 1145.9
+RecognizedString a theory of gravity late sixteen hundred that works well describes the motion a planet 108 113.3
+RecognizedString 2.2 9.2
+RecognizedString 1145.9 1150.6
+RecognizedString 1150.6 1152.6
+RecognizedString the most and the moon and so force 113.3 115.6
+RecognizedString the motion of a powerful apple find from trees any people head all of that could be describe using newton's work but 115.6 123.5
+RecognizedString einstein realise new net left something out of the story because even newton had written that'll though he understood how 123.5 131.9
+RecognizedString to calculate effective gravity havent unable to figure out 131.9 135.8
+RecognizedString how it really works how is the sun ninety three million miles away somehow defects the motion 135.8 142.4
+RecognizedString of the earth how does the sun reach out across empty a nerd space and exert 142.4 147.8
+RecognizedString influence and that is a task to which einstein set himself to figure out 147.8 152.3
+RecognizedString how gravity works and let me show you what it is found so einstein found that medium that transmit 152.3 159.9
+RecognizedString gravity is space itself 159.9 162
+RecognizedString the idea goes like this imagine space is a substrate of all the resign sunsets basic nice and flat 162 168.2
+RecognizedString emir nineteen nineteen 9.2 15.7
+RecognizedString if there's no matter present but if there is matter in environment such as the sonic causes the fabric of space to worp check curve and bakshi mina cates 168.2 178.7
+RecognizedString the force of gravity even the earth 178.7 181.5
+RecognizedString worp space around it now look at the moon 181.5 184.2
+RecognizedString the moon is captain orbit according to is ideas because rolls along valley in the curved environment that v e 184.2 191.6
+RecognizedString sun and the moon and earth can all create my virtue of the presents 191.6 195.9
+RecognizedString go to a full frame view of this the earth itself is captain or because it rosa long valley 195.9 202.4
+RecognizedString in the environment that curved because of the sons presents that is this new idea about how 202.4 209.4
+RecognizedString gravity actually works now 209.4 213.3
+RecognizedString this id was tested nineteen nineteen through astronomical observations it really works describes data 213.3 219.8
+RecognizedString and this gained einstein prominent around the world and that is what got 219.8 225.8
+RecognizedString a virtually unknown german mathematician name theater loser 15.7 22.5
+RecognizedString call it's a thinking he like einstein wasn't search of what we call a unified theory 225.8 232.2
+RecognizedString that's one fury that might be able to scribe 232.2 235.1
+RecognizedString all of nature's forces from one stead of ideas one setup principles one master equation if you will supposed to certain self 235.1 244.1
+RecognizedString einstein has been able to describe gravity 244.1 246.6
+RecognizedString in terms of worp sing curves in space in fact space and time to more precise maybe i can play the same game 246.6 254.8
+RecognizedString where the other known for switch was it back time 254.8 258.5
+RecognizedString known as the electromagnetic force me of other today but that time that was jani other one people are thinking about your the forces park for electricity and magnetic attraction in south fourth 258.5 267.9
+RecognizedString circle to says maybe i can play this game describe electromagnetic force in terms of works in kurtz 267.9 274.6
+RecognizedString that raisa question watching curves in what 274.6 278.6
+RecognizedString einstein at already used up space and time 278.6 282.7
+RecognizedString suggested a very bold and the 22.5 26
+RecognizedString watching curves to describe gravity didn't seem to be anything else war curve suck lupita said well 282.7 290.3
+RecognizedString maybe there are more dimensions of spacey said ever won describe one more force maybe i need one more 290.3 296.7
+RecognizedString dimensions zoe imagine a world at four dimensional space not three 296.7 301.1
+RecognizedString and maginet electromagnet is watson curves in that fourth dimension 301.1 305.9
+RecognizedString nah here's the thing when he wrote down the equations describing watching craven universal force 305.9 310.6
+RecognizedString based mansions not three p found the old equations that einstein had already driving three dimensions browser for gravity 310.6 317.8
+RecognizedString what are you found one more equation because of the one more dimension 317.8 321.8
+RecognizedString how many look that equation it was not other than the equation at scientists head long known to describe electromagnetic force 321.8 328.9
+RecognizedString amazing i just popped up 328.9 331.2
+RecognizedString he was so excited by this realization that you ran around is house screaming victory that he had found the unified theory 331.2 340.1
+RecognizedString in someone's very bizarre idea he propose that our universe mine actually have more than three dimensions 26 34.3
+RecognizedString now clearly cool it was a man who talk 340.1 344.1
+RecognizedString theory very seriously in fact there's a story that when he want to learn how to swim 344.1 351
+RecognizedString he read a book a treat is on swimming 351 354.9
+RecognizedString vent dove into the ocean with a man what risk kid life on theory 354.9 360.4
+RecognizedString now buffalos about your little boy practically minded to questions amelia rise from his observation number one if there are more dimensional space where are they 360.4 370.8
+RecognizedString you don't seem to see them and number two 370.8 373.7
+RecognizedString does this theory really work in detail when you try to apply it to the world around us 373.7 379.7
+RecognizedString now the first question was answered in nineteen twenty six 379.7 384.1
+RecognizedString by felony master fine he's suggested that dimensions mike come into varieties 384.1 390
+RecognizedString the might be big easy dimensions but the miles be tiny curled up dimensions product so small even other all around us 390 398.3
+RecognizedString that we are all aware that isn't addition to left right back fourth and up down 34.3 40.2
+RecognizedString that we don't see them let me show you that one visually 398.3 402.2
+RecognizedString so imagi looking at something like a cable supporting a traffic light sim manhattan new central park and cover elvin but the cable lots one dimensional 402.2 412.3
+RecognizedString from a distance view point but you know another does hasn't thickness it's very hard to see a from far away barbies zoom in 412.3 419.7
+RecognizedString and take a perspective it's a little am walking around 419.7 422.8
+RecognizedString little answer so small that they can access all dimensions the long dimension profit clockwise 422.8 428.6
+RecognizedString counterclockwise direction and i hope you preciate does it take 428.6 432.1
+RecognizedString so long to get a chance to do this potato illustrator faggot dimensions cambia tu sorts big and small 432.1 439.9
+RecognizedString any ideas maybe the big dimensions around us other ones that we can easily see butter my additional dimensions curled up sort of like the circular part of the table 439.9 449.9
+RecognizedString so small that they have so far remained invisible let me show me what that would look like 449.9 455.8
+RecognizedString self we take a look say at space itself 455.8 460
+RecognizedString close it propose at my additional dimensions of space that for some reason 40.2 45.9
+RecognizedString i can only show chris to dimensions on screen some you gotta fix at one day but anything that not flat screen as a new dimension go smaller 460 467.7
+RecognizedString smaller smaller and way down in the microscopic depths of space itself this is the idea 467.7 473.9
+RecognizedString you could have additional curled up dimensions here's a little shape of a circle so small that we don't see them 473.9 479
+RecognizedString but if you were a little ultra microscopic aunt walking randy can walk in the big dimensions that we all know about that's like the grid part 479 485.9
+RecognizedString but you could also access the tiny curled up dimension 485.9 489.5
+RecognizedString that's so small that we can't see with a naked iyer even with any ramos refind equipment but deeply talked 489.5 495.8
+RecognizedString into the fabric of space itself the ideas could be more dimensions as we see there now 495.8 503.4
+RecognizedString that's 503.4 505.5
+RecognizedString an explanation about how the universe could have more dimensions than the ones that we see what about the second question that i asked 505.5 512.4
+RecognizedString does it theory actually work when you tried apply to the real world war turns out that einstein includes and many others 512.4 520.3
+RecognizedString we don't yet see now 45.9 48.9
+RecognizedString worked on trying to refine this framework and apply it too 520.3 525.9
+RecognizedString the physics of the universe as was understood it the time 525.9 529.7
+RecognizedString any detail didn't work and detail friends that couldn't get the mass of the electronic workout correctly and this theory so many people work donna popeye the 529.7 539.5
+RecognizedString fourty certainly by the fifties this strange 539.5 543.1
+RecognizedString but very compelling idea of how to unify the laws of physics had gone away 543.1 549.1
+RecognizedString until something wonderful happened in our h 549.1 552.6
+RecognizedString in our area of a new approach to unify the laws of physics is being pursued by physicistt touching myself money i was around the world it's called super string theory as you are indicating 552.6 563.9
+RecognizedString and the wonderful thing is that super string theory has nothing to do at first sight 563.9 569.5
+RecognizedString with this idea of actor dimensions 569.5 572.1
+RecognizedString buy me study super string theory find reza rex 572.1 575.5
+RecognizedString when someone makes a boldin bizarre idea sometime that old is ball design has nothing to do with the world around us this particular idea however 48.9 59.1

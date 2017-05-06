@@ -16,20 +16,20 @@ Rectangle{
     id : root
     height: 50
   //  color:  "#EEEEEE"
-    Button {
+    QML_ImageButton {
         id : playButton
-        y : 5
+        anchors.top: parent.top
+        anchors.topMargin: 7
         width: 30
-        background: Rectangle {
-            Image {
-                source: soundStore.state === soundStore.playingState() ? "images/stop.png" : "images/play.png"
-            }
-        }
-        onClicked: {
+        height: 30
+        backgroundImage: soundStore.state === soundStore.playingState() ? "images/stop.png" : "images/play.png"
+        onTrigered: {
             if (soundStore.state === soundStore.playingState())
                 soundStore.stop()
-            else
+            else {
+                homePage.textArea.undoBindEditing()
                 soundStore.start()
+            }
         }
     }
     // Ползуок
@@ -41,31 +41,27 @@ Rectangle{
         width: mainVideoView.width - playButton.width - centraliseButton.width - homeButton.width
         anchors.bottom:  root.bottom
     }
-    Button {
+    QML_ImageButton {
         id : centraliseButton
-        y : 5
-        width: 40
+        anchors.top: parent.top
+        anchors.margins : 5
+        width: 30
+        height: 30
         anchors.left:  videoSlider.right
-        background: Rectangle {
-            Image {
-                source: homePage.homeUiControler.dontSynch ? "images/not-synch.png" : "images/synch.png"
-            }
-        }
-        onClicked: {
+        backgroundImage: homePage.homeUiControler.dontSynch ? "images/not-synch.png" : "images/synch.png"
+        onTrigered: {
             homePage.homeUiControler.dontSynch = !homePage.homeUiControler.dontSynch
         }
     }
-    Button {
+    QML_ImageButton {
         id : homeButton
-        y : 5
+        anchors.top: parent.top
+        anchors.margins: 5
         width: 30
+        height: 30
         anchors.left:  centraliseButton.right
-        background: Rectangle {
-            Image {
-                source: soundStore.isExample === true ? "images/go-home.png" : "images/cant-go-home.png"
-            }
-        }
-        onClicked: {
+        backgroundImage: soundStore.isExample === true ? "images/go-home.png" : "images/cant-go-home.png"
+        onTrigered: {
             if (soundStore.isExample)
                 goHome()
                 showComments()

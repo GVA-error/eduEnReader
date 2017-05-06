@@ -23,7 +23,8 @@ class Settings{
 public:
     enum Section{
         Video,
-        TextViewer
+        TextViewer,
+        Location
     };
 
     enum Key{
@@ -32,7 +33,8 @@ public:
         ShowExampleText,
         TextMarkColor,
         ExampleSize,
-        ExampleDiff
+        ExampleDiff,
+        BindLocation
     };
 
     class ValueRef{

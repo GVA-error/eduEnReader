@@ -60,5 +60,20 @@
         <file>qml/PC_READ_main.qml</file>
         <file>qml/images/cant-go-home.png</file>
         <file>qml/QML_WaitDialog.qml</file>
+        <file>qml/PC_WRITE_PageOpen.qml</file>
+        <file>qml/PC_WRITE_main.qml</file>
+        <file>qml/images/trash.jpg</file>
+        <file>qml/QML_YesNoDialog.qml</file>
+        <file>qml/PC_WRITE_PageHome.qml</file>
+        <file>qml/QML_TextEditor.qml</file>
+        <file>qml/QML_TextEditorDialog.qml</file>
+        <file>qml/QML_NameDialog.qml</file>
+        <file>qml/PC_WRITE_TopToolBar.qml</file>
+        <file>qml/PC_WRITE_PropertyDialog.qml</file>
+        <file>qml/PC_WRITE_Propertyes.qml</file>
+        <file>qml/QML_ImageButton.qml</file>
+        <file>qml/QML_BrightnessButton.qml</file>
+        <file>qml/QML_CommentList.qml</file>
+        <file>qml/QML_CommentSellectDialog.qml</file>
     </qresource>
 </RCC>

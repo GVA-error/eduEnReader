@@ -15,10 +15,50 @@ TextStore::TextStore()
     , _saved_url(QUrl())
     , _saved_curPosition(0)
     , _mousePresed(false)
+    , _someOpened(false)
 {
-    _markColor = QML_Settings().textMarkColor(); // TODO Заменить на согналы
+    _markColor = getDefaultMarkColor(); // TODO Заменить на сигналы
 }
 
+void TextStore::addTextForComment(const QString& text, const QColor& textColor)
+{
+    QString addingText = "\n" + text + " - ";
+    //_text.push_back(addingText);
+    qint64 textLength = getString().length();
+    auto cursor = textCursor();
+    cursor.setPosition(textLength);
+    cursor.insertText(addingText);
+
+    qint64 addingTextLength = addingText.length();
+    setSelectionStart(textLength);
+    setSelectionEnd(textLength + addingTextLength - 3);
+    setTextColor(textColor);
+    saveAs(_fileUrl, ".html");
+}
+
+bool TextStore::posIsCorrect(qint64 curPos) const
+{
+    if (curPos < 0 || curPos > _text.length())
+        return false;
+    return true;
+}
+
+qint64 TextStore::getWordEnd(qint64 curPos, bool reversDirrection) const
+{
+    qint64 wordEnd;
+    QRegExp sep("\\W"); // TODO сначало искать начало слова
+    if (reversDirrection)
+        wordEnd = _text.lastIndexOf(sep, curPos);
+    else
+        wordEnd = _text.indexOf(sep, curPos);
+
+    if (wordEnd < 0)
+        if (reversDirrection)
+            wordEnd = 0;
+        else
+            wordEnd = _text.length() - 1;
+    return wordEnd;
+}
 
 //qint64 TextStore::indexOfPrefixOrPostFix(const QString& str, qint64 leftOffset) const
 //{
@@ -143,6 +183,7 @@ void TextStore::setTarget(QQuickItem *target)
         if (qqdoc)
             _doc = qqdoc->textDocument();
     }
+    assert(_doc != 0);
     emit targetChanged();
 }
 
@@ -157,17 +198,18 @@ void TextStore::setFileUrl(const QUrl &url)
         if (file.open(QFile::ReadOnly))
         {
             QByteArray data = file.readAll();
-            QTextCodec *codec = QTextCodec::codecForHtml(data);
+            QTextCodec *codec = QTextCodec::codecForName("utf-8");
             setText(codec->toUnicode(data));
             if (_doc)
             {
                 _doc->setHtml(data);
                 _doc->setModified(false);
-                setCursorPosition(0);
+                setCursorPosition(1);
             }
             emit textChanged();
             emit documentTitleChanged();
-
+           // _someOpened = true;
+           // emit someOpenedChanged();
             reset();
         }
     }
@@ -206,13 +248,20 @@ void TextStore::saveAs(const QUrl &arg, const QString &fileType)
     if (!localPath.endsWith(ext))
         localPath += ext;
     QFile f(localPath);
-    if (!f.open(QFile::WriteOnly | QFile::Truncate | (isHtml ? QFile::NotOpen : QFile::Text))) {
+    if (!f.open(QFile::WriteOnly)) {
         emit error(tr("Cannot save: ") + f.errorString());
         return;
     }
-    f.write((isHtml ? _doc->toHtml() : _doc->toPlainText()).toLocal8Bit());
+    //QString out = (isHtml ? _doc->toHtml() : _doc->toPlainText()).toUtf8();
+  //  _doc->setProperty("lang", QVariant("ru-RU"));
+    f.write(_doc->toHtml().toUtf8());
     f.close();
     setFileUrl(QUrl::fromLocalFile(localPath));
+}
+
+void TextStore::save()
+{
+    saveAs(_fileUrl, ".html");
 }
 
 QUrl TextStore::fileUrl() const
@@ -260,6 +309,7 @@ void TextStore::reset()
     emit fontSizeChanged();
     emit textColorChanged();
     emit cursorPositionChanged();
+    emit someSellectedChanged();
 }
 
 QTextCursor TextStore::textCursor() const
@@ -301,6 +351,7 @@ void TextStore::setSelectionStart(int position)
     else
         _selectionStart = 0;
     emit selectionStartChanged();
+    emit someSellectedChanged();
 }
 
 void TextStore::setSelectionEnd(int position)
@@ -310,6 +361,7 @@ void TextStore::setSelectionEnd(int position)
     else
         _selectionEnd = 0;
     emit selectionEndChanged();
+    emit someSellectedChanged();
 }
 
 void TextStore::setAlignment(Qt::Alignment a)

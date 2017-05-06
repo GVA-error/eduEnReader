@@ -5,6 +5,8 @@
 #include <QMouseEvent>
 #include <QtGui/QTextCharFormat>
 #include <QtCore/QTextCodec>
+#include <QtAlgorithms>
+#include <QThread>
 #include <assert.h>
 #include "store.h"
 #include "Utilits/setting.h"
@@ -44,6 +46,9 @@ class TextStore : public QObject, public Store <TextStore>
 
     Q_PROPERTY(QColor markColor READ getMarkColor WRITE setMarkCalor NOTIFY markColorChanged)
 
+    Q_PROPERTY(bool someSellected READ someSellected NOTIFY someSellectedChanged)
+    Q_PROPERTY(bool someOpened READ someOpened NOTIFY someOpenedChanged)
+
 public:
    // const QColor _defaultColor = QColor("#e6d1d1");
    // const QStringList _prefixAndPostFix = { " ", ",", "!", "?", ":", "(", ")"};
@@ -57,7 +62,6 @@ public:
     QQuickItem *target() { return _target; }
 
     void setTarget(QQuickItem *target);
-
 
     int cursorPosition() const
     {
@@ -88,13 +92,20 @@ public:
 
     qint64 length() const { return _text.length(); }
 
+    bool posIsCorrect(qint64 curPos) const;
     //QStringList getAllWordVarints(const QString& word) const;
+
+    qint64 getWordEnd(qint64 curPos, bool reversDirrection) const;
+
+    // Добавляет текст в конец файла, нужен для добавления частей текста для последующего комментрирования
+    void addTextForComment(const QString& text, const QColor& textColor = QColor("black"));
 
 public Q_SLOTS:
     void setSelectionStart(int position);
     void setSelectionEnd(int position);
     void setCursorPosition(int position);
     QString getSellectedStreing() const;
+    bool someSellected() { return abs(_selectionEnd - _selectionStart) > 0; }
     void setSelectionByWord(qint32 pos);
     void setBold(bool arg);
     void setItalic(bool arg);
@@ -111,6 +122,7 @@ public Q_SLOTS:
     void setFileUrl(const QUrl &arg) override;
     void setText(const QString &arg);
     void saveAs(const QUrl &arg, const QString &fileType);
+    void save();
 
     void setDocumentTitle(QString arg);
 
@@ -118,7 +130,14 @@ public Q_SLOTS:
     void home();
 
     void setMarkCalor(const QColor& c){ _markColor = c; }
+    //void setTempMarkColor();
     QColor getMarkColor() const { return _markColor; }
+    QColor getDefaultMarkColor() const { return QML_Settings().textMarkColor(); }
+
+    bool someOpened() { return _someOpened; }
+    // Считаем следующее выделение временным, нужно для временного выделения комментариев
+   // bool isTemp() { return _isTempSellection; }
+   // void setTempFlag(bool tempFlag) { _isTempSellection = tempFlag; }
 
     //qint64 indexOfPrefixOrPostFix(const QString& s, qint64 leftOffset = 0) const; // первое вхождение префикса или постфикса
     //bool isPrefixOrPostfix(const QString&) const;
@@ -146,13 +165,13 @@ signals:
     void error(QString message);
 
     void markColorChanged();
-private:
-    void reset();
-    QTextCursor textCursor() const;
-    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
-    void mergeFormatOnAll(const QTextCharFormat &format);
-    QList <qint64> getWordPositions(const QString& word) const; // Нужно для подсветки слов
 
+    void someSellectedChanged();
+
+    void someOpenedChanged();
+private:
+   // bool _isTempSellection;
+    bool _someOpened;
     QQuickItem *_target;
     QTextDocument *_doc;
     // Нужен для возможости полного функционирования объектов textStore без привязки к гуи гуи
@@ -174,6 +193,13 @@ private:
     QUrl _fileUrl;
     QString _text;
     QString _documentTitle;
+
+    void reset();
+    QTextCursor textCursor() const;
+    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+    void mergeFormatOnAll(const QTextCharFormat &format);
+    QList <qint64> getWordPositions(const QString& word) const; // Нужно для подсветки слов
+
 };
 
 

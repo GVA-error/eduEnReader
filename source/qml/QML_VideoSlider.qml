@@ -8,6 +8,7 @@ import UiControlerModul 1.1
 import SoundStoreModul 1.1
 import TextStoreModul 1.0
 
+// TODO Property textArea
 Rectangle { // Ползунок
     property var source;
     //anchors.top: videoRect.

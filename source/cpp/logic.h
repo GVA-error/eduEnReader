@@ -5,6 +5,7 @@
 #include <QList>
 #include <QVector>
 #include <QTextStream>
+#include <QThread>
 #include "soundfragment.h"
 #include "textfragment.h"
 
@@ -44,6 +45,17 @@ public:
         patternTypes _type;
     };
 
+    // Правка текста бинда
+    void addWordInCurBindEnd();
+    void addWordInCurBindBegin();
+    void deleteWordFromCurBindEnd();
+    void deleteWordFromCurBindBegin();
+    void setCurBindEnd(qint64 pos);
+    void setCurBindBegin(qint64 pos);
+
+    // Нужна для формирования имён комментариев
+    QString getUniqCommentName();
+
     bool isNormalBind(const QVector <Logic::Bind>::const_iterator bindIterator) const;
     qint32 moreOrLess(Bind bind, qreal soundPos, qint64 textPos) const;
 
@@ -59,6 +71,7 @@ public:
     QList <Pattern> getPatterns() { return _patternList; }
 
     QString getCurBndFileName() const { return _curBndFileName; }
+    QString getCurBndUrl();
 
     // Логически обрабатывает бинлы
     void bindLogicHanding();
@@ -71,8 +84,11 @@ public:
     void writeInFile(TextStore::PTR , SoundStore::PTR);
     void writeInFile(const QString& fileName, TextStore::PTR , SoundStore::PTR);
     void readFromFile(const QString& fileName, TextStore::PTR, SoundStore::PTR);
+    void save();
     // TODO проверять на пересоздание
     void createFromNewSoundFile(const QString& fileName, TextStore::PTR, SoundStore::PTR);
+    // Нужна для удаления всех файлов взаимодействующих с логикой
+    void deleteAllFiles();
 
     // pos - номер бинда перед которым будет вставлен бинд
     void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, qint64 pos = -1);
@@ -80,7 +96,8 @@ public:
     void addRecognizedString(const QStringList& recognizedString, qreal beginSound, qreal endSound, QString fileName = QString());
     bool haveRecognizedString() { return _recognizedStrings.empty() == false; }
 
-    void makeComment(TextFragment::PTR text, QUrl url, const QString &name);
+    void makeComment(TextFragment::PTR text, QUrl url);
+    void deleteComment(const QString& name);
 
     QMap <QString, QStringList> getRecognizedStrings() const { return _recognizedStrings; }
     QMap <QString, qreal> getRecognizedStringBeginList() const { return _recognizedStringPosBegin; }
@@ -89,6 +106,7 @@ public:
     // Нужны для динамического позиционирования
     qint64 posInWavToPosInText(qreal) const; // по позиции в секундах, узнаёт позицию в интерпретированнном тексте
     qreal posInTxtToPosInWav(qint64) const; // по позиции в интерпретированном тексте узнаёт позицию в wav файле в секундах
+    QList <QString> getCommentNamesonTextPos(TextFragment::PTR) const;
     QList <QString> getCommentNamesonTextPos(qint64 begin, qint64 end) const; // по позиции в интерпритированном тексте возвращает url комментария
     QList <QString> getCommentNamesonTextPos(qint64 pos) const; // Если позиция принадлежит бинду, возвращает все комментарии пересекающие бинд
     QUrl getCommentUrlsonName(const QString &name) const;
@@ -106,6 +124,10 @@ public:
     void unMarkAllBindedText();
     void markLastBind();
     void unmarkLastBind();
+    void notAllowMarkBinds() { _f_notMarkBinds = true; }
+    void allowMarkBinds() { _f_notMarkBinds = false; }
+    void markCommentWithName(const QString& name);
+    void unmarkCommentWithName(const QString& name);
 
     qint32 getTextMidPosCurBind() const; // Нужно для позиционирования на середину бинда
     qint32 getTextBeginPosCurBind() const; // .. начала
@@ -114,15 +136,24 @@ public:
     qint64 roundToBindTextPos(qint64) const;
     qreal roundToBindSoundPos(qreal) const;
 
-    QString getTitle(const QUrl& bindFile) const;
+    void setTitle(const QString& newTitle) { _title = newTitle; }
+    QString getTitle() const { return _title; }
+    QString getTitle(const QUrl& bindFile) const; // Нужно для получения tittle без открытия лекцтии - Используеться в меню открытия
 
     void clear(bool clearRecognized);
 private:
     Logic();
     enum FileTypes{ sound, text, binds, undefined };
 
+    const QColor _commentMarkColor = QColor("skyblue");
     const bool _findInSequence = true; // Поиск только целыми предложениями
+    bool _f_notMarkBinds;
 
+    QString _title;
+
+    // Нужны для удаления без открытия
+    QString _soundStoreString;
+    QString _textStoreString;
     // Конфиг с патернами для поиска переводов
     const QString _sourceConfigFile = "./configs/sources.conf";
     QList <Pattern> _patternList;
@@ -148,9 +179,13 @@ private:
     // Возвращается если не нашли подходящего бинда
     // Иницилизирован в конструкторе
     Bind zeroBind; // Не стоит модифицировать, нейтрален отнасительно суммирования + используеться в лямдах
-    Bind tempBind; // служит как временная переменная которую можно поменять, но она не на что не повличет
+    Bind tempBind; // служит как временная переменная которую можно поменять, не на что не повличет
+
+    Bind _commentBind;
 
     QString _curBndFileName;
+    SoundStore::PTR _lastOpenedSoundStore;
+    TextStore::PTR _lastOpenedTextStore;
 
     //const qint32 _lastTempMarkListSize = 7;
    // Bind _lastTempMarkPos;
@@ -166,6 +201,8 @@ private:
     QMap <QString, QStringList> _recognizedStrings; // Распознаные строки из файла, нужны для быстрого перепросчёта
     QMap <QString, qreal> _recognizedStringPosBegin; // позициия в звуковом файле для каждого элемента _recognizedStrings
     QMap <QString, qreal> _recognizedStringPosEnd;
+
+    Comment getCommentWithName(const QString& name) const;
 
     // Добавление с сохранением порядка
     // Так же гарантирует что одновременно в списке биндов не будет ссылок на разные источники
@@ -218,6 +255,63 @@ private:
     }
 
     Bind summ(const Bind& left, const Bind& right) const;
+
+    // Нужна для добавления новых комментариев
+    // Даёт имена комментариям в соответствии с их позицией
+    void sortCommentName();
+
+    // Нужна для правки биндов
+    // Возвращает позицию конца слова
+    // reversDirrection - будет производится поиск начала слова
+    qint64 getWordEnd(qint64 curPos, bool reversDirrection);
+
+    bool posIsCorrect(qint64 curPos) const;
+
+    void addWordInCurBindEnd(QVector<Bind>::const_iterator);
+    void addWordInCurBindBegin(QVector<Bind>::const_iterator);
+    void deleteWordFromCurBindEnd(QVector<Bind>::const_iterator);
+    void deleteWordFromCurBindBegin(QVector<Bind>::const_iterator);
+
+    void setCurBindEnd(qint64 pos, QVector<Bind>::const_iterator);
+    void setCurBindBegin(qint64 pos, QVector<Bind>::const_iterator);
 };
+
+//// читает логику в отдельном потоке
+//class LogicReader : public QThread
+//{
+//    Q_OBJECT
+//public:
+//    typedef QSharedPointer <LogicReader> PTR;
+//    static QSharedPointer <LogicReader> factoryMethod(TextStore::PTR textStore, SoundStore::PTR soundStore, Logic::PTR logic)
+//    {
+//        PTR rezPtr = QSharedPointer <LogicReader> (new LogicReader(textStore, soundStore, logic));
+//        return rezPtr;
+//    }
+//    QString getCurState() { return _curOpenState; }
+//    void setFileName(const QString& fileName) {
+//        _fileName = fileName;
+//    }
+//    void runInThisThread() { run(); }
+//    LogicReader() = delete;
+//    explicit LogicReader(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic);
+//signals:
+//    void finished();
+//protected:
+//    void run(){
+//        _curOpenState = "Opening" + _fileName + "...";
+//        _logic->readFromFile(_fileName, _textStore, _soundStore);
+//        emit finished();
+//        _curOpenState = "end";
+//    }
+//private:
+//    Logic::PTR _logic;
+//    TextStore::PTR _textStore;
+//    SoundStore::PTR _soundStore;
+//    QString _fileName;
+//    QString _curOpenState;
+//};
+
+
+
 
 #endif // LOGIC_H

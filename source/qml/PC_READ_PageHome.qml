@@ -1,4 +1,5 @@
 import QtQuick 2.8
+import QtQml 2.2
 import QtWebEngine 1.4
 
 import QtMultimedia 5.8
@@ -7,6 +8,7 @@ import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
@@ -27,12 +29,12 @@ Page {
     // Список примеров или комментариев
     SwipeView {
         id: exampleCommentsPageLits
-        rightPadding: 20
+        rightPadding: 10
         anchors.top : parent.top
         anchors.bottom: controlPanel.top
         anchors.right : controlPanel.right
         anchors.left : mainVideoView.right
-        Component.onCompleted: contentItem.interactive = false
+        Component.onCompleted: interactive = false
         z : 3
         Page{// Список комментариев
             visible: exampleCommentsPageLits.currentIndex == 0
@@ -41,8 +43,7 @@ Page {
                 id: flickable
                 anchors.fill: parent
                 flickableDirection: Flickable.VerticalFlick
-                TextArea.flickable:
-                QML_TextReaderArea {
+                TextArea.flickable: TextArea {
                     id : commentArrea
                     text: commentDoc.text
                     textFormat: Qt.RichText
@@ -70,6 +71,7 @@ Page {
             }*/
         }
         Page{// Список примеров
+            topPadding: 15
             visible: exampleCommentsPageLits.currentIndex == 1
             QML_ListDialog{
                 z : 3;
@@ -97,7 +99,7 @@ Page {
            anchors.fill: parent;
            //source: root.source
            onPosChanged: {
-               textArea.syncSoundAndSliderPosition(false)
+               flickableTextArea.textArea.syncSoundAndSliderPosition(false)
            }
         }
         MouseArea{
@@ -140,7 +142,8 @@ Page {
         }
     }
 
-    Flickable {
+
+    QML_TextReaderArea{
         id: flickableTextArea
         visible: (settingPage.showExampleText === true && soundStore.isExample === true)
                  || (settingPage.showLectureText === true && soundStore.isExample === false)
@@ -148,55 +151,38 @@ Page {
         anchors.bottom: parent.bottom
         width: parent.width
         Component.onCompleted: contentItem.interactive = false
-        flickableDirection: Flickable.VerticalFlick
-        TextArea.flickable: QML_TextReaderArea{
-            id : textArea
-            anchors.fill: parent
-        }
-        ScrollBar.vertical: ScrollBar {
-            width: 20
-        }
-        Behavior on contentY {
-                 NumberAnimation {
-                     duration: 600
-                 }
-             }
-        function synch(f_pushSynch) { textArea.syncSoundAndSliderPosition(f_pushSynch) }
-        function getCurY() { return contentY }
-        function setCurY(newY) {
-            contentY = newY
-
-        }
-        function getCurHeigth() { return height }
+        sourceDocument: document
+        uiController: uiControler
+        contextMenue: contextMenue
     }
 
     UiControler{
         id: uiControler
         mouseIsPressed: textArea.mouseLeftPresed
-        document : document
+        document: TextStore {
+            id: document
+            target: flickableTextArea.textArea
+            cursorPosition: flickableTextArea.textArea.cursorPosition
+            selectionStart: flickableTextArea.textArea.selectionStart
+            selectionEnd: flickableTextArea.textArea.selectionEnd
+            textColor: "Black"
+            onError: {
+                errorDialog.text = message
+                errorDialog.visible = true
+            }
+        }
         soundStore : soundStore
         property bool dontSynch : false
         onDontSynchChanged:{
             if (!dontSynch)
                 textArea.syncSoundAndSliderPosition(true)
         }
-        Component.onCompleted: {
+        Component.onCompleted:{
             synchBndFileList()
         }
     }
 
-    TextStore {
-        id: document
-        target: textArea
-        cursorPosition: textArea.cursorPosition
-        selectionStart: textArea.selectionStart
-        selectionEnd: textArea.selectionEnd
-        textColor: "Black"
-        onError: {
-            errorDialog.text = message
-            errorDialog.visible = true
-        }
-    }
+
   /*  SoundStore {
         id : soundStore
         onPosChanged: {
@@ -211,6 +197,70 @@ Page {
     QML_HtmlView{
         id: commentDialog
         z: 4
+    }
+    MessageDialog {
+        id: errorDialog
+    }
+    Menu {
+        id : contextMenue
+        MenuItem {
+            text: "Translation/Synonyms"
+            onTriggered: {
+                //var translateUrl = uiControler.formUrlToTranslateSellected();
+                //translateDialog.setUrl(translateUrl)
+                //translateDialog.showDialog()
+                goTranslitionHelp()
+            }
+        }
+        MenuItem {
+            text: "Example"
+            onTriggered: {
+                //uiControler.getExample()
+                mainToolBar.setExampleText(document.getSellectedStreing())
+                showExamples();
+            }
+        }
+/*
+        MenuSeparator {
+            visible: recentFilesModel.count > 0
+        }
+*/
+        Instantiator {
+                model: homePage.homeUiControler.matirealsListModel
+                MenuItem {
+                    text: modelData
+                    onTriggered: {
+                        translitionHelpPage.setSource(text);
+                        goTranslitionHelp()
+                    }
+                }
+                onObjectAdded: contextMenue.insertItem(2+index, object)
+                onObjectRemoved: contextMenue.removeItem(object)
+        }
+
+
+//        MenuItem {
+//            text: "Set color"
+//            onTriggered: {
+//                colorDialog.open()
+//            }
+//        }
+
+//        MenuItem {
+//            text: "Add comment"
+//            onTriggered: {
+//                commentFileDialog.open()
+//            }
+//        }
+
+/*
+        ColorDialog {
+            id: colorDialog
+            color: homePage.homeDocument.markColor
+            onAccepted: {
+                document.setTextColor(color)
+            }
+        }*/
     }
 
 }

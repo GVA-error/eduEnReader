@@ -1,0 +1,5 @@
+/home/gva/kaldi/egs/apiai_decode/s5/recognize-wav.sh: line 14: path.sh: Нет такого файла или каталога
+///////
+// IMPORTANT: wav files must be in 16kHz, 16 bit little-endian format.
+//////
+exp/api.ai-model/final.mdl not found, use ./download-model.sh
