@@ -9,6 +9,12 @@ Item {
     property real baseH : 6/7 * height;
     anchors.fill: parent
     visible: false
+
+    Behavior on visible {
+         NumberAnimation {
+             duration: 250
+         }
+     }
     QML_DialogBackground {
         id: dialogBackground
         onBackClicked: {
@@ -50,7 +56,7 @@ Item {
         root.visible = true
     }
     function hideDialog() {
-        dialogBackground.hide()
         root.visible = false
+        dialogBackground.hide()
     }
 }

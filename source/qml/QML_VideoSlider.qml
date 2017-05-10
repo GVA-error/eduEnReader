@@ -8,14 +8,14 @@ import UiControlerModul 1.1
 import SoundStoreModul 1.1
 import TextStoreModul 1.0
 
-// TODO Property textArea
+// TODO Возможность смены размеров
 Rectangle { // Ползунок
     property var source;
     //anchors.top: videoRect.
     //anchors.right: parent.right
     id: soundGraph
-    height: size_height
-    width: size_width
+ //   height: size_height
+  //  width: size_width
     color : "transparent"
     Slider {
         id: control

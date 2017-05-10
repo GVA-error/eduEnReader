@@ -752,43 +752,45 @@ qrc_qml.cpp: ../qml.qrc \
 		../../../Qt/5.8/gcc_64/bin/rcc \
 		../qtquickcontrols2.conf \
 		../main.qml \
-		../qml/PC_WRITE_PropertyDialog.qml \
+		../qml/QML_ControlPanel.qml \
+		../qml/WRITE_main.qml \
 		../qml/QML_ListDialog.qml \
-		../qml/PC_WRITE_Propertyes.qml \
 		../qml/QML_VideoSlider.qml \
+		../qml/WRITE_TopToolBar.qml \
 		../qml/QML_SoundGraph.qml \
 		../qml/QML_TextEditorDialog.qml \
 		../qml/QML_PageTranslationHelp.qml \
-		../qml/PC_READ_main.qml \
+		../qml/READ_main.qml \
 		../qml/QML_WebViewDialog.qml \
-		../qml/PC_READ_ControlPanel.qml \
-		../qml/PC_WRITE_TopToolBar.qml \
-		../qml/PC_WRITE_PageOpen.qml \
-		../qml/PC_WRITE_PageHome.qml \
+		../qml/QML_HomePageInfoView.qml \
+		../qml/WRITE_TextAreaContextMenue.qml \
+		../qml/QML_PageOpen.qml \
+		../qml/QML_PageHome.qml \
+		../qml/READ_TextAreaContextMenue.qml \
 		../qml/QML_ComboBox.qml \
-		../qml/PC_QML_ToolBarButton.qml \
 		../qml/QML_MainVideoView.qml \
 		../qml/QML_CommentList.qml \
-		../qml/PC_WRITE_main.qml \
 		../qml/QML_HtmlView.qml \
 		../qml/QML_DialogBackground.qml \
-		../qml/PC_READ_PageOpen.qml \
-		../qml/PC_READ_PageSettings.qml \
-		../qml/PC_READ_PageHome.qml \
 		../qml/QML_ToolBarSeparator.qml \
 		../qml/QML_WaitDialog.qml \
 		../qml/QML_YesNoDialog.qml \
+		../qml/WRITE_PropertyDialog.qml \
 		../qml/QML_TextReaderArea.qml \
+		../qml/QML_ToolBarButton.qml \
 		../qml/QML_SimpleDialog.qml \
+		../qml/READ_TopToolBar.qml \
 		../qml/QML_NameDialog.qml \
 		../qml/QML_ImageButton.qml \
+		../qml/QML_PageSettings.qml \
 		../qml/QML_FileOpenDialog.qml \
 		../qml/QML_CommentSellectDialog.qml \
 		../qml/QML_TextEditor.qml \
 		../qml/QML_BrightnessButton.qml \
 		../qml/QML_FileDialogs.qml \
-		../qml/PC_READ_TopToolBar.qml \
 		../qml/QML_ScroolBar.qml \
+		../qml/QML_main.qml \
+		../qml/WRITE_Propertyes.qml \
 		../qml/images/textunder.png \
 		../qml/images/editredo.png \
 		../qml/images/textjustify.png \

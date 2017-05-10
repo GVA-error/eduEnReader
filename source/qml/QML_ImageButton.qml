@@ -27,6 +27,16 @@ Rectangle{
         source: image
         brightness: 0.0
         contrast: 0.0
+        Behavior on brightness {
+             NumberAnimation {
+                 duration: 250
+             }
+        }
+        Behavior on contrast {
+             NumberAnimation {
+                 duration: 250
+             }
+         }
     }
     states: [
         State {

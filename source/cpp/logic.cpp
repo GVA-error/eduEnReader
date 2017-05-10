@@ -1104,6 +1104,7 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
     QString textHashString;
     QString soundHashString;
     FileTypes type = getFileType(fileName);
+    QString curPath = QFileInfo(fileName).absolutePath();
     if (type != FileTypes::binds)
     {
         qDebug() << "Incorrect output file name";
@@ -1149,7 +1150,7 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
     }
     for (auto comment : _commentsVector)
     {
-        QString curStringBind = toString(comment);
+        QString curStringBind = toString(curPath, comment);
         fileStream << par_Comment << " " << curStringBind << "\n";
     }
     file.close();
@@ -1272,9 +1273,12 @@ QString Logic::toString(const Bind& bind) const
     return rez;
 }
 
-QString Logic::toString(const Comment& comment) const{
+QString Logic::toString(QString curPath, const Comment& comment) const{
     QUrl url = comment.commentUrl;
-    QString stringUrl = url.toString();
+    QString stringFileName = url.toLocalFile();
+    QDir curDir = QDir(curPath);
+    QString localUrlString = curDir.relativeFilePath(stringFileName);  //
+
     auto commented = comment.commented;
     qint64 textBegin = commented->begin();
     qint64 textEnd = commented->end();
@@ -1282,7 +1286,7 @@ QString Logic::toString(const Comment& comment) const{
 
     QString rez;
     QTextStream outStream(&rez);
-    outStream << stringUrl << " " << stringName << " "
+    outStream << localUrlString << " " << stringName << " "
               << textBegin << " " << textEnd;
 
     return rez;

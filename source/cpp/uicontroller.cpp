@@ -12,6 +12,7 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _sellectTimer.start();
     _curDir = QDir("lectures");
     _opening = false;    
+
 }
 
 void UIController::setDocument(TextStore* TS) {
@@ -46,6 +47,11 @@ void UIController::stopAllThreads()
         _bindMaker->wait(); //We have to wait again here!
     }
     //_bindMaker->exit();
+}
+
+void UIController::save()
+{
+    _logic->save();
 }
 
 void UIController::addTextInComment(const QString& commentName, const QString& text, const QColor& textColor)

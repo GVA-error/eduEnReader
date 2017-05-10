@@ -16,6 +16,7 @@ SoundStore::SoundStore(QObject *parent)
     setPosition(0);
     _isExample = false;
     _saved_payed = false;
+    emit isExampleStateChanged();
 }
 /*
 void SoundStore::setVideoSurface(QAbstractVideoSurface* surface)
@@ -51,15 +52,16 @@ void SoundStore::home()
     //        && _saved_startPos == _startPos
     //        && _saved_finishPos == _finishPos) // Мы и так дома
     //    return;
+    _tmpTimeStartFinish.clear();
     setFileUrl(_saved_lastOpenedUrl);
-    if (_saved_payed)
-        start();
-    else
-        stop();
     if (_saved_curPos > 0)
     {
         setPosition(_saved_curPos);
     }
+    if (_saved_payed)
+        start();
+    else
+        stop();
 }
 
 /*
@@ -108,7 +110,8 @@ void SoundStore::start()
         {
             _startPos = _tmpTimeStartFinish.front() * 1000 / curDuration;
             _finishPos = _tmpTimeStartFinish.back() * 1000 / curDuration;
-            setPosPersent(0);
+            if (_startPos > 0)
+                setPosPersent(0);
             _tmpTimeStartFinish.clear();
         }
         else{
@@ -214,19 +217,25 @@ void SoundStore::setFileUrl(const QUrl& url, qreal start, qreal finish)
 
 void SoundStore::setFileUrl(const QUrl& url)
 {
-    if (url.isValid() == false)
-        return;
-    if (isRemoteSource(url.toLocalFile()) == false)
-        if (QFile::exists(url.toString()))
-            return;
-    VlcQmlVideoPlayer::setUrl(url);
-
-    _lastOpenedUrl = url;
-    VlcQmlVideoPlayer::setVolume(100);
-    VlcQmlVideoPlayer::pause();
     _finishPos = -1;
     _startPos = -1;
+    _lastOpenedUrl = url;
     _isExample = false;
+    emit isExampleStateChanged();
+    if (url.isValid() == false)
+    {
+        emit openingError();
+        return;
+    }
+    if (isRemoteSource(url.toString()) == false)
+        if (QFile::exists(url.toLocalFile()) == false)
+        {
+            emit openingError();
+            return;
+        }
+    VlcQmlVideoPlayer::setUrl(url);
+    VlcQmlVideoPlayer::setVolume(100);
+    VlcQmlVideoPlayer::pause();
     qDebug() << state();
 }
 

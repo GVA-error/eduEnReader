@@ -24,12 +24,19 @@ Flickable {
     property var contextMenue
     property bool allowSellectOnlyWord: true
 
+    Behavior on contentY {
+         NumberAnimation {
+             duration: 600
+         }
+     }
+
     flickableDirection: Flickable.VerticalFlick
     TextArea.flickable: TextArea {
         id: frickableTextArea
         Accessible.name: "document"
         //visible: homePage.curRightList == 1
         textFormat: Qt.RichText
+        text: textStore.text
         wrapMode: TextArea.Wrap
         focus: true
         selectByMouse: true
@@ -49,6 +56,10 @@ Flickable {
         property bool bindEditingBegin: false
        // property int lastMouseX : 0
        // property int lastMouseY : 0
+        onBaseUrlChanged: {
+            frickableRoot.setCurY(0)
+        }
+
         function undoBindEditing()
         {
             stopBindEditingAll()
@@ -117,6 +128,11 @@ Flickable {
             }
             uiController.markCurText()
         }
+        function sellectCurWord(){
+            var curPos = textArea.positionAt(mouseArea.mouseX, mouseArea.mouseY)
+            textStore.setSelectionByWord(curPos)
+        }
+
         onCursorPositionChanged: {
     //        if (mouseLeftPresed)
     //        {
@@ -177,6 +193,7 @@ Flickable {
                     sourceDocument.setSelectionByWord(textPos)
                 }
                 //translitionHelpPage.phrase = document.getSellectedStreing();
+
                 contextMenue.open()
             }
         }
@@ -187,11 +204,7 @@ Flickable {
     ScrollBar.vertical: ScrollBar {
         width: 20
     }
-    Behavior on contentY {
-             NumberAnimation {
-                 duration: 600
-             }
-         }
+
     function synch(f_pushSynch) { frickableTextArea.syncSoundAndSliderPosition(f_pushSynch) }
     function getCurY() { return contentY }
     function setCurY(newY) {

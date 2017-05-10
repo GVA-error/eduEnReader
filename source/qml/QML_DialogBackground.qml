@@ -24,7 +24,7 @@ Rectangle {
 
     transitions: Transition {
         from: "hideBack"; to: "showBack"; reversible: true
-        NumberAnimation { properties: "opacity"; duration: 250;}
+        NumberAnimation { properties: "opacity"; duration: 450;}
     }
 
     MouseArea {

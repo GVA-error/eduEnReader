@@ -10,6 +10,7 @@ import UiControlerModul 1.1
 
 Page {
     property string phrase
+    property bool readOnly: false
 
     function setSource(str)
     {
@@ -29,7 +30,7 @@ Page {
     {
         var sellectedString = curSource.currentText
         var phraseForSeeking = textField.text
-        var url = homePage.homeUiControler.getMatirealUrlWithName(sellectedString);
+        var url = homeUiController.getMatirealUrlWithName(sellectedString)
         webView.url = url
     }
 
@@ -39,7 +40,7 @@ Page {
         width: parent.width
         anchors.top: parent.top
         Component.onCompleted: {
-            homePage.homeUiControler.getMatirealsFor("");
+            homeUiController.getMatirealsFor("");
         }
 
         Rectangle{
@@ -58,7 +59,7 @@ Page {
                 QML_ComboBox{
                     id : curSource
                     width: 300
-                    model: homePage.homeUiControler.matirealsListModel
+                    model: homeUiController.matirealsListModel
                     onCurrentTextChanged: {
                         viewMatireal()
                     }
@@ -80,7 +81,7 @@ Page {
                     focus = true
                 }
                 onTextChanged: {
-                    homePage.homeUiControler.getMatirealsFor(text)
+                    homeUiController.getMatirealsFor(text)
                     viewMatireal()
                 }
                 Component.onCompleted: focus = true

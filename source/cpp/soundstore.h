@@ -36,7 +36,12 @@ signals:
     void posChanged();
     void isExampleStateChanged();
     void playingStateChanged();
+    void openingError();
 public slots:
+
+    void clear(){
+        setFileUrl(QUrl("http//"));
+    }
 
     // Так как константы vlc не перенесены в qml код
     qint32 playingState() { return Vlc::Playing; }

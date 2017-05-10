@@ -227,7 +227,7 @@ private:
     void unmarkBind(const QList<Bind>&);
 
     QString toString(const Bind &) const;
-    QString toString(const Comment &) const;
+    QString toString(QString curPath, const Comment &) const;
     void fromString(QString curPath, Comment&, QString stringComment, TextStore::PTR text);
     void fromString(Bind&, QString bindString, SoundStore::PTR sound, TextStore::PTR text) const;
     void fromString(QStringList& str, qreal& posBigin, qreal &posEnd, QString source) const; // нужна для чтения распозноного текста
