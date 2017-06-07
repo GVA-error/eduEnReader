@@ -11,7 +11,7 @@ public:
         _fileName = fileName;
     }
     virtual ~BindOpenProcess() {}
-    void start() { runInThisThread(); }
+    void start() { runInThisThread(); } // так как при открытии гонка за документ
 
     void runInThisThread() {
         run();

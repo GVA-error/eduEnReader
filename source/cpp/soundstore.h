@@ -59,6 +59,12 @@ public slots:
     void saveHome();
     void home();
 
+    bool isCorrectLocalFile(){
+        if (isRemoteSource(_lastOpenedUrl.toString()) == false)
+            if (QFile::exists(_lastOpenedUrl.toLocalFile()) == true)
+                return true;
+        return false;
+    }
 protected:
     friend class Store <SoundStore>;
     bool _isExample;

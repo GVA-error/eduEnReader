@@ -41,6 +41,8 @@ public:
     bool read(double* data, int buffSize);
     // Записываем прочитанную инфу в открытый файл
     bool write(double* data, int dataSize);
+
+    qint64 sizeIn(); // TODO найти способ узнать длинну?
 private:
 
 #ifndef Q_OS_WIN

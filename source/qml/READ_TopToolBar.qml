@@ -7,7 +7,7 @@ import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
 import TextStoreModul 1.0
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 
 ToolBar {
     leftPadding: 10
@@ -40,21 +40,20 @@ ToolBar {
         }
         Row {
             id: homeRow
+            visible: homeUiController.someOpen
             QML_ToolBarButton {
                 fix_width : 100
-                text: "Video"
+                text: "Home"
                 checked: pageView.currentIndex === 1
-                onClicked: {
-                    mainRoot.goHome()
-                }
+                onClicked: mainRoot.goHome()
             }
         }
         Row {
             id: translationHelp
             QML_ToolBarButton {
                 fix_width : 100
-                text: "Matireals"
-                checked: pageView.currentIndex === 2
+                text: "dictionary"
+                checked: pageView.currentIndex === 2 || translationHelpDialog.visible === true
                 onClicked: mainRoot.goTranslitionHelp()
             }
         }
@@ -94,6 +93,7 @@ ToolBar {
                 visible: homePage.isExampleShowing()
                 id : exampleTextEdit
                 text: ""
+                font.pixelSize: 20
                 Material.accent: Material.LightBlue
                 onTextChanged: {
                     homePage.setExamples(text)

@@ -9,7 +9,7 @@ import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
 import SoundStoreModul 1.1
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 import TextStoreModul 1.0
 
 // Ползунок, старт, пауза ..
@@ -59,7 +59,7 @@ Rectangle{
         anchors.top: parent.top
         spacing: 5
         anchors.topMargin: 7
-        width: buttonSize * (readOnly ? 2 : 3) + spacing * (readOnly ? 2 : 3)
+        width: (buttonSize + spacing) * (readOnly ? 2 : 4)
         QML_ImageButton {
             id : centraliseButton
             width: buttonSize
@@ -70,24 +70,47 @@ Rectangle{
             }
         }
         QML_ImageButton {
+            id : autoCommentButton
+            visible: readOnly === false
+            width: readOnly ? 0 : buttonSize
+            height: buttonSize
+            backgroundImage: "images/textleft.png"
+            onTrigered: {
+                createNewCommentSplit.open()
+            }
+        }
+        QML_ImageButton {
+            id : synchButton
+            visible: readOnly === false
+            width: readOnly ? 0 : buttonSize
+            height: buttonSize
+            backgroundImage: "images/bind.png"
+            onTrigered: {
+                curTsBindingStart.open()
+            }
+        }
+        QML_ImageButton {
+            id : saveButton
+            visible: readOnly === false
+            width: readOnly ? 0 : buttonSize
+            height: buttonSize
+            backgroundImage: "images/filesave.png"
+            onTrigered: {
+                uiController.save()
+                messageDialog.title = "successful"
+                messageDialog.text = "saved"
+                messageDialog.open()
+            }
+        }
+        QML_ImageButton {
             id : homeButton
-            width: buttonSize
+            width: readOnly ? buttonSize : 0
             height: buttonSize
             backgroundImage: soundStore.isExample === true ? "images/go-home.png" : "images/cant-go-home.png"
             onTrigered: {
                 if (soundStore.isExample)
                     goHome()
                 showComments()
-            }
-        }
-        QML_ImageButton {
-            id : saveButton
-            visible: readOnly === false
-            width: readOnly ? 0 : 30
-            height: buttonSize
-            backgroundImage: "images/filesave.png"
-            onTrigered: {
-                uiController.save()
             }
         }
     }

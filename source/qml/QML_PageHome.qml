@@ -12,10 +12,11 @@ import Qt.labs.platform 1.0
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 
 Page {
     id: root
+    //padding: 30
 
     title: "main"
     property var textStore : textStore
@@ -28,7 +29,7 @@ Page {
         return exampleCommentsPageLits.currentIndex === 1
     }
     function showComments() {
-        if (readOnly)
+        if (readOnly || settingPage.showUserLikeComments)
             exampleCommentsPageLits.setCurrentIndex(0)
         else
             exampleCommentsPageLits.setCurrentIndex(2)
@@ -139,7 +140,7 @@ Page {
         allowSellectOnlyWord: root.readOnly
     }
 
-    UiControler{
+    UiController{
         id: uiController
         mouseIsPressed: flickableTextArea.mouseLeftPresed
         document : TextStore {
@@ -173,6 +174,7 @@ Page {
     }
     READ_TextAreaContextMenue {
         id : readContextMenue
+        textStore: homeTextStore
     }
     ColorDialog {
         id: commentedColorDialog

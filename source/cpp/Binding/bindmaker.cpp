@@ -181,17 +181,17 @@ void BindMaker::binding()
 void BindMaker::run()
 {
     preparetion();
-    if (_textList.empty())
-    {
-        qDebug() << "U have not text data" << "\n";
-        return;
-    }
     if (recognizeIsFinished())
     {
         qDebug() << "U have not prepeared sound data" << "\n";
         return;
     }
     recognizing();
+    if (_textList.empty())
+    {
+        qDebug() << "U have not text data" << "\n";
+        return;
+    }
     binding();
 }
 
@@ -209,8 +209,11 @@ void BindMaker::fillInGraph(Graph &g)
 
     for (auto curFile = _fileParts.begin(); curFile+1 != _fileParts.end(); curFile++)
         for (qint32 i = 1; curFile+i !=_fileParts.end(); i++)
-            for (auto localMin : _localMin[*curFile])
+           // for (auto localMin : _localMin[*curFile])
             {
+                if (_localMin[*curFile].empty())
+                    continue;
+                auto localMin = _localMin[*curFile].front();
                 auto nextFile = curFile + i;
                 qint32 beginID = _localMinToID[*curFile][localMin];
                 qint32 endID = getLocalMinEnd(*curFile, localMin, *nextFile);
@@ -282,7 +285,17 @@ void BindMaker::useLocalMinToFind_bind()
     Graph g(localMinNumber+1);
     connect(&g, SIGNAL(process(qreal)), this, SLOT(processLongestPath(qreal)));
     fillInGraph(g);
-    auto IDPath = g.longestPath();
+    QList <qint32> fatherList; // Какие вершины могут быть первыми
+    for (auto file : _fileParts)
+    {
+        if (_localMin[file].empty())
+            continue;
+        qint64 firstLocalMin = _localMin[file].front();
+        qint32 firstLocalMinId = _localMinToID[file][firstLocalMin];
+        fatherList.push_back(firstLocalMinId);
+    }
+
+    auto IDPath = g.longestPath(fatherList);
     addBinsFromList(IDPath);
 
     //_logic->clear(false);
@@ -307,32 +320,6 @@ void BindMaker::useLocalMinToFind_bind()
         }
         curLastTextPos = beginText;
     }*/
-}
-
-void BindMaker::addEdgeBinds()
-{
-    qint64 n = _logic->getBindNumber();
-
-    TextFragment::PTR firstText = _logic->getText(0);
-    TextFragment::PTR lastText = _logic->getText(n-1);
-    SoundFragment::PTR firstSound = _logic->getSound(0);
-    SoundFragment::PTR lastSound = _logic->getSound(n-1);
-
-    qint64 textLength = _textStore->length();
-    qreal soundDuration = _soundStore->fullDuration();
-
-    qreal beginSound = firstSound->begin();
-    qreal beginText = firstText->begin();
-    qreal endSound = lastSound->end();
-    qreal endText = lastText->end();
-
-    auto preText = TextFragment::factoryMethod(0, beginText, _textStore);
-    auto preSound = SoundFragment::factoryMethod(0, beginSound, _soundStore);
-    auto postText = TextFragment::factoryMethod(endText, textLength, _textStore);
-    auto postSound = SoundFragment::factoryMethod(endSound, soundDuration, _soundStore);
-
-    _logic->makeBind(preText, preSound, 0);
-    _logic->makeBind(postText, postSound, n-1);
 }
 
 QList <qint64> BindMaker::getCorelationFunc(const QStringList &recognizedString) const

@@ -16,7 +16,6 @@
 #include "cpp/uicontroller.h"
 #include "cpp/Utilits/setting.h"
 
-
 const QDir input = QDir("/home/gva/Desktop/input");
 const QDir output = QDir("/home/gva/Desktop/output");
 
@@ -69,6 +68,7 @@ void handleInputFiles()
 
 int main(int argc, char *argv[])
 {
+    Settings::setDefaults();
     const bool f_cmd = false;
 
     if (f_cmd)
@@ -78,8 +78,6 @@ int main(int argc, char *argv[])
             clearInput();
         return 0;
     }
-
-    Settings::setDefaults("Video/DpiScaling:AA_EnableHighDpiScaling;");
 
     int enum_index = qt_getQtMetaObject()->indexOfEnumerator("ApplicationAttribute");
     QString dpiScaling = Settings::get(Settings::DpiScaling, Settings::Video).toString();
@@ -93,8 +91,6 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    Settings::setDefaults("Video/Regim: value2");
-
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
         qWarning() << "Failed to load fontello.ttf";
@@ -107,7 +103,7 @@ int main(int argc, char *argv[])
     VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins");
     VlcQmlVideoPlayer::registerPlugin();
 
-    qmlRegisterType<UIController>("UiControlerModul", 1, 1, "UiControler");
+    qmlRegisterType<UIController>("UiControllerModul", 1, 1, "UiController");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");
     qmlRegisterType<SoundStore>("SoundStoreModul", 1, 1, "SoundStore");
     qmlRegisterType<QML_Settings>("QML_SettingsModul", 1, 0, "QML_Settings");

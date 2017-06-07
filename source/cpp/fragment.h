@@ -21,13 +21,17 @@ public:
         PTR rezPtr = QSharedPointer <ThisType> (new ThisType(begin, end, source));
         return rezPtr;
     }
-    static QSharedPointer <ThisType> summ(PTR left, PTR right)
+    static PTR summ(PTR left, PTR right)
     {
         IndexType rezBegin = left->begin();
         IndexType rezEnd = right->end();
         PTRSourceType leftSource = left->getSource();
         PTRSourceType rightSource = right->getSource();
-        assert(leftSource.data() == rightSource.data()); // так как нет понятия нуля
+        if (leftSource.data() == nullptr)
+            return right;
+        if (rightSource.data() == nullptr)
+            return left;
+        assert(leftSource.data() == rightSource.data()); // разные источники не складываем
         PTRSourceType rezSourse = leftSource;
         PTR rezPtr = QSharedPointer <ThisType> (new ThisType(rezBegin, rezEnd, rezSourse));;
         return rezPtr;

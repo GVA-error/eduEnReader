@@ -20,6 +20,34 @@ TextStore::TextStore()
     _markColor = getDefaultMarkColor(); // TODO Заменить на сигналы
 }
 
+QRegExp TextStore::getRegXFor(QString word)
+{
+    QString postFix = Settings::get(Settings::postfix, Settings::Examples).toString();
+    if (postFix.length() != 0)
+        postFix = "(" + postFix + "|\\W" + ")";
+    else
+        postFix = "\\W";
+    QRegExp wordRX("\\W" + word.toLower() + postFix);
+    return wordRX;
+}
+
+QList <qint64> TextStore::getWordPositions(const QString& word) const
+{
+    QList <qint64> rezList;
+    QString lowetWord = word.toLower();
+    QString lowerText = _text.toLower();
+    QRegExp wordRegX = TextStore::getRegXFor(lowetWord);
+    qint64 curPos = -1;
+    while (true)
+    {
+        curPos = lowerText.indexOf(wordRegX, curPos + 1);
+        if (curPos == -1)
+            break;
+        rezList.push_back(curPos + 1);
+    }
+    return rezList;
+}
+
 void TextStore::addTextForComment(const QString& text, const QColor& textColor)
 {
     QString addingText = "\n" + text + " - ";
@@ -43,22 +71,22 @@ bool TextStore::posIsCorrect(qint64 curPos) const
     return true;
 }
 
-qint64 TextStore::getWordEnd(qint64 curPos, bool reversDirrection) const
-{
-    qint64 wordEnd;
-    QRegExp sep("\\W"); // TODO сначало искать начало слова
-    if (reversDirrection)
-        wordEnd = _text.lastIndexOf(sep, curPos);
-    else
-        wordEnd = _text.indexOf(sep, curPos);
+//qint64 TextStore::getWordEnd(qint64 curPos, bool reversDirrection) const
+//{
+//    qint64 wordEnd;
+//    QRegExp sep("\\W");
+//    if (reversDirrection)
+//        wordEnd = _text.lastIndexOf(sep, curPos);
+//    else
+//        wordEnd = _text.indexOf(sep, curPos);
 
-    if (wordEnd < 0)
-        if (reversDirrection)
-            wordEnd = 0;
-        else
-            wordEnd = _text.length() - 1;
-    return wordEnd;
-}
+//    if (wordEnd < 0)
+//        if (reversDirrection)
+//            wordEnd = 0;
+//        else
+//            wordEnd = _text.length() - 1;
+//    return wordEnd;
+//}
 
 //qint64 TextStore::indexOfPrefixOrPostFix(const QString& str, qint64 leftOffset) const
 //{
@@ -92,37 +120,6 @@ qint64 TextStore::getWordEnd(qint64 curPos, bool reversDirrection) const
 //        return true;
 //    return false;
 //}
-
-QList <qint64> TextStore::getWordPositions(const QString& word) const
-{
-    QString text = getString();
-    QString curTextPart = text;
-
-    //QStringList textList = text.split(_prefixAndPostFix);
-    QList <qint64> rezList;
-
-    qint64 beginPos = 0;
-    while (curTextPart.length() != 0)
-    {
-        qint64 pos = curTextPart.indexOf(word);
-        qint64 realPos = beginPos + pos;
-        if (pos == -1)
-            break;
-        qint64 l = word.length();
-        qint64 cutSize = pos + l;
-        beginPos += cutSize;
-        curTextPart = curTextPart.mid(cutSize);
-        QRegExp sep("\\W");
-        if (!sep.exactMatch(text.at(realPos-1)))
-            if (realPos > 1)
-                continue;
-        if (!sep.exactMatch(text.at(realPos+l)))
-            if (realPos < text.length())
-                continue;
-        rezList.push_back(realPos);
-    }
-    return rezList;
-}
 
 QString TextStore::getString(qint64 begin, qint64 end) const
 {
@@ -475,11 +472,19 @@ void TextStore::setTextColor(const QColor &c)
 
 void TextStore::setWorldMark(const QString& word)
 {
+    QStringList wordSplit = word.split(QRegExp("\\W"));
+    qint64 wordNumber = wordSplit.size();
     setAllUnMarkText();
     auto wordPositions = getWordPositions(word);
+    QString lowerText = _text.toLower();
     for (auto pos : wordPositions)
     {
-        qint64 posEnd = pos + word.length();
+        qint64 posEnd = lowerText.indexOf(QRegExp("\\W"), pos);
+        for (int i = 0; i<wordNumber-1; i++)
+        {
+            posEnd = lowerText.indexOf(QRegExp("\\w"), posEnd);
+            posEnd = lowerText.indexOf(QRegExp("\\W"), posEnd);
+        }
         setSelectionEnd(posEnd);
         setSelectionStart(pos);
         setMarkText(); // Возвращать старый селлект нет смысла, так как метод исполбьзуется только во время примеров

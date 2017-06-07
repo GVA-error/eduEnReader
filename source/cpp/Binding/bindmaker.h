@@ -118,14 +118,11 @@ private:
     // Считаем только файлы из _processList
     void useLocalMinToFind_bind();
 
-    // Добавляет бинд в начало и конец
-    void addEdgeBinds(); // TODO Не работает, на и ненужна пока
-
     // Вычисляем точки локальных минимумов
     // maxWrongPersent = [0..1.0f] - максимально допустимая степень непохожести.
     // При 0.75 достаточно 1 правильного слова из 4 на своём месте.
     // При 0.25 - допускаеться только 4 неверно распознаных слова из 16.
-    void calcLocalMin(const QString& partFileName, qreal maxWrongPersent = 0.85);
+    void calcLocalMin(const QString& partFileName, qreal maxWrongPersent = 0.63);
 
     // Сейчас считаеться кореляция распознонова к тексту
     // Берутся части из текста размером с распознаные

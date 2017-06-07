@@ -16,8 +16,12 @@ public:
         _splitSize = splitSize;
         _diffSplitSize = diffSize;
     }
+    void useCurLogic(bool newValue){
+        _useCurLogic = newValue;
+    }
     void quit(){
-        if (_curState != endState)
+        // TODO Ждать записи в файл?
+        if (_curState != endState && _useCurLogic == false)
         {
             QFileInfo curFileInfo(_fileName);
             QString curBnd = curFileInfo.absolutePath() + "/" + curFileInfo.baseName() + ".bnd";
@@ -32,18 +36,25 @@ protected:
         // Для решения проблем многопоточности textStore просто создадим временный аналог в текущем потоке
         TextStore::PTR tmpTextstore = TextStore::factoryMethod();
         SoundStore::PTR tmpSoundstore = SoundStore::factoryMethod();
-        Logic::PTR tmpLogic = Logic::factoryMethod();
-        //bool curAutoplayFlag = _tmpSoundstore->autoplay();
+        Logic::PTR curLogic;// = Logic::factoryMethod();
         tmpSoundstore->setAutoplay(false);
-       // _bindMaker.data()->disconnect();
-        _bindMaker = BindMaker::factoryMethod(tmpTextstore, tmpSoundstore, tmpLogic);
+        curLogic = Logic::factoryMethod();
+        if (_useCurLogic)
+        {
+            //curLogic = _logic;
+            curLogic->readFromFile(_fileName, tmpTextstore, tmpSoundstore);
+        }
+        else
+        {
+            curLogic->createFromNewSoundFile(_fileName, tmpTextstore, tmpSoundstore);
+        }
+        _bindMaker = BindMaker::factoryMethod(tmpTextstore, tmpSoundstore, curLogic);
         connect(_bindMaker.data(), SIGNAL(process()), this, SLOT(generateNewState()));
-        tmpLogic->createFromNewSoundFile(_fileName, tmpTextstore, tmpSoundstore);
         _bindMaker->setSplitSize(_splitSize, _diffSplitSize);
         _bindMaker->runInThisThread();
-        tmpLogic->writeInFile(tmpTextstore, tmpSoundstore);
-        //tmpTextstore-
-        //_soundStore->setAutoplay(curAutoplayFlag);
+        //qint32 autoCommentsNumber = Settings::get(Settings::AutoCommentNumber, Settings::CrationOptions).toInt();
+        //tmpLogic->createAutoComments(autoCommentsNumber);
+        curLogic->save();
         finishSlot();
     }
 protected slots:
@@ -56,16 +67,19 @@ protected slots:
     }
 
 protected:
+    bool _useCurLogic;
     QString _fileName;
     qreal _splitSize;
     qreal _diffSplitSize;
     BindMaker::PTR _bindMaker;
+    Scripter _scripter;
     friend class LogicProcess <TsBindingProcess>;
     TsBindingProcess() = delete;
     TsBindingProcess(TextStore::PTR textStore, SoundStore::PTR soundStore, Logic::PTR logic)
         : LogicProcess(textStore, soundStore, logic) {
         _splitSize = 4.0f;
         _diffSplitSize = 2.0f;
+        _useCurLogic = false;
     }
 };
 

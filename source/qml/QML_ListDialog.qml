@@ -73,7 +73,7 @@ ListView
             anchors.bottomMargin: 3
             QML_ImageButton {
                 anchors.fill: parent
-                backgroundImage: "images/trash.jpg"
+                backgroundImage: "images/trash-empty.png"
             }
             MouseArea{
                 anchors.fill: parent

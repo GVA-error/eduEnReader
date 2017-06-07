@@ -10,7 +10,7 @@ import QtQuick.Dialogs 1.2
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 
 QML_main {
     id : mainRoot
@@ -26,6 +26,8 @@ QML_main {
     pageView: pageView
 
     function goSettings(){
+        if (settingPage.showTranslateDialog)
+            translationHelpDialog.hideDialog()
         homeUiController.saveHome()
         homeUiController.goOutHome()
         pageView.setCurrentIndex(3)
@@ -38,7 +40,11 @@ QML_main {
     function goTranslitionHelp(){
         homeUiController.saveHome()
         homeUiController.goOutHome()
-        pageView.setCurrentIndex(2)
+        if (settingPage.showTranslateDialog)
+            translationHelpDialog.showDialog()
+        else
+            pageView.setCurrentIndex(2)
+
         homeSoundStore.stop()
     }
 
@@ -66,6 +72,9 @@ QML_main {
             id : settingPage
             readOnly: true
         }
+    }
+    QML_TranslationHelpDialog{
+        id: translationHelpDialog
     }
 }
 

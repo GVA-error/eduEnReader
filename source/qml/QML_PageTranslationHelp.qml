@@ -6,7 +6,7 @@ import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.3
 import QtWebEngine 1.4
 
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 
 Page {
     property string phrase
@@ -41,6 +41,15 @@ Page {
         anchors.top: parent.top
         Component.onCompleted: {
             homeUiController.getMatirealsFor("");
+        }
+        QML_ImageButton{
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.margins: 5
+            backgroundImage: "images/go-home.png"
+            width: 50
+            height: 50
+            onTrigered: goHome()
         }
 
         Rectangle{

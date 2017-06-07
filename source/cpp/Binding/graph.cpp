@@ -42,7 +42,6 @@ QList <qint32> Graph::longestPath(qint32 s)
         prev[i] = NINF;
 
     QStack<qint32> Stack;
-    qint32 dist[V];
 
     // Mark all the vertices as not visited
     QVector <bool> visited;
@@ -58,6 +57,8 @@ QList <qint32> Graph::longestPath(qint32 s)
 
     // Initialize distances to all vertices as infinite and distance
     // to source as 0
+    QVector <qint32> dist;
+    dist.resize(V);
     for (qint32 i = 0; i < V; i++)
         dist[i] = NINF;
     dist[s] = 0;
@@ -87,7 +88,7 @@ QList <qint32> Graph::longestPath(qint32 s)
     return path;
 }
 
-QList <qint32> Graph::getMaxPath(qint32 dist[], map<qint32, qint32> prev)
+QList <qint32> Graph::getMaxPath(QVector <qint32> dist, map<qint32, qint32> prev)
 {
     QList <qint32> path;
 
@@ -109,15 +110,16 @@ QList <qint32> Graph::getMaxPath(qint32 dist[], map<qint32, qint32> prev)
     return path;
 }
 
-QList<qint32> Graph::longestPath()
+QList<qint32> Graph::longestPath(QList <qint32> fatherList)
 {
+    // TODO Тут нужно найти точки для которых нет отцов и искать уже по ним
     QList <qint32> rezPath;
-    for (qint32 i = 0; i<V; i++)
+    for (qint32 i : fatherList)
     {
         QList <qint32> curPath = longestPath(i);
         if (curPath.size() > rezPath.size())
             rezPath = curPath;
-        qreal curPersent = (qreal)i / (qreal)V;
+        qreal curPersent = (qreal)i / (qreal)fatherList.size();
         emit process(curPersent);
     }
    // std::cout << "Path ";

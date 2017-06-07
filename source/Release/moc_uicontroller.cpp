@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_UIController_t {
-    QByteArrayData data[131];
-    char stringdata0[1854];
+    QByteArrayData data[140];
+    char stringdata0[1960];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,123 +45,132 @@ QT_MOC_LITERAL(10, 175, 20), // "curCommentUrlChanged"
 QT_MOC_LITERAL(11, 196, 12), // "titleChanged"
 QT_MOC_LITERAL(12, 209, 15), // "curStateChanged"
 QT_MOC_LITERAL(13, 225, 18), // "soundSourceChanged"
-QT_MOC_LITERAL(14, 244, 5), // "title"
-QT_MOC_LITERAL(15, 250, 8), // "setTitle"
-QT_MOC_LITERAL(16, 259, 16), // "getbindFilesList"
-QT_MOC_LITERAL(17, 276, 16), // "setbindFilesList"
-QT_MOC_LITERAL(18, 293, 12), // "newBindFiles"
-QT_MOC_LITERAL(19, 306, 14), // "getExampleList"
-QT_MOC_LITERAL(20, 321, 14), // "setExampleList"
-QT_MOC_LITERAL(21, 336, 11), // "newExamples"
-QT_MOC_LITERAL(22, 348, 14), // "getCommentList"
-QT_MOC_LITERAL(23, 363, 14), // "setCommentList"
-QT_MOC_LITERAL(24, 378, 11), // "newComments"
-QT_MOC_LITERAL(25, 390, 13), // "curCommentUrl"
-QT_MOC_LITERAL(26, 404, 16), // "setCurCommentUrl"
-QT_MOC_LITERAL(27, 421, 16), // "getMatirealsList"
-QT_MOC_LITERAL(28, 438, 16), // "setMatirealsList"
-QT_MOC_LITERAL(29, 455, 12), // "newMatireals"
-QT_MOC_LITERAL(30, 468, 8), // "curState"
-QT_MOC_LITERAL(31, 477, 11), // "setCurState"
-QT_MOC_LITERAL(32, 489, 8), // "newState"
-QT_MOC_LITERAL(33, 498, 8), // "saveHome"
-QT_MOC_LITERAL(34, 507, 4), // "push"
-QT_MOC_LITERAL(35, 512, 4), // "home"
-QT_MOC_LITERAL(36, 517, 4), // "save"
-QT_MOC_LITERAL(37, 522, 14), // "setSoundSource"
-QT_MOC_LITERAL(38, 537, 6), // "source"
-QT_MOC_LITERAL(39, 544, 11), // "soundSource"
-QT_MOC_LITERAL(40, 556, 23), // "setPreviewForCurLecture"
-QT_MOC_LITERAL(41, 580, 3), // "url"
-QT_MOC_LITERAL(42, 584, 11), // "getImageUrl"
-QT_MOC_LITERAL(43, 596, 8), // "bindFile"
-QT_MOC_LITERAL(44, 605, 8), // "getTitle"
-QT_MOC_LITERAL(45, 614, 16), // "synchBndFileList"
-QT_MOC_LITERAL(46, 631, 16), // "synchCommentList"
-QT_MOC_LITERAL(47, 648, 12), // "openBindFile"
-QT_MOC_LITERAL(48, 661, 12), // "bindFileName"
-QT_MOC_LITERAL(49, 674, 12), // "saveBindFile"
-QT_MOC_LITERAL(50, 687, 14), // "createBindFile"
-QT_MOC_LITERAL(51, 702, 13), // "soundFileName"
-QT_MOC_LITERAL(52, 716, 8), // "makeBind"
-QT_MOC_LITERAL(53, 725, 12), // "allTsBinding"
-QT_MOC_LITERAL(54, 738, 12), // "allStBinding"
-QT_MOC_LITERAL(55, 751, 16), // "curUserStBinding"
-QT_MOC_LITERAL(56, 768, 10), // "addComment"
-QT_MOC_LITERAL(57, 779, 4), // "path"
-QT_MOC_LITERAL(58, 784, 13), // "openSoundFile"
-QT_MOC_LITERAL(59, 798, 8), // "fileName"
-QT_MOC_LITERAL(60, 807, 16), // "cursorPosChanged"
-QT_MOC_LITERAL(61, 824, 21), // "setCursorPosInTimePos"
-QT_MOC_LITERAL(62, 846, 21), // "setTimePosInCursorPos"
-QT_MOC_LITERAL(63, 868, 11), // "markCurText"
-QT_MOC_LITERAL(64, 880, 12), // "markLastText"
-QT_MOC_LITERAL(65, 893, 14), // "unmarkLastText"
-QT_MOC_LITERAL(66, 908, 17), // "startSellectTimer"
-QT_MOC_LITERAL(67, 926, 11), // "markComment"
-QT_MOC_LITERAL(68, 938, 4), // "name"
-QT_MOC_LITERAL(69, 943, 13), // "unmarkComment"
-QT_MOC_LITERAL(70, 957, 15), // "setExamplesSize"
-QT_MOC_LITERAL(71, 973, 7), // "newSize"
-QT_MOC_LITERAL(72, 981, 15), // "getExamplesSize"
-QT_MOC_LITERAL(73, 997, 11), // "setDiffSize"
-QT_MOC_LITERAL(74, 1009, 7), // "newDiff"
-QT_MOC_LITERAL(75, 1017, 11), // "getDiffSize"
-QT_MOC_LITERAL(76, 1029, 18), // "getCommentListSize"
-QT_MOC_LITERAL(77, 1048, 15), // "getFirstComment"
-QT_MOC_LITERAL(78, 1064, 27), // "formUrlToTranslateSellected"
-QT_MOC_LITERAL(79, 1092, 11), // "playExample"
-QT_MOC_LITERAL(80, 1104, 2), // "ID"
-QT_MOC_LITERAL(81, 1107, 10), // "getExample"
-QT_MOC_LITERAL(82, 1118, 14), // "getExamplesFor"
-QT_MOC_LITERAL(83, 1133, 14), // "seekablePhrase"
-QT_MOC_LITERAL(84, 1148, 12), // "getMatireals"
-QT_MOC_LITERAL(85, 1161, 15), // "getMatirealsFor"
-QT_MOC_LITERAL(86, 1177, 9), // "goOutHome"
-QT_MOC_LITERAL(87, 1187, 13), // "setForOpening"
-QT_MOC_LITERAL(88, 1201, 10), // "newOpening"
-QT_MOC_LITERAL(89, 1212, 10), // "openWaited"
-QT_MOC_LITERAL(90, 1223, 9), // "openState"
-QT_MOC_LITERAL(91, 1233, 21), // "getCommentUrlWithName"
-QT_MOC_LITERAL(92, 1255, 22), // "getBindFileUrlWithName"
-QT_MOC_LITERAL(93, 1278, 22), // "getMatirealUrlWithName"
-QT_MOC_LITERAL(94, 1301, 18), // "deleteBindWithName"
-QT_MOC_LITERAL(95, 1320, 10), // "deleteBind"
-QT_MOC_LITERAL(96, 1331, 21), // "deleteCommentWithName"
-QT_MOC_LITERAL(97, 1353, 5), // "isDir"
-QT_MOC_LITERAL(98, 1359, 9), // "setCurDir"
-QT_MOC_LITERAL(99, 1369, 6), // "getDir"
-QT_MOC_LITERAL(100, 1376, 4), // "QDir"
-QT_MOC_LITERAL(101, 1381, 14), // "getMidMarkable"
-QT_MOC_LITERAL(102, 1396, 16), // "getBeginMarkable"
-QT_MOC_LITERAL(103, 1413, 14), // "getEndMarkable"
-QT_MOC_LITERAL(104, 1428, 10), // "canNotSync"
-QT_MOC_LITERAL(105, 1439, 25), // "haveCommentInThisPosition"
-QT_MOC_LITERAL(106, 1465, 14), // "stopAllThreads"
-QT_MOC_LITERAL(107, 1480, 19), // "addWordInCurBindEnd"
-QT_MOC_LITERAL(108, 1500, 21), // "addWordInCurBindBegin"
-QT_MOC_LITERAL(109, 1522, 24), // "deleteWordFromCurBindEnd"
-QT_MOC_LITERAL(110, 1547, 26), // "deleteWordFromCurBindBegin"
-QT_MOC_LITERAL(111, 1574, 13), // "setCurBindEnd"
-QT_MOC_LITERAL(112, 1588, 3), // "pos"
-QT_MOC_LITERAL(113, 1592, 15), // "setCurBindBegin"
-QT_MOC_LITERAL(114, 1608, 16), // "addTextInComment"
-QT_MOC_LITERAL(115, 1625, 11), // "commentName"
-QT_MOC_LITERAL(116, 1637, 9), // "textColor"
-QT_MOC_LITERAL(117, 1647, 19), // "recognizeIsFinished"
-QT_MOC_LITERAL(118, 1667, 15), // "openingFinished"
-QT_MOC_LITERAL(119, 1683, 18), // "handleNextOrFinish"
-QT_MOC_LITERAL(120, 1702, 8), // "document"
-QT_MOC_LITERAL(121, 1711, 10), // "TextStore*"
-QT_MOC_LITERAL(122, 1722, 10), // "soundStore"
-QT_MOC_LITERAL(123, 1733, 11), // "SoundStore*"
-QT_MOC_LITERAL(124, 1745, 18), // "bindFilesListModel"
-QT_MOC_LITERAL(125, 1764, 16), // "exampleListModel"
-QT_MOC_LITERAL(126, 1781, 18), // "matirealsListModel"
-QT_MOC_LITERAL(127, 1800, 16), // "commentListModel"
-QT_MOC_LITERAL(128, 1817, 14), // "mouseIsPressed"
-QT_MOC_LITERAL(129, 1832, 12), // "examplesSize"
-QT_MOC_LITERAL(130, 1845, 8) // "diffSize"
+QT_MOC_LITERAL(14, 244, 21), // "curExampleWordChanged"
+QT_MOC_LITERAL(15, 266, 15), // "someOpenChanged"
+QT_MOC_LITERAL(16, 282, 5), // "title"
+QT_MOC_LITERAL(17, 288, 8), // "setTitle"
+QT_MOC_LITERAL(18, 297, 16), // "getbindFilesList"
+QT_MOC_LITERAL(19, 314, 16), // "setbindFilesList"
+QT_MOC_LITERAL(20, 331, 12), // "newBindFiles"
+QT_MOC_LITERAL(21, 344, 14), // "getExampleList"
+QT_MOC_LITERAL(22, 359, 14), // "setExampleList"
+QT_MOC_LITERAL(23, 374, 11), // "newExamples"
+QT_MOC_LITERAL(24, 386, 14), // "getCommentList"
+QT_MOC_LITERAL(25, 401, 14), // "setCommentList"
+QT_MOC_LITERAL(26, 416, 11), // "newComments"
+QT_MOC_LITERAL(27, 428, 13), // "curCommentUrl"
+QT_MOC_LITERAL(28, 442, 16), // "setCurCommentUrl"
+QT_MOC_LITERAL(29, 459, 16), // "getMatirealsList"
+QT_MOC_LITERAL(30, 476, 16), // "setMatirealsList"
+QT_MOC_LITERAL(31, 493, 12), // "newMatireals"
+QT_MOC_LITERAL(32, 506, 8), // "curState"
+QT_MOC_LITERAL(33, 515, 11), // "setCurState"
+QT_MOC_LITERAL(34, 527, 8), // "newState"
+QT_MOC_LITERAL(35, 536, 14), // "curExampleWord"
+QT_MOC_LITERAL(36, 551, 17), // "setCurExampleWord"
+QT_MOC_LITERAL(37, 569, 8), // "saveHome"
+QT_MOC_LITERAL(38, 578, 4), // "push"
+QT_MOC_LITERAL(39, 583, 4), // "home"
+QT_MOC_LITERAL(40, 588, 4), // "save"
+QT_MOC_LITERAL(41, 593, 8), // "someOpen"
+QT_MOC_LITERAL(42, 602, 11), // "setSomeOpen"
+QT_MOC_LITERAL(43, 614, 8), // "newValue"
+QT_MOC_LITERAL(44, 623, 14), // "setSoundSource"
+QT_MOC_LITERAL(45, 638, 6), // "source"
+QT_MOC_LITERAL(46, 645, 11), // "soundSource"
+QT_MOC_LITERAL(47, 657, 23), // "setPreviewForCurLecture"
+QT_MOC_LITERAL(48, 681, 3), // "url"
+QT_MOC_LITERAL(49, 685, 11), // "getImageUrl"
+QT_MOC_LITERAL(50, 697, 8), // "bindFile"
+QT_MOC_LITERAL(51, 706, 8), // "getTitle"
+QT_MOC_LITERAL(52, 715, 16), // "synchBndFileList"
+QT_MOC_LITERAL(53, 732, 16), // "synchCommentList"
+QT_MOC_LITERAL(54, 749, 12), // "openBindFile"
+QT_MOC_LITERAL(55, 762, 12), // "bindFileName"
+QT_MOC_LITERAL(56, 775, 12), // "saveBindFile"
+QT_MOC_LITERAL(57, 788, 14), // "createBindFile"
+QT_MOC_LITERAL(58, 803, 13), // "soundFileName"
+QT_MOC_LITERAL(59, 817, 8), // "makeBind"
+QT_MOC_LITERAL(60, 826, 12), // "allTsBinding"
+QT_MOC_LITERAL(61, 839, 12), // "allStBinding"
+QT_MOC_LITERAL(62, 852, 16), // "curUserStBinding"
+QT_MOC_LITERAL(63, 869, 12), // "curTsBinding"
+QT_MOC_LITERAL(64, 882, 12), // "downloadBase"
+QT_MOC_LITERAL(65, 895, 10), // "uploadBase"
+QT_MOC_LITERAL(66, 906, 18), // "createAutoComments"
+QT_MOC_LITERAL(67, 925, 18), // "autoCommentsNumber"
+QT_MOC_LITERAL(68, 944, 10), // "addComment"
+QT_MOC_LITERAL(69, 955, 13), // "openSoundFile"
+QT_MOC_LITERAL(70, 969, 8), // "fileName"
+QT_MOC_LITERAL(71, 978, 16), // "cursorPosChanged"
+QT_MOC_LITERAL(72, 995, 21), // "setCursorPosInTimePos"
+QT_MOC_LITERAL(73, 1017, 21), // "setTimePosInCursorPos"
+QT_MOC_LITERAL(74, 1039, 11), // "markCurText"
+QT_MOC_LITERAL(75, 1051, 12), // "markLastText"
+QT_MOC_LITERAL(76, 1064, 14), // "unmarkLastText"
+QT_MOC_LITERAL(77, 1079, 17), // "startSellectTimer"
+QT_MOC_LITERAL(78, 1097, 11), // "markComment"
+QT_MOC_LITERAL(79, 1109, 4), // "name"
+QT_MOC_LITERAL(80, 1114, 13), // "unmarkComment"
+QT_MOC_LITERAL(81, 1128, 15), // "setExamplesSize"
+QT_MOC_LITERAL(82, 1144, 7), // "newSize"
+QT_MOC_LITERAL(83, 1152, 15), // "getExamplesSize"
+QT_MOC_LITERAL(84, 1168, 11), // "setDiffSize"
+QT_MOC_LITERAL(85, 1180, 7), // "newDiff"
+QT_MOC_LITERAL(86, 1188, 11), // "getDiffSize"
+QT_MOC_LITERAL(87, 1200, 18), // "getCommentListSize"
+QT_MOC_LITERAL(88, 1219, 15), // "getFirstComment"
+QT_MOC_LITERAL(89, 1235, 27), // "formUrlToTranslateSellected"
+QT_MOC_LITERAL(90, 1263, 11), // "playExample"
+QT_MOC_LITERAL(91, 1275, 2), // "ID"
+QT_MOC_LITERAL(92, 1278, 10), // "getExample"
+QT_MOC_LITERAL(93, 1289, 14), // "getExamplesFor"
+QT_MOC_LITERAL(94, 1304, 14), // "seekablePhrase"
+QT_MOC_LITERAL(95, 1319, 12), // "getMatireals"
+QT_MOC_LITERAL(96, 1332, 15), // "getMatirealsFor"
+QT_MOC_LITERAL(97, 1348, 9), // "goOutHome"
+QT_MOC_LITERAL(98, 1358, 13), // "setForOpening"
+QT_MOC_LITERAL(99, 1372, 10), // "newOpening"
+QT_MOC_LITERAL(100, 1383, 10), // "openWaited"
+QT_MOC_LITERAL(101, 1394, 9), // "openState"
+QT_MOC_LITERAL(102, 1404, 21), // "getCommentUrlWithName"
+QT_MOC_LITERAL(103, 1426, 22), // "getBindFileUrlWithName"
+QT_MOC_LITERAL(104, 1449, 22), // "getMatirealUrlWithName"
+QT_MOC_LITERAL(105, 1472, 18), // "deleteBindWithName"
+QT_MOC_LITERAL(106, 1491, 10), // "deleteBind"
+QT_MOC_LITERAL(107, 1502, 21), // "deleteCommentWithName"
+QT_MOC_LITERAL(108, 1524, 5), // "isDir"
+QT_MOC_LITERAL(109, 1530, 9), // "setCurDir"
+QT_MOC_LITERAL(110, 1540, 6), // "getDir"
+QT_MOC_LITERAL(111, 1547, 4), // "QDir"
+QT_MOC_LITERAL(112, 1552, 14), // "getMidMarkable"
+QT_MOC_LITERAL(113, 1567, 16), // "getBeginMarkable"
+QT_MOC_LITERAL(114, 1584, 14), // "getEndMarkable"
+QT_MOC_LITERAL(115, 1599, 10), // "canNotSync"
+QT_MOC_LITERAL(116, 1610, 25), // "haveCommentInThisPosition"
+QT_MOC_LITERAL(117, 1636, 22), // "soundSourceIsLocalFile"
+QT_MOC_LITERAL(118, 1659, 14), // "stopAllThreads"
+QT_MOC_LITERAL(119, 1674, 13), // "setCurBindEnd"
+QT_MOC_LITERAL(120, 1688, 3), // "pos"
+QT_MOC_LITERAL(121, 1692, 15), // "setCurBindBegin"
+QT_MOC_LITERAL(122, 1708, 16), // "addTextInComment"
+QT_MOC_LITERAL(123, 1725, 11), // "commentName"
+QT_MOC_LITERAL(124, 1737, 9), // "textColor"
+QT_MOC_LITERAL(125, 1747, 5), // "clear"
+QT_MOC_LITERAL(126, 1753, 19), // "recognizeIsFinished"
+QT_MOC_LITERAL(127, 1773, 15), // "openingFinished"
+QT_MOC_LITERAL(128, 1789, 18), // "handleNextOrFinish"
+QT_MOC_LITERAL(129, 1808, 8), // "document"
+QT_MOC_LITERAL(130, 1817, 10), // "TextStore*"
+QT_MOC_LITERAL(131, 1828, 10), // "soundStore"
+QT_MOC_LITERAL(132, 1839, 11), // "SoundStore*"
+QT_MOC_LITERAL(133, 1851, 18), // "bindFilesListModel"
+QT_MOC_LITERAL(134, 1870, 16), // "exampleListModel"
+QT_MOC_LITERAL(135, 1887, 18), // "matirealsListModel"
+QT_MOC_LITERAL(136, 1906, 16), // "commentListModel"
+QT_MOC_LITERAL(137, 1923, 14), // "mouseIsPressed"
+QT_MOC_LITERAL(138, 1938, 12), // "examplesSize"
+QT_MOC_LITERAL(139, 1951, 8) // "diffSize"
 
     },
     "UIController\0soundSellectionChanged\0"
@@ -170,22 +179,26 @@ QT_MOC_LITERAL(130, 1845, 8) // "diffSize"
     "examplesSizeChanged\0matirealsListChanged\0"
     "diffSizeChanged\0curCommentUrlChanged\0"
     "titleChanged\0curStateChanged\0"
-    "soundSourceChanged\0title\0setTitle\0"
+    "soundSourceChanged\0curExampleWordChanged\0"
+    "someOpenChanged\0title\0setTitle\0"
     "getbindFilesList\0setbindFilesList\0"
     "newBindFiles\0getExampleList\0setExampleList\0"
     "newExamples\0getCommentList\0setCommentList\0"
     "newComments\0curCommentUrl\0setCurCommentUrl\0"
     "getMatirealsList\0setMatirealsList\0"
     "newMatireals\0curState\0setCurState\0"
-    "newState\0saveHome\0push\0home\0save\0"
-    "setSoundSource\0source\0soundSource\0"
-    "setPreviewForCurLecture\0url\0getImageUrl\0"
-    "bindFile\0getTitle\0synchBndFileList\0"
-    "synchCommentList\0openBindFile\0"
-    "bindFileName\0saveBindFile\0createBindFile\0"
-    "soundFileName\0makeBind\0allTsBinding\0"
-    "allStBinding\0curUserStBinding\0addComment\0"
-    "path\0openSoundFile\0fileName\0"
+    "newState\0curExampleWord\0setCurExampleWord\0"
+    "saveHome\0push\0home\0save\0someOpen\0"
+    "setSomeOpen\0newValue\0setSoundSource\0"
+    "source\0soundSource\0setPreviewForCurLecture\0"
+    "url\0getImageUrl\0bindFile\0getTitle\0"
+    "synchBndFileList\0synchCommentList\0"
+    "openBindFile\0bindFileName\0saveBindFile\0"
+    "createBindFile\0soundFileName\0makeBind\0"
+    "allTsBinding\0allStBinding\0curUserStBinding\0"
+    "curTsBinding\0downloadBase\0uploadBase\0"
+    "createAutoComments\0autoCommentsNumber\0"
+    "addComment\0openSoundFile\0fileName\0"
     "cursorPosChanged\0setCursorPosInTimePos\0"
     "setTimePosInCursorPos\0markCurText\0"
     "markLastText\0unmarkLastText\0"
@@ -203,15 +216,13 @@ QT_MOC_LITERAL(130, 1845, 8) // "diffSize"
     "deleteCommentWithName\0isDir\0setCurDir\0"
     "getDir\0QDir\0getMidMarkable\0getBeginMarkable\0"
     "getEndMarkable\0canNotSync\0"
-    "haveCommentInThisPosition\0stopAllThreads\0"
-    "addWordInCurBindEnd\0addWordInCurBindBegin\0"
-    "deleteWordFromCurBindEnd\0"
-    "deleteWordFromCurBindBegin\0setCurBindEnd\0"
-    "pos\0setCurBindBegin\0addTextInComment\0"
-    "commentName\0textColor\0recognizeIsFinished\0"
-    "openingFinished\0handleNextOrFinish\0"
-    "document\0TextStore*\0soundStore\0"
-    "SoundStore*\0bindFilesListModel\0"
+    "haveCommentInThisPosition\0"
+    "soundSourceIsLocalFile\0stopAllThreads\0"
+    "setCurBindEnd\0pos\0setCurBindBegin\0"
+    "addTextInComment\0commentName\0textColor\0"
+    "clear\0recognizeIsFinished\0openingFinished\0"
+    "handleNextOrFinish\0document\0TextStore*\0"
+    "soundStore\0SoundStore*\0bindFilesListModel\0"
     "exampleListModel\0matirealsListModel\0"
     "commentListModel\0mouseIsPressed\0"
     "examplesSize\0diffSize"
@@ -224,116 +235,125 @@ static const uint qt_meta_data_UIController[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      98,   14, // methods
-      13,  684, // properties
+     105,   14, // methods
+      15,  730, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      12,       // signalCount
+      14,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  504,    2, 0x06 /* Public */,
-       3,    0,  505,    2, 0x06 /* Public */,
-       4,    0,  506,    2, 0x06 /* Public */,
-       5,    0,  507,    2, 0x06 /* Public */,
-       6,    0,  508,    2, 0x06 /* Public */,
-       7,    0,  509,    2, 0x06 /* Public */,
-       8,    0,  510,    2, 0x06 /* Public */,
-       9,    0,  511,    2, 0x06 /* Public */,
-      10,    0,  512,    2, 0x06 /* Public */,
-      11,    0,  513,    2, 0x06 /* Public */,
-      12,    0,  514,    2, 0x06 /* Public */,
-      13,    0,  515,    2, 0x06 /* Public */,
+       1,    0,  539,    2, 0x06 /* Public */,
+       3,    0,  540,    2, 0x06 /* Public */,
+       4,    0,  541,    2, 0x06 /* Public */,
+       5,    0,  542,    2, 0x06 /* Public */,
+       6,    0,  543,    2, 0x06 /* Public */,
+       7,    0,  544,    2, 0x06 /* Public */,
+       8,    0,  545,    2, 0x06 /* Public */,
+       9,    0,  546,    2, 0x06 /* Public */,
+      10,    0,  547,    2, 0x06 /* Public */,
+      11,    0,  548,    2, 0x06 /* Public */,
+      12,    0,  549,    2, 0x06 /* Public */,
+      13,    0,  550,    2, 0x06 /* Public */,
+      14,    0,  551,    2, 0x06 /* Public */,
+      15,    0,  552,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      14,    0,  516,    2, 0x0a /* Public */,
-      15,    1,  517,    2, 0x0a /* Public */,
-      16,    0,  520,    2, 0x0a /* Public */,
-      17,    1,  521,    2, 0x0a /* Public */,
-      19,    0,  524,    2, 0x0a /* Public */,
-      20,    1,  525,    2, 0x0a /* Public */,
-      22,    0,  528,    2, 0x0a /* Public */,
-      23,    1,  529,    2, 0x0a /* Public */,
-      25,    0,  532,    2, 0x0a /* Public */,
-      26,    1,  533,    2, 0x0a /* Public */,
-      27,    0,  536,    2, 0x0a /* Public */,
-      28,    1,  537,    2, 0x0a /* Public */,
-      30,    0,  540,    2, 0x0a /* Public */,
-      31,    1,  541,    2, 0x0a /* Public */,
-      33,    1,  544,    2, 0x0a /* Public */,
-      33,    0,  547,    2, 0x2a /* Public | MethodCloned */,
-      35,    0,  548,    2, 0x0a /* Public */,
-      36,    0,  549,    2, 0x0a /* Public */,
-      37,    1,  550,    2, 0x0a /* Public */,
-      39,    0,  553,    2, 0x0a /* Public */,
-      40,    1,  554,    2, 0x0a /* Public */,
-      42,    1,  557,    2, 0x0a /* Public */,
-      44,    1,  560,    2, 0x0a /* Public */,
-      45,    0,  563,    2, 0x0a /* Public */,
-      46,    0,  564,    2, 0x0a /* Public */,
-      47,    1,  565,    2, 0x0a /* Public */,
-      49,    1,  568,    2, 0x0a /* Public */,
-      50,    1,  571,    2, 0x0a /* Public */,
-      52,    0,  574,    2, 0x0a /* Public */,
-      53,    0,  575,    2, 0x0a /* Public */,
-      54,    0,  576,    2, 0x0a /* Public */,
-      55,    0,  577,    2, 0x0a /* Public */,
-      56,    0,  578,    2, 0x0a /* Public */,
-      56,    1,  579,    2, 0x0a /* Public */,
-      58,    1,  582,    2, 0x0a /* Public */,
-      60,    0,  585,    2, 0x0a /* Public */,
-      61,    0,  586,    2, 0x0a /* Public */,
-      62,    0,  587,    2, 0x0a /* Public */,
-      63,    0,  588,    2, 0x0a /* Public */,
-      64,    0,  589,    2, 0x0a /* Public */,
-      65,    0,  590,    2, 0x0a /* Public */,
-      66,    0,  591,    2, 0x0a /* Public */,
-      67,    1,  592,    2, 0x0a /* Public */,
-      69,    1,  595,    2, 0x0a /* Public */,
-      70,    1,  598,    2, 0x0a /* Public */,
-      72,    0,  601,    2, 0x0a /* Public */,
-      73,    1,  602,    2, 0x0a /* Public */,
-      75,    0,  605,    2, 0x0a /* Public */,
-      76,    0,  606,    2, 0x0a /* Public */,
-      77,    0,  607,    2, 0x0a /* Public */,
-      78,    0,  608,    2, 0x0a /* Public */,
-      79,    1,  609,    2, 0x0a /* Public */,
-      81,    0,  612,    2, 0x0a /* Public */,
-      82,    1,  613,    2, 0x0a /* Public */,
-      84,    0,  616,    2, 0x0a /* Public */,
-      85,    1,  617,    2, 0x0a /* Public */,
-      86,    0,  620,    2, 0x0a /* Public */,
-      87,    1,  621,    2, 0x0a /* Public */,
-      89,    0,  624,    2, 0x0a /* Public */,
-      90,    0,  625,    2, 0x0a /* Public */,
-      91,    1,  626,    2, 0x0a /* Public */,
-      92,    1,  629,    2, 0x0a /* Public */,
-      93,    1,  632,    2, 0x0a /* Public */,
-      94,    1,  635,    2, 0x0a /* Public */,
-      95,    1,  638,    2, 0x0a /* Public */,
-      96,    1,  641,    2, 0x0a /* Public */,
-      97,    1,  644,    2, 0x0a /* Public */,
-      98,    1,  647,    2, 0x0a /* Public */,
-      99,    1,  650,    2, 0x0a /* Public */,
-     101,    0,  653,    2, 0x0a /* Public */,
-     102,    0,  654,    2, 0x0a /* Public */,
-     103,    0,  655,    2, 0x0a /* Public */,
-     104,    0,  656,    2, 0x0a /* Public */,
-     105,    0,  657,    2, 0x0a /* Public */,
-     106,    0,  658,    2, 0x0a /* Public */,
-     107,    0,  659,    2, 0x0a /* Public */,
-     108,    0,  660,    2, 0x0a /* Public */,
-     109,    0,  661,    2, 0x0a /* Public */,
-     110,    0,  662,    2, 0x0a /* Public */,
-     111,    1,  663,    2, 0x0a /* Public */,
-     113,    1,  666,    2, 0x0a /* Public */,
-     114,    3,  669,    2, 0x0a /* Public */,
-     114,    2,  676,    2, 0x2a /* Public | MethodCloned */,
-     117,    0,  681,    2, 0x09 /* Protected */,
-     118,    0,  682,    2, 0x09 /* Protected */,
-     119,    0,  683,    2, 0x09 /* Protected */,
+      16,    0,  553,    2, 0x0a /* Public */,
+      17,    1,  554,    2, 0x0a /* Public */,
+      18,    0,  557,    2, 0x0a /* Public */,
+      19,    1,  558,    2, 0x0a /* Public */,
+      21,    0,  561,    2, 0x0a /* Public */,
+      22,    1,  562,    2, 0x0a /* Public */,
+      24,    0,  565,    2, 0x0a /* Public */,
+      25,    1,  566,    2, 0x0a /* Public */,
+      27,    0,  569,    2, 0x0a /* Public */,
+      28,    1,  570,    2, 0x0a /* Public */,
+      29,    0,  573,    2, 0x0a /* Public */,
+      30,    1,  574,    2, 0x0a /* Public */,
+      32,    0,  577,    2, 0x0a /* Public */,
+      33,    1,  578,    2, 0x0a /* Public */,
+      35,    0,  581,    2, 0x0a /* Public */,
+      36,    1,  582,    2, 0x0a /* Public */,
+      37,    1,  585,    2, 0x0a /* Public */,
+      37,    0,  588,    2, 0x2a /* Public | MethodCloned */,
+      39,    0,  589,    2, 0x0a /* Public */,
+      40,    0,  590,    2, 0x0a /* Public */,
+      41,    0,  591,    2, 0x0a /* Public */,
+      42,    1,  592,    2, 0x0a /* Public */,
+      44,    1,  595,    2, 0x0a /* Public */,
+      46,    0,  598,    2, 0x0a /* Public */,
+      47,    1,  599,    2, 0x0a /* Public */,
+      49,    1,  602,    2, 0x0a /* Public */,
+      51,    1,  605,    2, 0x0a /* Public */,
+      52,    0,  608,    2, 0x0a /* Public */,
+      53,    0,  609,    2, 0x0a /* Public */,
+      54,    1,  610,    2, 0x0a /* Public */,
+      56,    1,  613,    2, 0x0a /* Public */,
+      57,    1,  616,    2, 0x0a /* Public */,
+      59,    0,  619,    2, 0x0a /* Public */,
+      60,    0,  620,    2, 0x0a /* Public */,
+      61,    0,  621,    2, 0x0a /* Public */,
+      62,    0,  622,    2, 0x0a /* Public */,
+      63,    0,  623,    2, 0x0a /* Public */,
+      64,    0,  624,    2, 0x0a /* Public */,
+      65,    0,  625,    2, 0x0a /* Public */,
+      66,    1,  626,    2, 0x0a /* Public */,
+      68,    0,  629,    2, 0x0a /* Public */,
+      69,    1,  630,    2, 0x0a /* Public */,
+      71,    0,  633,    2, 0x0a /* Public */,
+      72,    0,  634,    2, 0x0a /* Public */,
+      73,    0,  635,    2, 0x0a /* Public */,
+      74,    0,  636,    2, 0x0a /* Public */,
+      75,    0,  637,    2, 0x0a /* Public */,
+      76,    0,  638,    2, 0x0a /* Public */,
+      77,    0,  639,    2, 0x0a /* Public */,
+      78,    1,  640,    2, 0x0a /* Public */,
+      80,    1,  643,    2, 0x0a /* Public */,
+      81,    1,  646,    2, 0x0a /* Public */,
+      83,    0,  649,    2, 0x0a /* Public */,
+      84,    1,  650,    2, 0x0a /* Public */,
+      86,    0,  653,    2, 0x0a /* Public */,
+      87,    0,  654,    2, 0x0a /* Public */,
+      88,    0,  655,    2, 0x0a /* Public */,
+      89,    0,  656,    2, 0x0a /* Public */,
+      90,    1,  657,    2, 0x0a /* Public */,
+      92,    0,  660,    2, 0x0a /* Public */,
+      93,    1,  661,    2, 0x0a /* Public */,
+      95,    0,  664,    2, 0x0a /* Public */,
+      96,    1,  665,    2, 0x0a /* Public */,
+      97,    0,  668,    2, 0x0a /* Public */,
+      98,    1,  669,    2, 0x0a /* Public */,
+     100,    0,  672,    2, 0x0a /* Public */,
+     101,    0,  673,    2, 0x0a /* Public */,
+     102,    1,  674,    2, 0x0a /* Public */,
+     103,    1,  677,    2, 0x0a /* Public */,
+     104,    1,  680,    2, 0x0a /* Public */,
+     105,    1,  683,    2, 0x0a /* Public */,
+     106,    1,  686,    2, 0x0a /* Public */,
+     107,    1,  689,    2, 0x0a /* Public */,
+     108,    1,  692,    2, 0x0a /* Public */,
+     109,    1,  695,    2, 0x0a /* Public */,
+     110,    1,  698,    2, 0x0a /* Public */,
+     112,    0,  701,    2, 0x0a /* Public */,
+     113,    0,  702,    2, 0x0a /* Public */,
+     114,    0,  703,    2, 0x0a /* Public */,
+     115,    0,  704,    2, 0x0a /* Public */,
+     116,    0,  705,    2, 0x0a /* Public */,
+     117,    0,  706,    2, 0x0a /* Public */,
+     118,    0,  707,    2, 0x0a /* Public */,
+     119,    1,  708,    2, 0x0a /* Public */,
+     121,    1,  711,    2, 0x0a /* Public */,
+     122,    3,  714,    2, 0x0a /* Public */,
+     122,    2,  721,    2, 0x2a /* Public | MethodCloned */,
+     125,    0,  726,    2, 0x0a /* Public */,
+     126,    0,  727,    2, 0x09 /* Protected */,
+     127,    0,  728,    2, 0x09 /* Protected */,
+     128,    0,  729,    2, 0x09 /* Protected */,
 
  // signals: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -351,38 +371,45 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::QString,
     QMetaType::Void, QMetaType::QString,    2,
     QMetaType::QStringList,
-    QMetaType::Void, QMetaType::QStringList,   18,
+    QMetaType::Void, QMetaType::QStringList,   20,
     QMetaType::QStringList,
-    QMetaType::Void, QMetaType::QStringList,   21,
+    QMetaType::Void, QMetaType::QStringList,   23,
     QMetaType::QStringList,
-    QMetaType::Void, QMetaType::QStringList,   24,
+    QMetaType::Void, QMetaType::QStringList,   26,
     QMetaType::QUrl,
     QMetaType::Void, QMetaType::QUrl,    2,
     QMetaType::QStringList,
-    QMetaType::Void, QMetaType::QStringList,   29,
+    QMetaType::Void, QMetaType::QStringList,   31,
     QMetaType::QString,
-    QMetaType::Void, QMetaType::QString,   32,
-    QMetaType::Void, QMetaType::Bool,   34,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   38,
+    QMetaType::Void, QMetaType::QString,   34,
     QMetaType::QString,
-    QMetaType::Void, QMetaType::QUrl,   41,
-    QMetaType::QUrl, QMetaType::QString,   43,
-    QMetaType::QString, QMetaType::QString,   43,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void, QMetaType::Bool,   38,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Bool,
+    QMetaType::Void, QMetaType::Bool,   43,
+    QMetaType::Void, QMetaType::QString,   45,
+    QMetaType::QString,
     QMetaType::Void, QMetaType::QUrl,   48,
-    QMetaType::Void, QMetaType::QUrl,   48,
-    QMetaType::Void, QMetaType::QUrl,   51,
+    QMetaType::QUrl, QMetaType::QString,   50,
+    QMetaType::QString, QMetaType::QString,   50,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QUrl,   55,
+    QMetaType::Void, QMetaType::QUrl,   55,
+    QMetaType::Void, QMetaType::QUrl,   58,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   67,
     QMetaType::QUrl,
-    QMetaType::Void, QMetaType::QUrl,   57,
-    QMetaType::Void, QMetaType::QString,   59,
+    QMetaType::Void, QMetaType::QString,   70,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -390,65 +417,65 @@ static const uint qt_meta_data_UIController[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   68,
-    QMetaType::Void, QMetaType::QString,   68,
-    QMetaType::Void, QMetaType::Int,   71,
+    QMetaType::Void, QMetaType::QString,   79,
+    QMetaType::Void, QMetaType::QString,   79,
+    QMetaType::Void, QMetaType::Int,   82,
     QMetaType::Int,
-    QMetaType::Void, QMetaType::Int,   74,
+    QMetaType::Void, QMetaType::Int,   85,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::QString,
     QMetaType::QString,
-    QMetaType::Void, QMetaType::QString,   80,
+    QMetaType::Void, QMetaType::QString,   91,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   83,
+    QMetaType::Void, QMetaType::QString,   94,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   83,
+    QMetaType::Void, QMetaType::QString,   94,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QUrl,   88,
+    QMetaType::Void, QMetaType::QUrl,   99,
     QMetaType::Void,
     QMetaType::QString,
-    QMetaType::QUrl, QMetaType::QString,   68,
-    QMetaType::QUrl, QMetaType::QString,   68,
-    QMetaType::QUrl, QMetaType::QString,   68,
-    QMetaType::Void, QMetaType::QString,   68,
-    QMetaType::Void, QMetaType::QString,   59,
-    QMetaType::Void, QMetaType::QString,   68,
-    QMetaType::Bool, QMetaType::QString,   68,
-    QMetaType::Void, QMetaType::QString,   68,
-    0x80000000 | 100, QMetaType::QString,   68,
+    QMetaType::QUrl, QMetaType::QString,   79,
+    QMetaType::QUrl, QMetaType::QString,   79,
+    QMetaType::QUrl, QMetaType::QString,   79,
+    QMetaType::Void, QMetaType::QString,   79,
+    QMetaType::Void, QMetaType::QString,   70,
+    QMetaType::Void, QMetaType::QString,   79,
+    QMetaType::Bool, QMetaType::QString,   79,
+    QMetaType::Void, QMetaType::QString,   79,
+    0x80000000 | 111, QMetaType::QString,   79,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Bool,
     QMetaType::Bool,
+    QMetaType::Bool,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::LongLong,  120,
+    QMetaType::Void, QMetaType::LongLong,  120,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QColor,  123,    2,  124,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,  123,    2,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::LongLong,  112,
-    QMetaType::Void, QMetaType::LongLong,  112,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QColor,  115,    2,  116,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,  115,    2,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
  // properties: name, type, flags
-     120, 0x80000000 | 121, 0x0009510b,
-     122, 0x80000000 | 123, 0x0009510b,
-     124, QMetaType::QStringList, 0x00495003,
-     125, QMetaType::QStringList, 0x00495003,
-     126, QMetaType::QStringList, 0x00495003,
-     127, QMetaType::QStringList, 0x00495003,
-     128, QMetaType::Bool, 0x00095102,
-     129, QMetaType::Int, 0x00495103,
-     130, QMetaType::Int, 0x00495103,
-      25, QMetaType::QUrl, 0x00495103,
-      14, QMetaType::QString, 0x00495103,
-      30, QMetaType::QString, 0x00495001,
-      39, QMetaType::QString, 0x00495103,
+     129, 0x80000000 | 130, 0x0009510b,
+     131, 0x80000000 | 132, 0x0009510b,
+     133, QMetaType::QStringList, 0x00495003,
+     134, QMetaType::QStringList, 0x00495003,
+     135, QMetaType::QStringList, 0x00495003,
+     136, QMetaType::QStringList, 0x00495003,
+     137, QMetaType::Bool, 0x00095102,
+     138, QMetaType::Int, 0x00495103,
+     139, QMetaType::Int, 0x00495103,
+      27, QMetaType::QUrl, 0x00495103,
+      16, QMetaType::QString, 0x00495103,
+      32, QMetaType::QString, 0x00495001,
+      46, QMetaType::QString, 0x00495103,
+      35, QMetaType::QString, 0x00495103,
+      41, QMetaType::Bool, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -464,6 +491,8 @@ static const uint qt_meta_data_UIController[] = {
        9,
       10,
       11,
+      12,
+      13,
 
        0        // eod
 };
@@ -486,119 +515,129 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 9: _t->titleChanged(); break;
         case 10: _t->curStateChanged(); break;
         case 11: _t->soundSourceChanged(); break;
-        case 12: { QString _r = _t->title();
+        case 12: _t->curExampleWordChanged(); break;
+        case 13: _t->someOpenChanged(); break;
+        case 14: { QString _r = _t->title();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 13: _t->setTitle((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 14: { QStringList _r = _t->getbindFilesList();
+        case 15: _t->setTitle((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 16: { QStringList _r = _t->getbindFilesList();
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 15: _t->setbindFilesList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
-        case 16: { QStringList _r = _t->getExampleList();
+        case 17: _t->setbindFilesList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
+        case 18: { QStringList _r = _t->getExampleList();
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 17: _t->setExampleList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
-        case 18: { QStringList _r = _t->getCommentList();
+        case 19: _t->setExampleList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
+        case 20: { QStringList _r = _t->getCommentList();
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 19: _t->setCommentList((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 20: { QUrl _r = _t->curCommentUrl();
+        case 21: _t->setCommentList((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 22: { QUrl _r = _t->curCommentUrl();
             if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 21: _t->setCurCommentUrl((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 22: { QStringList _r = _t->getMatirealsList();
+        case 23: _t->setCurCommentUrl((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 24: { QStringList _r = _t->getMatirealsList();
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
-        case 23: _t->setMatirealsList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
-        case 24: { QString _r = _t->curState();
+        case 25: _t->setMatirealsList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
+        case 26: { QString _r = _t->curState();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 25: _t->setCurState((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 26: _t->saveHome((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 27: _t->saveHome(); break;
-        case 28: _t->home(); break;
-        case 29: _t->save(); break;
-        case 30: _t->setSoundSource((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 31: { QString _r = _t->soundSource();
+        case 27: _t->setCurState((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 28: { QString _r = _t->curExampleWord();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 32: _t->setPreviewForCurLecture((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 33: { QUrl _r = _t->getImageUrl((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 34: { QString _r = _t->getTitle((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 35: _t->synchBndFileList(); break;
-        case 36: _t->synchCommentList(); break;
-        case 37: _t->openBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 38: _t->saveBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 39: _t->createBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 40: _t->makeBind(); break;
-        case 41: _t->allTsBinding(); break;
-        case 42: _t->allStBinding(); break;
-        case 43: _t->curUserStBinding(); break;
-        case 44: { QUrl _r = _t->addComment();
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 45: _t->addComment((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 46: _t->openSoundFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 47: _t->cursorPosChanged(); break;
-        case 48: _t->setCursorPosInTimePos(); break;
-        case 49: _t->setTimePosInCursorPos(); break;
-        case 50: _t->markCurText(); break;
-        case 51: _t->markLastText(); break;
-        case 52: _t->unmarkLastText(); break;
-        case 53: _t->startSellectTimer(); break;
-        case 54: _t->markComment((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 55: _t->unmarkComment((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 56: _t->setExamplesSize((*reinterpret_cast< qint32(*)>(_a[1]))); break;
-        case 57: { qint32 _r = _t->getExamplesSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 58: _t->setDiffSize((*reinterpret_cast< qint32(*)>(_a[1]))); break;
-        case 59: { qint32 _r = _t->getDiffSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 60: { qint32 _r = _t->getCommentListSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 61: { QString _r = _t->getFirstComment();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 62: { QString _r = _t->formUrlToTranslateSellected();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 63: _t->playExample((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 64: _t->getExample(); break;
-        case 65: _t->getExamplesFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 66: _t->getMatireals(); break;
-        case 67: _t->getMatirealsFor((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 68: _t->goOutHome(); break;
-        case 69: _t->setForOpening((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
-        case 70: _t->openWaited(); break;
-        case 71: { QString _r = _t->openState();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 72: { QUrl _r = _t->getCommentUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 73: { QUrl _r = _t->getBindFileUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 74: { QUrl _r = _t->getMatirealUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
-        case 75: _t->deleteBindWithName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 76: _t->deleteBind((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 77: _t->deleteCommentWithName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 78: { bool _r = _t->isDir((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 29: _t->setCurExampleWord((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 30: _t->saveHome((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 31: _t->saveHome(); break;
+        case 32: _t->home(); break;
+        case 33: _t->save(); break;
+        case 34: { bool _r = _t->someOpen();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 79: _t->setCurDir((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 80: { QDir _r = _t->getDir((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 35: _t->setSomeOpen((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 36: _t->setSoundSource((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 37: { QString _r = _t->soundSource();
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 38: _t->setPreviewForCurLecture((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 39: { QUrl _r = _t->getImageUrl((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
+        case 40: { QString _r = _t->getTitle((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 41: _t->synchBndFileList(); break;
+        case 42: _t->synchCommentList(); break;
+        case 43: _t->openBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 44: _t->saveBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 45: _t->createBindFile((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 46: _t->makeBind(); break;
+        case 47: _t->allTsBinding(); break;
+        case 48: _t->allStBinding(); break;
+        case 49: _t->curUserStBinding(); break;
+        case 50: _t->curTsBinding(); break;
+        case 51: _t->downloadBase(); break;
+        case 52: _t->uploadBase(); break;
+        case 53: _t->createAutoComments((*reinterpret_cast< qint32(*)>(_a[1]))); break;
+        case 54: { QUrl _r = _t->addComment();
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
+        case 55: _t->openSoundFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 56: _t->cursorPosChanged(); break;
+        case 57: _t->setCursorPosInTimePos(); break;
+        case 58: _t->setTimePosInCursorPos(); break;
+        case 59: _t->markCurText(); break;
+        case 60: _t->markLastText(); break;
+        case 61: _t->unmarkLastText(); break;
+        case 62: _t->startSellectTimer(); break;
+        case 63: _t->markComment((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 64: _t->unmarkComment((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 65: _t->setExamplesSize((*reinterpret_cast< qint32(*)>(_a[1]))); break;
+        case 66: { qint32 _r = _t->getExamplesSize();
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
+        case 67: _t->setDiffSize((*reinterpret_cast< qint32(*)>(_a[1]))); break;
+        case 68: { qint32 _r = _t->getDiffSize();
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
+        case 69: { qint32 _r = _t->getCommentListSize();
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
+        case 70: { QString _r = _t->getFirstComment();
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 71: { QString _r = _t->formUrlToTranslateSellected();
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 72: _t->playExample((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 73: _t->getExample(); break;
+        case 74: _t->getExamplesFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 75: _t->getMatireals(); break;
+        case 76: _t->getMatirealsFor((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 77: _t->goOutHome(); break;
+        case 78: _t->setForOpening((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 79: _t->openWaited(); break;
+        case 80: { QString _r = _t->openState();
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 81: { QUrl _r = _t->getCommentUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
+        case 82: { QUrl _r = _t->getBindFileUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
+        case 83: { QUrl _r = _t->getMatirealUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
+        case 84: _t->deleteBindWithName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 85: _t->deleteBind((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 86: _t->deleteCommentWithName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 87: { bool _r = _t->isDir((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 88: _t->setCurDir((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 89: { QDir _r = _t->getDir((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QDir*>(_a[0]) = _r; }  break;
-        case 81: { qint32 _r = _t->getMidMarkable();
+        case 90: { qint32 _r = _t->getMidMarkable();
             if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 82: { qint32 _r = _t->getBeginMarkable();
+        case 91: { qint32 _r = _t->getBeginMarkable();
             if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 83: { qint32 _r = _t->getEndMarkable();
+        case 92: { qint32 _r = _t->getEndMarkable();
             if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
-        case 84: { bool _r = _t->canNotSync();
+        case 93: { bool _r = _t->canNotSync();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 85: { bool _r = _t->haveCommentInThisPosition();
+        case 94: { bool _r = _t->haveCommentInThisPosition();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 86: _t->stopAllThreads(); break;
-        case 87: _t->addWordInCurBindEnd(); break;
-        case 88: _t->addWordInCurBindBegin(); break;
-        case 89: _t->deleteWordFromCurBindEnd(); break;
-        case 90: _t->deleteWordFromCurBindBegin(); break;
-        case 91: _t->setCurBindEnd((*reinterpret_cast< qint64(*)>(_a[1]))); break;
-        case 92: _t->setCurBindBegin((*reinterpret_cast< qint64(*)>(_a[1]))); break;
-        case 93: _t->addTextInComment((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QColor(*)>(_a[3]))); break;
-        case 94: _t->addTextInComment((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 95: _t->recognizeIsFinished(); break;
-        case 96: _t->openingFinished(); break;
-        case 97: _t->handleNextOrFinish(); break;
+        case 95: { bool _r = _t->soundSourceIsLocalFile();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 96: _t->stopAllThreads(); break;
+        case 97: _t->setCurBindEnd((*reinterpret_cast< qint64(*)>(_a[1]))); break;
+        case 98: _t->setCurBindBegin((*reinterpret_cast< qint64(*)>(_a[1]))); break;
+        case 99: _t->addTextInComment((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QColor(*)>(_a[3]))); break;
+        case 100: _t->addTextInComment((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 101: _t->clear(); break;
+        case 102: _t->recognizeIsFinished(); break;
+        case 103: _t->openingFinished(); break;
+        case 104: _t->handleNextOrFinish(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -688,6 +727,20 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 return;
             }
         }
+        {
+            typedef void (UIController::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UIController::curExampleWordChanged)) {
+                *result = 12;
+                return;
+            }
+        }
+        {
+            typedef void (UIController::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&UIController::someOpenChanged)) {
+                *result = 13;
+                return;
+            }
+        }
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
@@ -716,6 +769,8 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 10: *reinterpret_cast< QString*>(_v) = _t->title(); break;
         case 11: *reinterpret_cast< QString*>(_v) = _t->curState(); break;
         case 12: *reinterpret_cast< QString*>(_v) = _t->soundSource(); break;
+        case 13: *reinterpret_cast< QString*>(_v) = _t->curExampleWord(); break;
+        case 14: *reinterpret_cast< bool*>(_v) = _t->someOpen(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -735,6 +790,8 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 9: _t->setCurCommentUrl(*reinterpret_cast< QUrl*>(_v)); break;
         case 10: _t->setTitle(*reinterpret_cast< QString*>(_v)); break;
         case 12: _t->setSoundSource(*reinterpret_cast< QString*>(_v)); break;
+        case 13: _t->setCurExampleWord(*reinterpret_cast< QString*>(_v)); break;
+        case 14: _t->setSomeOpen(*reinterpret_cast< bool*>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -767,29 +824,29 @@ int UIController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 98)
+        if (_id < 105)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 98;
+        _id -= 105;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 98)
+        if (_id < 105)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 98;
+        _id -= 105;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 15;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 13;
+        _id -= 15;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 13;
+        _id -= 15;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 13;
+        _id -= 15;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 13;
+        _id -= 15;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 13;
+        _id -= 15;
     }
 #endif // QT_NO_PROPERTIES
     return _id;
@@ -865,6 +922,18 @@ void UIController::curStateChanged()
 void UIController::soundSourceChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 11, Q_NULLPTR);
+}
+
+// SIGNAL 12
+void UIController::curExampleWordChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 12, Q_NULLPTR);
+}
+
+// SIGNAL 13
+void UIController::someOpenChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 13, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     cpp/Utilits/setting.cpp \
     cpp/Processes/process.cpp \
     cpp/Processes/bindopenprocess.cpp \
-    cpp/Processes/tsbindingprocess.cpp
+    cpp/Processes/tsbindingprocess.cpp \
+    cpp/Processes/scriptprocess.cpp
 
 RESOURCES += qml.qrc
 
@@ -75,4 +76,5 @@ HEADERS += \
     cpp/Utilits/setting.h \
     cpp/Processes/process.h \
     cpp/Processes/bindopenprocess.h \
-    cpp/Processes/tsbindingprocess.h
+    cpp/Processes/tsbindingprocess.h \
+    cpp/Processes/scriptprocess.h

@@ -10,9 +10,26 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _diffSize = s.exampleDiff();
 
     _sellectTimer.start();
-    _curDir = QDir("lectures");
+    _curDir = QDir("eduEnReaderBase");
     _opening = false;    
+    _someOpen = false;
+    _curExampleWord = "Example";
+}
 
+void UIController::createAutoComments(qint32 autoCommentsNumber)
+{
+    _logic->createAutoComments(autoCommentsNumber);
+}
+
+QString UIController::curExampleWord() const
+{
+    return _curExampleWord;
+}
+
+void UIController::setCurExampleWord(const QString& newWord)
+{
+    _curExampleWord = newWord;
+    emit curExampleWordChanged();
 }
 
 void UIController::setDocument(TextStore* TS) {
@@ -20,10 +37,7 @@ void UIController::setDocument(TextStore* TS) {
     QObject::connect(_textStore.data(), SIGNAL(cursorPositionChanged()), this, SLOT(cursorPosChanged()));
     // По скольку последовательность вызовов setDocument и setSoundStore заранее неизвестна
     if (_textStore.isNull() == false && _soundStore.isNull() == false)
-    {
-        initBindMaker(_textStore, _soundStore, _logic);
-        initLogicReader(_textStore, _soundStore, _logic);
-    }
+        initAllProcesses();
 }
 
 void UIController::setSoundStore(SoundStore* TS) {
@@ -31,15 +45,11 @@ void UIController::setSoundStore(SoundStore* TS) {
     QObject::connect(_soundStore.data(), SIGNAL(posChanged()), this, SLOT(setCursorPosInTimePos()));
     // По скольку последовательность вызовов setDocument и setSoundStore заранее неизвестна
     if (_textStore.isNull() == false && _soundStore.isNull() == false)
-    {
-        initBindMaker(_textStore, _soundStore, _logic);
-        initLogicReader(_textStore, _soundStore, _logic);
-    }
+        initAllProcesses();
 }
 
 void UIController::stopAllThreads()
 {
-    //_logicReader->exit();
     _bindMaker->quit();
     if(!_bindMaker->wait(3000)) //Wait until it actually has terminated (max. 3 sec)
     {
@@ -52,6 +62,11 @@ void UIController::stopAllThreads()
 void UIController::save()
 {
     _logic->save();
+}
+
+bool UIController::someOpen()
+{
+    return _someOpen;
 }
 
 void UIController::addTextInComment(const QString& commentName, const QString& text, const QColor& textColor)
@@ -341,16 +356,9 @@ TextFragment::PTR UIController::getSellectedText()
 
 QUrl UIController::addComment()
 {
-    QString uniqName = _logic->getUniqCommentName();
-    QUrl commentUrl = QUrl::fromLocalFile(uniqName);
-    addComment(commentUrl);
-    return commentUrl;
-}
-
-void UIController::addComment(const QUrl& commentUrl)
-{
     auto sellectedFragment = getSellectedText();
-    _logic->makeComment(sellectedFragment, commentUrl);
+    auto commentUrl = _logic->makeComment(sellectedFragment);
+    return commentUrl;
 }
 
 QUrl UIController::getMatirealUrlWithName(const QString& name) const
@@ -527,9 +535,7 @@ void UIController::getExamplesFor(const QString& seekablePhrase)
         qint32 secEnd = (qint32)end%60;
         QString beginString = QString().number(minBegin) + ":" + QString().number(secBegin);
         QString endString = QString().number(minEnd) + ":" + QString().number(secEnd);
-
         example.text = beginString + " " + example.text + " " + endString;
-
         QString newExampleName = QString().number(_exampleList.size()+1) + ":" + example.FileName;
                 //+ " " + beginString;
                 //+ "-" + endString;
@@ -537,18 +543,33 @@ void UIController::getExamplesFor(const QString& seekablePhrase)
         _example[newExampleName] = example;
     }
     setExampleList(_exampleList);
+    if (_exampleList.empty() == false)
+        setCurExampleWord(seekablePhrase);
 }
 
-void UIController::initBindMaker(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic)
+void UIController::initAllProcesses()
 {
-    _bindMaker = TsBindingProcess::factoryMethod(text, sound, logic);
+    initBindMaker();
+    initScripterProcess();
+    initLogicReader();
+}
+
+void UIController::initScripterProcess()
+{
+    _scripterProcess = ScriptProcess::factoryMethod(_textStore, _soundStore, _logic);
+    connect(_scripterProcess.data(), SIGNAL(stateChanged(QString)), this, SLOT(setCurState(QString)));
+}
+
+void UIController::initBindMaker()
+{
+    _bindMaker = TsBindingProcess::factoryMethod(_textStore, _soundStore, _logic);
     connect(_bindMaker.data(), SIGNAL(finished()), this, SLOT(handleNextOrFinish()));
     connect(_bindMaker.data(), SIGNAL(stateChanged(QString)), this, SLOT(setCurState(QString)));
 }
 
-void UIController::initLogicReader(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic)
+void UIController::initLogicReader()
 {
-    _logicReader = BindOpenProcess::factoryMethod(text, sound, logic);
+    _logicReader = BindOpenProcess::factoryMethod(_textStore, _soundStore, _logic);
    // connect(_logicReader.data(), SIGNAL(finished()), this, SLOT(openingFinished()));
 }
 
@@ -690,6 +711,11 @@ void UIController::handleNextOrFinish()
     {
         QString endState = _bindMaker->endState;
         setCurState(endState);
+        if (_bindSiqence.size() == 1)
+        {
+            QString fileName = _bindSiqence.front();
+            _logic->readFromFile(fileName, _textStore, _soundStore);
+        }
         return;
     }
     QString nextVideoString = *nextVideoIterator;
@@ -718,10 +744,18 @@ QString UIController::getCurStateBindSequnce()
     return curState;
 }
 
-void UIController::initBindingSequence()
+void UIController::initBindingSequence(bool forAll)
 {
     _bindSiqence.clear();
     _f_bindSequnceProcess.clear();
+    if (forAll == false)
+    {
+        QString curLogic = _logic->getCurBndFileName();
+        assert(QFile::exists(curLogic));
+        _bindSiqence.push_back(curLogic);
+        _f_bindSequnceProcess[curLogic] = false;
+        return;
+    }
     QString stringBindLocation = Settings::get(Settings::BindLocation, Settings::Location).toString();
     QDir dirBindLocation = QDir(stringBindLocation);
     QStringList videos;
@@ -738,11 +772,40 @@ void UIController::initBindingSequence()
     }
 }
 
-void UIController::allTsBinding()
+void UIController::downloadBase()
+{
+    _scripterProcess->setExecuteScript(Scripter::_downloadBaseScript);
+    _scripterProcess->start();
+}
+
+void UIController::uploadBase()
+{
+    _scripterProcess->setExecuteScript(Scripter::_uploadBaseScript);
+    _scripterProcess->start();
+}
+
+void UIController::tsBinding(bool forAll)
 {
     QString curState = getCurStateBindSequnce();
     setCurState(curState);
-    initBindingSequence();
+    initBindingSequence(forAll);
+    startTsBinging();
+}
+
+void UIController::curTsBinding()
+{
+    _bindMaker->useCurLogic(true);
+    tsBinding(false);
+}
+
+void UIController::allTsBinding()
+{
+    _bindMaker->useCurLogic(false);
+    tsBinding(true);
+}
+
+void UIController::startTsBinging()
+{
     if (_bindSiqence.empty())
     {
         handleNextOrFinish();
@@ -806,17 +869,7 @@ void UIController::makeBind()
 //    _f_reconizing = false;
 //    fileStream << "End binding time: " << curTime.toString();
 
-
-    return;
-
-
-    if (_f_reconizing)
-        return;
-    //BindMaker bm(_textStore, _soundStore, _logic);
-    _bindMaker->setSplitSize(5.0f, 3.0f);
-    _bindMaker->start();
-    _f_reconizing = true;
-
+assert(false);
     //_transliter.loadTranslation("");
 
 //    _logic->bindLogicHanding();

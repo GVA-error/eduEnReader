@@ -95,10 +95,13 @@ public:
     bool posIsCorrect(qint64 curPos) const;
     //QStringList getAllWordVarints(const QString& word) const;
 
-    qint64 getWordEnd(qint64 curPos, bool reversDirrection) const;
+    //qint64 getWordEnd(qint64 curPos, bool reversDirrection) const;
 
     // Добавляет текст в конец файла, нужен для добавления частей текста для последующего комментрирования
     void addTextForComment(const QString& text, const QColor& textColor = QColor("black"));
+
+    static QRegExp getRegXFor(QString word);
+   // static QList <qint64> getWordPositions(QString text, QString word);
 
 public Q_SLOTS:
     void setSelectionStart(int position);

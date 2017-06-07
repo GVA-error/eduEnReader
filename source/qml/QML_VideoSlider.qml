@@ -4,7 +4,7 @@ import QtMultimedia 5.8
 import QtQuick.Controls 2.1
 import Qt.labs.platform 1.0
 
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 import SoundStoreModul 1.1
 import TextStoreModul 1.0
 

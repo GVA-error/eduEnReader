@@ -12,7 +12,7 @@ import QtQuick.Dialogs 1.2
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 import QML_SettingsModul 1.0
 
 ApplicationWindow {

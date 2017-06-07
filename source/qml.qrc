@@ -47,7 +47,6 @@
         <file>qml/QML_MainVideoView.qml</file>
         <file>qml/QML_ListDialog.qml</file>
         <file>qml/QML_HtmlView.qml</file>
-        <file>qml/QML_FileOpenDialog.qml</file>
         <file>qml/QML_FileDialogs.qml</file>
         <file>qml/QML_DialogBackground.qml</file>
         <file>qml/QML_ComboBox.qml</file>
@@ -59,7 +58,6 @@
         <file>qml/QML_TextEditorDialog.qml</file>
         <file>qml/QML_NameDialog.qml</file>
         <file>qml/QML_ImageButton.qml</file>
-        <file>qml/QML_BrightnessButton.qml</file>
         <file>qml/QML_CommentList.qml</file>
         <file>qml/QML_CommentSellectDialog.qml</file>
         <file>qml/WRITE_main.qml</file>
@@ -77,5 +75,12 @@
         <file>qml/QML_PageOpen.qml</file>
         <file>qml/QML_PageSettings.qml</file>
         <file>qml/QML_main.qml</file>
+        <file>qml/QML_TranslationHelpDialog.qml</file>
+        <file>qml/images/folder-downloads.png</file>
+        <file>qml/images/package_internet_p2p.png</file>
+        <file>qml/images/svn-commit.png</file>
+        <file>qml/images/trash-empty.png</file>
+        <file>qml/images/un_bind.png</file>
+        <file>qml/images/yast-restore.png</file>
     </qresource>
 </RCC>

@@ -7,9 +7,7 @@
 #include <QDebug>
 #include <QList>
 #include <QDir>
-#include <QMap>
-
-// TODO Выделить ScriptRecognize
+#include <QMap>ы
 
 // Интерфейс распознователя речи
 class IASR : public QObject

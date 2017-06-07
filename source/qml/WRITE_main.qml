@@ -10,7 +10,7 @@ import QtQuick.Dialogs 1.2
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 
 QML_main {
     id : mainRoot
@@ -36,7 +36,6 @@ QML_main {
         homeUiController.goOutHome()
         pageView.setCurrentIndex(2)
         homeSoundStore.stop()
-        //homePage.homeUiControler.makeBind()
     }
 
     header : WRITE_TopToolBar { id : mainToolBar }
@@ -65,12 +64,6 @@ QML_main {
         }
     }
 
-    QML_WaitDialog{
-        id : waitDialog
-        anchors.fill: parent
-        z : 100
-        stateText: homeUiController.curState
-    }
     WRITE_PropertyDialog{
         id: propertyDialog
         uiController: homeUiController
@@ -111,5 +104,33 @@ QML_main {
         }
     }
     MessageDialog { id : messageDialog }
+    QML_TranslationHelpDialog{
+        id: translationHelpDialog
+    }
+    QML_YesNoDialog{
+        id: curTsBindingStart
+        title: "Start?"
+        text: "Do you wanna start handling?\n It's spend many time."
+        onYes:{
+            if (homeUiController.soundSourceIsLocalFile() === false)
+            {
+                messageDialog.text = "You must have local file to bind it"
+                messageDialog.open()
+                return;
+            }
+            homeSoundStore.stop()
+            waitDialog.showDialog()
+            homeUiController.curTsBinding()
+        }
+    }
+    QML_YesNoDialog{
+        id: createNewCommentSplit
+        title: "Split?"
+        text: "Do you want create new comment split? It delete all your comments in this file."
+        onYes: {
+            var commentsSize = settingPage.autoCommentNumber
+            homeUiController.createAutoComments(commentsSize)
+        }
+    }
 }
 

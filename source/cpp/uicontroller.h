@@ -11,18 +11,40 @@
 #include "Binding/bindmaker.h"
 #include "cpp/Processes/bindopenprocess.h"
 #include "cpp/Processes/tsbindingprocess.h"
+#include "Processes/scriptprocess.h"
 
 // Заметка: Когда буду делать лекции сделать шрифт побольше
 
 /* TODO LIST
  *
+ * КЕШИРОВАНИЕ МАСТ ХЕВ!!! Лучше через множества
+ *
+ * 4 слова? So it may be
+ * сеттингс в схему
  * Ближайший план:
+ * -15) Оптимизировать максимальный путь в графе - поиск безотцовщины
+ * -14) Возможность повторного биндинга.
+ * -13) Дополнить последний бнд
+ * -12) Иногда не открывается видео
+ * -11) Чистка мусора
+ * -10) Импорт файла настроек, а может сразу обнова?
+ * -9) Повторный биндинг
+ * -8) Добавление слова в каммент - не работает, не выдлен текст
+ * -7) Редактирование комментария во время просмотра как пользователь в версии для создания
+ * -6) Перезалить образ, так как глюк с кодировкой
+ * -5) Если лекция не выбрана переходить не домой а на выбор лекции
+ * -4) Проверить бинд на хоме
+ * -3) Описать решение конфликтов через клон
+ * -2) Перенести asr скрипт в скриптер
+ * -1) Возможность создания без текста
  * 0) Кнопки перелистывания
  * 1) Настройка типа выделения
  * 2) Разбиение биндов с учётом позиций слов
- * 4) Подсветка слов?
- * 5) Всё таки страница перевода в окне?
- * 7) Отмена процесса
+ * 3) Создание первоначальной разбивки комментариев // возможность просмотра как юзер
+ * 4) Сразу открытие при добавлении слова
+ * 5) Кеширование базы?
+ * 6) Выделение, очистка оформления и сохранение
+ * 7) Извлечение титров - авто?
  * 8) Импорт из титров
  * 9) Отпаралелить открытие текста?
  * 10) На опене кнопка бинда с учётом моментов пунктуации текста
@@ -33,9 +55,9 @@
  *
  * Рефакторинг:
  * 1) Продумать имена
- * 2) Find_if заменить на qFind
  *
  * Заметки:
+ * -n) Как удобней искать в одной папке удалённый реп или в относительной??
  * -n) Оставить среди соседних локальных минимумов меньший
  * -n) Использование следующего текстового фрагмента при поиске предыдущего если не найдена кореляция
  * -n) Синхронизация с удалёнкой
@@ -48,14 +70,10 @@
  * -n) 3 причины возникновения ошибки: неправильное деление слов, неверное распознование, неверный поиск локальных минимумов
  * -n) вероятность сдвижки влево
  *
+ * -12) При заходе за последний, возвращать последний
  * -11) Нормальный вывод в консоль
  * -9) Поиск сомнительных моментов - надо?
- * -8) Применение оптимизационных алгоритмов к крупным частям
- * -4) Сьтруктурировать словарь как файловую структуру. - Файловый словарь?
- * -3) Препод может отключить текст и запретить браузер
  * 0) Вкл/откл подсветки, вкл/откл текста.
- * 1) Ввести понятие бесконечного бинда - нужно для последнего бинда
- * 4) Представление дирректории комментариев в виде оглавления
  * 7) Использование внешнего апи
  * 8) Список для транслейта
  * 10) Архивирование
@@ -63,10 +81,9 @@
  * 16) Вставка рапознонаго текста
  * 17) Вставка временных отметок
  * 18) Полный экран
- * 20) ПРоблема с тире - странно воспроизводит
  * 21) Проблема с выделением цветом - крайне не стабильно
  * 22) Проверка кодек и сущевствования файлов
- * 23) Хранение времени в милисекундах
+ * 23) Хранение времени в процентах?
  * 27) Псевдонимы?
  * 30) Dont find corelation - выводит при не рабочем скрипте распознования
  * n) Децентралиация вычислений?
@@ -92,6 +109,9 @@ class UIController : public QObject
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QString curState READ curState /*WRITE setCurState */NOTIFY curStateChanged)
     Q_PROPERTY(QString soundSource READ soundSource WRITE setSoundSource NOTIFY soundSourceChanged)
+    Q_PROPERTY(QString curExampleWord READ curExampleWord WRITE setCurExampleWord NOTIFY curExampleWordChanged)
+    Q_PROPERTY(bool someOpen READ someOpen WRITE setSomeOpen NOTIFY someOpenChanged)
+
 public:
     explicit UIController(QObject *parent = 0);
 
@@ -117,6 +137,8 @@ signals:
     void titleChanged();
     void curStateChanged();
     void soundSourceChanged();
+    void curExampleWordChanged();
+    void someOpenChanged();
 public slots:
 
     // Проперти
@@ -134,10 +156,17 @@ public slots:
     void setMatirealsList(const QStringList& newMatireals);
     QString curState() const;
     void setCurState(const QString& newState);
+    QString curExampleWord() const;
+    void setCurExampleWord(const QString&);
 
     void saveHome(bool push = false);
     void home();
     void save();
+    bool someOpen(); // Проверяет открыта ли какая либо лекция
+    void setSomeOpen(bool newValue)
+    {
+        _someOpen = newValue;
+    }
 
     void setSoundSource(const QString& source);
     QString soundSource() const;
@@ -156,9 +185,16 @@ public slots:
     void allTsBinding(); // Биндинг основываясь на моментах тишины всех файлов без бинда
     void allStBinding(); // Биндинг основываясь на знаках пунктуации всех файлов
     void curUserStBinding(); // Биндинг основываясь на текстовых отрезках заданых пользователем
+    void curTsBinding();
+
+    void downloadBase();
+    void uploadBase();
+
+    // создать автоматически разбивку комментариев для текущего бинда
+    // autoCommentsNumber - количество биндов в одном комментарии
+    void createAutoComments(qint32 autoCommentsNumber);
 
     QUrl addComment();
-    void addComment(const QUrl& path);
     void openSoundFile(const QString& fileName);
     void cursorPosChanged();
     void setCursorPosInTimePos();
@@ -196,11 +232,13 @@ public slots:
 
     void setForOpening(const QUrl& newOpening) {
         QString fileName = newOpening.toLocalFile();
-        _logicReader->setFileName(fileName); }
+        _logicReader->setFileName(fileName);
+    }
     void openWaited() {
         if (_opening)
             return;
         _opening = true;
+        emit someOpenChanged();
         setCurCommentUrl(QUrl(""));
         _logicReader->runInThisThread();
         openingFinished();
@@ -227,18 +265,23 @@ public slots:
 
     bool canNotSync() const { return _sellectTimer.elapsed() < _sellectingTime; }
     bool haveCommentInThisPosition() { return _commentList.empty() == false; }
+    bool soundSourceIsLocalFile() {
+        return _soundStore->isCorrectLocalFile();
+    }
 
     void stopAllThreads();
 
     // Правка текста бинда
-    void addWordInCurBindEnd() { _logic->addWordInCurBindEnd(); }
-    void addWordInCurBindBegin() { _logic->addWordInCurBindBegin(); }
-    void deleteWordFromCurBindEnd() { _logic->deleteWordFromCurBindEnd(); }
-    void deleteWordFromCurBindBegin() { _logic->deleteWordFromCurBindBegin(); }
+    //void addWordInCurBindEnd() { _logic->addWordInCurBindEnd(); }
+  //  void addWordInCurBindBegin() { _logic->addWordInCurBindBegin(); }
+  //  void deleteWordFromCurBindEnd() { _logic->deleteWordFromCurBindEnd(); }
+   // void deleteWordFromCurBindBegin() { _logic->deleteWordFromCurBindBegin(); }
     void setCurBindEnd(qint64 pos) { _logic->setCurBindEnd(pos); }
     void setCurBindBegin(qint64 pos) { _logic->setCurBindBegin(pos); }
 
     void addTextInComment(const QString &commentName, const QString&, const QColor& textColor = QColor("black"));
+
+    void clear() { _logic->clear(false); }
 protected slots:
     void recognizeIsFinished();
     void openingFinished();
@@ -255,6 +298,7 @@ private:
     qreal _diffSize;
     bool _mouseIsPressed;
     bool _opening;
+    bool _someOpen;
 
     Logic::PTR _logic;
     SoundStore::PTR _soundStore; //bool _f_setSound;
@@ -262,11 +306,13 @@ private:
     //BindMaker::PTR _bindMaker;
     BindOpenProcess::PTR _logicReader;
     TsBindingProcess::PTR _bindMaker;
+    ScriptProcess::PTR _scripterProcess;
 
     // Организация очереди биндинга
     QStringList _bindSiqence; // Очередь для биндинга
     QMap <QString, bool> _f_bindSequnceProcess; // Обработан ли тот или иной файл в очереди
     QString _curBinding; // Текущий обрабатываемый файл
+    QString _curExampleWord;
 
     QStringList _bindFilesList; // Модель для гуи
     QStringList _exampleList; // Модель для гуи
@@ -289,14 +335,20 @@ private:
     // TODO Убрать - не используеться
     const QString _baseTranslateURL = "http://www.multitran.com/m.exe?l1=1&l2=2&s="; // +word0+word1 ..
 
-    void initBindingSequence();
+    void initBindingSequence(bool forAll = true);
 
     void synchTitle(const QString &bindFile);
     TextFragment::PTR getSellectedText();
     void setSellectionText(TextFragment::PTR);
     void setSellectionText(qint64 begin, qint64 end);
-    void initBindMaker(TextStore::PTR, SoundStore::PTR, Logic::PTR);
-    void initLogicReader(TextStore::PTR, SoundStore::PTR, Logic::PTR);
+
+    void initAllProcesses();
+    void initScripterProcess();
+    void initBindMaker();
+    void initLogicReader();
+
+    void startTsBinging();
+    void tsBinding(bool forAll);
 
     QString getCurStateBindSequnce();
 };

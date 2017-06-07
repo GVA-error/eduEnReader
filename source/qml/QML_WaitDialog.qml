@@ -7,22 +7,45 @@ QML_SimpleDialog {
 
     property string stateText
 
-    contentText: stateText
     baseW : 3/7 * width;
     baseH : 3/7 * height;
 
     onStateTextChanged: {
+        contentText = stateText
         if (stateText === "end" || stateText === "")
-        {
-            homePage.homeUiControler.stopAllThreads()
             hideDialog()
+    }
+
+    Rectangle{
+        anchors.centerIn: parent
+        width: baseW
+        height: baseH
+        color: "transparent"
+        Text {
+            id: text
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.rightMargin: 14
+            anchors.bottomMargin: 14
+            font.pointSize: 18
+            text: qsTr("Cancel")
+        }
+        MouseArea{
+            z: 200
+            anchors.fill: text
+            onClicked: {
+                cancelDialog.open()
+            }
         }
     }
-    MouseArea{
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
-
+    QML_YesNoDialog{
+        id: cancelDialog
+        title: "cancel?"
+        text: "Do you want cancel it process?"
+        onYes: {
+            homeUiController.setCurState("Cancaling. Please wait...");
+            homeUiController.stopAllThreads()
+            hideDialog()
         }
     }
 }

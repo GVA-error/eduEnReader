@@ -10,6 +10,8 @@ Item {
     anchors.fill: parent
     visible: false
 
+    signal backClicked
+
     Behavior on visible {
          NumberAnimation {
              duration: 250
@@ -18,7 +20,7 @@ Item {
     QML_DialogBackground {
         id: dialogBackground
         onBackClicked: {
-            //hideDialog()
+            root.backClicked()
         }
     }
     Rectangle {

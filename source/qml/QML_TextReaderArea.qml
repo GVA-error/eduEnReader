@@ -9,12 +9,12 @@ import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
 import TextStoreModul 1.0
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 Flickable {
     id: frickableRoot
 
     property int cynhTopPading : 45
-    property int cynhBottpmPading : 45
+    property int cynhBottpmPading : 55
     property int lastMidY : 0 // нужно чтобы уменьшить частоту синхронизации
     property int minDY : 1 // и это тоже
     property bool mouseLeftPresed: mouseArea.pressed
@@ -36,12 +36,19 @@ Flickable {
         Accessible.name: "document"
         //visible: homePage.curRightList == 1
         textFormat: Qt.RichText
-        text: textStore.text
+        text: sourceDocument.text
         wrapMode: TextArea.Wrap
         focus: true
         selectByMouse: true
         selectByKeyboard: true
         persistentSelection: true
+        onSelectionStartChanged: {
+            sourceDocument.setSelectionStart(selectionStart);
+        }
+        onSelectionEndChanged: {
+            sourceDocument.setSelectionEnd(selectionEnd);
+        }
+
         //baseUrl: "qrc:/"
         leftPadding: 10
         rightPadding: 10
@@ -130,7 +137,7 @@ Flickable {
         }
         function sellectCurWord(){
             var curPos = textArea.positionAt(mouseArea.mouseX, mouseArea.mouseY)
-            textStore.setSelectionByWord(curPos)
+            sourceDocument.setSelectionByWord(curPos)
         }
 
         onCursorPositionChanged: {
@@ -146,7 +153,6 @@ Flickable {
             id : mouseArea
             Component.onCompleted: contentItem.interactive = false
             onPressed: {
-                //  console.log("CLICKED")
                 if (frickableTextArea.bindEditingBegin || frickableTextArea.bindEditingEnd)
                     frickableTextArea.stopBindEdting()
 
@@ -187,29 +193,28 @@ Flickable {
             propagateComposedEvents: true
             onClicked: {
                 frickableTextArea.undoBindEditing()
+                var selectedText;
                 if (frickableTextArea.selectedText.length === 0 && allowSellectOnlyWord)
                 {
                     var textPos = frickableTextArea.positionAt(mouseX, mouseY)
                     sourceDocument.setSelectionByWord(textPos)
+                    selectedText = sourceDocument.getSellectedStreing()
                 }
-                //translitionHelpPage.phrase = document.getSellectedStreing();
-
+                else
+                    selectedText = frickableTextArea.selectedText
+                homeUiController.getMatirealsFor(selectedText);
                 contextMenue.open()
             }
         }
         onLinkActivated: Qt.openUrlExternally(link)
     }
-
-
-    ScrollBar.vertical: ScrollBar {
+    ScrollBar.vertical: ScrollBar{
         width: 20
     }
-
     function synch(f_pushSynch) { frickableTextArea.syncSoundAndSliderPosition(f_pushSynch) }
     function getCurY() { return contentY }
     function setCurY(newY) {
         contentY = newY
-
     }
     function getCurHeigth() { return height }
 }

@@ -24,17 +24,25 @@ public:
     enum Section{
         Video,
         TextViewer,
-        Location
+        Location,
+        Behavior,
+        Examples,
+        CrationOptions
     };
 
     enum Key{
-        DpiScaling,
-        ShowLectureText,
-        ShowExampleText,
-        TextMarkColor,
-        ExampleSize,
-        ExampleDiff,
-        BindLocation
+        DpiScaling, // Использование dpiScaling - на некоторых системах помогает избавиться от графических глюков
+        ShowLectureText, // Показ текста к основному видео
+        ShowExampleText, // .. к видео примерам
+        TextMarkColor, // Каким цветом помечаем бинды
+        ExampleSize, // Желаемый размер примеров в секундах
+        ExampleDiff, // На сколько можно отклониться от размера примеров
+        BindLocation, // не используется.
+        ShowTranslateDialog, // Показывать диалог перевода вместо страници перевода
+        postfix, // Постфикс который может добавлятся к корню во время поиска примеров
+        showUserLikeComments, // Показывать комментарии при редактировании как их видит пользователь
+        AutoCommentNumber, // количество биндов в одном комментарии при автоматиеском создании комментариев
+        DefaultRemoteSource // Если видео файла ненайдётся на текущей машине, он будет взят с данного ресурса
     };
 
     class ValueRef{
@@ -47,6 +55,7 @@ public:
         const QString keyPath;
     };
 
+    static void setDefaults();
     static void setDefaults(const QString &str);
     static QVariant get(Key, Section);
     static ValueRef set(Key, Section);
@@ -75,6 +84,9 @@ class QML_Settings : public QObject
     Q_PROPERTY(qint32 exampleSize READ exampleSize WRITE setExampleSize NOTIFY exampleSizeChanged)
     Q_PROPERTY(qint32 exampleDiff READ exampleDiff WRITE setExampleDiff NOTIFY exampleDiffChanged)
     Q_PROPERTY(QColor textMarkColor READ textMarkColor WRITE setTextMarkColor NOTIFY textMarkColorChanged)
+    Q_PROPERTY(bool showTranslateDialog READ showTranslateDialog WRITE setShowTranslateDialog NOTIFY showTranslateDialogChanged)
+    Q_PROPERTY(bool showUserLikeComments READ showUserLikeComments WRITE setShowUserLikeComments NOTIFY showUserLikeCommentsChanged)
+    Q_PROPERTY(qint32 autoCommentNumber READ autoCommentNumber WRITE setAutoCommentNumber NOTIFY autoCommentNumberChanged)
 public:
     explicit QML_Settings(QObject* parent = 0);
 
@@ -124,12 +136,33 @@ public slots:
     void setExampleDiff(const qint32& newValue) {
         Settings::set(Settings::ExampleDiff, Settings::TextViewer) = newValue;
     }
+    bool showTranslateDialog() const{
+        return Settings::get(Settings::ShowTranslateDialog, Settings::Behavior).toBool();
+    }
+    void setShowTranslateDialog(bool newValue){
+        Settings::set(Settings::ShowTranslateDialog, Settings::Behavior) = newValue;
+    }
+    bool showUserLikeComments(){
+        return Settings::get(Settings::showUserLikeComments, Settings::Behavior).toBool();
+    }
+    void setShowUserLikeComments(bool newValue){
+        Settings::set(Settings::showUserLikeComments, Settings::Behavior) = newValue;
+    }
+    qint32 autoCommentNumber(){
+        return Settings::get(Settings::AutoCommentNumber, Settings::CrationOptions).toInt();
+    }
+    void setAutoCommentNumber(qint32 newValue){
+        Settings::set(Settings::AutoCommentNumber, Settings::CrationOptions) = newValue;
+    }
 signals:
     void showLectureTextChanged();
     void showExampleTextChanged();
     void textMarkColorChanged();
     void exampleSizeChanged();
     void exampleDiffChanged();
+    void showTranslateDialogChanged();
+    void showUserLikeCommentsChanged();
+    void autoCommentNumberChanged();
 private:
     void setDefaults();
 };

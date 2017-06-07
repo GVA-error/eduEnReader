@@ -4,7 +4,7 @@ import QtWebEngine 1.4
 QML_SimpleDialog {
     id : root
     property url defaultURL
-    onBack: hideDialog()
+    onBackClicked: hideDialog()
     Rectangle{
         width: translateDialog.baseW * 9 / 10
         height: translateDialog.baseH * 3 / 4

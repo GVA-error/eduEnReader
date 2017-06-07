@@ -219,8 +219,8 @@ void SoundStore::setFileUrl(const QUrl& url)
 {
     _finishPos = -1;
     _startPos = -1;
-    _lastOpenedUrl = url;
     _isExample = false;
+    _lastOpenedUrl = QUrl("http");
     emit isExampleStateChanged();
     if (url.isValid() == false)
     {
@@ -233,6 +233,7 @@ void SoundStore::setFileUrl(const QUrl& url)
             emit openingError();
             return;
         }
+    _lastOpenedUrl = url;
     VlcQmlVideoPlayer::setUrl(url);
     VlcQmlVideoPlayer::setVolume(100);
     VlcQmlVideoPlayer::pause();

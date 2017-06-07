@@ -5,40 +5,33 @@ import TextStoreModul 1.0
 // Список примеров или комментариев
 SwipeView {
     id: exampleCommentsPageLits
-    property bool readOnly: false
+    property bool readOnly
     property var uiController
 
-    Component.onCompleted: {
-        currentIndex = readOnly ? 0 : 3
-    }
-
+    currentIndex: readOnly || (settingPage.showUserLikeComments && !readOnly) ? 0 : 2
     Page{// Список комментариев для чтения
         id : readCommentPage
         visible: exampleCommentsPageLits.currentIndex == 0
         padding: 10
-        QML_ImageButton{
-            id: up
-        }
-        Flickable {
-            id: flickable
+        QML_TextReaderArea {
+            id : commentArrea
             anchors.fill: parent
-            flickableDirection: Flickable.VerticalFlick
-            TextArea.flickable: TextArea {
-                id : commentArrea
-                text: commentDoc.text
-                textFormat: Qt.RichText
-                readOnly: true
-                onTextChanged: cursorPosition = 0
-            }
-            ScrollBar.vertical: ScrollBar {}
-            TextStore{
+
+            sourceDocument: TextStore{
                 id : commentDoc
-                target: commentArrea
+                target: commentArrea.textArea
                 fileUrl : uiController.curCommentUrl
             }
-        }
-        QML_ImageButton{
-            id: down
+            uiController: root.uiController
+            contextMenue: READ_TextAreaContextMenue {
+                id : readContextMenue
+                textStore: commentDoc
+            }
+
+            //text: commentDoc.text
+            //textFormat: Qt.RichText
+            //readOnly: true
+            //onTextChanged: cursorPosition = 0
         }
     }
     Page{// Список примеров
@@ -49,7 +42,7 @@ SwipeView {
             z : 3;
             id : examples;
             out_model: uiController.exampleListModel;
-            title: "Examples"
+            title: uiController.curExampleWord
             anchors.fill: parent
             onSelected : uiController.playExample(str)
         }

@@ -93,6 +93,15 @@ bool WavWorker::write(double* data, int dataSize)
     bool succes = sf_write_double (_out, data, dataSize);
     return succes;
 }
+
+qint64 WavWorker::sizeIn(){
+    qint64 sugestSize = 60 * _16k;
+    double buffer[sugestSize];
+    if (read(buffer, sugestSize))
+        return sugestSize;
+    return 0;
+}
+
 #endif
 
 #ifdef Q_OS_WIN
@@ -105,4 +114,5 @@ void WavWorker::openInFile(const QString& fileName){}
 void WavWorker::openOutFile(const QString& fileName, const Settings& settings){}
 bool WavWorker::read(double* data, int buffSize){ return true; }
 bool WavWorker::write(double* data, int dataSize){ return true; }
+qint64 WavWorker::sizeIn() { return -1; }
 #endif

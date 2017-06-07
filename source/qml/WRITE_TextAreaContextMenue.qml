@@ -13,7 +13,7 @@ Menu {
         text: "Add comment"
         enabled: textStore.someSellected
         onTriggered: {
-            var commentFile = uiControler.addComment()
+            var commentFile = uiController.addComment()
             commentEditor.openFile(commentFile)
             commentEditor.showDialog()
         }

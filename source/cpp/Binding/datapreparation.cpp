@@ -11,6 +11,10 @@ QString DataPreparation::prepeareWav(const QString& videoFile)
     generateNoise_wav(wavFile, _noise_wav, _noiseWindowBegin, _noiseWindowEnd);
     _scripter.noiseReduse(wavFile, _noise_wav);
    // _scripter.noiseReduse(wavFile, _noise_wav);
+    _wav.openInFile(wavFile);
+    qint64 sampleSize = _wav.sizeIn();
+    qreal secondTime = sampleSize / _16k;
+    _scripter.createPreview(videoFile, secondTime);
     return wavFile;
 }
 

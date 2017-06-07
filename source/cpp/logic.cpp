@@ -14,6 +14,28 @@ Logic::Logic()
     synchPatterns();
 }
 
+void Logic::createAutoComments(qint32 autoCommentsNumber)
+{
+    assert(autoCommentsNumber >= 1);
+    deleteAllComments();
+    Bind summBind = zeroBind;
+    qint32 curBindNumber = 0;
+    for (auto curBind : _bindVector)
+    {
+        summBind = summ(summBind, curBind);
+        curBindNumber++;
+        if (curBindNumber == autoCommentsNumber)
+        {
+            makeComment(summBind);
+            summBind = zeroBind;
+            curBindNumber = 0;
+        }
+    }
+    if (_bindVector.empty() == false)
+        makeComment(summBind);
+    save();
+}
+
 void Logic::setCurBindEnd(qint64 pos)
 {
     if (isNormalBind(_lastBindIterator) == false)
@@ -85,112 +107,112 @@ void Logic::setCurBindBegin(qint64 pos, QVector<Bind>::const_iterator cur)
     curText->setBegin(pos);
 }
 
-void Logic::addWordInCurBindEnd(QVector<Bind>::const_iterator cur)
-{
-    assert(false); // не тестилось
-    if (isNormalBind(cur) == false)
-        return;
-    TextFragment::PTR text = cur->text;
-    qint64 end = text->end();
-    qint64 newEnd = getWordEnd(end, false);
-    if (newEnd < 0)
-        return;
-    text->setEnd(newEnd);
-}
+//void Logic::addWordInCurBindEnd(QVector<Bind>::const_iterator cur)
+//{
+//    assert(false); // не тестилось
+//    if (isNormalBind(cur) == false)
+//        return;
+//    TextFragment::PTR text = cur->text;
+//    qint64 end = text->end();
+//    qint64 newEnd = getWordEnd(end, false);
+//    if (newEnd < 0)
+//        return;
+//    text->setEnd(newEnd);
+//}
 
-void Logic::addWordInCurBindBegin(QVector<Bind>::const_iterator cur)
-{
-    assert(false); // не тестилось
-    if (isNormalBind(cur) == false)
-        return;
-    TextFragment::PTR text = cur->text;
-    qint64 begin = text->begin();
-    qint64 newBegin = getWordEnd(begin, true);
-    if (newBegin < 0)
-        return;
-    text->setBegin(newBegin);
-}
+//void Logic::addWordInCurBindBegin(QVector<Bind>::const_iterator cur)
+//{
+//    assert(false); // не тестилось
+//    if (isNormalBind(cur) == false)
+//        return;
+//    TextFragment::PTR text = cur->text;
+//    qint64 begin = text->begin();
+//    qint64 newBegin = getWordEnd(begin, true);
+//    if (newBegin < 0)
+//        return;
+//    text->setBegin(newBegin);
+//}
 
-void Logic::deleteWordFromCurBindEnd(QVector<Bind>::const_iterator cur)
-{
-    assert(false); // не тестилось
-    if (isNormalBind(cur) == false)
-        return;
-    TextFragment::PTR text = cur->text;
-    qint64 end = text->end();
-    qint64 newEnd = getWordEnd(end, true);
-    if (newEnd < 0)
-        return;
-    text->setEnd(newEnd);
-}
+//void Logic::deleteWordFromCurBindEnd(QVector<Bind>::const_iterator cur)
+//{
+//    assert(false); // не тестилось
+//    if (isNormalBind(cur) == false)
+//        return;
+//    TextFragment::PTR text = cur->text;
+//    qint64 end = text->end();
+//    qint64 newEnd = getWordEnd(end, true);
+//    if (newEnd < 0)
+//        return;
+//    text->setEnd(newEnd);
+//}
 
-void Logic::deleteWordFromCurBindBegin(QVector<Bind>::const_iterator cur)
-{
-    assert(false); // не тестилось
-    if (isNormalBind(cur) == false)
-        return;
-    TextFragment::PTR text = cur->text;
-    qint64 begin = text->begin();
-    qint64 newBegin = getWordEnd(begin, false);
-    if (newBegin < 0)
-        return;
-    text->setBegin(newBegin);
-}
+//void Logic::deleteWordFromCurBindBegin(QVector<Bind>::const_iterator cur)
+//{
+//    assert(false); // не тестилось
+//    if (isNormalBind(cur) == false)
+//        return;
+//    TextFragment::PTR text = cur->text;
+//    qint64 begin = text->begin();
+//    qint64 newBegin = getWordEnd(begin, false);
+//    if (newBegin < 0)
+//        return;
+//    text->setBegin(newBegin);
+//}
 
-void Logic::addWordInCurBindEnd()
-{
-    if (isNormalBind(_lastBindIterator) == false)
-        return;
-    addWordInCurBindEnd(_lastBindIterator);
-    auto next = _lastBindIterator+1;
-    if (isNormalBind(next) == false)
-        return;
-    deleteWordFromCurBindBegin(next);
-}
+//void Logic::addWordInCurBindEnd()
+//{
+//    if (isNormalBind(_lastBindIterator) == false)
+//        return;
+//    addWordInCurBindEnd(_lastBindIterator);
+//    auto next = _lastBindIterator+1;
+//    if (isNormalBind(next) == false)
+//        return;
+//    deleteWordFromCurBindBegin(next);
+//}
 
-void Logic::addWordInCurBindBegin()
-{
-    if (isNormalBind(_lastBindIterator) == false)
-        return;
-    addWordInCurBindBegin(_lastBindIterator);
-    if (_lastBindIterator == _bindVector.begin())
-        return;
-    auto prev = _lastBindIterator - 1;
-    if (isNormalBind(prev) == false)
-        return;
-    deleteWordFromCurBindEnd(prev);
-}
+//void Logic::addWordInCurBindBegin()
+//{
+//    if (isNormalBind(_lastBindIterator) == false)
+//        return;
+//    addWordInCurBindBegin(_lastBindIterator);
+//    if (_lastBindIterator == _bindVector.begin())
+//        return;
+//    auto prev = _lastBindIterator - 1;
+//    if (isNormalBind(prev) == false)
+//        return;
+//    deleteWordFromCurBindEnd(prev);
+//}
 
-void Logic::deleteWordFromCurBindEnd()
-{
-    if (isNormalBind(_lastBindIterator) == false)
-        return;
-    deleteWordFromCurBindEnd(_lastBindIterator);
-    auto next = _lastBindIterator + 1;
-    if (isNormalBind(next) == false)
-        return;
-    addWordInCurBindBegin(next);
-}
+//void Logic::deleteWordFromCurBindEnd()
+//{
+//    if (isNormalBind(_lastBindIterator) == false)
+//        return;
+//    deleteWordFromCurBindEnd(_lastBindIterator);
+//    auto next = _lastBindIterator + 1;
+//    if (isNormalBind(next) == false)
+//        return;
+//    addWordInCurBindBegin(next);
+//}
 
-void Logic::deleteWordFromCurBindBegin()
-{
-    if (isNormalBind(_lastBindIterator) == false)
-        return;
-    deleteWordFromCurBindBegin(_lastBindIterator);
-    if (_lastBindIterator == _bindVector.begin())
-        return;
-    auto prev = _lastBindIterator - 1;
-    if (isNormalBind(prev) == false)
-        return;
-    addWordInCurBindEnd(prev);
-}
+//void Logic::deleteWordFromCurBindBegin()
+//{
+//    if (isNormalBind(_lastBindIterator) == false)
+//        return;
+//    deleteWordFromCurBindBegin(_lastBindIterator);
+//    if (_lastBindIterator == _bindVector.begin())
+//        return;
+//    auto prev = _lastBindIterator - 1;
+//    if (isNormalBind(prev) == false)
+//        return;
+//    addWordInCurBindEnd(prev);
+//}
 
-qint64 Logic::getWordEnd(qint64 curPos, bool reversDirrection)
-{
-    if (_lastOpenedTextStore.isNull())
-        return -1;
-    return _lastOpenedTextStore->getWordEnd(curPos, reversDirrection);
-}
+//qint64 Logic::getWordEnd(qint64 curPos, bool reversDirrection)
+//{
+//    if (_lastOpenedTextStore.isNull())
+//        return -1;
+//    return _lastOpenedTextStore->getWordEnd(curPos, reversDirrection);
+//}
 
 bool Logic::posIsCorrect(qint64 curPos) const
 {
@@ -400,7 +422,7 @@ void Logic::getAllFiles(QStringList& rezList, QDir curDir, const QStringList mas
     }
 }
 
-QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile) const
+QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile)
 {
     QList <Logic::Example> rezList;
     QStringList bindFiles;
@@ -408,6 +430,7 @@ QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal m
     TextStore::PTR tmp_textStore = TextStore::factoryMethod();
     SoundStore::PTR tmp_soundStore = SoundStore::factoryMethod();
     Logic tmp_logic;
+
     for (QString bnd : bindFiles)
     {
         if (!findInThisFile && bnd == _curBndFileName)
@@ -434,7 +457,9 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, q
             continue;
         auto sound = soundFragment->getSource();
         auto text = bind.text;
-        newExample.FileName = sound->toString();
+        if (sound == nullptr || text->getSource() == nullptr)
+            continue;
+        newExample.FileName = sound->getFileName();
         newExample.start = soundFragment->begin();
         newExample.end = soundFragment->end();
         newExample.realUrl = sound->fileUrl();
@@ -446,81 +471,132 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, q
     return rezList;
 }
 
-void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const
+//void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const
+//{
+//    assert(step == -1 || step == 1);
+//    if (_findInSequence == false)
+//        return;
+
+//    for (auto curAdd = firstAdd; curAdd != _bindVector.constEnd() ; curAdd += step)
+//    {
+//        auto text = curBind.text;
+//        if (step == -1 && text->haveSentanceEndPrev(seekablePhrase))
+//            break;
+//        if (step == 1 && text->haveSentanceEndPost(seekablePhrase))
+//            break;
+//        if (text->isPhraseInMidSentance(seekablePhrase))
+//            break;
+
+//        if (step == 1)
+//            curBind = summ(curBind, *curAdd);
+//        else
+//            curBind = summ(*curAdd, curBind);
+
+//        if (curAdd == _bindVector.begin())
+//            break;
+//        if (curAdd + step == _bindVector.constEnd())
+//            break;
+//    }
+//}
+
+
+Logic::Bind Logic::addBindToPoints(qint64 findedBegin, qint64 findedEnd, QVector <Bind>::const_iterator begin, QVector <Bind>::const_iterator end)
 {
-    assert(step == -1 || step == 1);
-    if (_findInSequence == false)
-        return;
+    Bind rez = addBindToLeftPoint(*begin, findedBegin, begin);
+    rez = addBindToRightPoint(rez, findedEnd, end);
+    return rez;
+}
 
-    for (auto curAdd = firstAdd; curAdd != _bindVector.constEnd() ; curAdd += step)
+Logic::Bind Logic::addBindToLeftPoint(Bind cur, qint64 findedBegin, QVector <Bind>::const_iterator begin)
+{
+    Bind rez = cur;
+    if (begin == _bindVector.begin())
+        return rez;
+    auto beginIterator = begin - 1;
+    while (true)
     {
-        auto text = curBind.text;
-        if (step == -1 && text->haveSentanceEndPrev(seekablePhrase))
+        if (rez.text->havePointBeforePos(findedBegin))
+        {
+            qint64 leftOffset = findedBegin - rez.text->begin();
+            qint64 fragmentSize = rez.text->size();
+            if (leftOffset > fragmentSize * 0.25)
+                break;
+        }
+        rez = summ(*beginIterator, rez);
+        if (beginIterator == _bindVector.begin())
             break;
-        if (step == 1 && text->haveSentanceEndPost(seekablePhrase))
-            break;
-        if (text->isPhraseInMidSentance(seekablePhrase))
-            break;
+        beginIterator--;
+    }
+    return rez;
+}
 
-        if (step == 1)
-            curBind = summ(curBind, *curAdd);
-        else
-            curBind = summ(*curAdd, curBind);
-
-        if (curAdd == _bindVector.begin())
-            break;
-        if (curAdd + step == _bindVector.constEnd())
+Logic::Bind Logic::addBindToRightPoint(Bind cur, qint64 findedEnd, QVector <Bind>::const_iterator end)
+{
+    Bind rez = cur;
+    if (end + 1 == _bindVector.end())
+        return rez;
+    auto endIterator = end + 1;
+    while (true)
+    {
+        if (rez.text->havePointAfterPos(findedEnd))
+        {
+            qint64 rightOffset = rez.text->end() - findedEnd;
+            qint64 fragmentSize = rez.text->size();
+            if (rightOffset > fragmentSize * 0.25)
+                break;
+        }
+        rez = summ(rez, *endIterator);
+        endIterator++;
+        if (endIterator == _bindVector.end())
             break;
     }
+    return rez;
 }
 
 QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
 {
     QList <Logic::Bind> rezList;
 
-    _bindVector.push_front(zeroBind);
     _bindVector.push_back(zeroBind);
+    _bindVector.push_front(zeroBind);
 
-    auto curBind = _bindVector.begin() + 1;
-    qint32 curnumber = 0; // TODO для дебага
-
-    for (;curBind != _bindVector.constEnd() - 1; curBind++)
+    QSet <qint64> findedBegins;
+    // Искать только в текущем и следующем
+    for (auto cur = _bindVector.begin(); cur != _bindVector.constEnd() - 1; cur++)
     {
-        curnumber++;
-        if (curnumber > 76)
-            curnumber += 10;
-        Bind next = *(curBind+1);
-        Bind prev = *(curBind-1);
-        TextFragment::PTR cutTextFragmend = (*curBind).text;
-        Bind summBind = *curBind;
-        if (cutTextFragmend->havePhraseOnMid(seekablePhrase))
-        {
-            addWhileNotFindSentenceEnd(curBind-1, summBind, seekablePhrase, -1);
-            addWhileNotFindSentenceEnd(curBind+1, summBind, seekablePhrase, 1);
-        }
-        else if (cutTextFragmend->havePhraseOnBegin(seekablePhrase))
-        {
-            summBind = summ(prev, summBind);
-            if (curBind-1 != _bindVector.begin())
-                addWhileNotFindSentenceEnd(curBind-2, summBind, seekablePhrase, -1);
-            addWhileNotFindSentenceEnd(curBind+1, summBind, seekablePhrase, 1);
-        } else if (cutTextFragmend->havePhraseOnEnd(seekablePhrase))
-        {
-            summBind = summ(summBind, next);
-            addWhileNotFindSentenceEnd(curBind-1, summBind, seekablePhrase, -1);
-            if (curBind+1 != _bindVector.constEnd())
-                addWhileNotFindSentenceEnd(curBind+2, summBind, seekablePhrase, 1);
-        }
-        else
+        Bind curBind = *cur;
+        Bind nextBind = *(cur+1);
+
+        TextFragment::PTR curText = curBind.text;
+        TextFragment::PTR nextText = nextBind.text;
+        if (isNormalBind(cur) == false && isNormalBind(cur+1) == false)
             continue;
-        if (rezList.empty() ||
-                isEquils(rezList.back(), summBind) == false) // TODO Возможно стоит проверять все бинды на эквивалентность
-            rezList.push_back(summBind);
+        TextFragment::PTR fullText = TextFragment::summ(curText, nextText);
+        QString fullString = fullText->getString();
+        fullString = fullString.toLower();
+        qint64 beginPos = -1;
+        qint64 realBeginPos = -1;
+        while (true)
+        {
+            QRegExp wordRX = TextStore::getRegXFor(seekablePhrase);
+            beginPos = fullString.indexOf(wordRX, beginPos+1);
+            realBeginPos = beginPos + fullText->begin();
+            if (beginPos == -1 || findedBegins.contains(realBeginPos) == false)
+                break;
+        }
+        if (beginPos == -1 || findedBegins.contains(realBeginPos))
+            continue;
+        findedBegins.insert(realBeginPos);
+        qint64 realEndPos = realBeginPos + seekablePhrase.length();
+        auto beginBind = cur;
+        auto endBind = cur;
+        if (curText->isBelongs(realEndPos) == false)
+            endBind = cur + 1;
+        auto rezBind = addBindToPoints(realBeginPos, realEndPos, beginBind, endBind);
+        rezList.push_back(rezBind);
     }
-
-    _bindVector.pop_front();
     _bindVector.pop_back();
-
+    _bindVector.pop_front();
     return rezList;
 }
 
@@ -588,7 +664,7 @@ QList <QString> Logic::getCommentNamesonTextPos(qint64 begin, qint64 end) const
         auto commented = comment.commented;
         if (commented.isNull())
             continue;
-        if (commented->haveIntersaption(begin, end))
+        if (commented->haveIntersaption(begin + 1, end - 1)) // + 1 - чтобы не выводить смежные камментарии
         {
             QString name = comment.name;
             rezList.push_back(name);
@@ -821,6 +897,7 @@ void Logic::clear(bool clearRecognized)
         _recognizedStringPosEnd.clear();
         _recognizedStrings.clear();
     }
+    _title.clear();
     //curSoundFileName.clear();
    // curTextFileName.clear();
 }
@@ -910,19 +987,40 @@ void Logic::sortCommentName()
     }
 }
 
-void Logic::makeComment(TextFragment::PTR text, QUrl url)
+QUrl Logic::makeComment(Bind commentBind)
 {
+    auto text = commentBind.text;
+    return makeComment(text);
+}
+
+QUrl Logic::makeComment(TextFragment::PTR text)
+{
+    QString uniqName = getUniqCommentName();
+    QUrl commentUrl = QUrl::fromLocalFile(uniqName);
     Comment c;
-    c.name = "";
+    c.name = uniqName;
     c.commented = text;
-    c.commentUrl = url;
+    c.commentUrl = commentUrl;
+    TextStore::PTR commentStore = TextStore::factoryMethod();
+    commentStore->setFileUrl(commentUrl);
+    commentStore->save();
     addInCommentList(c);
     sortCommentName();
+    return commentUrl;
 }
 
 void Logic::save()
 {
     writeInFile(_curBndFileName, _lastOpenedTextStore, _lastOpenedSoundStore);
+}
+
+void Logic::deleteAllComments()
+{
+    QStringList deleteList;
+    for (Comment comment : _commentsVector)
+        deleteList.push_back(comment.name);
+    for (auto commentName : deleteList)
+        deleteComment(commentName);
 }
 
 void Logic::deleteComment(const QString& name)
@@ -1114,9 +1212,19 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
     QFileInfo info(fileName);
     QString textFileName = info.path() + "/" + info.baseName() + ".html";
     QUrl textUrl = QUrl::fromLocalFile(textFileName);
-    textStore->saveAs(textUrl, ".html");
-    soundStoreString = soundStore->toString();
-    textStoreString = textStore->toString();
+    if (textStore.isNull() == false)
+    {
+        textStore->saveAs(textUrl, ".html");
+        textStoreString = textStore->toString(curPath);
+        textHashString = textStore->getHash();
+        _lastOpenedTextStore = textStore;
+    }
+    if (soundStore.isNull() == false)
+    {
+        soundStoreString = soundStore->toString(curPath);
+        soundHashString = soundStore->getHash();
+        _lastOpenedSoundStore = soundStore;
+    }
 
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly))
@@ -1125,8 +1233,6 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
         return;
     }
     QTextStream fileStream(&file);
-    textHashString = textStore->getHash();
-    soundHashString = soundStore->getHash();
     fileStream << par_Title << " " << _title << "\n";
     fileStream << par_TextStore << " " << textStoreString << "\n";
     fileStream << par_TextStoreHash << " " << textHashString << "\n";
@@ -1180,6 +1286,7 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         return;
     }
     _curBndFileName = fileName;
+    _title = QFileInfo(fileName).baseName();
     QTextStream fileStream(&file);
     QString par_buff;
     QString value_buff;
@@ -1187,6 +1294,7 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     {
         fileStream >> par_buff;
         value_buff = fileStream.readLine();
+        value_buff = value_buff.trimmed();
         if (par_buff == par_Bind)
             bindListString.push_back(value_buff);
         if (par_buff == par_Comment)
@@ -1194,13 +1302,13 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         else if (par_buff == par_RecognizedString)
             recognizedStrings.push_back(value_buff);
         else if (par_buff == par_SoundStore)
-            soundStoreString = value_buff.trimmed();
+            soundStoreString = value_buff;
         else if (par_buff == par_SoundStoreHash)
-            soundHashString = value_buff.trimmed();
+            soundHashString = value_buff;
         else if (par_buff == par_TextStore)
-            textStoreString = value_buff.trimmed();
+            textStoreString = value_buff;
         else if (par_buff == par_TextStoreHash)
-            textHashString = value_buff.trimmed();
+            textHashString = value_buff;
         else if (par_buff == par_Title)
             _title = value_buff;
     }
@@ -1210,13 +1318,14 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
     QString realHashText;
     QString realHashSound;
     QString curPath = QFileInfo(fileName).absolutePath();
-    if (!textStore.isNull())
+    if (textStore.isNull() == false)
     {
+        textStore->setText("");
         textStore->fromString(textStoreString, curPath);
         realHashText = textStore->getHash();
     }
     _lastOpenedTextStore = textStore;
-    if (!soundStore.isNull())
+    if (soundStore.isNull() == false)
     {
         soundStore->fromString(soundStoreString, curPath);
         realHashSound = soundStore->getHash();

@@ -46,10 +46,10 @@ public:
     };
 
     // Правка текста бинда
-    void addWordInCurBindEnd();
-    void addWordInCurBindBegin();
-    void deleteWordFromCurBindEnd();
-    void deleteWordFromCurBindBegin();
+//    void addWordInCurBindEnd();
+//    void addWordInCurBindBegin();
+//    void deleteWordFromCurBindEnd();
+//    void deleteWordFromCurBindBegin();
     void setCurBindEnd(qint64 pos);
     void setCurBindBegin(qint64 pos);
 
@@ -61,9 +61,8 @@ public:
 
     // Формирование списка примеров по искомой фразе
     // findInThisFile - искать ли в текущем файле
-    QList <Example> getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile = false) const;
+    QList <Example> getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile = false);
     QList <Example> getExamplesInThis(const QString& seakablePhrase, qreal minDuration, qreal maxDuration); // Ищет только в текущем файле
-
     // Рекурсивно находит все файлы в корневом каталоге
     void getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask) const;
 
@@ -90,14 +89,19 @@ public:
     // Нужна для удаления всех файлов взаимодействующих с логикой
     void deleteAllFiles();
 
+    void createAutoComments(qint32 autoCommentsNumber);
+
     // pos - номер бинда перед которым будет вставлен бинд
     void makeBind(TextFragment::PTR text, SoundFragment::PTR sound, qint64 pos = -1);
     void addRecognizedString(const QStringList& recognizedString, SoundFragment::PTR sound, QString fileName = QString());
     void addRecognizedString(const QStringList& recognizedString, qreal beginSound, qreal endSound, QString fileName = QString());
     bool haveRecognizedString() { return _recognizedStrings.empty() == false; }
 
-    void makeComment(TextFragment::PTR text, QUrl url);
+    // Возвращают путь к созданному комментарию
+    QUrl makeComment(TextFragment::PTR text);
+    QUrl makeComment(Bind);
     void deleteComment(const QString& name);
+    void deleteAllComments();
 
     QMap <QString, QStringList> getRecognizedStrings() const { return _recognizedStrings; }
     QMap <QString, qreal> getRecognizedStringBeginList() const { return _recognizedStringPosBegin; }
@@ -197,7 +201,7 @@ private:
     // Кеш, середин биндов
     QVector <qint32> _bindMid;
 
-    QVector <Comment> _commentsVector; // Комментарии к тексту
+    QVector <Comment> _commentsVector; // Комментарии к тексту - важно чтобы он был упорядочен
     QMap <QString, QStringList> _recognizedStrings; // Распознаные строки из файла, нужны для быстрого перепросчёта
     QMap <QString, qreal> _recognizedStringPosBegin; // позициия в звуковом файле для каждого элемента _recognizedStrings
     QMap <QString, qreal> _recognizedStringPosEnd;
@@ -240,8 +244,12 @@ private:
 
     // Нужно для нахождения примеров
     QList<Bind> getBindsWithPhrase(const QString& seekablePhrase);
+    // Дополняет найденные примеры до точек
+    Bind addBindToPoints(qint64 findedBegin, qint64 findedEnd, QVector <Bind>::const_iterator begin, QVector <Bind>::const_iterator end);
+    Bind addBindToLeftPoint(Bind cur, qint64 findedBegin, QVector <Bind>::const_iterator endBind);
+    Bind addBindToRightPoint(Bind cur, qint64 findedEnd, QVector <Bind>::const_iterator end);
 
-    void addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const;
+    //void addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const;
 
     bool isEquils(const Bind& left, const Bind& right) const {
         auto l_sound = left.sound;
@@ -263,55 +271,18 @@ private:
     // Нужна для правки биндов
     // Возвращает позицию конца слова
     // reversDirrection - будет производится поиск начала слова
-    qint64 getWordEnd(qint64 curPos, bool reversDirrection);
+    //qint64 getWordEnd(qint64 curPos, bool reversDirrection);
 
     bool posIsCorrect(qint64 curPos) const;
 
-    void addWordInCurBindEnd(QVector<Bind>::const_iterator);
-    void addWordInCurBindBegin(QVector<Bind>::const_iterator);
-    void deleteWordFromCurBindEnd(QVector<Bind>::const_iterator);
-    void deleteWordFromCurBindBegin(QVector<Bind>::const_iterator);
+//    void addWordInCurBindEnd(QVector<Bind>::const_iterator);
+//    void addWordInCurBindBegin(QVector<Bind>::const_iterator);
+//    void deleteWordFromCurBindEnd(QVector<Bind>::const_iterator);
+//    void deleteWordFromCurBindBegin(QVector<Bind>::const_iterator);
 
     void setCurBindEnd(qint64 pos, QVector<Bind>::const_iterator);
     void setCurBindBegin(qint64 pos, QVector<Bind>::const_iterator);
 };
-
-//// читает логику в отдельном потоке
-//class LogicReader : public QThread
-//{
-//    Q_OBJECT
-//public:
-//    typedef QSharedPointer <LogicReader> PTR;
-//    static QSharedPointer <LogicReader> factoryMethod(TextStore::PTR textStore, SoundStore::PTR soundStore, Logic::PTR logic)
-//    {
-//        PTR rezPtr = QSharedPointer <LogicReader> (new LogicReader(textStore, soundStore, logic));
-//        return rezPtr;
-//    }
-//    QString getCurState() { return _curOpenState; }
-//    void setFileName(const QString& fileName) {
-//        _fileName = fileName;
-//    }
-//    void runInThisThread() { run(); }
-//    LogicReader() = delete;
-//    explicit LogicReader(TextStore::PTR text, SoundStore::PTR sound, Logic::PTR logic);
-//signals:
-//    void finished();
-//protected:
-//    void run(){
-//        _curOpenState = "Opening" + _fileName + "...";
-//        _logic->readFromFile(_fileName, _textStore, _soundStore);
-//        emit finished();
-//        _curOpenState = "end";
-//    }
-//private:
-//    Logic::PTR _logic;
-//    TextStore::PTR _textStore;
-//    SoundStore::PTR _soundStore;
-//    QString _fileName;
-//    QString _curOpenState;
-//};
-
-
 
 
 #endif // LOGIC_H

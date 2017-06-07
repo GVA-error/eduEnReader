@@ -38,7 +38,7 @@ Rectangle {
     }
 
     function hide(){
-        root.visible = false
         root.state = "hideBack"
+        root.visible = false
     }
 }

@@ -41,7 +41,7 @@ class Graph : public QObject
 
     // A function used by longestPath
     void topologicalSortUtil(qint32 v, QVector<bool> &visited, QStack<qint32> &Stack);
-    QList <qint32> getMaxPath(qint32 dist[], map<qint32, qint32> prev);
+    QList <qint32> getMaxPath(QVector<qint32> dist, map<qint32, qint32> prev);
 public:
     Graph(qint32 V);   // Constructor
 
@@ -50,8 +50,8 @@ public:
 
     // Finds longest distances from given source vertex
     QList<qint32> longestPath(qint32 s);
-    // .. from All
-    QList<qint32> longestPath();
+    // .. from list<s>
+    QList<qint32> longestPath(QList<qint32> fatherList);
 
 signals:
     void process(qreal);

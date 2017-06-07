@@ -10,14 +10,7 @@ QML_Settings::QML_Settings(QObject* parent): QObject(parent)
 
 void QML_Settings::setDefaults()
 {
-    QString defaultString;
-    defaultString+= "TextViewer/TextMarkColor:230_209_209_255;";
-    defaultString+= "TextViewer/ShowLectureText:true;";
-    defaultString+= "TextViewer/ShowExampleText:true;";
-    defaultString+= "TextViewer/ExampleSize:20;";
-    defaultString+= "TextViewer/ExampleDiff:20;";
-    defaultString+= "Location/BindLocation:lectures;";
-    Settings::setDefaults(defaultString);
+    Settings::setDefaults();
 }
 
 Settings::Settings()
@@ -29,6 +22,25 @@ Settings::Settings()
     idx = mo.indexOfEnumerator("Section");
     sections = mo.enumerator(idx);
 
+}
+
+void Settings::setDefaults()
+{
+    QString defaultString;
+    defaultString+= "TextViewer/TextMarkColor:230_209_209_255;";
+    defaultString+= "TextViewer/ShowLectureText:true;";
+    defaultString+= "TextViewer/ShowExampleText:true;";
+    defaultString+= "TextViewer/ExampleSize:20;";
+    defaultString+= "TextViewer/ExampleDiff:20;";
+    defaultString+= "Location/BindLocation:eduEnReaderBase;";
+    defaultString+= "Behavior/ShowTranslateDialog:true;";
+    defaultString+= "Video/DpiScaling:AA_DisableHighDpiScaling;";
+    defaultString+= "Examples/postfix:ing|ed|s;";
+
+    defaultString+= "Behavior/showUserLikeComments:true;";
+    defaultString+= "CrationOptions/AutoCommentNumber:7;";
+
+    Settings::setDefaults(defaultString);
 }
 
 QVariant Settings::get(Key k, Section s){

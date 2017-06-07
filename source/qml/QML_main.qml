@@ -10,7 +10,7 @@ import QtQuick.Dialogs 1.2
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
-import UiControlerModul 1.1
+import UiControllerModul 1.1
 
 ApplicationWindow {
     title: homePage.textStore.documentTitle
@@ -25,16 +25,22 @@ ApplicationWindow {
     property var homeTextArea
     property var homeSoundStore
     property var pageView
+    property var waitDialog: waitDialog
 
     Component.onDestruction: {
         homeUiController.stopAllThreads()
     }
 
     function goHome(){
-        pageView.setCurrentIndex(1)
+        if (settingPage.showTranslateDialog)
+            translationHelpDialog.hideDialog()
         homePage.showComments()
         homeUiController.home()
         homeTextArea.syncSoundAndSliderPosition(true)
+        if (homeUiController.someOpen)
+            pageView.setCurrentIndex(1)
+        else
+            pageView.setCurrentIndex(0)
     }
     function goOpenFile(){
         homeUiController.saveHome()

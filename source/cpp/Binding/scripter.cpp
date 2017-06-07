@@ -1,5 +1,13 @@
 #include "scripter.h"
 
+const QString Scripter::_noiseReduseScrit = QDir::currentPath() + "/Scripts/noiseReduse.sh";
+const QString Scripter::_normaliseScrit = QDir::currentPath() + "/Scripts/normalise.sh";
+const QString Scripter::_extractSoundScrit = QDir::currentPath() + "/Scripts/extractSound.sh";
+const QString Scripter::_downloadBaseScript = QDir::currentPath() + "/Scripts/downloadBase.sh";
+const QString Scripter::_uploadBaseScript = QDir::currentPath() + "/Scripts/uploadBase.sh";
+const QString Scripter::_createPreviewScript = QDir::currentPath() + "/Scripts/createPreview.sh";
+const QString Scripter::_tmp_wav = QDir::currentPath() + "/Scripts/tmp.wav";
+
 Scripter::Scripter(QObject *parent) : QObject(parent)
 {
     _console = new QProcess();
@@ -7,6 +15,30 @@ Scripter::Scripter(QObject *parent) : QObject(parent)
                      this, SLOT(finished(int)));
     QObject::connect(_console, SIGNAL(readyReadStandardOutput()),
                      this, SLOT(checkConsol()));
+}
+
+void Scripter::createPreview(const QString &videoFile, qreal duration)
+{
+    setExecutingScript(_createPreviewScript);
+    qint32 randomPersent = rand() % 100;
+    QString time = "00:00:" + QString::number(duration*0.25 + randomPersent/100*0.5*duration);
+    QFileInfo inputinfo(videoFile);
+    QString previewFile = inputinfo.absolutePath() + "/" + inputinfo.baseName() + ".jpeg";
+    if (QFile::exists(previewFile))
+        QFile::remove(previewFile);
+    execute(QStringList() << videoFile << time << previewFile);
+}
+
+void Scripter::downloadBase()
+{
+    setExecutingScript(_downloadBaseScript);
+    execute(QStringList());
+}
+
+void Scripter::uploadBase()
+{
+    setExecutingScript(_uploadBaseScript);
+    execute(QStringList());
 }
 
 QString Scripter::extractAudio(const QString& videoFile)
@@ -41,7 +73,10 @@ void Scripter::execute(const QStringList& A)
 {
    // _console->kill();
     _console->setWorkingDirectory("./");
-    _console->start(_script, A);
+    if (A.empty())
+        _console->start(_script);
+    else
+        _console->start(_script, A);
     _console->waitForFinished(-1);
 }
 
