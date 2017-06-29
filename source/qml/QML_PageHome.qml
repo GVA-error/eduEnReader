@@ -40,6 +40,9 @@ Page {
     function setExamples(str) {
         uiController.getExamplesFor(str)
     }
+    function hideControlPanel(){
+        mainVideoView.visibleControlPanel = false
+    }
 
     // Список примеров или комментариев
     QML_HomePageInfoView {
@@ -59,15 +62,39 @@ Page {
     Rectangle{
         id : mainVideoView
         z : 3
+        property bool visibleControlPanel: true
+        property int controlPanelH: visibleControlPanel ? 50 : 0
+        Behavior on controlPanelH {
+             NumberAnimation {
+                 duration: 200
+             }
+        }
         //anchors.bottom: controlPanel.top
-        x : 10
-        y : 10
-        width: parent.width * 2 / 3
-        height: parent.height * 2 / 3
+        x : fullScreen==0 || fullScreen==1
+            ? 10 : 0
+        y : fullScreen==0 || fullScreen==1
+            ? 10 : 0
+        width: fullScreen==0 || fullScreen==1
+               ?  parent.width * 2 / 3 : parent.width
+        height: fullScreen==0 || fullScreen==1
+               ? parent.height * 2 / 3 : (parent.height -
+                  controlPanelH)
+        Behavior on width {
+             NumberAnimation {
+                 duration: 200
+             }
+        }
+        Behavior on height {
+             NumberAnimation {
+                 duration: 200
+             }
+        }
         color: "black"
+
         SoundStore { // TODO стоит выделить класс плеера и стора отдельно?
            id : soundStore;
            anchors.fill: parent
+           url: "https://"
            //source: root.source
            onPosChanged: {
                flickableTextArea.textArea.syncSoundAndSliderPosition(false)
@@ -76,9 +103,14 @@ Page {
                clear()
                textArea.text = "Video source is not found";
            }
+           onPlayingStateChanged:
+               flickableTextArea.textArea.syncSoundAndSliderPosition(true)
         }
         MouseArea{
+            property bool visibleCursor: true
+            cursorShape: visibleCursor ? Qt.PointingHandCursor : Qt.BlankCursor
             anchors.fill: parent
+            hoverEnabled: true
             onClicked: {
                 console.log(soundStore.state)
                 console.log(soundStore.PlayingState)
@@ -89,7 +121,34 @@ Page {
                     textArea.undoBindEditing()
                 }
             }
+            onDoubleClicked: {
+                mainRoot.fullScreen++
+            }
+            onMouseXChanged:
+                if (visibleCursor === false)
+                    visibleCursor = true
+                else
+                    hideMouseTimer.restart()
+            Timer{
+                id: hideMouseTimer
+                interval: 2000
+                onTriggered: parent.visibleCursor = false
+            }
         }
+    }
+    Keys.onEscapePressed: fullScreen = 0
+
+    MouseArea{ // появление и исчезновение сontrolPanel
+        visible: fullScreen === 2
+        acceptedButtons: Qt.RightButton;
+        height: 77
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.left: parent.left
+        hoverEnabled: true
+        z: 4
+        onEntered: mainVideoView.visibleControlPanel = true
+        onExited:  mainVideoView.visibleControlPanel = false
     }
 
     // Ползунок, старт, пауза
@@ -127,17 +186,22 @@ Page {
     // Текст
     QML_TextReaderArea{
         id: flickableTextArea
-        visible: (settingPage.showExampleText === true && soundStore.isExample === true)
+        visible: ((settingPage.showExampleText === true && soundStore.isExample === true)
                  || (settingPage.showLectureText === true && soundStore.isExample === false)
+                  && fullScreen != 2)
         anchors.top: controlPanel.bottom
         anchors.bottom: parent.bottom
-        anchors.topMargin: 14
+        anchors.topMargin: 20
         width: parent.width
         Component.onCompleted: contentItem.interactive = false
         sourceDocument: textStore
         uiController: uiController
         contextMenue: readOnly ? readContextMenue : writeContextMenue
         allowSellectOnlyWord: root.readOnly
+        onVisibleChanged: {
+            if (fullScreen === 2)
+                hideControlPanel()
+        }
     }
 
     UiController{

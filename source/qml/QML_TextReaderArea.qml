@@ -161,29 +161,6 @@ Flickable {
                 uiController.setTimePosInCursorPos()
                 mouse.accepted = false
             }
-          /*  onMouseXChanged: {
-                if (frickableTextArea.bindEditingEnd === false &&
-                        frickableTextArea.bindEditingBegin === false)
-                    return;
-                if (Math.abs(mouseX - frickableTextArea.lastMouseX) > 50)
-                {
-                    if (mouseX > frickableTextArea.lastMouseX)
-                        if (frickableTextArea.bindEditingEnd)
-                            uiControler.addWordInCurBindEnd()
-                        else //if (bindEditingBegin)
-                            uiControler.deleteWordFromCurBindBegin()
-                    else
-                        if (frickableTextArea.bindEditingEnd)
-                            uiControler.deleteWordFromCurBindEnd()
-                        else // if (bindEditingBegin)
-                            uiControler.addWordInCurBindBegin()
-                    frickableTextArea.lastMouseX = mouseX
-                    uiController.markCurText()
-                    console.log("Ok we hir ")
-                    console.log(frickableTextArea.lastMouseX)
-                    console.log(frickableTextArea.bindEditingEnd)
-                }
-            }*/
         }
 
         MouseArea {

@@ -11,6 +11,7 @@ import UiControllerModul 1.1
 Page {
     property string phrase
     property bool readOnly: false
+    padding: 30
 
     function setSource(str)
     {

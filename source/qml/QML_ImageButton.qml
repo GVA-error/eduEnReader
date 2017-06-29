@@ -14,6 +14,7 @@ Rectangle{
         id: mouseArea
         acceptedButtons: Qt.LeftButton
         anchors.fill: root
+        cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
         property bool f_entered: false
         onEntered: f_entered = true

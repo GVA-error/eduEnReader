@@ -31,7 +31,9 @@ SOURCES += main.cpp \
     cpp/Processes/process.cpp \
     cpp/Processes/bindopenprocess.cpp \
     cpp/Processes/tsbindingprocess.cpp \
-    cpp/Processes/scriptprocess.cpp
+    cpp/Processes/scriptprocess.cpp \
+    cpp/Utilits/wordcash.cpp \
+    cpp/Processes/cashingprocess.cpp
 
 RESOURCES += qml.qrc
 
@@ -77,4 +79,7 @@ HEADERS += \
     cpp/Processes/process.h \
     cpp/Processes/bindopenprocess.h \
     cpp/Processes/tsbindingprocess.h \
-    cpp/Processes/scriptprocess.h
+    cpp/Processes/scriptprocess.h \
+    cpp/Utilits/wordcash.h \
+    cpp/Processes/cashingprocess.h
+

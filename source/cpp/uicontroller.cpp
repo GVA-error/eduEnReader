@@ -16,6 +16,21 @@ UIController::UIController(QObject *parent) : QObject(parent)
     _curExampleWord = "Example";
 }
 
+QString UIController::getCurVideoTime(qreal curTime)
+{
+    qreal timePos;
+    if (_f_home)
+        timePos = curTime * _soundStore->fullDuration();
+    else{
+        timePos = _soundStore->getStartPosition() + curTime * _soundStore->duration();
+    }
+    qint32 sec = (qint32)timePos % 60;
+    qint32 min = (timePos - sec) / 60;
+    QString stringTime = QString().number(min) + ":"
+            + (sec<10 ? QString().number(0) : "") + QString().number(sec);
+    return stringTime;
+}
+
 void UIController::createAutoComments(qint32 autoCommentsNumber)
 {
     _logic->createAutoComments(autoCommentsNumber);
@@ -145,6 +160,8 @@ void UIController::saveHome(bool push)
 }
 
 void UIController::home(){
+    if (_f_home)
+        saveHome();
     _soundStore->home();
     _textStore->home();
     _f_home = true;
@@ -267,7 +284,7 @@ void UIController::synchBndFileList()
     if (rezPath != QDir().currentPath())
     {
         _dirs[backName] = rezPath;
-        _bindFilesList.push_back(backName);
+        _bindFilesList.push_front(backName);
     }
 
     emit bindFilesListChanged();
@@ -552,6 +569,13 @@ void UIController::initAllProcesses()
     initBindMaker();
     initScripterProcess();
     initLogicReader();
+    initCashProcess();
+}
+
+void UIController::initCashProcess()
+{
+    _cashProcess = CashingProcess::factoryMethod(_textStore, _soundStore, _logic);
+    connect(_cashProcess.data(), SIGNAL(stateChanged(QString)), this, SLOT(setCurState(QString)));
 }
 
 void UIController::initScripterProcess()
@@ -770,6 +794,11 @@ void UIController::initBindingSequence(bool forAll)
         _bindSiqence.push_back(bindPretendent);
         _f_bindSequnceProcess[bindPretendent] = false;
     }
+}
+
+void UIController::cashFiles()
+{
+    _cashProcess->start();
 }
 
 void UIController::downloadBase()

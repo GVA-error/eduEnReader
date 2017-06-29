@@ -375,6 +375,12 @@ QString Logic::getTitle(const QUrl& bindFileName) const
     return title;
 }
 
+QString Logic::getText() const
+{
+    QString text = _lastOpenedTextStore->getString();
+    return text;
+}
+
 TextFragment::PTR Logic::getText(qint64 pos) const
 {
     if (pos == 0)
@@ -404,7 +410,7 @@ qint64 Logic::getBindNumber() const
     return _bindVector.size();
 }
 
-void Logic::getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask) const
+void Logic::getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask)
 {
     QFileInfoList fileInfoList = curDir.entryInfoList(mask);
     for (auto fileInfo : fileInfoList)
@@ -422,32 +428,14 @@ void Logic::getAllFiles(QStringList& rezList, QDir curDir, const QStringList mas
     }
 }
 
-QList <Logic::Example> Logic::getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile)
-{
-    QList <Logic::Example> rezList;
-    QStringList bindFiles;
-    getAllFiles(bindFiles, QDir(), QStringList("*.bnd"));
-    TextStore::PTR tmp_textStore = TextStore::factoryMethod();
-    SoundStore::PTR tmp_soundStore = SoundStore::factoryMethod();
-    Logic tmp_logic;
-
-    for (QString bnd : bindFiles)
-    {
-        if (!findInThisFile && bnd == _curBndFileName)
-            continue;
-        tmp_logic.readFromFile(bnd, tmp_textStore, tmp_soundStore);
-        auto bndExamples = tmp_logic.getExamplesInThis(seakablePhrase, minDuration, maxDuration);
-        rezList += bndExamples;
-    }
-    return rezList;
-}
-
-QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, qreal minDuration, qreal maxDuration)
+QList <Logic::Example> Logic::getExamples(const QString& seekablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile)
 {
     QList <Logic::Example> rezList;
 
-    auto bindsWithSeekablePhrase = getBindsWithPhrase(seekablePhrase);
+    QMap <qint32, QUrl> soundFileUrls;
+    auto bindsWithSeekablePhrase = getBindsWithPhrase(seekablePhrase, soundFileUrls);
 
+    qint32 curBindNumber = 0;
     for (auto bind : bindsWithSeekablePhrase)
     {
         Example newExample;
@@ -455,21 +443,52 @@ QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, q
         qreal duration = soundFragment->size();
         if (duration < minDuration || duration > maxDuration)
             continue;
-        auto sound = soundFragment->getSource();
+        //auto sound = soundFragment->getSource();
         auto text = bind.text;
-        if (sound == nullptr || text->getSource() == nullptr)
+        if (text->getSource() == nullptr)
             continue;
-        newExample.FileName = sound->getFileName();
+        QUrl curUrl = soundFileUrls[curBindNumber];
+        newExample.FileName = curUrl.fileName();
         newExample.start = soundFragment->begin();
         newExample.end = soundFragment->end();
-        newExample.realUrl = sound->fileUrl();
+        newExample.realUrl = curUrl;
         newExample.text = "... " + text->getString() + " ...";
         newExample.exampableWord = seekablePhrase;
         rezList.push_back(newExample);
+        curBindNumber++;
     }
 
     return rezList;
 }
+
+//QList <Logic::Example> Logic::getExamplesInThis(const QString& seekablePhrase, qreal minDuration, qreal maxDuration)
+//{
+//    QList <Logic::Example> rezList;
+
+//    auto bindsWithSeekablePhrase = getBindsWithPhrase(seekablePhrase);
+
+//    for (auto bind : bindsWithSeekablePhrase)
+//    {
+//        Example newExample;
+//        auto soundFragment = bind.sound;
+//        qreal duration = soundFragment->size();
+//        if (duration < minDuration || duration > maxDuration)
+//            continue;
+//        auto sound = soundFragment->getSource();
+//        auto text = bind.text;
+//        if (sound == nullptr || text->getSource() == nullptr)
+//            continue;
+//        newExample.FileName = sound->getFileName();
+//        newExample.start = soundFragment->begin();
+//        newExample.end = soundFragment->end();
+//        newExample.realUrl = sound->fileUrl();
+//        newExample.text = "... " + text->getString() + " ...";
+//        newExample.exampableWord = seekablePhrase;
+//        rezList.push_back(newExample);
+//    }
+
+//    return rezList;
+//}
 
 //void Logic::addWhileNotFindSentenceEnd(QVector <Logic::Bind>::iterator firstAdd, Logic::Bind& curBind, const QString& seekablePhrase, qint32 step) const
 //{
@@ -510,7 +529,7 @@ Logic::Bind Logic::addBindToPoints(qint64 findedBegin, qint64 findedEnd, QVector
 Logic::Bind Logic::addBindToLeftPoint(Bind cur, qint64 findedBegin, QVector <Bind>::const_iterator begin)
 {
     Bind rez = cur;
-    if (begin == _bindVector.begin())
+    if (begin == _bindVector.constBegin())
         return rez;
     auto beginIterator = begin - 1;
     while (true)
@@ -522,8 +541,10 @@ Logic::Bind Logic::addBindToLeftPoint(Bind cur, qint64 findedBegin, QVector <Bin
             if (leftOffset > fragmentSize * 0.25)
                 break;
         }
+        if (isNormalBind(beginIterator) == false)
+            break;
         rez = summ(*beginIterator, rez);
-        if (beginIterator == _bindVector.begin())
+        if (beginIterator == _bindVector.constBegin())
             break;
         beginIterator--;
     }
@@ -533,7 +554,7 @@ Logic::Bind Logic::addBindToLeftPoint(Bind cur, qint64 findedBegin, QVector <Bin
 Logic::Bind Logic::addBindToRightPoint(Bind cur, qint64 findedEnd, QVector <Bind>::const_iterator end)
 {
     Bind rez = cur;
-    if (end + 1 == _bindVector.end())
+    if (end + 1 == _bindVector.constEnd())
         return rez;
     auto endIterator = end + 1;
     while (true)
@@ -545,59 +566,77 @@ Logic::Bind Logic::addBindToRightPoint(Bind cur, qint64 findedEnd, QVector <Bind
             if (rightOffset > fragmentSize * 0.25)
                 break;
         }
+        if (isNormalBind(endIterator) == false)
+            break;
         rez = summ(rez, *endIterator);
         endIterator++;
-        if (endIterator == _bindVector.end())
+        if (endIterator == _bindVector.constEnd())
             break;
     }
     return rez;
 }
 
-QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase)
+QList <Logic::Bind> Logic::getBindsWithPhrase(const QString& seekablePhrase, QMap <qint32, QUrl>& soundFileUrls)
 {
     QList <Logic::Bind> rezList;
-
-    _bindVector.push_back(zeroBind);
-    _bindVector.push_front(zeroBind);
-
-    QSet <qint64> findedBegins;
     // Искать только в текущем и следующем
-    for (auto cur = _bindVector.begin(); cur != _bindVector.constEnd() - 1; cur++)
+    QString firstWord = seekablePhrase.split(QRegExp("\\W"), QString::SkipEmptyParts).front();
+    QList <QSharedPointer<Logic::Cash>> cashes = _cashMap[firstWord];
+    for (QSharedPointer<Cash> cash : cashes)
     {
-        Bind curBind = *cur;
-        Bind nextBind = *(cur+1);
-
-        TextFragment::PTR curText = curBind.text;
-        TextFragment::PTR nextText = nextBind.text;
-        if (isNormalBind(cur) == false && isNormalBind(cur+1) == false)
-            continue;
-        TextFragment::PTR fullText = TextFragment::summ(curText, nextText);
-        QString fullString = fullText->getString();
-        fullString = fullString.toLower();
-        qint64 beginPos = -1;
-        qint64 realBeginPos = -1;
-        while (true)
+        cash->_binds.push_back(zeroBind);
+        cash->_binds.push_front(zeroBind);
+        QSet <qint64> findedBegins;
+        for (qint32 wordPos : cash->_wordPos[firstWord])
         {
-            QRegExp wordRX = TextStore::getRegXFor(seekablePhrase);
-            beginPos = fullString.indexOf(wordRX, beginPos+1);
-            realBeginPos = beginPos + fullText->begin();
-            if (beginPos == -1 || findedBegins.contains(realBeginPos) == false)
-                break;
+            auto cur = cash->_binds.begin() + wordPos + 1;
+            auto next = cur + 1;
+            Bind bindWithPhrase = getBindWithPhrase(seekablePhrase, cur, next, findedBegins);
+            if (isEquils(bindWithPhrase, zeroBind) == false)
+            {
+                soundFileUrls[rezList.size()] = cash->_soundFileUrl;
+                rezList.push_back(bindWithPhrase);
+            }
         }
-        if (beginPos == -1 || findedBegins.contains(realBeginPos))
-            continue;
-        findedBegins.insert(realBeginPos);
-        qint64 realEndPos = realBeginPos + seekablePhrase.length();
-        auto beginBind = cur;
-        auto endBind = cur;
-        if (curText->isBelongs(realEndPos) == false)
-            endBind = cur + 1;
-        auto rezBind = addBindToPoints(realBeginPos, realEndPos, beginBind, endBind);
-        rezList.push_back(rezBind);
+        cash->_binds.pop_back();
+        cash->_binds.pop_front();
     }
-    _bindVector.pop_back();
-    _bindVector.pop_front();
     return rezList;
+}
+
+Logic::Bind Logic::getBindWithPhrase(const QString& seekablePhrase, QVector <Bind>::const_iterator cur, QVector <Bind>::const_iterator next, QSet <qint64>& findedBegins)
+{
+    Bind curBind = *cur;
+    Bind nextBind = *(cur+1);
+    TextFragment::PTR curText = curBind.text;
+    TextFragment::PTR nextText = nextBind.text;
+    if (isNormalBind(cur) == false && isNormalBind(cur+1) == false)
+        return zeroBind;
+    TextFragment::PTR fullText = TextFragment::summ(curText, nextText);
+    QString fullString = fullText->getString();
+    fullString = fullString.toLower();
+    qint64 beginPos = -1;
+    qint64 realBeginPos = -1;
+    while (true)
+    {
+        QRegExp wordRX = TextStore::getRegXFor(seekablePhrase);
+        beginPos = fullString.indexOf(wordRX, beginPos+1);
+        realBeginPos = beginPos + fullText->begin();
+        if (beginPos == -1 || findedBegins.contains(realBeginPos) == false)
+            break;
+    }
+    if (beginPos == -1 || findedBegins.contains(realBeginPos))
+        return zeroBind;
+    findedBegins.insert(realBeginPos);
+    qint64 realEndPos = realBeginPos + seekablePhrase.length();
+    auto beginBind = cur;
+    auto endBind = cur;
+    if (curText->isBelongs(realEndPos) == false)
+        endBind = cur + 1;
+    if (isNormalBind(beginBind) == false || isNormalBind(endBind) == false)
+        return zeroBind;
+    auto rezBind = addBindToPoints(realBeginPos, realEndPos, beginBind, endBind);
+    return rezBind;
 }
 
 void Logic::bindLogicHanding()
@@ -823,6 +862,14 @@ QVector <Logic::Bind>::const_iterator Logic::getBindFromSoundOrTextPos(qreal sou
             if (moreOrLess(*nextBind, soundPos, textPos) == 0)
                 return nextBind;
     }
+
+    // Поведение за пределами размеченной облости
+    qint32 endTextPos = _bindVector.back().text->end();
+    if (textPos >= endTextPos)
+        return _bindVector.constEnd()-1;
+    qint32 endSoundPos = _bindVector.back().sound->end();
+    if (soundPos >= endSoundPos)
+        return _bindVector.constEnd()-1;
 
     // Ищем во всех
     auto lamdaLessThen = [soundPos, textPos, this](const Logic::Bind& left, const Logic::Bind& right)
@@ -1119,6 +1166,9 @@ void Logic::unmarkCommentWithName(const QString& name)
 
 QVector <Logic::Bind>::const_iterator Logic::getBindOnTextPos(qint64 textPos)
 {
+    qint32 endPos = _bindVector.back().text->end();
+    if (textPos >= endPos)
+        return _bindVector.end() - 1;
     for (auto bind = _bindVector.begin(); bind != _bindVector.constEnd(); bind++)
     {
         auto curBind = *bind;
@@ -1233,6 +1283,9 @@ void Logic::writeInFile(const QString& fileName, TextStore::PTR textStore, Sound
         return;
     }
     QTextStream fileStream(&file);
+    _title = _title.trimmed();
+    if (_title.length() == 0)
+        _title = fileName;
     fileStream << par_Title << " " << _title << "\n";
     fileStream << par_TextStore << " " << textStoreString << "\n";
     fileStream << par_TextStoreHash << " " << textHashString << "\n";
@@ -1330,7 +1383,16 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         soundStore->fromString(soundStoreString, curPath);
         realHashSound = soundStore->getHash();
     }
+    else
+        soundStore = SoundStore::factoryMethod();
     _lastOpenedSoundStore = soundStore;
+    if (SoundStore::isRemoteSource(soundStoreString))
+        _curSoundStoreUrl = soundStoreString;
+    else
+    {
+        QString curDir = QFileInfo(fileName).absolutePath();
+        _curSoundStoreUrl = QUrl::fromLocalFile(curDir + "/" + soundStoreString);
+    }
 
     if (!soundStore.isNull() || !soundStore.isNull())
         if (realHashText != textHashString || realHashSound != soundHashString)

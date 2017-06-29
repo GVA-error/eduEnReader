@@ -15,9 +15,9 @@ ToolBar {
     bottomPadding : 10
     Material.elevation: 6
     id : root
-    function setExampleText(text){
-        exampleTextEdit.text = text
-    }
+    //function setExampleText(text){
+    //    exampleTextEdit.text = text
+    //}
     Flow {
         id: flow
         width: parent.width

@@ -52,6 +52,9 @@ public slots:
     void setPosPersent(qreal); // позиция устанавливаеться в проентах
     qreal getPersentPos(); // Процент воспроизведёного
     qreal getTimePos() const;
+    qreal getStartPosition() { return _startPos; }
+    qint64 duration() const ;//override;
+
     void start(); // Использовать вместо play TODO - Перегрузить
     void stop();
     void stopStopTimer(); // Нужна для синхронизации завершения
@@ -72,8 +75,8 @@ protected:
     QAbstractVideoSurface* m_surface; // Для потдержки Qml MediaPlayer
     QTimer _timerToStop;
     // Моменты начала и конца воспроизведения файла.
-    float _startPos;
-    float _finishPos;
+    qreal _startPos;
+    qreal _finishPos;
     QList <qreal> _tmpTimeStartFinish; // по скольку втдео воспроизводиться в другом потоке, храним тут просьбу пользователя о установке start и finish
 
     // Сохраненное состояние
@@ -87,7 +90,6 @@ protected:
     // Допустимая погрешность по времени в милисекундах при остановке видео
     const qint32 _epsilonTime = 50;
 
-    qint64 duration() const ;//override;
 };
 
 #endif // SOUNDSTORE_H

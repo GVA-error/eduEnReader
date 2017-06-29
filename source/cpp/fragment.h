@@ -23,6 +23,10 @@ public:
     }
     static PTR summ(PTR left, PTR right)
     {
+        if (left.isNull())
+            return right;
+        if (right.isNull())
+            return left;
         IndexType rezBegin = left->begin();
         IndexType rezEnd = right->end();
         PTRSourceType leftSource = left->getSource();

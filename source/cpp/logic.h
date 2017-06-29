@@ -12,7 +12,6 @@
 class Logic
 {
 public:
-    const qint64 MAX_WORD_LEN = 1000;
 
     typedef QSharedPointer <Logic> PTR;
     static QSharedPointer <Logic> factoryMethod()
@@ -20,7 +19,6 @@ public:
         PTR rezPtr = QSharedPointer <Logic> (new Logic());
         return rezPtr;
     }
-
     struct Bind{
         TextFragment::PTR text;
         SoundFragment::PTR sound;
@@ -44,7 +42,20 @@ public:
         QString _pattern;
         patternTypes _type;
     };
+    // Кеш к логике
+    struct Cash{
+        QUrl _soundFileUrl;
+        QVector <Logic::Bind> _binds;
+        QMap <QString, QSet <qint32>> _wordPos;
+    };
+    typedef QMap <QString, QList<QSharedPointer <Logic::Cash>>> CashMap;
 
+    // кеширует файлы биндов
+    void setCash(CashMap& cashMap) {
+        _cashMap = cashMap;
+    }
+
+    QVector <Bind> getBindVector() { return _bindVector; }
     // Правка текста бинда
 //    void addWordInCurBindEnd();
 //    void addWordInCurBindBegin();
@@ -62,15 +73,16 @@ public:
     // Формирование списка примеров по искомой фразе
     // findInThisFile - искать ли в текущем файле
     QList <Example> getExamples(const QString& seakablePhrase, qreal minDuration, qreal maxDuration, bool findInThisFile = false);
-    QList <Example> getExamplesInThis(const QString& seakablePhrase, qreal minDuration, qreal maxDuration); // Ищет только в текущем файле
+   // QList <Example> getExamplesInThis(const QString& seakablePhrase, qreal minDuration, qreal maxDuration); // Ищет только в текущем файле
     // Рекурсивно находит все файлы в корневом каталоге
-    void getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask) const;
+    static void getAllFiles(QStringList& rezList, QDir curDir, const QStringList mask);
 
     QString getUrlFromPattern(const Pattern&, QString str) const;
     QList <Pattern> getPatterns() { return _patternList; }
 
     QString getCurBndFileName() const { return _curBndFileName; }
     QString getCurBndUrl();
+    QUrl getCurSoundStoreUrl() const { return _curSoundStoreUrl; }
 
     // Логически обрабатывает бинлы
     void bindLogicHanding();
@@ -115,6 +127,7 @@ public:
     QList <QString> getCommentNamesonTextPos(qint64 pos) const; // Если позиция принадлежит бинду, возвращает все комментарии пересекающие бинд
     QUrl getCommentUrlsonName(const QString &name) const;
     TextFragment::PTR getText(qint64 pos) const;
+    QString getText() const;
     SoundFragment::PTR getSound(qint64 pos) const;
     qint64 getBindNumber() const;
 
@@ -188,8 +201,10 @@ private:
     Bind _commentBind;
 
     QString _curBndFileName;
+    QUrl _curSoundStoreUrl;
     SoundStore::PTR _lastOpenedSoundStore;
     TextStore::PTR _lastOpenedTextStore;
+    CashMap _cashMap;
 
     //const qint32 _lastTempMarkListSize = 7;
    // Bind _lastTempMarkPos;
@@ -243,7 +258,9 @@ private:
     QVector <Bind>::const_iterator getBindFromSoundOrTextPos(qreal soundPos, qint64 textPos) const;
 
     // Нужно для нахождения примеров
-    QList<Bind> getBindsWithPhrase(const QString& seekablePhrase);
+    QList<Bind> getBindsWithPhrase(const QString& seekablePhrase, QMap <qint32, QUrl>& soundFileUrls);
+    Logic::Bind getBindWithPhrase(const QString& seekablePhrase, QVector <Bind>::const_iterator cur, QVector <Bind>::const_iterator next, QSet <qint64>& findedBegins);
+    //QList<Cash> getCashListForPhrase(const QString& seekablePhrase);
     // Дополняет найденные примеры до точек
     Bind addBindToPoints(qint64 findedBegin, qint64 findedEnd, QVector <Bind>::const_iterator begin, QVector <Bind>::const_iterator end);
     Bind addBindToLeftPoint(Bind cur, qint64 findedBegin, QVector <Bind>::const_iterator endBind);

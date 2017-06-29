@@ -15,6 +15,7 @@ ToolBar {
     bottomPadding : 10
     Material.elevation: 6
     id : root
+    visible: fullScreen === 0
     property var pageView
     function setExampleText(text){
         exampleTextEdit.text = text

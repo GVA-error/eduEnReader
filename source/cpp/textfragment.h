@@ -13,6 +13,7 @@ public:
     // Метод в локальных координатах
     QChar getSymbol(qint64 i) const;
     QString getString() const;
+    QSet <QString> getWordSet() const;
 
     qint64 getFragmentLength() const;
 

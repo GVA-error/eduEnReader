@@ -59,7 +59,7 @@ Rectangle{
         anchors.top: parent.top
         spacing: 5
         anchors.topMargin: 7
-        width: (buttonSize + spacing) * (readOnly ? 2 : 4)
+        width: (buttonSize + spacing) * (readOnly ? 3 : 5)
         QML_ImageButton {
             id : centraliseButton
             width: buttonSize
@@ -111,6 +111,15 @@ Rectangle{
                 if (soundStore.isExample)
                     goHome()
                 showComments()
+            }
+        }
+        QML_ImageButton {
+            id : fullScreenButton
+            width: buttonSize
+            height: buttonSize
+            backgroundImage: "images/image-stack.png"
+            onTrigered: {
+                fullScreen++
             }
         }
     }

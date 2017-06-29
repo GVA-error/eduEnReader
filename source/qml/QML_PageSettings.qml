@@ -59,7 +59,7 @@ Page {
             title: "Read options:"
 
             GridLayout {
-                rows: 6
+                rows: 7
                 flow: GridLayout.TopToBottom
                 width: parent.width
                 rowSpacing: 10
@@ -71,6 +71,7 @@ Page {
                 Label { text: "Show lectures text" }
                 Label { text: "Show examples text" }
                 Label { text: "Show translate dialog" }
+                Label { text: "Save cash" }
 
                 ToolButton {
                     id: colorButton
@@ -136,6 +137,13 @@ Page {
                     checked: settingsStore.showTranslateDialog
                     onCheckedChanged: {
                         settingsStore.showTranslateDialog = checked
+                    }
+                }
+                CheckBox{
+                    id : saveCash
+                    checked: settingsStore.saveCashFlag
+                    onCheckedChanged: {
+                        settingsStore.saveCashFlag = checked
                     }
                 }
             }

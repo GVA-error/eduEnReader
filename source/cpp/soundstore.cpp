@@ -16,6 +16,7 @@ SoundStore::SoundStore(QObject *parent)
     setPosition(0);
     _isExample = false;
     _saved_payed = false;
+    //setWindowState(windowState() ^ Qt::WindowFullScreen);
     emit isExampleStateChanged();
 }
 /*

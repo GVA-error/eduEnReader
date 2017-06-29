@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'textstore.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'textstore.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.8.0. It"
+#error "This file was generated using the moc from 5.9.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -326,9 +326,9 @@ void TextStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 20: _t->setSelectionEnd((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 21: _t->setCursorPosition((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 22: { QString _r = _t->getSellectedStreing();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         case 23: { bool _r = _t->someSellected();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 24: _t->setSelectionByWord((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         case 25: _t->setBold((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 26: _t->setItalic((*reinterpret_cast< bool(*)>(_a[1]))); break;
@@ -350,11 +350,11 @@ void TextStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 42: _t->home(); break;
         case 43: _t->setMarkCalor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
         case 44: { QColor _r = _t->getMarkColor();
-            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = _r; }  break;
+            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = std::move(_r); }  break;
         case 45: { QColor _r = _t->getDefaultMarkColor();
-            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = _r; }  break;
+            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = std::move(_r); }  break;
         case 46: { bool _r = _t->someOpened();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -556,7 +556,7 @@ void TextStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
 
 const QMetaObject TextStore::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_TextStore.data,
-      qt_meta_data_TextStore,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+      qt_meta_data_TextStore,  qt_static_metacall, nullptr, nullptr}
 };
 
 
@@ -567,7 +567,7 @@ const QMetaObject *TextStore::metaObject() const
 
 void *TextStore::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_TextStore.stringdata0))
         return static_cast<void*>(const_cast< TextStore*>(this));
     if (!strcmp(_clname, "Store<TextStore>"))
@@ -612,116 +612,116 @@ int TextStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void TextStore::targetChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
 void TextStore::cursorPositionChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 
 // SIGNAL 2
 void TextStore::selectionStartChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 
 // SIGNAL 3
 void TextStore::selectionEndChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
 }
 
 // SIGNAL 4
 void TextStore::fontFamilyChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
 }
 
 // SIGNAL 5
 void TextStore::textColorChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
 }
 
 // SIGNAL 6
 void TextStore::alignmentChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
 }
 
 // SIGNAL 7
 void TextStore::boldChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 7, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 7, nullptr);
 }
 
 // SIGNAL 8
 void TextStore::italicChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 8, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 8, nullptr);
 }
 
 // SIGNAL 9
 void TextStore::underlineChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 9, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
 }
 
 // SIGNAL 10
 void TextStore::fontSizeChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 10, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 10, nullptr);
 }
 
 // SIGNAL 11
 void TextStore::defaultFontSizesChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 11, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 11, nullptr);
 }
 
 // SIGNAL 12
 void TextStore::fileUrlChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 12, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 12, nullptr);
 }
 
 // SIGNAL 13
 void TextStore::textChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 13, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 13, nullptr);
 }
 
 // SIGNAL 14
 void TextStore::documentTitleChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 14, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 14, nullptr);
 }
 
 // SIGNAL 15
 void TextStore::error(QString _t1)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 15, _a);
 }
 
 // SIGNAL 16
 void TextStore::markColorChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 16, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 16, nullptr);
 }
 
 // SIGNAL 17
 void TextStore::someSellectedChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 17, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 17, nullptr);
 }
 
 // SIGNAL 18
 void TextStore::someOpenedChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 18, Q_NULLPTR);
+    QMetaObject::activate(this, &staticMetaObject, 18, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

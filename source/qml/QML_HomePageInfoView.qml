@@ -27,11 +27,6 @@ SwipeView {
                 id : readContextMenue
                 textStore: commentDoc
             }
-
-            //text: commentDoc.text
-            //textFormat: Qt.RichText
-            //readOnly: true
-            //onTextChanged: cursorPosition = 0
         }
     }
     Page{// Список примеров

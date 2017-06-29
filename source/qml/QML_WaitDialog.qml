@@ -14,6 +14,8 @@ QML_SimpleDialog {
         contentText = stateText
         if (stateText === "end" || stateText === "")
             hideDialog()
+        else if (visible == false && stateText !== "end" && stateText !== "")
+            showDialog()
     }
 
     Rectangle{

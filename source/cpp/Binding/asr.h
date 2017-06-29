@@ -7,7 +7,7 @@
 #include <QDebug>
 #include <QList>
 #include <QDir>
-#include <QMap>ы
+#include <QMap>
 
 // Интерфейс распознователя речи
 class IASR : public QObject

@@ -12,6 +12,7 @@
 #include "cpp/Processes/bindopenprocess.h"
 #include "cpp/Processes/tsbindingprocess.h"
 #include "Processes/scriptprocess.h"
+#include "Processes/cashingprocess.h"
 
 // Заметка: Когда буду делать лекции сделать шрифт побольше
 
@@ -22,11 +23,14 @@
  * 4 слова? So it may be
  * сеттингс в схему
  * Ближайший план:
+ * -19) Сохранение в кеше только в каком файле какие слова. Алгоритм поиска следующего?
+ * -18) ПОиск примеров в отдельном потоке или оптимизация
+ * -17) Тестить кеширование
+ * -16) Сдвинутый пример phisics
  * -15) Оптимизировать максимальный путь в графе - поиск безотцовщины
  * -14) Возможность повторного биндинга.
  * -13) Дополнить последний бнд
  * -12) Иногда не открывается видео
- * -11) Чистка мусора
  * -10) Импорт файла настроек, а может сразу обнова?
  * -9) Повторный биндинг
  * -8) Добавление слова в каммент - не работает, не выдлен текст
@@ -159,6 +163,7 @@ public slots:
     QString curExampleWord() const;
     void setCurExampleWord(const QString&);
 
+    // Переходы из дома и в дом
     void saveHome(bool push = false);
     void home();
     void save();
@@ -187,8 +192,13 @@ public slots:
     void curUserStBinding(); // Биндинг основываясь на текстовых отрезках заданых пользователем
     void curTsBinding();
 
+    // Файловая система
     void downloadBase();
     void uploadBase();
+    void cashFiles();
+    void clearThrash(){
+        DataPreparation::clearTrash();
+    }
 
     // создать автоматически разбивку комментариев для текущего бинда
     // autoCommentsNumber - количество биндов в одном комментарии
@@ -263,6 +273,8 @@ public slots:
     qint32 getBeginMarkable() const;
     qint32 getEndMarkable() const;
 
+    QString getCurVideoTime(qreal); // Время для ползунка
+
     bool canNotSync() const { return _sellectTimer.elapsed() < _sellectingTime; }
     bool haveCommentInThisPosition() { return _commentList.empty() == false; }
     bool soundSourceIsLocalFile() {
@@ -303,9 +315,9 @@ private:
     Logic::PTR _logic;
     SoundStore::PTR _soundStore; //bool _f_setSound;
     TextStore::PTR _textStore;  //bool _f_setText;
-    //BindMaker::PTR _bindMaker;
     BindOpenProcess::PTR _logicReader;
     TsBindingProcess::PTR _bindMaker;
+    CashingProcess::PTR _cashProcess;
     ScriptProcess::PTR _scripterProcess;
 
     // Организация очереди биндинга
@@ -346,6 +358,7 @@ private:
     void initScripterProcess();
     void initBindMaker();
     void initLogicReader();
+    void initCashProcess();
 
     void startTsBinging();
     void tsBinding(bool forAll);

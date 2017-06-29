@@ -26,9 +26,26 @@ ApplicationWindow {
     property var homeSoundStore
     property var pageView
     property var waitDialog: waitDialog
+    property int fullScreen: 0
+    // 0 - обычный режи
+    // 1 - режим для чтения
+    // 2 - режим только видео
+    onFullScreenChanged: {
+        if (fullScreen >= 3 || fullScreen < 0)
+            fullScreen = 0
+        if (fullScreen === 2 || fullScreen === 1)
+            showFullScreen()
+        if (fullScreen === 0)
+            showMaximized()
+        update()
+    }
 
     Component.onDestruction: {
         homeUiController.stopAllThreads()
+    }
+    Component.onCompleted: {
+        homeUiController.cashFiles()
+        homeUiController.clearThrash()
     }
 
     function goHome(){

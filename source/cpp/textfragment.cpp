@@ -192,6 +192,13 @@ bool TextFragment::isEquils(QString left, QString right)
 //    return false;
 //}
 
+QSet <QString> TextFragment::getWordSet() const
+{
+    QString curString = getString();
+    QStringList wordList = curString.split(QRegExp("\\W"), QString::SkipEmptyParts);
+    return wordList.toSet();
+}
+
 QString TextFragment::getString() const
 {
     QString rezString = _source->getString(_begin, _end);

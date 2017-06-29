@@ -43,13 +43,30 @@ Rectangle { // Ползунок
         }
 
         handle: Rectangle {
+            id: handleRect
             x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
             y: control.topPadding + control.availableHeight / 2 - height / 2
-            implicitWidth: 34
+            implicitWidth: 54
             implicitHeight: 34
             radius: 11
             color: control.pressed ? "#f0f0f0" : "#f6f6f6"
             border.color: "#bdbebf"
+            Component.onCompleted: timeTextTimer.start()
+            Text {
+                id: handleText
+                anchors.centerIn: parent
+                text: homeUiController.getCurVideoTime(0)
+            }
+            Timer{
+                id: timeTextTimer
+                repeat: true
+                interval: 500
+                onTriggered: handleRect.synchHandleTime()
+            }
+            function synchHandleTime(){
+                handleText.text = homeUiController.getCurVideoTime(control.visualPosition)
+            }
+            onXChanged: handleRect.synchHandleTime()
         }
 
         onPressedChanged: {
@@ -80,49 +97,4 @@ Rectangle { // Ползунок
             //uiControler.setCursorPosInTimePos();
         }
     }
-
-
-//            handle: Rectangle {
-//                anchors.centerIn: parent
-//                color: control.pressed ? "white" : "lightgray"
-//                border.color: "gray"
-//                border.width: 2
-//                implicitWidth: 34
-//                implicitHeight: 34
-//                radius: 12
-//            }
-  //      }
-
-
-
-//        MouseArea{
-//            propagateComposedEvents : true
-////            anchors.fill: parent
-////            onPressed: {
-////                soundSlider.value = mouseX / soundSlider.width;
-////                uiControler.setCursorPosInTimePos();
-////              //  propagateComposedEvents = true
-////            }
-//        }
-
-//        onValueChanged:
-//        {
-//            //if (pressed)
-//            //    source.position = value;
-//            //if ()
-
-//        }
-//        onPressedChanged: {
-//            //if (pressed)
-//                source.position = value;
-//        }
-
-//        onPressedChanged:{
-//            //if (pressed)
-
-//            if (!pressed)
-//            {
-//                source.setPosPersent(soundSlider.value);
-//            }
-//        }
 }
