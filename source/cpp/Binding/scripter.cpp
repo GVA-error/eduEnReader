@@ -4,9 +4,12 @@ const QString Scripter::_noiseReduseScrit = QDir::currentPath() + "/Scripts/nois
 const QString Scripter::_normaliseScrit = QDir::currentPath() + "/Scripts/normalise.sh";
 const QString Scripter::_extractSoundScrit = QDir::currentPath() + "/Scripts/extractSound.sh";
 const QString Scripter::_downloadBaseScript = QDir::currentPath() + "/Scripts/downloadBase.sh";
+const QString Scripter::_initBaseScript = QDir::currentPath() + "/Scripts/initBase.sh";
 const QString Scripter::_uploadBaseScript = QDir::currentPath() + "/Scripts/uploadBase.sh";
 const QString Scripter::_createPreviewScript = QDir::currentPath() + "/Scripts/createPreview.sh";
 const QString Scripter::_tmp_wav = QDir::currentPath() + "/Scripts/tmp.wav";
+
+const QString Scripter::_baseDir = QDir::currentPath() + "/eduEnReaderBase";
 
 Scripter::Scripter(QObject *parent) : QObject(parent)
 {
@@ -31,7 +34,11 @@ void Scripter::createPreview(const QString &videoFile, qreal duration)
 
 void Scripter::downloadBase()
 {
-    setExecutingScript(_downloadBaseScript);
+    if (QDir(_baseDir).exists()) // TODO заменить на константу из настроек
+        setExecutingScript(_downloadBaseScript);
+    else
+        setExecutingScript(_initBaseScript);
+    qDebug() << _script;
     execute(QStringList());
 }
 

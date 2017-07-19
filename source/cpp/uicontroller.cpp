@@ -22,7 +22,7 @@ QString UIController::getCurVideoTime(qreal curTime)
     if (_f_home)
         timePos = curTime * _soundStore->fullDuration();
     else{
-        timePos = _soundStore->getStartPosition() + curTime * _soundStore->duration();
+        timePos = _soundStore->getStartPosition() + curTime * _soundStore->fullDuration();
     }
     qint32 sec = (qint32)timePos % 60;
     qint32 min = (timePos - sec) / 60;

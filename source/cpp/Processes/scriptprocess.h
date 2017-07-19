@@ -32,7 +32,8 @@ protected:
 
     void run()
     {
-        if (_script == Scripter::_downloadBaseScript)
+        qDebug() << _script;
+        if (_script == Scripter::_downloadBaseScript || _script == Scripter::_initBaseScript)
         {
             setNewState("downloading...");
             _scripter.downloadBase();

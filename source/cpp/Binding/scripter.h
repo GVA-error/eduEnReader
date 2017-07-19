@@ -19,9 +19,12 @@ public:
     static const QString _normaliseScrit;// = QDir::currentPath() + "/Scripts/normalise.sh";
     static const QString _extractSoundScrit;// = QDir::currentPath() + "/Scripts/extractSound.sh";
     static const QString _downloadBaseScript;// = QDir::currentPath() + "/Scripts/downloadBase.sh";
+    static const QString _initBaseScript;// = QDir::currentPath() + "/Scripts/downloadBase.sh";
     static const QString _uploadBaseScript;// = QDir::currentPath() + "/Scripts/uploadBase.sh";
     static const QString _createPreviewScript; // = QDir::currentPath() + "/Scripts/createPreview.sh";
     static const QString _tmp_wav;// = QDir::currentPath() + "/Scripts/tmp.wav";
+
+    static const QString _baseDir;// = QDir::currentPath() + "/eduEnReaderBase";
 
     explicit Scripter(QObject *parent = 0);
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd eduEnReaderBase
-git fetch --all
-git reset --hard origin/master
+git pull
+git fetch https://github.com/eduEnReader/eduEnReaderBase.git
 echo 0

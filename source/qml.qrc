@@ -82,5 +82,6 @@
         <file>qml/images/trash-empty.png</file>
         <file>qml/images/un_bind.png</file>
         <file>qml/images/yast-restore.png</file>
+        <file>qml/images/image-stack.png</file>
     </qresource>
 </RCC>
