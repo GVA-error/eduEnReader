@@ -44,8 +44,13 @@ QML_main {
             translationHelpDialog.showDialog()
         else
             pageView.setCurrentIndex(2)
-
         homeSoundStore.stop()
+    }
+    function goExercises(){
+        homeUiController.saveHome()
+        homeUiController.goOutHome()
+        homeSoundStore.stop()
+        pageView.setCurrentIndex(4)
     }
 
     header : READ_TopToolBar {
@@ -72,6 +77,11 @@ QML_main {
             id : settingPage
             readOnly: true
         }
+        QML_PageExercises{
+            id : exercisesPage
+            readOnly: true
+        }
+
     }
     QML_TranslationHelpDialog{
         id: translationHelpDialog

@@ -641,6 +641,27 @@ void UIController::setTimePosInCursorPos()
         _soundStore->setPosReal(newSoundPos);
 }
 
+void UIController::synchExercises()
+{
+    _exercisesList.push_back("Ext. 1.");
+    _exercisesList.push_back("Ext. 2.");
+    _exercisesList.push_back("Ext. 3.");
+    _exercisesList.push_back("Ext. 4.");
+    _exercisesList.push_back("Ext. 5.");
+    emit exercisesListChanged();
+}
+
+QUrl UIController::getExercisesUrlWithName(const QString& name) const
+{
+    QString curName = _logic->getCurBndFileName();
+    qDebug() << curName;
+    QString exString = curName.mid(0, curName.length() - 4);
+    qDebug() << exString;
+    exString += " " + name + "html";
+    qDebug() << exString;
+    return QUrl::fromLocalFile(exString);
+}
+
 // TODO Добавить работу с выделением
 void UIController::synchCommentList()
 {

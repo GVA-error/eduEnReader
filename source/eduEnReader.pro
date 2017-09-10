@@ -8,8 +8,8 @@ QT += webenginewidgets
 CONFIG += c++11
 CONFIG += qt plugin
 
-LIBS += -lsndfile
-LIBS += -lVLCQtCore -lVLCQtQml
+INCLUDEPATH += C:\vlcqt\include
+LIBS += -lC:\vlcqt\lib\VLCQtCore -lC:\vlcqt\lib\VLCQtQml
 
 SOURCES += main.cpp \
     cpp/fragment.cpp \

@@ -68,6 +68,15 @@ ToolBar {
             }
         }
         Row {
+            id: exercisesRow
+            QML_ToolBarButton {
+                fix_width : 100
+                text: "exercises"
+                checked: pageView.currentIndex === 4
+                onClicked: mainRoot.goExercises()
+            }
+        }
+        Row {
             id: exampleRow
             //spacing: 30
             QML_ToolBarButton {

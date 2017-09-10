@@ -139,13 +139,13 @@ Page {
                         settingsStore.showTranslateDialog = checked
                     }
                 }
-                CheckBox{
-                    id : saveCash
-                    checked: settingsStore.saveCashFlag
-                    onCheckedChanged: {
-                        settingsStore.saveCashFlag = checked
-                    }
-                }
+//                CheckBox{
+//                    id : saveCash
+//                    checked: settingsStore.saveCashFlag
+//                    onCheckedChanged: {
+//                        settingsStore.saveCashFlag = checked
+//                    }
+//                }
             }
         }
         GroupBox {

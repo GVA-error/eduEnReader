@@ -1,49 +1,21 @@
-QMAKE_DEFAULT_INCDIRS = \
-    /usr/include/c++/4.8 \
-    /usr/include/c++/4.8/x86_64-suse-linux \
-    /usr/include/c++/4.8/backward \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8/include \
-    /usr/local/include \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed \
-    /usr/x86_64-suse-linux/include \
-    /usr/include
-QMAKE_DEFAULT_LIBDIRS = \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8 \
-    /usr/lib64 \
-    /lib64 \
-    /usr/x86_64-suse-linux/lib \
-    /lib \
-    /usr/lib
 QMAKE_CXX.INCDIRS = \
-    /usr/include/c++/4.8 \
-    /usr/include/c++/4.8/x86_64-suse-linux \
-    /usr/include/c++/4.8/backward \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8/include \
-    /usr/local/include \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed \
-    /usr/x86_64-suse-linux/include \
-    /usr/include \
-    /usr/include/c++/4.8 \
-    /usr/include/c++/4.8/x86_64-suse-linux \
-    /usr/include/c++/4.8/backward \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8/include \
-    /usr/local/include \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8/include-fixed \
-    /usr/x86_64-suse-linux/include \
-    /usr/include
+    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\INCLUDE" \
+    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\INCLUDE" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\ucrt" \
+    "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\include\\um" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\shared" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\um" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\winrt"
 QMAKE_CXX.LIBDIRS = \
-    /usr/lib64/gcc/x86_64-suse-linux/4.8 \
-    /usr/lib64 \
-    /lib64 \
-    /usr/x86_64-suse-linux/lib \
-    /lib \
-    /usr/lib
+    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\LIB\\amd64" \
+    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\LIB\\amd64" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.14393.0\\ucrt\\x64" \
+    "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\lib\\um\\x64" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.14393.0\\um\\x64"
 QMAKE_CXX.QT_COMPILER_STDCXX = 199711L
-QMAKE_CXX.QT_GCC_MAJOR_VERSION = 4
-QMAKE_CXX.QT_GCC_MINOR_VERSION = 8
-QMAKE_CXX.QT_GCC_PATCH_VERSION = 5
+QMAKE_CXX.QMAKE_MSC_VER = 1900
+QMAKE_CXX.QMAKE_MSC_FULL_VER = 190024215
 QMAKE_CXX.COMPILER_MACROS = \
     QT_COMPILER_STDCXX \
-    QT_GCC_MAJOR_VERSION \
-    QT_GCC_MINOR_VERSION \
-    QT_GCC_PATCH_VERSION
+    QMAKE_MSC_VER \
+    QMAKE_MSC_FULL_VER

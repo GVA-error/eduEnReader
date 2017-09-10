@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");
     qmlRegisterType<SoundStore>("SoundStoreModul", 1, 1, "SoundStore");
     qmlRegisterType<QML_Settings>("QML_SettingsModul", 1, 0, "QML_Settings");
-    engine.load(QUrl(QStringLiteral("qrc:/qml/READ_main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/WRITE_main.qml")));
 
     if (engine.rootObjects().isEmpty())
         return -1;

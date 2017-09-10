@@ -147,6 +147,7 @@ Page {
                          //   console.log(url)
                             homeUiController.setForOpening(url)
                             homeUiController.openWaited()
+                            goHome()
                         }
                     }
                 }

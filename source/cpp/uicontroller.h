@@ -106,6 +106,7 @@ class UIController : public QObject
     Q_PROPERTY(QStringList exampleListModel READ getExampleList WRITE setExampleList NOTIFY exampleListChanged)
     Q_PROPERTY(QStringList matirealsListModel READ getMatirealsList WRITE setMatirealsList NOTIFY matirealsListChanged)
     Q_PROPERTY(QStringList commentListModel READ getCommentList WRITE setCommentList NOTIFY commentListChanged)
+    Q_PROPERTY(QStringList exercisesListModel READ exercisesList NOTIFY exercisesListChanged)
     Q_PROPERTY(bool mouseIsPressed WRITE setMouseIsPressed)
     Q_PROPERTY(qint32 examplesSize READ getExamplesSize WRITE setExamplesSize NOTIFY examplesSizeChanged)
     Q_PROPERTY(qint32 diffSize READ getDiffSize WRITE setDiffSize NOTIFY diffSizeChanged)
@@ -134,6 +135,7 @@ signals:
     void bindFilesListChanged();
     void exampleListChanged();
     void commentListChanged();
+    void exercisesListChanged();
     void examplesSizeChanged();
     void matirealsListChanged();
     void diffSizeChanged();
@@ -158,6 +160,8 @@ public slots:
     void setCurCommentUrl(const QUrl&);
     QStringList getMatirealsList() const;
     void setMatirealsList(const QStringList& newMatireals);
+    QStringList exercisesList() const { return _exercisesList; }
+
     QString curState() const;
     void setCurState(const QString& newState);
     QString curExampleWord() const;
@@ -181,6 +185,7 @@ public slots:
     QString getTitle(const QString& bindFile) const;
     void synchBndFileList();
     void synchCommentList();
+    void synchExercises();
     void openBindFile(const QUrl &bindFileName);
     void saveBindFile(const QUrl &bindFileName);
     void createBindFile(const QUrl &soundFileName);
@@ -252,12 +257,14 @@ public slots:
         setCurCommentUrl(QUrl(""));
         _logicReader->runInThisThread();
         openingFinished();
+        synchExercises();
     }
     QString openState() { return _logicReader->getCurState(); }
 
     QUrl getCommentUrlWithName(const QString& name) const;
     QUrl getBindFileUrlWithName(const QString& name) const;
     QUrl getMatirealUrlWithName(const QString& name) const;
+    QUrl getExercisesUrlWithName(const QString& name) const;
 
     void deleteBindWithName(const QString& name);
     void deleteBind(const QString& fileName);
@@ -330,6 +337,8 @@ private:
     QStringList _exampleList; // Модель для гуи
     QStringList _commentList; // Модель для гуи
     QStringList _matirealsList; // Модель для гуи
+    QStringList _exercisesList; // Модель для гуи
+
     QMap <QString, Logic::Example> _example; // Для обработки клика по списку примеров
     QMap <QString, QUrl> _bindFile; // Для обработки клика по скписку бинд файлов
     QMap <QString, QString> _bindTitles; // Для отображения списка бинд файлов
