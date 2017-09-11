@@ -1417,6 +1417,8 @@ void Logic::readFromFile(const QString &fileName, TextStore::PTR textStore, Soun
         QStringList rec;
         qreal begin;
         qreal end;
+        if (recognizedStr.length() == 0)
+            continue;
         fromString(rec, begin, end, recognizedStr);
         addRecognizedString(rec, begin, end);
     }
@@ -1498,6 +1500,8 @@ void Logic::fromString(Bind& bind, QString bindString, SoundStore::PTR sound, Te
 void Logic::fromString(QStringList& str, qreal& posBegin, qreal& posEnd, QString source) const
 {
     str = source.split(" ", QString::SplitBehavior::SkipEmptyParts);
+    if (str.size() < 3)
+        return;
     QString stringBegin = *(str.end() - 2);
     QString stringEnd = *(str.end() - 1);
     posBegin = stringBegin.toDouble();

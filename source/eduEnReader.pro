@@ -9,12 +9,12 @@ CONFIG += c++11
 CONFIG += qt plugin
 
 #manjaro
-LIBS += -lsndfile
-LIBS += -L/usr/local/lib64/ -lVLCQtCore -lVLCQtQml
+#LIBS += -lsndfile
+#LIBS += -L/usr/local/lib64/ -lVLCQtCore -lVLCQtQml
 
 #suse
-#LIBS += -lsndfile
-#LIBS += -lVLCQtCore -lVLCQtQml
+LIBS += -lsndfile
+LIBS += -lVLCQtCore -lVLCQtQml
 
 #windows
 #INCLUDEPATH += C:\vlcqt\include
