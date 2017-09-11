@@ -8,8 +8,17 @@ QT += webenginewidgets
 CONFIG += c++11
 CONFIG += qt plugin
 
-INCLUDEPATH += C:\vlcqt\include
-LIBS += -lC:\vlcqt\lib\VLCQtCore -lC:\vlcqt\lib\VLCQtQml
+#manjaro
+LIBS += -lsndfile
+LIBS += -L/usr/local/lib64/ -lVLCQtCore -lVLCQtQml
+
+#suse
+#LIBS += -lsndfile
+#LIBS += -lVLCQtCore -lVLCQtQml
+
+#windows
+#INCLUDEPATH += C:\vlcqt\include
+#LIBS += -lC:\vlcqt\lib\VLCQtCore -lC:\vlcqt\lib\VLCQtQml
 
 SOURCES += main.cpp \
     cpp/fragment.cpp \
