@@ -9,7 +9,7 @@ import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 
 import SoundStoreModul 1.1
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 import TextStoreModul 1.0
 
 // Ползунок, старт, пауза ..

@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 import TextStoreModul 1.0
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 
 Page {
     title: "settings"

@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 
 QML_ListDialog{
     id : comments

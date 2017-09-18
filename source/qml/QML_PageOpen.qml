@@ -4,7 +4,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.3
 
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 
 Page {
     id : root

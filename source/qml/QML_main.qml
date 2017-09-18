@@ -10,7 +10,7 @@ import QtQuick.Dialogs 1.2
 
 import TextStoreModul 1.0
 import SoundStoreModul 1.1
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 
 ApplicationWindow {
     title: homePage.textStore.documentTitle

@@ -10,7 +10,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
 import TextStoreModul 1.0
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 import QML_SettingsModul 1.0
 
 Page {

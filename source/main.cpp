@@ -103,11 +103,11 @@ int main(int argc, char *argv[])
     VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins");
     VlcQmlVideoPlayer::registerPlugin();
 
-    qmlRegisterType<UIController>("UiControllerModul", 1, 1, "UiController");
+    qmlRegisterType<UIController>("UiControllerModul", 1, 2, "UiController");
     qmlRegisterType<TextStore>("TextStoreModul", 1, 0, "TextStore");
     qmlRegisterType<SoundStore>("SoundStoreModul", 1, 1, "SoundStore");
     qmlRegisterType<QML_Settings>("QML_SettingsModul", 1, 0, "QML_Settings");
-    engine.load(QUrl(QStringLiteral("qrc:/qml/WRITE_main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/READ_main.qml")));
 
     if (engine.rootObjects().isEmpty())
         return -1;

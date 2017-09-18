@@ -6,7 +6,7 @@ import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.3
 import QtWebEngine 1.4
 
-import UiControllerModul 1.1
+import UiControllerModul 1.2
 
 Page {
     property string phrase
@@ -41,7 +41,7 @@ Page {
         width: parent.width
         anchors.top: parent.top
         Component.onCompleted: {
-            homeUiController.getMatirealsFor("");
+            //homeUiController.getMatirealsFor("");
         }
         QML_ImageButton{
             anchors.right: parent.right
