@@ -26,31 +26,31 @@ QML_main {
     pageView: pageView
 
     function goSettings(){
-        if (settingPage.showTranslateDialog)
-            translationHelpDialog.hideDialog()
-        homeUiController.saveHome()
-        homeUiController.goOutHome()
-        pageView.setCurrentIndex(3)
-        homeSoundStore.stop()
+//        if (settingPage.showTranslateDialog)
+//            translationHelpDialog.hideDialog()
+//        homeUiController.saveHome()
+//        homeUiController.goOutHome()
+//        pageView.setCurrentIndex(3)
+//        homeSoundStore.stop()
     }
     function goExamples(){
-          homeUiController.saveHome()
-          homePage.showExamples()
+//          homeUiController.saveHome()
+//          homePage.showExamples()
     }
     function goTranslitionHelp(){
-        homeUiController.saveHome()
-        homeUiController.goOutHome()
-        if (settingPage.showTranslateDialog)
-            translationHelpDialog.showDialog()
-        else
-            pageView.setCurrentIndex(2)
-        homeSoundStore.stop()
+//        homeUiController.saveHome()
+//        homeUiController.goOutHome()
+//        if (settingPage.showTranslateDialog)
+//            translationHelpDialog.showDialog()
+//        else
+//            pageView.setCurrentIndex(2)
+//        homeSoundStore.stop()
     }
     function goExercises(){
-        homeUiController.saveHome()
-        homeUiController.goOutHome()
-        homeSoundStore.stop()
-        pageView.setCurrentIndex(4)
+//        homeUiController.saveHome()
+//        homeUiController.goOutHome()
+//        homeSoundStore.stop()
+//        pageView.setCurrentIndex(4)
     }
 
     header : READ_TopToolBar {
@@ -65,22 +65,22 @@ QML_main {
             id: openPage
             readOnly: true
         }
-        QML_PageHome {
-            id : homePage
-            readOnly: true
-        }
-        QML_PageTranslationHelp {
-            id : translitionHelpPage
-            readOnly: true
-        }
-        QML_PageSettings {
-            id : settingPage
-            readOnly: true
-        }
-        QML_PageExercises{
-            id : exercisesPage
-            readOnly: true
-        }
+//        QML_PageHome {
+//            id : homePage
+//            readOnly: true
+//        }
+//        QML_PageTranslationHelp {
+//            id : translitionHelpPage
+//            readOnly: true
+//        }
+//        QML_PageSettings {
+//            id : settingPage
+//            readOnly: true
+//        }
+//        QML_PageExercises{
+//            id : exercisesPage
+//            readOnly: true
+//        }
 
     }
     QML_TranslationHelpDialog{
