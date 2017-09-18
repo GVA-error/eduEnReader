@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'soundstore.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'soundstore.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.8.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -150,28 +150,28 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->openingError(); break;
         case 4: _t->clear(); break;
         case 5: { qint32 _r = _t->playingState();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 6: { qint32 _r = _t->bufferingState();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 7: { bool _r = _t->isExample();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 8: _t->setPosReal((*reinterpret_cast< qreal(*)>(_a[1]))); break;
         case 9: _t->setPosPersent((*reinterpret_cast< qreal(*)>(_a[1]))); break;
         case 10: { qreal _r = _t->getPersentPos();
-            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
         case 11: { qreal _r = _t->getTimePos();
-            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
         case 12: { qreal _r = _t->getStartPosition();
-            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qreal*>(_a[0]) = _r; }  break;
         case 13: { qint64 _r = _t->duration();
-            if (_a[0]) *reinterpret_cast< qint64*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint64*>(_a[0]) = _r; }  break;
         case 14: _t->start(); break;
         case 15: _t->stop(); break;
         case 16: _t->stopStopTimer(); break;
         case 17: _t->saveHome(); break;
         case 18: _t->home(); break;
         case 19: { bool _r = _t->isCorrectLocalFile();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -231,7 +231,7 @@ void SoundStore::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
 
 const QMetaObject SoundStore::staticMetaObject = {
     { &VlcQmlVideoPlayer::staticMetaObject, qt_meta_stringdata_SoundStore.data,
-      qt_meta_data_SoundStore,  qt_static_metacall, nullptr, nullptr}
+      qt_meta_data_SoundStore,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
@@ -242,7 +242,7 @@ const QMetaObject *SoundStore::metaObject() const
 
 void *SoundStore::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_SoundStore.stringdata0))
         return static_cast<void*>(const_cast< SoundStore*>(this));
     if (!strcmp(_clname, "Store<SoundStore>"))
@@ -287,25 +287,25 @@ int SoundStore::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void SoundStore::posChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 
 // SIGNAL 1
 void SoundStore::isExampleStateChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 
 // SIGNAL 2
 void SoundStore::playingStateChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 
 // SIGNAL 3
 void SoundStore::openingError()
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

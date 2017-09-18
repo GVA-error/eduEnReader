@@ -14,8 +14,8 @@ const QString Scripter::_baseDir = QDir::currentPath() + "/eduEnReaderBase";
 Scripter::Scripter(QObject *parent) : QObject(parent)
 {
     _console = new QProcess();
-    QObject::connect(_console, SIGNAL(finished(int)),
-                     this, SLOT(finished(int)));
+    //QObject::connect(_console, SIGNAL(finished(int)),
+    //                 this, SLOT(finished(int)));
     QObject::connect(_console, SIGNAL(readyReadStandardOutput()),
                      this, SLOT(checkConsol()));
 }

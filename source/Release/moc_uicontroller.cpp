@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'uicontroller.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'uicontroller.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.8.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -546,46 +546,46 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 13: _t->curExampleWordChanged(); break;
         case 14: _t->someOpenChanged(); break;
         case 15: { QString _r = _t->title();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 16: _t->setTitle((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 17: { QStringList _r = _t->getbindFilesList();
-            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
         case 18: _t->setbindFilesList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
         case 19: { QStringList _r = _t->getExampleList();
-            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
         case 20: _t->setExampleList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
         case 21: { QStringList _r = _t->getCommentList();
-            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
         case 22: _t->setCommentList((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
         case 23: { QUrl _r = _t->curCommentUrl();
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 24: _t->setCurCommentUrl((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 25: { QStringList _r = _t->getMatirealsList();
-            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
         case 26: _t->setMatirealsList((*reinterpret_cast< const QStringList(*)>(_a[1]))); break;
         case 27: { QStringList _r = _t->exercisesList();
-            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = _r; }  break;
         case 28: { QString _r = _t->curState();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 29: _t->setCurState((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 30: { QString _r = _t->curExampleWord();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 31: _t->setCurExampleWord((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 32: _t->saveHome((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 33: _t->saveHome(); break;
         case 34: _t->home(); break;
         case 35: _t->save(); break;
         case 36: { bool _r = _t->someOpen();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 37: _t->setSomeOpen((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 38: _t->setSoundSource((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 39: { QString _r = _t->soundSource();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 40: _t->setPreviewForCurLecture((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 41: { QUrl _r = _t->getImageUrl((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 42: { QString _r = _t->getTitle((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 43: _t->synchBndFileList(); break;
         case 44: _t->synchCommentList(); break;
         case 45: _t->synchExercises(); break;
@@ -603,7 +603,7 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 57: _t->clearThrash(); break;
         case 58: _t->createAutoComments((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         case 59: { QUrl _r = _t->addComment();
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 60: _t->openSoundFile((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 61: _t->cursorPosChanged(); break;
         case 62: _t->setCursorPosInTimePos(); break;
@@ -616,16 +616,16 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 69: _t->unmarkComment((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 70: _t->setExamplesSize((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         case 71: { qint32 _r = _t->getExamplesSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 72: _t->setDiffSize((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         case 73: { qint32 _r = _t->getDiffSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 74: { qint32 _r = _t->getCommentListSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 75: { QString _r = _t->getFirstComment();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 76: { QString _r = _t->formUrlToTranslateSellected();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 77: _t->playExample((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 78: _t->getExample(); break;
         case 79: _t->getExamplesFor((*reinterpret_cast< const QString(*)>(_a[1]))); break;
@@ -635,37 +635,37 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 83: _t->setForOpening((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         case 84: _t->openWaited(); break;
         case 85: { QString _r = _t->openState();
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 86: { QUrl _r = _t->getCommentUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 87: { QUrl _r = _t->getBindFileUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 88: { QUrl _r = _t->getMatirealUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 89: { QUrl _r = _t->getExercisesUrlWithName((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QUrl*>(_a[0]) = _r; }  break;
         case 90: _t->deleteBindWithName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 91: _t->deleteBind((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 92: _t->deleteCommentWithName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 93: { bool _r = _t->isDir((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 94: _t->setCurDir((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 95: { QDir _r = _t->getDir((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QDir*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QDir*>(_a[0]) = _r; }  break;
         case 96: { qint32 _r = _t->getMidMarkable();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 97: { qint32 _r = _t->getBeginMarkable();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 98: { qint32 _r = _t->getEndMarkable();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 99: { QString _r = _t->getCurVideoTime((*reinterpret_cast< qreal(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 100: { bool _r = _t->canNotSync();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 101: { bool _r = _t->haveCommentInThisPosition();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 102: { bool _r = _t->soundSourceIsLocalFile();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 103: _t->stopAllThreads(); break;
         case 104: _t->setCurBindEnd((*reinterpret_cast< qint64(*)>(_a[1]))); break;
         case 105: _t->setCurBindBegin((*reinterpret_cast< qint64(*)>(_a[1]))); break;
@@ -846,7 +846,7 @@ void UIController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
 
 const QMetaObject UIController::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_UIController.data,
-      qt_meta_data_UIController,  qt_static_metacall, nullptr, nullptr}
+      qt_meta_data_UIController,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
@@ -857,7 +857,7 @@ const QMetaObject *UIController::metaObject() const
 
 void *UIController::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_UIController.stringdata0))
         return static_cast<void*>(const_cast< UIController*>(this));
     return QObject::qt_metacast(_clname);
@@ -900,91 +900,91 @@ int UIController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void UIController::soundSellectionChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 
 // SIGNAL 1
 void UIController::textSellectionChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 
 // SIGNAL 2
 void UIController::bindFilesListChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 
 // SIGNAL 3
 void UIController::exampleListChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
 }
 
 // SIGNAL 4
 void UIController::commentListChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
 }
 
 // SIGNAL 5
 void UIController::exercisesListChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
 }
 
 // SIGNAL 6
 void UIController::examplesSizeChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
 }
 
 // SIGNAL 7
 void UIController::matirealsListChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 7, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 7, Q_NULLPTR);
 }
 
 // SIGNAL 8
 void UIController::diffSizeChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 8, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 8, Q_NULLPTR);
 }
 
 // SIGNAL 9
 void UIController::curCommentUrlChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 9, Q_NULLPTR);
 }
 
 // SIGNAL 10
 void UIController::titleChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 10, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 10, Q_NULLPTR);
 }
 
 // SIGNAL 11
 void UIController::curStateChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 11, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 11, Q_NULLPTR);
 }
 
 // SIGNAL 12
 void UIController::soundSourceChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 12, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 12, Q_NULLPTR);
 }
 
 // SIGNAL 13
 void UIController::curExampleWordChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 13, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 13, Q_NULLPTR);
 }
 
 // SIGNAL 14
 void UIController::someOpenChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 14, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 14, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

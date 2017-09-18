@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'setting.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'setting.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.8.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -105,8 +105,8 @@ static const uint qt_meta_data_Settings[] = {
 };
 
 const QMetaObject Settings::staticMetaObject = {
-    { nullptr, qt_meta_stringdata_Settings.data,
-      qt_meta_data_Settings,  nullptr, nullptr, nullptr}
+    { Q_NULLPTR, qt_meta_stringdata_Settings.data,
+      qt_meta_data_Settings,  Q_NULLPTR, Q_NULLPTR, Q_NULLPTR}
 };
 
 struct qt_meta_stringdata_QML_Settings_t {
@@ -272,28 +272,28 @@ void QML_Settings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 6: _t->showUserLikeCommentsChanged(); break;
         case 7: _t->autoCommentNumberChanged(); break;
         case 8: { bool _r = _t->showLectureText();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 9: _t->setShowLectureText((*reinterpret_cast< const bool(*)>(_a[1]))); break;
         case 10: { bool _r = _t->showExampleText();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 11: _t->setShowExampleText((*reinterpret_cast< const bool(*)>(_a[1]))); break;
         case 12: { QColor _r = _t->textMarkColor();
-            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< QColor*>(_a[0]) = _r; }  break;
         case 13: _t->setTextMarkColor((*reinterpret_cast< const QColor(*)>(_a[1]))); break;
         case 14: { qint32 _r = _t->exampleSize();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 15: _t->setExampleSize((*reinterpret_cast< const qint32(*)>(_a[1]))); break;
         case 16: { qint32 _r = _t->exampleDiff();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 17: _t->setExampleDiff((*reinterpret_cast< const qint32(*)>(_a[1]))); break;
         case 18: { bool _r = _t->showTranslateDialog();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 19: _t->setShowTranslateDialog((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 20: { bool _r = _t->showUserLikeComments();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 21: _t->setShowUserLikeComments((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 22: { qint32 _r = _t->autoCommentNumber();
-            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = std::move(_r); }  break;
+            if (_a[0]) *reinterpret_cast< qint32*>(_a[0]) = _r; }  break;
         case 23: _t->setAutoCommentNumber((*reinterpret_cast< qint32(*)>(_a[1]))); break;
         default: ;
         }
@@ -395,7 +395,7 @@ void QML_Settings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
 
 const QMetaObject QML_Settings::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_QML_Settings.data,
-      qt_meta_data_QML_Settings,  qt_static_metacall, nullptr, nullptr}
+      qt_meta_data_QML_Settings,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
@@ -406,7 +406,7 @@ const QMetaObject *QML_Settings::metaObject() const
 
 void *QML_Settings::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_QML_Settings.stringdata0))
         return static_cast<void*>(const_cast< QML_Settings*>(this));
     return QObject::qt_metacast(_clname);
@@ -449,49 +449,49 @@ int QML_Settings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void QML_Settings::showLectureTextChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 
 // SIGNAL 1
 void QML_Settings::showExampleTextChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 
 // SIGNAL 2
 void QML_Settings::textMarkColorChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 
 // SIGNAL 3
 void QML_Settings::exampleSizeChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
 }
 
 // SIGNAL 4
 void QML_Settings::exampleDiffChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
 }
 
 // SIGNAL 5
 void QML_Settings::showTranslateDialogChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
 }
 
 // SIGNAL 6
 void QML_Settings::showUserLikeCommentsChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
 }
 
 // SIGNAL 7
 void QML_Settings::autoCommentNumberChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 7, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 7, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

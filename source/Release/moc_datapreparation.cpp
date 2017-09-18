@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'datapreparation.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'datapreparation.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.8.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -64,7 +64,7 @@ void DataPreparation::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
 
 const QMetaObject DataPreparation::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_DataPreparation.data,
-      qt_meta_data_DataPreparation,  qt_static_metacall, nullptr, nullptr}
+      qt_meta_data_DataPreparation,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
@@ -75,7 +75,7 @@ const QMetaObject *DataPreparation::metaObject() const
 
 void *DataPreparation::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_DataPreparation.stringdata0))
         return static_cast<void*>(const_cast< DataPreparation*>(this));
     return QObject::qt_metacast(_clname);
@@ -84,6 +84,8 @@ void *DataPreparation::qt_metacast(const char *_clname)
 int DataPreparation::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
     return _id;
 }
 QT_WARNING_POP
